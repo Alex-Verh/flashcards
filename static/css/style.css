@@ -86,7 +86,7 @@ a:visited {
 }
 
 #aside {
-    float: left;
+    float: right;
     width: 25%;
     padding: 40px;
     padding-top: 20px;
@@ -94,7 +94,7 @@ a:visited {
 }
 
 #main {
-    float: right;
+    float: left;
     width: 65%;
     padding: 40px;
     padding-top: 5px;
