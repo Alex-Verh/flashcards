@@ -34,28 +34,40 @@
         <div id = "main">
             <div id = "mainText">
                 <h1>
-                    Unlock Your Memory's Potential with the Power of Flashcards
+                    Contact Us
                 </h1>
-                <p>Welcome to our website, a leading resource for memory improvement and enhanced learning. 
-                    Our focus is on providing a comprehensive and user-friendly platform for creating and viewing flashcards, 
-                    which are a proven tool for retaining and recalling information. Each flashcard features a term or concept 
-                    on one side and its definition on the other, making it a simple and effective method for memorizing important information. 
-                    Whether you're a student studying for exams, a professional seeking to improve your knowledge base, or anyone looking to enhance 
-                    their memory, our website is the ideal resource for you. Start utilizing the power of flashcards today and improve your ability 
-                    to retain and recall important information!
+                <p>Thank you for visiting our website. 
+                    If you have any questions, comments, or feedback, we would love to hear from you. 
+                    You can reach us by filling out the contact form on this page. 
+                    Our team will make every effort to respond to your inquiry as soon as possible. 
+                    We value your business and appreciate the opportunity to serve you.
                 </p>
                 
             </div>
-            <form action="home.html">
-                <button class="guest" role="button">Enter as a guest</button>
-            </form>
+
         </div>
 
+        <!-- TODO Check input validity, email check and add some check before message sending and other default things destined for forms-->
+        <form class="form-style-4" action="" method="POST">
+            <label for="field1">
+            <span>Enter Your Name:</span><input type="text" name="field1" required="true" />
+            </label>
+            <label for="field2">
+            <span>Email Address:</span><input type="email" name="field2" required="true" />
+            </label>
+            <label for="field3">
+            <span>Short Subject:</span><input type="text" name="field3" required="true" />
+            </label>
+            <label for="field4">
+            <span>Message to Us:</span><input type = "text" name="field4" required="true"></input>
+            </label>
+            <label>
+            <input type="submit" value="Send to Us" />
+            </label>
+        </form>
 
-        <div id="footer"> <!-- !TODO will be imported using python instead of writting it-->
-            <a class = "footerButtons" href = "contact.html"> Contact Us </a>
-            <a class = "footerButtons" href = "help.html"> Help </a>
-            <a class = "footerButtons" href = "about.html"> About Us </a>
+        <div id="footer"> 
+
         </div>
   
     </div>
