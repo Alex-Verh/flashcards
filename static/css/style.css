@@ -46,10 +46,8 @@ a {
 }
 
 #main {
-    margin : 5px;
     text-align: center;
     padding : 2%;
-    display: inline-block; /* Make the width of box same as image */
     height: 80%;
     overflow: hidden;
 }
@@ -85,65 +83,81 @@ a {
   }
 
 .guest:hover {
-box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
-transform: translateY(-2px);
+    box-shadow: rgba(250, 235, 215, 0.15) 0 8px 15px;
+    transform: translateY(-2px);
 }
 /* END Enter as a Guest button CSS*/
 
 /* Contact Us form CSS*/
-.form-style-4{
+.contact-us{
 	width: 40%;
     font-family: 'Crimson Text', serif;
-	padding: 25px 25px 15px 25px;
+	padding: 20px 25px 5px 25px;
 	border: 2px solid antiquewhite;
     border-radius: 15px;
     margin: 0 auto;
     color: white;
+    margin-bottom: .5%;
 }
-.form-style-4 input[type=submit],
-.form-style-4 input[type=button],
-.form-style-4 input[type=text],
-.form-style-4 input[type=email],
-.form-style-4 label
+.contact-us input[type=submit],
+.contact-us input[type=button],
+.contact-us input[type=text],
+.contact-us input[type=email],
+.contact-us label
 {
 	color: white;
 
 }
-.form-style-4 label {
+.contact-us label {
 	display:block;
-	margin-bottom: 10px;
+	margin-bottom: 15px;
 }
-.form-style-4 label > span{
+.contact-us label > span{
 	float: left;
-    width: 30%;
+    width: 27%;
 }
-.form-style-4 input[type=text],
-.form-style-4 input[type=email] {
+
+.contact-us input[type=text],
+.contact-us input[type=email] {
 	background: transparent;
 	border: none;
 	border-bottom: 1px dashed antiquewhite;
 	width: 70%;
 	outline: none;
 	font-style: italic;
+    margin-bottom: 10px;
 }
 
 
-.form-style-4 input[type=text]:focus,
-.form-style-4 input[type=email]:focus {
+.contact-us input[type=text]:focus,
+.contact-us input[type=email]:focus {
 	border-bottom: 1px dashed #D9FFA9;
 }
 
-.form-style-4 input[type=submit] {
-	background: none;
+.contact-us input[type=submit] {
+    background: none;
 	border: none;
 	padding: 8px 10px 8px 10px;
 	border-radius: 5px;
 	color: antiquewhite;
     border: 1px solid antiquewhite;
+    cursor: pointer;
 }
-.form-style-4 input[type=submit]:hover{
+.contact-us input[type=submit]:hover{
     background: rgba(250, 235, 215, 0.275);
-    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+    box-shadow: rgba(250, 235, 215, 0.15) 0 8px 15px;
     transform: translateY(-2px);
 }
 /* END Contact Us form CSS*/
+
+#faq {
+    margin: 65px;
+}
+
+.faq summary {
+    cursor: pointer;
+    color:white;
+    text-decoration:0.1px underline;
+    font-size: 20px;
+    margin-bottom: 2%;
+}
