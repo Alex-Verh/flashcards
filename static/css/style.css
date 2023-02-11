@@ -4,6 +4,7 @@
 body {
     margin: 0;
     padding: 0;
+    height : 100%;
     background: url("../../images/background.jpg") no-repeat center top / cover fixed;
 }
 
@@ -22,7 +23,6 @@ body {
 html,
 body {
     margin: 0;
-    height : 100%;
 }
 
 #container {
@@ -41,9 +41,10 @@ a {
 }
 
 #header {
-    padding : 10px;
-    margin : 5px;
+    padding : 1%;
+    margin : 0.5%;
     text-align: right;
+    font-size: 3vh;
 }
 
 #main {
@@ -56,6 +57,7 @@ a {
 #footer {
     margin-top : 3%;
     margin-bottom: 2%;
+    font-size: 3vh;
 }
 
 
@@ -67,10 +69,15 @@ a {
 #mainText {
     margin: 0 20%;
     font-family: 'Crimson Text', serif;
+    font-size: 2.7vh;
+}
+
+#about {
+    margin-bottom: 11.5%;
 }
 
 /* Enter as a Guest button CSS*/
-.guest{
+.guest {
     font-family: sans-serif;
     text-align : center;
     background-color: #00000000;
@@ -78,10 +85,12 @@ a {
     border: 2px solid antiquewhite;
     border-radius: 15px;
     cursor: pointer;
-    padding: 16px 24px;
-    margin-top: 10px;
+    padding: 1% 2%;
+    margin-top: 1%;
     transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
-  }
+    font-size: 2.5vh;
+
+}
 
 .guest:hover {
     box-shadow: rgba(250, 235, 215, 0.15) 0 8px 15px;
@@ -90,15 +99,16 @@ a {
 /* END Enter as a Guest button CSS*/
 
 /* Contact Us form CSS*/
-.contact-us{
+.contact-us {
 	width: 40%;
     font-family: 'Crimson Text', serif;
-	padding: 20px 25px 5px 25px;
+	padding: 2% 2.5% 0.5% 2.5%;
 	border: 2px solid antiquewhite;
     border-radius: 15px;
     margin: 0 auto;
     color: white;
-    margin-bottom: .5%;
+    margin-bottom: 1.5%;
+    font-size: 2.5vh;
 }
 .contact-us input[type=submit],
 .contact-us input[type=text],
@@ -109,7 +119,7 @@ a {
 }
 .contact-us label {
 	display:block;
-	margin-bottom: 15px;
+	margin-bottom: 3.4%;
 }
 .contact-us label > span{
 	float: left;
@@ -124,7 +134,8 @@ a {
 	width: 70%;
 	outline: none;
 	font-style: italic;
-    margin-bottom: 10px;
+    margin-bottom: 1.5%;
+    font-size: 2.5vh;
 }
 
 
@@ -136,12 +147,14 @@ a {
 .contact-us input[type=submit] {
     background: none;
 	border: none;
-	padding: 8px 10px 8px 10px;
+	padding: 1% 1.3% 1% 1.3%;
 	border-radius: 5px;
 	color: antiquewhite;
     border: 1px solid antiquewhite;
     cursor: pointer;
+    font-size: 2.5vh;
 }
+
 .contact-us input[type=submit]:hover{
     background: rgba(250, 235, 215, 0.275);
     box-shadow: rgba(250, 235, 215, 0.15) 0 8px 15px;
@@ -150,26 +163,28 @@ a {
 /* END Contact Us form CSS*/
 
 #faq {
-    margin: 65px;
+    margin: 7%;
 }
 
 .faq summary {
     cursor: pointer;
     color:white;
     text-decoration:0.1px underline;
-    font-size: 20px;
-    margin-bottom: 2%;
+    font-size: 3vh;
+    margin-bottom: 3.5%;
 }
 
 /* Login form CSS*/
 .login {
 	width: 60%;
     font-family: 'Crimson Text', serif;
-	padding: 20px 25px 5px 25px;
+	padding: 2% 2.5% 0.5% 2.5%;
     border-radius: 15px;
     margin: .5% auto;
     color: white;
     margin-top: 7%;
+    font-size: 2.5vh;
+
 }
 .login input[type=submit],
 .login input[type=password],
@@ -180,7 +195,7 @@ a {
 }
 .login label {
 	display:block;
-	margin-bottom: 15px;
+	margin-bottom: 3.4%;
 }
 .login label > span{
 	float: left;
@@ -195,7 +210,8 @@ a {
 	width: 70%;
 	outline: none;
 	font-style: italic;
-    margin-bottom: 10px;
+    margin-bottom: 1.5%;
+    font-size: 2.5vh;
 }
 
 
@@ -207,12 +223,14 @@ a {
 .login input[type=submit] {
     background: none;
 	border: none;
-	padding: 8px 10px 8px 10px;
+	padding: 1% 2% 1% 2%;
 	border-radius: 5px;
 	color: antiquewhite;
     border: 1px solid antiquewhite;
     cursor: pointer;
+    font-size: 2.5vh;
 }
+
 .login input[type=submit]:hover{
     background: rgba(250, 235, 215, 0.275);
     box-shadow: rgba(250, 235, 215, 0.15) 0 8px 15px;
