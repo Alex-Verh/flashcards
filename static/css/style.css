@@ -100,10 +100,8 @@ a {
     margin-bottom: .5%;
 }
 .contact-us input[type=submit],
-.contact-us input[type=button],
 .contact-us input[type=text],
-.contact-us input[type=email],
-.contact-us label
+.contact-us input[type=email]
 {
 	color: white;
 
@@ -161,3 +159,62 @@ a {
     font-size: 20px;
     margin-bottom: 2%;
 }
+
+/* Login form CSS*/
+.login {
+	width: 60%;
+    font-family: 'Crimson Text', serif;
+	padding: 20px 25px 5px 25px;
+    border-radius: 15px;
+    margin: .5% auto;
+    color: white;
+    margin-top: 7%;
+}
+.login input[type=submit],
+.login input[type=password],
+.login input[type=text]
+{
+	color: white;
+
+}
+.login label {
+	display:block;
+	margin-bottom: 15px;
+}
+.login label > span{
+	float: left;
+    width: 27%;
+}
+
+.login input[type=text],
+.login input[type=password] {
+	background: transparent;
+	border: none;
+	border-bottom: 1px dashed antiquewhite;
+	width: 70%;
+	outline: none;
+	font-style: italic;
+    margin-bottom: 10px;
+}
+
+
+.login input[type=text]:focus,
+.login input[type=password]:focus {
+	border-bottom: 1px dashed #D9FFA9;
+}
+
+.login input[type=submit] {
+    background: none;
+	border: none;
+	padding: 8px 10px 8px 10px;
+	border-radius: 5px;
+	color: antiquewhite;
+    border: 1px solid antiquewhite;
+    cursor: pointer;
+}
+.login input[type=submit]:hover{
+    background: rgba(250, 235, 215, 0.275);
+    box-shadow: rgba(250, 235, 215, 0.15) 0 8px 15px;
+    transform: translateY(-2px);
+}
+/* END Contact Us form CSS*/
