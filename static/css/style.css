@@ -5,7 +5,7 @@ body {
     margin: 0;
     padding: 0;
     height : 100%;
-    background: url("../../images/background.jpg") no-repeat center top / cover fixed;
+    background: url("../images/background.jpg") no-repeat center top / cover fixed;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -163,7 +163,7 @@ a {
 /* END Contact Us form CSS*/
 
 #faq {
-    margin: 7%;
+    margin: 5%;
 }
 
 .faq summary {
@@ -236,4 +236,11 @@ a {
     box-shadow: rgba(250, 235, 215, 0.15) 0 8px 15px;
     transform: translateY(-2px);
 }
+
 /* END Contact Us form CSS*/
+.flash-error {
+
+}
+.flash-success {
+
+}

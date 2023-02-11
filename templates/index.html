@@ -25,11 +25,13 @@
 
         <div id="header"> <!-- !TODO will be imported using python instead of writting it-->
             <div class="links">
-                <a class = "navButtons" href = "login.html"> Login </a>
+                <a class = "navButtons" href = "{{url_for('login')}}"> Login </a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <a class = "navButtons" href = "register.html"> Register </a>
+                <a class = "navButtons" href = "{{url_for('register')}}"> Register </a>
             </div>
         </div>
+
+        <div class="error404">{{message}}</div>
 
         <div id = "main">
             <div id = "mainText">
@@ -46,16 +48,16 @@
                 </p>
                 
             </div>
-            <form action="home.html">
+            <form action="{{url_for('home')}}">
                 <button class="guest" role="button">Enter as a guest</button>
             </form>
         </div>
 
 
         <div id="footer"> <!-- !TODO will be imported using python instead of writting it-->
-            <a class = "footerButtons" href = "contact.html"> Contact Us </a>
-            <a class = "footerButtons" href = "help.html"> Help </a>
-            <a class = "footerButtons" href = "about.html"> About Us </a>
+            <a class = "footerButtons" href = "{{url_for('contact')}}"> Contact Us </a>
+            <a class = "footerButtons" href = "{{url_for('help')}}"> Help </a>
+            <a class = "footerButtons" href = "{{url_for('about')}}"> About Us </a>
         </div>
   
     </div>

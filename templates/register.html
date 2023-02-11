@@ -25,7 +25,7 @@
 
         <div id="header"> <!-- !TODO will be imported using python instead of writting it-->
             <div class="links">
-                <a class = "navButtons" href = "index.html"> Return </a>
+                <a class = "navButtons" href = "{{url_for('index')}}"> Return </a>
             </div>
         </div>
 
@@ -48,15 +48,15 @@
                     </label>
                 </form>
                 <p>Do you have an account?  &nbsp;&nbsp;
-                    <a class = "navButtons" href = "login.html" style = "text-decoration: underline;">Login</a>
+                    <a class = "navButtons" href = "{{url_for('login')}}" style = "text-decoration: underline;">Login</a>
                 </p>
             </div>
         </div>
 
         <div id="footer"> <!-- !TODO will be imported using python instead of writting it-->
-            <a class = "footerButtons" href = "contact.html"> Contact Us </a>
-            <a class = "footerButtons" href = "help.html"> Help </a>
-            <a class = "footerButtons" href = "about.html"> About Us </a>
+            <a class = "footerButtons" href = "{{url_for('contact')}}"> Contact Us </a>
+            <a class = "footerButtons" href = "{{url_for('help')}}"> Help </a>
+            <a class = "footerButtons" href = "{{url_for('about')}}"> About Us </a>
         </div>
     </div>
 </body>
