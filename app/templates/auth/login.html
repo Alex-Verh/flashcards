@@ -17,15 +17,10 @@
             <em>"Welcome back! Let's get started."</em>
             <!-- TODO Check input validity, email check and add some check before message sending and other default things destined for forms-->
             <form class="login" action="" method="POST">
-                <label for="field1">
-                <span>Name:</span><input type="text" name="field1" required="true" />
-                </label>
-                <label for="field2">
-                <span>Password:</span><input type="password" name="field2" required="true" />
-                </label>
-                <label>
-                <input type="submit" name = "login" value="Login" />
-                </label>
+                {{ form.hidden_tag() }}
+                {{ form.username.label() -}}{{- form.username() }}
+                {{ form.password.label() -}}{{- form.password() }}
+                {{ form.submit() }} 
             </form>
             <p>Don't you have an account?  &nbsp;&nbsp;
                 <a class = "navButtons" href = "{{url_for('auth.register')}}" style = "text-decoration: underline;">Register</a>
