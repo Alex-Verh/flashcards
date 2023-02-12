@@ -1,6 +1,7 @@
 from . import bp
 from flask import render_template
-
+from app.extensions import db
+from app.models.user import Users
 
 @bp.route('/login', methods=['POST', 'GET'])
 def login():

@@ -1,6 +1,6 @@
 from . import bp
 from flask import render_template, flash, request
-
+from .forms import ContactForm
 
 @bp.route('/')
 def index():
@@ -19,18 +19,18 @@ def help():
 
 @bp.route('/contact', methods=['POST', 'GET'])
 def contact():
-    if request.method == 'POST':
-        name = request.form.get('name')
-        email = request.form.get('email')
-        title = request.form.get('title')
-        message = request.form.get('message')
+    # if request.method == 'POST':
+    #     name = request.form.get('name')
+    #     email = request.form.get('email')
+    #     title = request.form.get('title')
+    #     message = request.form.get('message')
         
-        if email.endswith('gmail.com'):
+    #     if email.endswith('gmail.com'):
             
-            flash('Success', category='success')
-        else:
-            flash('Error', category = 'error')
-    return render_template('main/contact.html')
+    #         flash('Success', category='success')
+    #     else:
+    #         flash('Error', category = 'error')
+    return render_template('main/contact.html', form=ContactForm())
 
 
 @bp.errorhandler(404)

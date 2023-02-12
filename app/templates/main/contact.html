@@ -30,7 +30,13 @@
 
     <!-- TODO Check input validity, email check and add some check before message sending and other default things destined for forms-->
     <form class="contact-us " action="{{url_for('main.contact')}}" method="POST">
-        <label for="name">
+        {{ form.hidden_tag() }}
+        {{ form.name.label() -}}{{- form.name() }}
+        {{ form.email.label() -}}{{- form.email() }}
+        {{ form.title.label() -}}{{- form.title() }}
+        {{ form.message.label() -}}{{- form.message() }}
+        {{ form.submit() }} 
+        <!-- <label for="name">
         <span>Enter Name:</span><input type="text" name="name" required="true" />
         </label>
         <label for="email">
@@ -44,6 +50,6 @@
         </label>
         <label>
         <input type="submit" value="Send to Us" />
-        </label>
+        </label> -->
     </form>
 {% endblock -%}
