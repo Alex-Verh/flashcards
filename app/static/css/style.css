@@ -28,9 +28,9 @@ body {
 #container {
     margin : 1%;
     padding : 1%;
-    border : solid black 1px;
+    border : solid black 0.1vh;
     background-color: rgba(0, 0, 0, 0.718);
-    border-radius: 10px;
+    border-radius: 1vh;
     color: white;
 }
 
@@ -82,8 +82,8 @@ a {
     text-align : center;
     background-color: #00000000;
     color:antiquewhite;
-    border: 2px solid antiquewhite;
-    border-radius: 15px;
+    border: 0.4vh solid antiquewhite;
+    border-radius: 1.5vh;
     cursor: pointer;
     padding: 1% 2%;
     margin-top: 1%;
@@ -93,18 +93,18 @@ a {
 }
 
 .guest:hover {
-    box-shadow: rgba(250, 235, 215, 0.15) 0 8px 15px;
-    transform: translateY(-2px);
+    box-shadow: rgba(250, 235, 215, 0.15) 0 0.8vh 1.5vh;
+    transform: translateY(-0.4vh);
 }
 /* END Enter as a Guest button CSS*/
 
 /* Contact Us form CSS*/
 .contact-us {
-	width: 40%;
+	width: 45%;
     font-family: 'Crimson Text', serif;
 	padding: 2% 2.5% 0.5% 2.5%;
-	border: 2px solid antiquewhite;
-    border-radius: 15px;
+	border: 0.4vh solid antiquewhite;
+    border-radius: 1.5vh;
     margin: 0 auto;
     color: white;
     margin-bottom: 1.5%;
@@ -114,52 +114,46 @@ a {
 .contact-us input[type=text],
 .contact-us input[type=email]
 {
-	color: white;
+    color: white;
+}
 
-}
 .contact-us label {
-	display:block;
-	margin-bottom: 3.4%;
-}
-.contact-us label > span{
-	float: left;
-    width: 27%;
+	margin-bottom: 4%;
+    width: 20%;
+    display: inline-block;
 }
 
 .contact-us input[type=text],
 .contact-us input[type=email] {
 	background: transparent;
-	border: none;
-	border-bottom: 1px dashed antiquewhite;
-	width: 70%;
+	border: hidden;
+	border-bottom: 0.1vh dashed antiquewhite;
+	width: 65%;
 	outline: none;
 	font-style: italic;
-    margin-bottom: 1.5%;
+    margin-bottom: 4%;
     font-size: 2.5vh;
+    margin-left : 6%;
 }
 
 
 .contact-us input[type=text]:focus,
 .contact-us input[type=email]:focus {
-	border-bottom: 1px dashed #D9FFA9;
+	border-bottom: 0.1vh dashed #D9FFA9;
 }
 
 .contact-us input[type=submit] {
     background: none;
 	border: none;
-	padding: 1% 1.3% 1% 1.3%;
-	border-radius: 5px;
+	padding: 1.5% 2.5% 2% 2.5%;
+	border-radius: 0.8vh;
 	color: antiquewhite;
-    border: 1px solid antiquewhite;
+    border: 0.1vh solid antiquewhite;
     cursor: pointer;
     font-size: 2.5vh;
+    margin:1.3%;
 }
 
-.contact-us input[type=submit]:hover{
-    background: rgba(250, 235, 215, 0.275);
-    box-shadow: rgba(250, 235, 215, 0.15) 0 8px 15px;
-    transform: translateY(-2px);
-}
 /* END Contact Us form CSS*/
 
 #faq {
@@ -169,16 +163,16 @@ a {
 .faq summary {
     cursor: pointer;
     color:white;
-    text-decoration:0.1px underline;
+    text-decoration:0.1vh underline;
     font-size: 3vh;
     margin-bottom: 3.5%;
 }
 
-/* Login form CSS*/
+/* Login-Register form CSS*/
 .login {
 	width: 60%;
     font-family: 'Crimson Text', serif;
-	padding: 2% 2.5% 0.5% 2.5%;
+	padding: 1.8% 2.5% 0.5% 2.5%;
     border-radius: 15px;
     margin: .5% auto;
     color: white;
@@ -194,50 +188,53 @@ a {
 
 }
 .login label {
-	display:block;
-	margin-bottom: 3.4%;
-}
-.login label > span{
-	float: left;
-    width: 27%;
+	margin-bottom: 4%;
+    width: 30%;
+    display: inline-block;
+    text-align: left;
 }
 
 .login input[type=text],
 .login input[type=password] {
 	background: transparent;
-	border: none;
-	border-bottom: 1px dashed antiquewhite;
-	width: 70%;
+	border: hidden;
+	border-bottom: 0.1vh dashed antiquewhite;
+	width: 63%;
 	outline: none;
 	font-style: italic;
     margin-bottom: 1.5%;
     font-size: 2.5vh;
+    margin-left : 4%;
 }
 
 
 .login input[type=text]:focus,
 .login input[type=password]:focus {
-	border-bottom: 1px dashed #D9FFA9;
+	border-bottom: 0.1vh dashed #D9FFA9;
 }
 
 .login input[type=submit] {
     background: none;
 	border: none;
-	padding: 1% 2% 1% 2%;
-	border-radius: 5px;
+	padding: 1.5% 2.5% 2% 2.5%;
+	border-radius: 0.8vh;
 	color: antiquewhite;
-    border: 1px solid antiquewhite;
+    border: 0.1vh solid antiquewhite;
     cursor: pointer;
     font-size: 2.5vh;
+    margin:1.3%;
 }
+/* END Login-Register form CSS*/
 
-.login input[type=submit]:hover{
+.contact-us input[type=submit]:hover,
+.login input[type=submit]:hover {
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
     background: rgba(250, 235, 215, 0.275);
-    box-shadow: rgba(250, 235, 215, 0.15) 0 8px 15px;
-    transform: translateY(-2px);
+    box-shadow: rgba(250, 235, 215, 0.15) 0 0.8vh 1.5vh;
+    transform: translateY(-0.4vh);
 }
 
-/* END Contact Us form CSS*/
+
 .flash-error {
 
 }
