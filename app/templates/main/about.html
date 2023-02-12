@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title -%}About - {% endblock -%}
+
+{% block container -%}
+    <div id="header"> <!-- !TODO will be imported using python instead of writting it-->
+        <div class="links">
+            <a class = "navButtons" href = "{{url_for('main.index')}}"> Return </a>
+        </div>
+    </div>
+
+    <div id = "main">
+        <div id = "mainText">
+            <h1>
+                About Us
+            </h1>
+            <div id = "about">
+                <p>We are a dedicated team of volunteers who are committed to providing a comprehensive and reliable platform for learning.</p>
+                <p>
+                    We believe that education is the foundation for personal growth and success, and our website aims to provide a space where individuals can develop their knowledge and skills. Whether you're looking to enhance your career, pursue a personal interest, or simply broaden your horizons, our platform is here to support you.
+                    
+                    We are dedicated to delivering high-quality content and resources that are accurate, up-to-date, and relevant to our users. Our website is designed to be user-friendly and intuitive, making it easy for anyone to learn and grow.
+                    
+                    As volunteers, we are driven by a passion for education and a commitment to making a positive difference in the world. We believe that everyone should have access to the resources they need to learn and grow, and we are proud to be a part of this mission.</p>
+                    
+                <p>Thank you for choosing to learn with us. We look forward to supporting you on your journey of discovery and growth.</p>
+            </div>
+        </div>
+    </div>
+    
+{% endblock -%}
+            

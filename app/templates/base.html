@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--Basic info--------------------------------------------------------->
+<meta charset="utf-8">
+<meta name="description" content="FlashCards">
+<meta name="author" content="Verhovetchi Alexandru">
+<meta name="author" content="Bargan Denis">
+<title>{% block title %}{% endblock %}FlashCards</title>
+<!--Mobile--------------------------------------------------------->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--CSS--------------------------------------------------------->
+<link href="../static/css/style.css" rel="stylesheet" type="text/css">
+<!--Favicon--------------------------------------------------------->
+<link rel="icon" type="image/png" href="">
+<!--Fonts--------------------------------------------------------->
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Crimson+Text:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+</head>
+
+<!-- !TODO This things up there will be imported using py libraries to avoid duplication-->
+
+<body>
+    <div id = "container">
+        {% block container %} {% endblock %}
+    </div>
+</body>
+</html>
