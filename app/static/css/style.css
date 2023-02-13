@@ -241,9 +241,9 @@ a {
     font-style:normal;
 }
 
-
 .flash-error {
-
+    color : red;
+    
 }
 .flash-success {
 

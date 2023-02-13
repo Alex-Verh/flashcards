@@ -10,19 +10,27 @@
     </div>
 
     <div id = "main">
-        <div id = "mainText"  style = "margin-bottom : 4%">
+        <div id = "mainText"  style = "margin-bottom : 3%">
             <h1>
                 Login
             </h1>
             <em>"Welcome back! Let's get started."</em>
-            <!-- TODO Check input validity, email check and add some check before message sending and other default things destined for forms-->
+            
+            <!-- {% for cat, msg in get_flashed_messages(True) %}
+                <div class="flash-{{cat}}">                    
+                    {{msg}}
+                </div>
+            {% endfor %}          -->
+
             <form novalidate class="login" action="{{url_for('auth.login')}}" method="POST">
                 {{ form.hidden_tag() }}
                 {% for field in form if field.name not in ['csrf_token', 'submit'] -%}
                     {{ field.label() -}}
                     {% if field.errors -%}
                         {{ field(class='invalid', value = '', placeholder = field.errors[0]) }}
-
+                    {% elif get_flashed_messages() -%}
+                        {% if field.name == 'username' -%}
+                        {{ field(class='invalid', value = '', placeholder = get_flashed_messages()[0]) }}
                     {% else -%}
                     {{ field() -}} 
                     {% endif -%}
