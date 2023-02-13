@@ -235,6 +235,12 @@ a {
     transform: translateY(-0.4vh);
 }
 
+.invalid::placeholder {
+    color: red;
+    font-size : 2vh;
+    font-style:normal;
+}
+
 
 .flash-error {
 

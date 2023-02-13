@@ -1,5 +1,5 @@
 from . import bp
-from flask import render_template, flash, request
+from flask import render_template, redirect, url_for
 from .forms import ContactForm
 
 @bp.route('/')
@@ -30,7 +30,10 @@ def contact():
     #         flash('Success', category='success')
     #     else:
     #         flash('Error', category = 'error')
-    return render_template('main/contact.html', form=ContactForm())
+    form = ContactForm()
+    if form.validate_on_submit():
+        return redirect(url_for('main.index'))
+    return render_template('main/contact.html', form=form)
 
 
 @bp.errorhandler(404)

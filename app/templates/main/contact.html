@@ -34,10 +34,7 @@
         {% for field in form if field.name not in ['csrf_token', 'submit'] -%}
             {{ field.label() -}}
             {% if field.errors -%}
-                {{ field(class='invalid') }}
-                <span class="invalid-feedback">
-                    {% for e in field.errors %}{{e}}{% endfor -%}
-                </span>
+            {{ field(class='invalid', value = '', placeholder = field.errors[0]) }}
             {% else -%}
             {{ field() -}} 
             {% endif -%}
