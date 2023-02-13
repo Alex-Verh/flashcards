@@ -16,7 +16,7 @@
             </h1>
             <em>"Welcome back! Let's get started."</em>
             <!-- TODO Check input validity, email check and add some check before message sending and other default things destined for forms-->
-            <form class="login" action="{{url_for('auth.login')}}" method="POST">
+            <form novalidate class="login" action="{{url_for('auth.login')}}" method="POST">
                 {{ form.hidden_tag() }}
                 {% for field in form if field.name not in ['csrf_token', 'submit'] -%}
                     {{ field.label() -}}
