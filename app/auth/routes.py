@@ -16,10 +16,9 @@ def login():
             if users[username] == form.password.data:
                 return redirect(url_for('main.index')) 
             else:
-                message = 'Password is incorrect'
+                flash('Password is incorrect', category='password')
         else:
-            message = 'Username is incorrect'
-        flash(message, category='error')
+            flash('Username is incorrect', category='username')
 
     return render_template('auth/login.html', form=form)
 
