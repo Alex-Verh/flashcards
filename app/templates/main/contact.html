@@ -31,10 +31,17 @@
     <!-- TODO Check input validity, email check and add some check before message sending and other default things destined for forms-->
     <form class="contact-us " action="{{url_for('main.contact')}}" method="POST">
         {{ form.hidden_tag() }}
-        {{ form.name.label() -}}{{- form.name() }}
-        {{ form.email.label() -}}{{- form.email() }}
-        {{ form.title.label() -}}{{- form.title() }}
-        {{ form.message.label() -}}{{- form.message() }}
-        {{ form.submit() }} 
+        {% for field in form if field.name not in ['csrf_token', 'submit'] -%}
+            {{ field.label() -}}
+            {% if field.errors -%}
+                {{ field(class='invalid') }}
+                <span class="invalid-feedback">
+                    {% for e in field.errors %}{{e}}{% endfor -%}
+                </span>
+            {% else -%}
+            {{ field() -}} 
+            {% endif -%}
+        {% endfor -%}
+        {{ form.submit() }}
     </form>
 {% endblock -%}

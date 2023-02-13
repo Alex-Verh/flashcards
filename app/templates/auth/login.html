@@ -18,17 +18,18 @@
             <!-- TODO Check input validity, email check and add some check before message sending and other default things destined for forms-->
             <form class="login" action="{{url_for('auth.login')}}" method="POST">
                 {{ form.hidden_tag() }}
-                {{ form.username.label() -}}
-                {% if form.username.errors %}
-                    {{ form.username(class='invalid') }}
-                    <span class="invalid-feedback">
-                        {% for e in form.username.errors %}{{e}}{% endfor -%}
-                    </span>
-                {% else -%}
-                   {{- form.username() }} 
-                {% endif -%}
-                
-                {{ form.password.label() -}}{{- form.password() }}
+                {% for field in form if field.name not in ['csrf_token', 'submit'] -%}
+                    {{ field.label() -}}
+                    {% if field.errors -%}
+                        {{ field(class='invalid') }}
+                        <span class="invalid-feedback">
+                            {% for e in field.errors %}{{e}}{% endfor -%}
+                        </span>
+                    {% else -%}
+                    {{ field() -}} 
+                    {% endif -%}
+
+                {% endfor -%}
                 {{ form.submit() }} 
             </form>
             <p>Don't you have an account?  &nbsp;&nbsp;
