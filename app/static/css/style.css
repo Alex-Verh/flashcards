@@ -236,14 +236,26 @@ a {
 }
 
 .invalid::placeholder {
-    color: red;
+    color: rgba(255, 0, 0, 0.75);
     font-size : 2vh;
     font-style:normal;
 }
 
+/* Change the white to any color when choosing an input option */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 3vh rgba(0, 0, 0) inset !important;
+}
+
+/*Change text in autofill textbox when choosing an input option */
+input:-webkit-autofill{
+    -webkit-text-fill-color: rgb(255, 255, 255) !important;
+}
+
 .flash-error {
-    color : red;
-    
+    color : rgba(255, 0, 0, 0.75);
 }
 .flash-success {
     color : green;
