@@ -11,6 +11,9 @@ def index():
 def about():
     return render_template('main/about.html')
 
+@bp.route('/home')
+def home():
+    return render_template('main/home.html')
 
 @bp.route('/help')
 def help():
