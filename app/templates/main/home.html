@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - {% endblock %}
+
+{% block container -%}
+
+    <div id="header"> <!-- !TODO will be imported using python instead of writting it-->
+        
+        <div class="rechts">
+            <a class = "logicButtons" href = "#"> Sort By </a>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <a class = "logicButtons" href = "#"> Search Bar </a>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <a class = "logicButtons" href = "#"> Flashcard Constructor </a>
+        </div>
+
+        <div class="links">
+            <a class = "navButtons" href = "{{url_for('auth.login')}}"> Login </a>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <a class = "navButtons" href = "{{url_for('auth.register')}}"> Register </a>
+        </div>
+    </div>
+
+    <div id = "main">
+        <p> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facilis quod perspiciatis ab tempore inventore accusamus tenetur dolor perferendis! Dolor quisquam sed quam obcaecati sapiente commodi hic sequi fuga, voluptatibus debitis.
+        </p>
+
+    </div>
+
+    <div id = "aside">
+        <p> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facilis quod perspiciatis ab tempore inventore accusamus tenetur dolor perferendis! Dolor quisquam sed quam obcaecati sapiente commodi hic sequi fuga, voluptatibus debitis.
+        </p>
+    </div>
+
+    <div id="footer"> <!-- !TODO will be imported using python instead of writting it-->
+        <a class = "footerButtons" href = "{{url_for('main.contact')}}"> Contact Us </a>
+        <a class = "footerButtons" href = "{{url_for('main.help')}}"> Help </a>
+        <a class = "footerButtons" href = "{{url_for('main.about')}}"> About Us </a>
+    </div>
+
+{% endblock -%}
