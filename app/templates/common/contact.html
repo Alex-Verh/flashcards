@@ -24,12 +24,9 @@
         </div>
 
     </div>
-    {% for cat, msg in get_flashed_messages(True) -%}
-    <div class="flash-{{cat}}">{{msg}}</div>
-    {% endfor -%}
 
     <!-- TODO Check input validity, email check and add some check before message sending and other default things destined for forms-->
-    <form novalidate class="contact-us " action="{{url_for('main.contact')}}" method="POST">
+    <form novalidate class="contact-us " action="{{url_for('common.contact')}}" method="POST">
         {{ form.hidden_tag() }}
         {% for field in form if field.name not in ['csrf_token', 'submit'] -%}
             {{ field.label() -}}
