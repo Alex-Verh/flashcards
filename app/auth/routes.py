@@ -14,7 +14,7 @@ def login():
         username = form.username.data
         if username in users:
             if users[username] == form.password.data:
-                return redirect(url_for('main.index')) 
+                return redirect(url_for('main.home')) 
             form.password.errors.append('Password is incorrect')
         else:
             form.username.errors.append('Username is incorrect')
