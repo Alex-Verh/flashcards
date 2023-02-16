@@ -2,7 +2,7 @@ from . import bp
 from flask import render_template, redirect, url_for, flash
 from .forms import LoginForm, RegisterForm
 # from app.extensions import db
-# from app.models.user import Users
+# from app.models import User
 
 users = {'denis':'12345228', 'alex':'123456789'}
 
@@ -26,10 +26,11 @@ def login():
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
-        username = form.username.data
-        password = form.password.data
-        if username not in users:
-            users[username] = password
-            return redirect(url_for('auth.login'))
-        form.username.errors.append('User with this username already exists')
+        # username = form.username.data
+        # password = form.password.data
+        # if username not in users:
+        #     users[username] = password
+        #     return redirect(url_for('auth.login'))
+        # form.username.errors.append('User with this username already exists')
+        return redirect(url_for('auth.login'))
     return render_template('auth/register.html', form=form)

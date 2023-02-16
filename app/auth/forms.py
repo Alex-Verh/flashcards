@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms.fields import StringField, SubmitField, PasswordField
 from wtforms.validators import DataRequired, Length, EqualTo, Regexp, ValidationError
-
+from app.models import User
 
 class LoginForm(FlaskForm):
     username = StringField('Username:', validators=[DataRequired("Please enter your username")])
@@ -15,3 +15,8 @@ class RegisterForm(FlaskForm):
     password = PasswordField('Password:', validators=[DataRequired("Please enter your password"), Regexp("^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{0,}$", message='Password must at least one uppercase letter, one lowercase letter, one number and one special character'), Length(8, 20,"Length must be between 8-20 characters")])
     password1 = PasswordField('Repeat password:', validators=[DataRequired("Please repeat your password"), EqualTo('password', "Passwords must match")])
     submit = SubmitField('Register')
+    
+    def validate_username(self, username):
+        existing_user_name = User.query.filter_by(username=username.data).first()
+        if existing_user_name:
+            raise ValidationError('User with this username already exists')
