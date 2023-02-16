@@ -11,7 +11,13 @@ def index():
 @bp.route('/home')
 def home():
     if isinstance(current_user, AnonymousUserMixin):
-        print('unauthorized user')
+        authorized = False
     else:
-        print(current_user.id)
-    return render_template('main/home.html')
+
+        authorized = True
+    return render_template('main/home.html', authorized=authorized)
+
+@bp.route('/profile')
+@login_required
+def profile():
+    return f'User: {current_user.username}'

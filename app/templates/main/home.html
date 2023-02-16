@@ -13,11 +13,14 @@
             &nbsp;&nbsp;&nbsp;&nbsp;
             <a class = "logicButtons" href = "#"> Flashcard Constructor </a>
         </div>
-
         <div class="links">
+            {% if authorized -%}
+            <a class = "navButtons" href = "{{url_for('main.profile')}}"> My profile </a>
+            {% else -%}
             <a class = "navButtons" href = "{{url_for('auth.login')}}"> Login </a>
             &nbsp;&nbsp;&nbsp;&nbsp;
             <a class = "navButtons" href = "{{url_for('auth.register')}}"> Register </a>
+            {% endif -%}
         </div>
     </div>
 
