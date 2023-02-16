@@ -16,6 +16,9 @@ def create_app(config_class=Config):
     
     from app.auth import bp as auth_bp
     app.register_blueprint(auth_bp)
+    
+    from app.common import bp as common_bp
+    app.register_blueprint(common_bp)
 
 
     @app.route('/test')

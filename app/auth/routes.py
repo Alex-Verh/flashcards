@@ -2,23 +2,22 @@ from . import bp
 from flask import render_template, redirect, url_for, flash
 from .forms import LoginForm, RegisterForm
 # from app.extensions import db
-# from app.models.user import Users
+# from app.models import User
 
+users = {'denis':'12345228', 'alex':'123456789'}
 
 @bp.route('/login', methods=['POST', 'GET'])
 def login():
     form = LoginForm()
-    users = {'denis':'12345228', 'alex':'123456789', }
     
     if form.validate_on_submit():
         username = form.username.data
         if username in users:
             if users[username] == form.password.data:
-                return redirect(url_for('main.index')) 
-            else:
-                flash('Password is incorrect', category='password')
+                return redirect(url_for('main.home')) 
+            form.password.errors.append('Password is incorrect')
         else:
-            flash('Username is incorrect', category='username')
+            form.username.errors.append('Username is incorrect')
 
     return render_template('auth/login.html', form=form)
 
@@ -27,5 +26,11 @@ def login():
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
-        return redirect(url_for('main.index'))
+        # username = form.username.data
+        # password = form.password.data
+        # if username not in users:
+        #     users[username] = password
+        #     return redirect(url_for('auth.login'))
+        # form.username.errors.append('User with this username already exists')
+        return redirect(url_for('auth.login'))
     return render_template('auth/register.html', form=form)
