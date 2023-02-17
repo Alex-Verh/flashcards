@@ -11,6 +11,8 @@ def create_app(config_class=Config):
     db.init_app(app)
     login_manager.init_app(app)
     login_manager.login_view = 'auth.login'
+    login_manager.login_message = "Login to access all platform features"
+    login_manager.login_message_category = "success"
     
     # Register blueprints here
     from app.main import bp as main_bp

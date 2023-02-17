@@ -1,5 +1,5 @@
 from . import bp
-from flask import render_template, redirect, url_for
+from flask import render_template, flash
 from .forms import ContactForm
 
 
@@ -17,7 +17,7 @@ def help():
 def contact():
     form = ContactForm()
     if form.validate_on_submit():
-        return redirect(url_for('main.index'))
+        flash('Your message has been sent successfully', category='success')
     return render_template('common/contact.html', form=form)
 
 

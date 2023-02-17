@@ -14,9 +14,15 @@
             <h1>
                 Login
             </h1>
-            <em>"Welcome back! Let's get started."</em>
 
-            <form novalidate class="login" action="{{url_for('auth.login')}}" method="POST">
+            {% for cat, msg in get_flashed_messages(True) -%}
+            <em class="{{cat}}-msg">{{msg}}</em>
+            {% else -%}
+            <em>"Welcome back! Let's get started."</em>
+            {% endfor -%}
+            
+
+            <form novalidate class="login" action="" method="POST">
                 <!-- TODO make better -->
                 {{ form.hidden_tag() }}
                 {% for field in form if field.name not in ['csrf_token', 'submit'] -%}
