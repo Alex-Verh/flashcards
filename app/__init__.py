@@ -1,7 +1,7 @@
 from flask import Flask
 
 from config import Config
-from .extensions import db
+from .extensions import db, login_manager
 
 def create_app(config_class=Config):
     app = Flask(__name__)
@@ -9,6 +9,10 @@ def create_app(config_class=Config):
 
     # Initialize Flask extensions here
     db.init_app(app)
+    login_manager.init_app(app)
+    login_manager.login_view = 'auth.login'
+    login_manager.login_message = "Login to access all platform features"
+    login_manager.login_message_category = "success"
     
     # Register blueprints here
     from app.main import bp as main_bp

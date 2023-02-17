@@ -1,36 +1,65 @@
 from . import bp
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, request, flash
+from flask_login import login_user, login_required, logout_user, current_user
+from werkzeug.security import generate_password_hash, check_password_hash
 from .forms import LoginForm, RegisterForm
-# from app.extensions import db
-# from app.models import User
+from app.extensions import db, login_manager
+from app.models import User
 
-users = {'denis':'12345228', 'alex':'123456789'}
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
 
 @bp.route('/login', methods=['POST', 'GET'])
 def login():
-    form = LoginForm()
+    if current_user.is_authenticated:
+        return redirect(url_for('main.profile'))
     
+    form = LoginForm()
     if form.validate_on_submit():
-        username = form.username.data
-        if username in users:
-            if users[username] == form.password.data:
-                return redirect(url_for('main.home')) 
-            form.password.errors.append('Password is incorrect')
+        user = User.query.filter_by(username=form.username.data).first()
+        if user:
+            if check_password_hash(user.password, form.password.data):
+                login_user(user)
+                return redirect(request.args.get("next") or url_for("main.home"))
+            else:
+                form.password.errors.append("Wrong password")
         else:
-            form.username.errors.append('Username is incorrect')
+            form.username.errors.append("That user doesn't exist")
 
     return render_template('auth/login.html', form=form)
 
 
+@bp.route('/logout', methods=['POST', 'GET'])
+@login_required
+def logout():
+    logout_user()
+    flash("You have logged out", "success")
+    return redirect(url_for('auth.login'))
+
+
 @bp.route('/register', methods=['POST', 'GET'])
 def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.profile'))
+    
     form = RegisterForm()
     if form.validate_on_submit():
-        # username = form.username.data
-        # password = form.password.data
-        # if username not in users:
-        #     users[username] = password
-        #     return redirect(url_for('auth.login'))
-        # form.username.errors.append('User with this username already exists')
+        hashed_psw = generate_password_hash(form.password.data)
+        try:
+            new_user = User(
+                name=form.name.data,
+                username=form.username.data,
+                password=hashed_psw)
+            db.session.add(new_user)
+            db.session.commit()
+        except:
+            db.session.rollback()
+            flash('Error while working with database')
+            return render_template('auth/register.html', form=form)
+        
+        flash("You have registered successfully", "success")
         return redirect(url_for('auth.login'))
     return render_template('auth/register.html', form=form)
