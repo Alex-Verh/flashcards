@@ -303,13 +303,20 @@ input:-webkit-autofill{
 
 .flashcard {
     border : antiquewhite 0.1vh solid;
+    font-size : 2vh;
     margin : 1%;
     float : left;
     border-radius: 1.5vh;
+    perspective: 1000px; /* Remove this if you don't want the 3D effect */
 }
 
 .flash-screen {
-    padding : 8vh 19vh;
+    height: 15vh;
+    width: 30vh;
+    position: relative;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
 }
 
 .flash-modulate {
@@ -324,12 +331,40 @@ input:-webkit-autofill{
     border-radius: 1.5vh;
 }
 
-.flash-reverse {
-    border : antiquewhite 0.1vh solid;
-    border-radius: 1.5vh;
+.image-maximize {
+    margin: 0 4% 1% 0;
     float : right;
-    width : 15%;
+    width : 9%;
+    aspect-ratio: 1;
+    cursor: pointer;
 }
+
+  /* Do an horizontal flip when you move the mouse over the flip box container */
+.flashcard:hover .flash-screen {
+    transform: rotateY(180deg);
+}
+  
+  /* Position the front and back side */
+ .flash-card-front, .flash-card-back {
+    position: absolute;
+    -webkit-backface-visibility: hidden; /* Safari */
+    backface-visibility: hidden;
+  }
+  
+  /* Style the front side (fallback if image is missing) */
+  .flash-card-front {
+    height: 15vh;
+    width: 30vh;
+    margin : auto;
+  }
+  
+  /* Style the back side */
+  .flash-card-back {
+    height: 15vh;
+    width: 30vh;
+    transform: rotateY(180deg);
+  }
+
 
 /* CSS for pointer blur */
 #blob {
@@ -344,7 +379,7 @@ input:-webkit-autofill{
     overflow: hidden;
     background-image: linear-gradient(to bottom right, red, yellow);
     animation : rotate 20s infinite;
-    filter : blur(25vh);
+    filter : blur(35vh);
     pointer-events: none;
 }
 
