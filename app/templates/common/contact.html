@@ -20,9 +20,7 @@
                 Our team will make every effort to respond to your inquiry as soon as possible. 
                 We value your business and appreciate the opportunity to serve you.
             </p>
-            {% for cat, msg in get_flashed_messages(True) -%}
-            <em class="{{cat}}-msg">{{msg}}</em>
-            {% endfor -%}   
+               
         </div>
     </div>
     
@@ -38,5 +36,8 @@
             {% endif -%}
         {% endfor -%}
         {{ form.submit() }}
+        {% for cat, msg in get_flashed_messages(True) -%}
+        <em class="{{cat}}-msg">{{msg}}</em>
+        {% endfor -%}
     </form>
 {% endblock -%}

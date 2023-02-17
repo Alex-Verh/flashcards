@@ -277,7 +277,8 @@ input:-webkit-autofill{
     color : rgba(255, 0, 0, 0.75);
 }
 .success-msg {
-    color : rgba(0, 128, 0, 0.75);
+    font-size: 2.5vh;
+    margin-left: 3.3%;
 }
 
 /* CSS for flashcards in dashboard */

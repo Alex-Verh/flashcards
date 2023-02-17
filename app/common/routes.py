@@ -1,6 +1,7 @@
 from . import bp
-from flask import render_template, flash
+from flask import render_template, flash, redirect, url_for
 from .forms import ContactForm
+
 
 
 @bp.route('/about')
@@ -18,6 +19,8 @@ def contact():
     form = ContactForm()
     if form.validate_on_submit():
         flash('Your message has been sent successfully', category='success')
+        return redirect(url_for('common.contact'))
+    
     return render_template('common/contact.html', form=form)
 
 
