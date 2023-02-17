@@ -4,6 +4,6 @@
 /app/__pycache__
 /app/auth/__pycache__
 /app/main/__pycache__
-/app/models/__pycache__
+/app/common/__pycache__
 .env
 base.db
