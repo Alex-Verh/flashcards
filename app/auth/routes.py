@@ -22,7 +22,7 @@ def login():
         user = User.query.filter_by(username=form.username.data).first()
         if user:
             if check_password_hash(user.password, form.password.data):
-                login_user(user)
+                login_user(user, remember=True)
                 return redirect(request.args.get("next") or url_for("main.home"))
             else:
                 form.password.errors.append("Wrong password")
