@@ -185,7 +185,7 @@ a {
     color:white;
     text-decoration:0.1vh underline;
     font-size: 3vh;
-    margin-bottom: 3.5%;
+    margin-bottom: 2.8%;
 }
 
 /* Login-Register form CSS*/
@@ -350,22 +350,49 @@ input:-webkit-autofill{
     position: absolute;
     -webkit-backface-visibility: hidden; /* Safari */
     backface-visibility: hidden;
-  }
+}
   
-  /* Style the front side (fallback if image is missing) */
-  .flash-card-front {
+/* Style the front side (fallback if image is missing) */
+.flash-card-front {
     height: 15vh;
     width: 30vh;
     margin : auto;
-  }
+}
   
-  /* Style the back side */
-  .flash-card-back {
+/* Style the back side */
+.flash-card-back {
     height: 15vh;
     width: 30vh;
     transform: rotateY(180deg);
-  }
+}
 
+.flash-list {
+    font-size: 2vh;
+    overflow: scroll;
+    height : 26vh;
+    width: 65%;
+    margin: 0 auto;
+}
+
+.flash-list-unit{
+    display: block;
+    text-decoration: none;
+    padding: 1%;
+    margin : 0.5% 4% 0.5% 0.5%;
+    text-align: left;
+    border : 0.1vh antiquewhite solid;
+    border-radius: 2vh;
+}
+
+.emoticons {
+    float: right;
+}
+
+.emoticons img{
+    width : 3vh;
+    aspect-ratio: 1;
+    cursor: pointer;
+}
 
 /* CSS for pointer blur */
 #blob {

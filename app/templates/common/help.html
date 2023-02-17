@@ -5,7 +5,7 @@
 {% block container %}
     <div id="header"> <!-- !TODO will be imported using python instead of writting it-->
         <div class="links">
-            <a class = "navButtons" href = "{{url_for('main.index')}}"> Return </a>
+            <a class = "navButtons" href = "{{url_for('main.index')}}"> Main Page </a>
         </div>
     </div>
 
@@ -62,6 +62,13 @@
                     <details>
                     <summary>Can I use this website on my mobile device?</summary>
                     <p>Yes, our website is optimized for use on both desktop and mobile devices. You can access all of the same features and functionality on your mobile device as you can on your desktop computer. Moreover, our team is currently developing a mobile application of our platform.</p>
+                    </details>
+                </div>
+
+                <div class = "faq">
+                    <details>
+                    <summary>More about the concept of flashcards..</summary>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/p3-o0pxDrL0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                     </details>
                 </div>
             </div>
