@@ -32,6 +32,8 @@ body {
     background-color: rgba(0, 0, 0, 0.718);
     border-radius: 1vh;
     color: white;
+    overflow: hidden;
+    position: relative;
 }
 
 a {
@@ -327,4 +329,35 @@ input:-webkit-autofill{
     border-radius: 1.5vh;
     float : right;
     width : 15%;
+}
+
+/* CSS for pointer blur */
+#blob {
+    background-color : white;
+    height : 30vh;
+    aspect-ratio: 1;
+    left: 50%;
+    top: 50%;
+    translate : -50% -50%;
+    border-radius: 50%;
+    position:absolute;
+    overflow: hidden;
+    background-image: linear-gradient(to bottom right, red, yellow);
+    animation : rotate 20s infinite;
+    filter : blur(25vh);
+    pointer-events: none;
+}
+
+@keyframes rotate {
+    from {
+        rotate: 0deg;
+    }
+
+    50% {
+        scale : 1 1.5;
+    }
+
+    to {
+        rotate : 360deg;
+    }
 }
