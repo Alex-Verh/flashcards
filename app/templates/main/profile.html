@@ -27,16 +27,9 @@
         </div>
 
         <div class = "flash-list">
-            <a class = "flash-list-unit" href = "#"><strong>Title: </strong> Cheoto Nado  &nbsp;&nbsp;&nbsp;&nbsp;<strong>Content: </strong> Content text text text text ..  &nbsp;&nbsp;&nbsp;&nbsp; <div class = "emoticons"><img src ="../../static/images/favourite.png" alt = "Favourite"> &nbsp;&nbsp;&nbsp;&nbsp;<img src ="../../static/images/bin.png" alt = "Delete"></div></a>
-            <a class = "flash-list-unit" href = "#"><strong>Title: </strong> Cheoto Nado  &nbsp;&nbsp;&nbsp;&nbsp;<strong>Content: </strong> Content text text text text ..  &nbsp;&nbsp;&nbsp;&nbsp; <div class = "emoticons"><img src ="../../static/images/favourite.png" alt = "Favourite"> &nbsp;&nbsp;&nbsp;&nbsp;<img src ="../../static/images/bin.png" alt = "Delete"></div></a>
-            <a class = "flash-list-unit" href = "#"><strong>Title: </strong> Cheoto Nado  &nbsp;&nbsp;&nbsp;&nbsp;<strong>Content: </strong> Content text text text text ..  &nbsp;&nbsp;&nbsp;&nbsp; <div class = "emoticons"><img src ="../../static/images/favourite.png" alt = "Favourite"> &nbsp;&nbsp;&nbsp;&nbsp;<img src ="../../static/images/bin.png" alt = "Delete"></div></a>
-            <a class = "flash-list-unit" href = "#"><strong>Title: </strong> Cheoto Nado  &nbsp;&nbsp;&nbsp;&nbsp;<strong>Content: </strong> Content text text text text ..  &nbsp;&nbsp;&nbsp;&nbsp; <div class = "emoticons"><img src ="../../static/images/favourite.png" alt = "Favourite"> &nbsp;&nbsp;&nbsp;&nbsp;<img src ="../../static/images/bin.png" alt = "Delete"></div></a>
-            <a class = "flash-list-unit" href = "#"><strong>Title: </strong> Cheoto Nado  &nbsp;&nbsp;&nbsp;&nbsp;<strong>Content: </strong> Content text text text text ..  &nbsp;&nbsp;&nbsp;&nbsp; <div class = "emoticons"><img src ="../../static/images/favourite.png" alt = "Favourite"> &nbsp;&nbsp;&nbsp;&nbsp;<img src ="../../static/images/bin.png" alt = "Delete"></div></a>
-            <a class = "flash-list-unit" href = "#"><strong>Title: </strong> Cheoto Nado  &nbsp;&nbsp;&nbsp;&nbsp;<strong>Content: </strong> Content text text text text ..  &nbsp;&nbsp;&nbsp;&nbsp; <div class = "emoticons"><img src ="../../static/images/favourite.png" alt = "Favourite"> &nbsp;&nbsp;&nbsp;&nbsp;<img src ="../../static/images/bin.png" alt = "Delete"></div></a>
-            <a class = "flash-list-unit" href = "#"><strong>Title: </strong> Cheoto Nado  &nbsp;&nbsp;&nbsp;&nbsp;<strong>Content: </strong> Content text text text text ..  &nbsp;&nbsp;&nbsp;&nbsp; <div class = "emoticons"><img src ="../../static/images/favourite.png" alt = "Favourite"> &nbsp;&nbsp;&nbsp;&nbsp;<img src ="../../static/images/bin.png" alt = "Delete"></div></a>
-            <a class = "flash-list-unit" href = "#"><strong>Title: </strong> Cheoto Nado  &nbsp;&nbsp;&nbsp;&nbsp;<strong>Content: </strong> Content text text text text ..  &nbsp;&nbsp;&nbsp;&nbsp; <div class = "emoticons"><img src ="../../static/images/favourite.png" alt = "Favourite"> &nbsp;&nbsp;&nbsp;&nbsp;<img src ="../../static/images/bin.png" alt = "Delete"></div></a>
-            <a class = "flash-list-unit" href = "#"><strong>Title: </strong> Cheoto Nado  &nbsp;&nbsp;&nbsp;&nbsp;<strong>Content: </strong> Content text text text text ..  &nbsp;&nbsp;&nbsp;&nbsp; <div class = "emoticons"><img src ="../../static/images/favourite.png" alt = "Favourite"> &nbsp;&nbsp;&nbsp;&nbsp;<img src ="../../static/images/bin.png" alt = "Delete"></div></a>
-
+            {% for card in user_cards -%}
+                <a class = "flash-list-unit" href = "#"><strong>Title: </strong>{{card.title}} &nbsp;&nbsp;&nbsp;&nbsp;<strong>Content: </strong>{{card.content}}  &nbsp;&nbsp;&nbsp;&nbsp; <div class = "emoticons"><img src ="../../static/images/favourite.png" alt = "Favourite"> &nbsp;&nbsp;&nbsp;&nbsp;<img src ="../../static/images/bin.png" alt = "Delete"></div></a>
+            {% endfor -%}
         </div>
     </div>
 
