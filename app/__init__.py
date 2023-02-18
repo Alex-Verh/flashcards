@@ -8,12 +8,18 @@ def create_app(config_class=Config):
 
     # Initialize Flask extensions here
     from .extensions import db, login_manager, mail
+    
     db.init_app(app)
     
     login_manager.init_app(app)
-    login_manager.login_view = 'auth.login'
+    login_manager.login_view = 'users.login'
     login_manager.login_message = "Login to access all platform features"
     login_manager.login_message_category = "success"
+    
+    from .models import User
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.get(int(user_id))
     
     mail.init_app(app)
     
@@ -21,8 +27,8 @@ def create_app(config_class=Config):
     from app.main import bp as main_bp
     app.register_blueprint(main_bp)
     
-    from app.auth import bp as auth_bp
-    app.register_blueprint(auth_bp)
+    from app.users import bp as users_bp
+    app.register_blueprint(users_bp)
     
     from app.common import bp as common_bp
     app.register_blueprint(common_bp)

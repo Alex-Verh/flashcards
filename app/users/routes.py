@@ -3,19 +3,14 @@ from flask import render_template, redirect, url_for, request, flash
 from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from .forms import LoginForm, RegisterForm
-from app.extensions import db, login_manager
-from app.models import User
-
-
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
+from app.extensions import db
+from app.models import User, FlashCard
 
 
 @bp.route('/login', methods=['POST', 'GET'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('main.profile'))
+        return redirect(url_for('users.profile'))
     
     form = LoginForm()
     if form.validate_on_submit():
@@ -29,7 +24,7 @@ def login():
         else:
             form.username.errors.append("That user doesn't exist")
 
-    return render_template('auth/login.html', form=form)
+    return render_template('users/login.html', form=form)
 
 
 @bp.route('/logout', methods=['POST', 'GET'])
@@ -37,13 +32,13 @@ def login():
 def logout():
     logout_user()
     flash("You have logged out", "success")
-    return redirect(url_for('auth.login'))
+    return redirect(url_for('users.login'))
 
 
 @bp.route('/register', methods=['POST', 'GET'])
 def register():
     if current_user.is_authenticated:
-        return redirect(url_for('main.profile'))
+        return redirect(url_for('users.profile'))
     
     form = RegisterForm()
     if form.validate_on_submit():
@@ -58,8 +53,15 @@ def register():
         except:
             db.session.rollback()
             flash('Error while working with database')
-            return render_template('auth/register.html', form=form)
+            return render_template('users/register.html', form=form)
         
         flash("You have registered successfully", "success")
-        return redirect(url_for('auth.login'))
-    return render_template('auth/register.html', form=form)
+        return redirect(url_for('users.login'))
+    return render_template('users/register.html', form=form)
+
+
+@bp.route('/profile')
+@login_required
+def profile():
+    user_cards = FlashCard.query.filter_by(user_id=current_user.get_id()).all()
+    return render_template('main/profile.html', user_cards=user_cards)
