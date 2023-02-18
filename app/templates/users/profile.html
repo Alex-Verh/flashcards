@@ -5,14 +5,8 @@
 {% block container -%}
 
     <div id="header"> <!-- !TODO will be imported using python instead of writting it-->
-        
-        <div class="rechts">
-            <a class = "logicButtons" href = "#"> Flashcard Constructor </a>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <a class = "logicButtons" href = "{{url_for('main.home')}}"> Go Back </a>
-        </div>
         <div class="links">
-            <a class = "navButtons" href = "{{url_for('users.logout')}}"> Logout </a>
+            <a class = "navButtons" href = "{{url_for('main.home')}}"> Home </a>
         </div>
     </div>
 

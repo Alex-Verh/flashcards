@@ -64,4 +64,11 @@ def register():
 @login_required
 def profile():
     user_cards = FlashCard.query.filter_by(user_id=current_user.get_id()).all()
-    return render_template('users/profile.html', user_cards=user_cards, user_cards_len=len(user_cards))
+    for card in user_cards:
+        title_len = len(card.title)
+        content_len = len(card.content)
+        if title_len > 20:
+            card.title = card.title[:19] + '..'
+        if content_len > 90:
+            card.content = card.content[:89] + '..'
+    return render_template('users/profile.html', user_cards=user_cards)
