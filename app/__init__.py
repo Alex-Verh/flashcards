@@ -1,18 +1,21 @@
 from flask import Flask
 
 from config import Config
-from .extensions import db, login_manager
 
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
 
     # Initialize Flask extensions here
+    from .extensions import db, login_manager, mail
     db.init_app(app)
+    
     login_manager.init_app(app)
     login_manager.login_view = 'auth.login'
     login_manager.login_message = "Login to access all platform features"
     login_manager.login_message_category = "success"
+    
+    mail.init_app(app)
     
     # Register blueprints here
     from app.main import bp as main_bp
