@@ -17,4 +17,5 @@ def home():
 @login_required
 def profile():
     user_cards = FlashCard.query.filter_by(user_id=current_user.get_id()).all()
-    return render_template('main/profile.html', user_cards=user_cards)
+    user_cards_len = len(user_cards)
+    return render_template('main/profile.html', user_cards=user_cards, user_cards_len=user_cards_lenfavi)
