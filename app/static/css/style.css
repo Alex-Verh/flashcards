@@ -366,22 +366,30 @@ input:-webkit-autofill{
     transform: rotateY(180deg);
 }
 
-.flash-list {
+#flash-list {
     font-size: 2vh;
     overflow: scroll;
-    height : 26vh;
-    width: 65%;
-    margin: 0 auto;
+    width: 70%;
+    float: right;
+    height : 55vh;
+    text-align: left;
+    padding: 1%;
 }
 
 .flash-list-unit{
     display: block;
     text-decoration: none;
     padding: 1%;
-    margin : 0.5% 4% 0.5% 0.5%;
+    margin : 0.5% 4% 1% 0;
     text-align: left;
     border : 0.1vh antiquewhite solid;
     border-radius: 2vh;
+}
+
+#flash-profile {
+    float: left;
+    width: 20%;
+    height : 60vh;
 }
 
 .emoticons {
