@@ -5,8 +5,11 @@
 {% block container -%}
 
     <div id="header"> <!-- !TODO will be imported using python instead of writting it-->
+        <div class="rechts">
+            <a href = "#"> Add new set </a>
+        </div>
         <div class="links">
-            <a class = "navButtons" href = "{{url_for('main.home')}}"> Home </a>
+            <a href = "{{url_for('main.home')}}"> Home </a>
         </div>
     </div>
 
@@ -15,23 +18,26 @@
             <h1>
                 Your Profile:
             </h1>
-            <p><strong>Name:</strong> {{current_user.name}}</p>
-            <p><strong>Username:</strong> {{current_user.username}}</p>
-            <p><strong>Number of flash-cards:</strong> {{user_cards_len}}</p>
+            <div class = "profile-value"><strong>Name:</strong> <div class = "value">{{current_user.name}}</div></div>
+            <div class = "profile-value"><strong>Username:</strong>  <div class = "value">{{current_user.username}}</div></div>
+            <div class = "profile-value"><strong>Number of sets:</strong> <div class = "value"> ### </div></div>
+            <div class = "profile-value"><strong>Number of flash-cards:</strong><div class = "value">{{user_cards_len}}</div></div>
+            <a href = "{{url_for('users.logout')}}">
+                <button class="guest" role="button">Logout</button>
+            </a>
         </div>
         
         <div id = "flash-list">
-            <h1>Your flashcards:</h1> 
-            {% for card in user_cards -%}
-                <a class = "flash-list-unit" href = "#"><strong>{{card.title}}</strong> &nbsp;&nbsp; | &nbsp;&nbsp;{{card.content}}  &nbsp;&nbsp;&nbsp;&nbsp; <div class = "emoticons"><img src ="../../static/images/favourite.png" alt = "Favourite"> &nbsp;&nbsp;&nbsp;&nbsp;<img src ="../../static/images/bin.png" alt = "Delete"></div></a>
-            {% endfor -%}
+
         </div>
+        
     </div>
 
     <div id="footer"> <!-- !TODO will be imported using python instead of writting it-->
         <a class = "footerButtons" href = "{{url_for('common.contact')}}"> Contact Us </a>
         <a class = "footerButtons" href = "{{url_for('common.help')}}"> Help </a>
         <a class = "footerButtons" href = "{{url_for('common.about')}}"> About Us </a>
+        <a id = "deleteProfile" href = "#"> Delete Profile </a>
     </div>
     
 {% endblock -%}

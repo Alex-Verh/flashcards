@@ -7,20 +7,28 @@
     <div id="header"> <!-- !TODO will be imported using python instead of writting it-->
         
         <div class="rechts">
-            <a class = "logicButtons" href = "#"> Sort By </a>
+            <a href = "#"> Sort By </a>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <a class = "logicButtons" href = "#"> Create </a>
+            <a href = "#"> Create </a>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <a class = "logicButtons" href = "#"> Search Bar </a>
+        <div class="searchBox">
+
+            <input class="searchInput"type="text" name="" placeholder="Search">
+            <button class="searchButton" href="#">
+                <i class="material-icons">
+                    S
+                </i>
+            </button>
+        </div>
 
         </div>
         <div class="links">
             {% if current_user.is_authenticated -%}
-            <a class = "navButtons" href = "{{url_for('users.profile')}}"> {{current_user.name}} </a>
+            <a href = "{{url_for('users.profile')}}"><strong> {{current_user.username}} </strong></a>
             {% else -%}
-            <a class = "navButtons" href = "{{url_for('users.login')}}"> Login </a>
+            <a href = "{{url_for('users.login')}}"> Login </a>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <a class = "navButtons" href = "{{url_for('users.register')}}"> Register </a>
+            <a href = "{{url_for('users.register')}}"> Register </a>
             {% endif -%}
         </div>
     </div>
