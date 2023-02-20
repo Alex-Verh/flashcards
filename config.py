@@ -14,3 +14,4 @@ class Config:
     MAIL_USE_TLS = False
     MAIL_USERNAME = 'kris.ron.googl@gmail.com'
     MAIL_PASSWORD = os.environ.get('EMAIL_PASS')
+    UPLOAD_FOLDER = 'uploads'

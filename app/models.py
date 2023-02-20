@@ -24,7 +24,7 @@ class FlashCard(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(40), nullable=False)
     content = db.Column(db.String(300), nullable=False)
-    cardset_id = db.Column(db.Integer, db.ForeignKey('cardset.id'))
+    cardset_id = db.Column(db.Integer, db.ForeignKey('card_set.id'))
     images = db.relationship('CardImage', backref='flashcard', lazy=True)
     audio = db.relationship('CardAudio', backref='flashcard', lazy=True)
 
@@ -33,18 +33,18 @@ class FlashCard(db.Model):
     
 class CardImage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    image = db.Column(db.Blob)
+    image = db.Column(db.String(50))
     side = db.Column(db.Integer, nullable=False)
-    card_id = db.Column(db.Integer, db.ForeignKey('flashcard.id'))
+    card_id = db.Column(db.Integer, db.ForeignKey('flash_card.id'))
     
     def __repr__(self):
         return f"<CardImage: {self.id}>"
     
 class CardAudio(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    audio = db.Column(db.Blob)
+    audio = db.Column(db.String(50))
     side = db.Column(db.Integer, nullable=False)
-    card_id = db.Column(db.Integer, db.ForeignKey('flashcard.id'))
+    card_id = db.Column(db.Integer, db.ForeignKey('flash_card.id'))
     
     def __repr__(self):
         return f"<CardAudio: {self.id}>"    

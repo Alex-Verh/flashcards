@@ -10,5 +10,5 @@ def index():
 def home():
     search = request.args.get('search')
     if search:
-        print("TY ebobo!", search)
+        print(search)
     return render_template('main/home.html')
