@@ -11,14 +11,12 @@
             &nbsp;&nbsp;&nbsp;&nbsp;
             <a href = "#"> Create </a>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <div class="searchBox">
-                <input class="searchInput" type="text" name="search" placeholder="Search.." autocomplete="off">
+            <form class="searchBox" action = "{{url_for('main.home')}}" method = "GET">
+                <input class="searchInput" type="text" name="search" placeholder="Search.." autocomplete="off" required>
                 <button class="searchButton" href="#">
-                    <i class="material-icons">
-                        <img src="../../static/images/search.png" alt="S">
-                    </i>
+                    <img src="../../static/images/search.png" alt="S">
                 </button>
-            </div>
+            </form>
         </div>
         <div class="links">
             {% if current_user.is_authenticated -%}
