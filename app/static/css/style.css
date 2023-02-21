@@ -431,7 +431,7 @@ input:-webkit-autofill{
 
 .flash-list {
     overflow: scroll;
-    width: 70%;
+    width: 68%;
     float: right;
     height : 22vh;
     text-align: left;
@@ -441,14 +441,31 @@ input:-webkit-autofill{
 .flashcard-unit {
     border: 0.1vh solid antiquewhite;
     border-radius: 1.5vh;
-    display: inline-block;
-    margin: 0 3vh 1.5vh 1vh;
-    height: 8vh;
-    width: 35vh;
-    text-align: center;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
+    float:left;
+    margin: 0 2vh 1.5vh 1vh;
+    height: 36%;
+    width: 28%;
+    scroll-snap-align: end;
+    padding:0.7%;
 }
+
+.flashcard-unit-image {
+    width: 6%;
+    float: right;
+}
+
+.flashcard-unit-image img {
+    width: 100%;
+    float: right;
+}
+
+.flashcard-unit-text {
+    width: 85%;
+    float: left;
+    text-align: center;
+    margin:3% 0 0 5%;
+}
+
 
 #flashcard-set-profile {
     font-size: 2vh;
@@ -457,8 +474,9 @@ input:-webkit-autofill{
 #flash-profile {
     font-size: 3vh;
     float: left;
-    width: 27%;
+    width: 31%;
     height : 60vh;
+    overflow: scroll;
 }
 
 .profile-value {
