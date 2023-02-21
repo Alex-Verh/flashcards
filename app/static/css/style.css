@@ -123,8 +123,16 @@ a {
 #aside {
     float : right;
     width : 25%;
-    font-size: 2.7vh;
-    height: 60vh;
+    font-size: 2.5vh;
+    overflow: scroll;
+    height: 50vh;
+}
+
+.category {
+    padding : 2%;
+    border: 0.1vh solid antiquewhite;
+    border-radius: 1.5vh;
+    margin: 3%;
 }
 
 #footer {
@@ -349,10 +357,13 @@ input:-webkit-autofill{
 #dash {
     float : left;
     width : 73%;
-    font-size: 2.7vh;
+    font-size: 2vh;
     overflow: scroll;
-    height: 60vh;
+    height: 49vh;
+    text-align: left;
+    scroll-snap-type: y mandatory;
 }
+
 *::-webkit-scrollbar-corner {
     display: none;
 }
@@ -366,7 +377,7 @@ input:-webkit-autofill{
     border-radius: 2vh;       /* roundness of the scroll thumb */
   }
 
-.flashcard {
+/* .flashcard {
     border : antiquewhite 0.1vh solid;
     font-size : 2vh;
     margin : 1%;
@@ -381,24 +392,38 @@ input:-webkit-autofill{
     text-align: center;
     transition: transform 0.8s;
     transform-style: preserve-3d;
-}
+} */
 
-.flash-modulate {
-    overflow: hidden;
-    margin : 1vh;
-}
-
-.flash-save {
-    float : left;
-    width : 75%;
+.set {
     border : antiquewhite 0.1vh solid;
+    font-size : 2.3vh;
+    margin : 0 1% 1% 1%;
+    float : left;
     border-radius: 1.5vh;
+    scroll-snap-align: start;
+    width: 22%;
+    height: 30%;
+
 }
 
-.image-maximize {
-    margin: 0 4% 1% 0;
+.set-screen {
+    padding:0 5% 0 5%;
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    height: 75%;
+}
+
+.set-modulate {
+    overflow: hidden;
+    margin : 2%;
+}
+
+.image-save {
+    margin: 0 3% 3% 0;
     float : right;
-    width : 9%;
+    width : 6%;
     aspect-ratio: 1;
     cursor: pointer;
 }
