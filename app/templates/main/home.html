@@ -4,16 +4,16 @@
 
 {% block container -%}
 
-    <div id="header"> <!-- !TODO will be imported using python instead of writting it-->
+    <div id="header"> 
         
         <div class="rechts">
             <a href = "#"> Sort By </a>
             &nbsp;&nbsp;&nbsp;&nbsp;
             <a href = "#"> Create </a>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <form class="searchBox" action = "{{url_for('main.home')}}" method = "GET">
-                <input class="searchInput" type="text" name="search" placeholder="Search.." autocomplete="off" required>
-                <button class="searchButton" href="#">
+            <form id="searchBox" action = "{{url_for('main.home')}}" method = "GET">
+                <input id="searchInput" type="text" name="search" placeholder="Search.." autocomplete="off" onfocusout = "useValue()" required>
+                <button id="searchButton" href="#">
                     <img src="../../static/images/search.png" alt="S">
                 </button>
             </form>
@@ -60,7 +60,7 @@
         </div>
     </div>
 
-    <div id="footer"> <!-- !TODO will be imported using python instead of writting it-->
+    <div id="footer"> 
         <a class = "footerButtons" href = "{{url_for('common.contact')}}"> Contact Us </a>
         <a class = "footerButtons" href = "{{url_for('common.help')}}"> Help </a>
         <a class = "footerButtons" href = "{{url_for('common.about')}}"> About Us </a>

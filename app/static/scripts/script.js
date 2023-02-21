@@ -1,3 +1,4 @@
+// JavaScript for cursor visual effect
 const blob = document.getElementById("blob");
 
 document.body.onpointermove = event => {
