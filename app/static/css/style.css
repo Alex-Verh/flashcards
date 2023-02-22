@@ -12,7 +12,12 @@ body {
 body::-webkit-scrollbar {
     display: none;
 }
-  
+
+/* Disable copy, paste and cut on the webpage */
+body{
+    user-select : none;
+}  
+
 /* Hide scrollbar for IE, Edge and Firefox */
 body {
     -ms-overflow-style: none;  /* IE and Edge */
@@ -552,14 +557,29 @@ input:-webkit-autofill{
     display: inline-block;
     font-size: 3vh;
     border-radius: 3vh;
-    padding: 3% 5%;
+    padding: 1% 2%;
     text-decoration: none;
     text-align: center;
     position: relative;
     transition: color .1s ease;
+    margin:1%;
+    transition: all .5s ease-in-out;
 }
+
 .create-set:hover {
     background: rgba(250, 235, 215, 0.5);
+}
+
+.window-bottom, 
+.window-main {
+    padding: 1vh 2vh;
+}
+
+.window-header {
+    border-bottom: #eeeeee solid 1px;
+    padding: 1vh 2vh;
+    font-size: 3vh;
+
 }
 
 .close-creation {
@@ -593,11 +613,11 @@ input:-webkit-autofill{
 
 .transit .window {
     transform: translate(0, 0);
-    top: 20%;
+    top: 15%;
 }
 
 .window {
-    background-color: #000000;
+    background-color: #000000ca;
     border: antiquewhite solid 0.5vh;
     border-radius: 0.5vh;
     margin-left: -35%;
@@ -620,8 +640,9 @@ input:-webkit-autofill{
     outline: none;
 	font-style: italic;
     margin-bottom: 4%;
+    margin-top: 10vh;
     font-size: 2.5vh;
-    margin-top: 10px;
+    margin-top: 1vh;
     background: transparent;
 	border: hidden;
 	border-bottom: 0.1vh dashed antiquewhite;
@@ -631,30 +652,154 @@ input:-webkit-autofill{
 	border-bottom: 0.1vh dashed #D9FFA9;
 }
 
-#window-select {
-    appearance: none;
-    outline: 0;
-    border: 0.1vh solid antiquewhite;
-    box-shadow: none;
-    flex: 1;
-    padding: 1vh;
-    color: white;
-    border-radius: 1.5vh;
-    background-color: black;
-    background-image: none;
+/*Styling Selectbox*/
+.dropdown {
+    width: 32vh;
+    display: inline-block;
+    background-color: #000000;
+    border-radius: 0.5vh;
+    box-shadow: 0 0 0.2vh rgb(204, 204, 204);
+    transition: all .5s ease;
+    position: relative;
+    font-size: 3vh;
+    color: #ffffff;
+    height: 100%;
+    text-align: left
+}
+
+.dropdown .select {
     cursor: pointer;
+    display: block;
+    padding: 1vh;
+    text-align: center;
 }
 
-#window-select label {
-
+.dropdown:hover {
+    box-shadow: 0 0 0.5vh rgb(204, 204, 204)
 }
 
-.window-bottom, 
-.window-main {
-    padding: 1vh 2vh;
+.dropdown:active {
+    background-color: #000000
 }
 
-.window-header {
-    border-bottom: #eeeeee solid 1px;
-    padding: 1vh 2vh;
+.dropdown.active:hover,
+.dropdown.active {
+    box-shadow: 0 0 0.4vh rgb(204, 204, 204);
+    border-radius: 0.2vh 0.2vh 0 0;
+    background-color: #000000
 }
+
+.dropdown .dropdown-menu {
+    position: absolute;
+    background-color: #000000;
+    width: 100%;
+    left: 0;
+    margin-top: 0.1vh;
+    box-shadow: 0 0.1vh 0.2vh rgb(204, 204, 204);
+    border-radius: 0 0.1vh 0.2vh 0.2vh;
+    overflow: scroll;
+    display: none;
+    max-height: 14vh;
+    overflow-y: auto;
+    z-index: 9;
+    scroll-snap-type: y mandatory;
+}
+
+.dropdown .dropdown-menu li {
+    padding: 1vh;
+    transition: all .2s ease-in-out;
+    cursor: pointer;
+    scroll-snap-align: end;
+} 
+.dropdown .dropdown-menu {
+    padding: 0;
+    list-style: none;
+}
+
+.dropdown .dropdown-menu li:hover {
+    background-color: #323232;
+}
+
+.dropdown .dropdown-menu li:active {
+    background-color: #1f1f1f
+}
+
+/* select box css end */
+
+/* Window radio-choice css */
+#window-choice {
+    display: inline-flex;
+    height: 7vh;
+    width: 40vh;
+    align-items: center;
+    justify-content: space-evenly;
+    border-radius: 5vh;
+    padding: 2vh 1.5vh;
+    box-shadow: 0.5vh 0.5vh 3vh rgba(255, 255, 255, 0.2);
+    margin: 5vh;
+}
+
+#window-choice .option{
+    background: #000000;
+    height: 70%;
+    width: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 1vh;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 0 1vh;
+    border: 0.2vh solid lightgrey;
+    transition: all 0.3s ease;
+}
+
+#window-choice .option .dot{
+    height: 2vh;
+    width: 2vh;
+    background: #d9d9d9;
+    border-radius: 50%;
+    position: relative;
+}
+
+#window-choice .option .dot::before{
+  position: absolute;
+  content: "";
+  top: 0.4vh;
+  left: 0.4vh;
+  width: 1.2vh;
+  height: 1.2vh;
+  background: #000000;
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(1.5);
+  transition: all 0.3s ease;
+}
+input[type="radio"]{
+  display: none;
+}
+
+#option-1:checked:checked ~ .option-1,
+#option-2:checked:checked ~ .option-2{
+  border-color: #ffffff7b;
+  background: #000000;
+}
+#option-1:checked:checked ~ .option-1 .dot,
+#option-2:checked:checked ~ .option-2 .dot{
+  background: #fff;
+}
+#option-1:checked:checked ~ .option-1 .dot::before,
+#option-2:checked:checked ~ .option-2 .dot::before{
+  opacity: 1;
+  transform: scale(1);
+}
+
+#window-choice .option span{
+  font-size: 3vh;
+  color: #808080;
+}
+#option-1:checked:checked ~ .option-1 span,
+#option-2:checked:checked ~ .option-2 span {
+  color: #fff;
+}
+/*end radio-choice*/

@@ -12,16 +12,40 @@
             
             <div class="window-main">
                 <input id="window-name" novalidate type="text" name="set-name" placeholder="Enter set name" required/>
+               
                 <br>
-                <label for="category-choice">Choose a car:</label>
 
-                <select name="category-choice" id="window-select">
-                  <option value="category1">Category1</option>
-                  <option value="category2">Category2</option>
-                  <option value="category3">Category3</option>
-                  <option value="category4">Category4</option>
-                </select>
+                <div class="dropdown">
+                    <div class="select">
+                      <span>Select Category</span>
+                    </div>
+                    <input type="hidden" name="category">
+                    <ul class="dropdown-menu">
+                      <li>Category 1</li>
+                      <li>Category 2</li>
+                      <li>Category 3</li>
+                      <li>Category 4</li>
+                      <li>Category 5</li>
+                      <li>Category 6</li>
+                      <li>Category 7</li>
+                      <li>Category 8</li>
+                    </ul>
+                </div>
 
+                <br>
+
+                <div id = "window-choice">
+                    <input type="radio" name="select" id="option-1">
+                    <input type="radio" name="select" id="option-2" checked>
+                    <label for="option-1" class="option option-1">
+                    <div class="dot"></div>
+                        <span>Public</span>
+                        </label>
+                    <label for="option-2" class="option option-2">
+                    <div class="dot"></div>
+                        <span>Private</span>
+                    </label>
+                </div>
             </div>
         
             <div class="window-bottom">
@@ -58,7 +82,7 @@
     </div>
 
     <div id = "main">
-        <h3 style="text-align: left">Popular sets:</h3> 
+        <h3 style="text-align: left; font-size: 3vh;">Popular sets:</h3> 
         <div id = "dash">
             <div class="set">
                 <div class = "set-screen">
