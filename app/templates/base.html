@@ -9,6 +9,8 @@
 <title>{% block title %}{% endblock %}FlashCards</title>
 <!--Mobile--------------------------------------------------------->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--JQuery--------------------------------------------------------->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <!--CSS--------------------------------------------------------->
 <link href="../static/css/style.css" rel="stylesheet" type="text/css">
 <!--Favicon--------------------------------------------------------->
@@ -22,12 +24,11 @@
 
 <body>
     <div id = "container">
-    <!--JS--------------------------------------------------------->
     <div id = "blob"></div>
-    <script src = "../static/scripts/script.js">
-    </script>
-    
         {% block container %} {% endblock %}
     </div>
 </body>
 </html>
+<!--JS--------------------------------------------------------->
+<script src = "../static/scripts/script.js"></script>
+<script src = "../static/scripts/jquery.js"></script>

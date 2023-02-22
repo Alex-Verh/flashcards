@@ -3,17 +3,69 @@
 {% block title %}Home - {% endblock %}
 
 {% block container -%}
+    <div class="around-creation" aria-hidden="true">
+        <div class="window">
+            <div class="window-header">
+                <h2>Create new set</h2>
+                <a href="#" class="close-creation" aria-hidden="true">×</a>
+            </div>
+            
+            <div class="window-main">
+                <input id="window-name" novalidate type="text" name="set-name" placeholder="Enter set name" required/>
+               
+                <br>
 
-    <div id="header"> <!-- !TODO will be imported using python instead of writting it-->
+                <div class="dropdown">
+                    <div class="select">
+                      <span>Select Category</span>
+                    </div>
+                    <input type="hidden" name="category">
+                    <ul class="dropdown-menu">
+                      <li>Category 1</li>
+                      <li>Category 2</li>
+                      <li>Category 3</li>
+                      <li>Category 4</li>
+                      <li>Category 5</li>
+                      <li>Category 6</li>
+                      <li>Category 7</li>
+                      <li>Category 8</li>
+                    </ul>
+                </div>
+
+                <br>
+
+                <div id = "window-choice">
+                    <input type="radio" name="select" id="option-1">
+                    <input type="radio" name="select" id="option-2" checked>
+                    <label for="option-1" class="option option-1">
+                    <div class="dot"></div>
+                        <span>Public</span>
+                        </label>
+                    <label for="option-2" class="option option-2">
+                    <div class="dot"></div>
+                        <span>Private</span>
+                    </label>
+                </div>
+            </div>
+        
+            <div class="window-bottom">
+                <a href="#" class="create-set">Create</a>
+            </div>
+        </div>
+    </div>
+    
+    <div id="header"> 
         
         <div class="rechts">
             <a href = "#"> Sort By </a>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <a href = "#"> Create </a>
+            {% if current_user.is_authenticated -%}
+            <a href = "#" class="open-window"> Create </a>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <form class="searchBox" action = "{{url_for('main.home')}}" method = "GET">
-                <input class="searchInput" type="text" name="search" placeholder="Search.." autocomplete="off" required>
-                <button class="searchButton" href="#">
+            {% endif -%}
+            <form id="searchBox" action = "{{url_for('main.home')}}" method = "GET">
+                <input id="searchInput" type="text" name="search" placeholder="Search.." autocomplete="off" onfocusout = "useValue()" required>
+                <button id="searchButton" href="#">
                     <img src="../../static/images/search.png" alt="S">
                 </button>
             </form>
@@ -30,37 +82,29 @@
     </div>
 
     <div id = "main">
+        <h3 style="text-align: left; font-size: 3vh;">Popular sets:</h3> 
         <div id = "dash">
-
-            <div class="flashcard">
-                <div class = "flash-screen">
-                    <div class="flash-card-front"><h2><strong>Word</strong></h2></div>
-
-                    <div class="flash-card-back">
-                        <p><strong>Word</strong></p>
-                        <p>Some explanation tralala </p>
-                        <p>Written by xxX.AYEshnik2012.Xxx</p>
-                      </div>
+            <div class="set">
+                <div class = "set-screen">
+                    I am a set, and fuck off dickhead
                 </div>
-
-                <div class = "flash-modulate">
-                    <div class = "flash-save">Save in your profile</div>
-
-                    <img class = "image-maximize" src="../../static/images/maximize.png" alt="Maximize">
+                <div class = "set-modulate">
+                    <img class = "image-save" src="../../static/images/save.png" alt="Save">
                 </div>
             </div>
-
-
         </div>
         <div id = "aside">
-            <p> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facilis quod perspiciatis ab tempore inventore accusamus tenetur dolor perferendis! Dolor quisquam sed quam obcaecati sapiente commodi hic sequi fuga, voluptatibus debitis.
-            </p>
-            <p> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facilis quod perspiciatis ab tempore inventore accusamus tenetur dolor perferendis! Dolor quisquam sed quam obcaecati sapiente commodi hic sequi fuga, voluptatibus debitis.
-            </p>
+            <h3 style = "text-align: left;">Categories:</h3>
+            <a href="#"><div class = "category">Category 1</div></a>
+            <a href="#"><div class = "category">Category 2</div></a>
+            <a href="#"><div class = "category">Category 3</div></a>
+            <a href="#"><div class = "category">Category 4</div></a>
+            <a href="#"><div class = "category">Category 5</div></a>
+            <a href="#"><div class = "category">Category 6</div></a>
         </div>
     </div>
 
-    <div id="footer"> <!-- !TODO will be imported using python instead of writting it-->
+    <div id="footer"> 
         <a class = "footerButtons" href = "{{url_for('common.contact')}}"> Contact Us </a>
         <a class = "footerButtons" href = "{{url_for('common.help')}}"> Help </a>
         <a class = "footerButtons" href = "{{url_for('common.about')}}"> About Us </a>
