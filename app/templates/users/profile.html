@@ -20,8 +20,8 @@
             </h1>
             <div class = "profile-value"><strong>Name:</strong> <div class = "value">{{current_user.name}}</div></div>
             <div class = "profile-value"><strong>Username:</strong>  <div class = "value">{{current_user.username}}</div></div>
-            <div class = "profile-value"><strong>Number of sets:</strong> <div class = "value"> ### </div></div>
-            <div class = "profile-value"><strong>Number of flash-cards:</strong><div class = "value">{{user_cards_len}}</div></div>
+            <div class = "profile-value"><strong>Sets:</strong> <div class = "value"> ### </div></div>
+            <div class = "profile-value"><strong>Flash-cards:</strong><div class = "value">{{user_cards_len}}</div></div>
             <a href = "{{url_for('users.logout')}}">
                 <button class="guest" role="button">Logout</button>
             </a>

@@ -30,6 +30,9 @@ def create_app(config_class=Config):
     from app.users import bp as users_bp
     app.register_blueprint(users_bp)
     
+    from app.cards import bp as cards_bp
+    app.register_blueprint(cards_bp)
+    
     from app.common import bp as common_bp
     app.register_blueprint(common_bp)
 
