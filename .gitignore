@@ -8,3 +8,4 @@
 /app/common/__pycache__
 .env
 base.db
+example.json
