@@ -6,6 +6,8 @@
 /app/main/__pycache__
 /app/cards/__pycache__
 /app/common/__pycache__
+/migrations/__pycache__
+/migrations/versions/__pycache__
 .env
 base.db
 example.json
