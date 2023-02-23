@@ -166,7 +166,7 @@ a {
 .guest {
     font-family: sans-serif;
     text-align : center;
-    background-color: none;
+    background-color: #00000000;
     color:#faebd7;
     border: 0.4vh solid #faebd7;
     border-radius: 1.5vh;
@@ -709,7 +709,7 @@ input:-webkit-autofill{
     padding: 1vh;
     transition: all .2s ease-in-out;
     cursor: pointer;
-    scroll-snap-align: end;
+    scroll-snap-align: start;
 } 
 .dropdown .dropdown-menu {
     padding: 0;
