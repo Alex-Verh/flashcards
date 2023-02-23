@@ -21,7 +21,7 @@ class User(db.Model, UserMixin):
 class CardSet(db.Model):
     __tablename__ = 'card_sets'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50), nullable=False)
+    title = db.Column(db.String(50), nullable=False)
     is_public = db.Column(db.Boolean, nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey('card_set_categories.id', ondelete="SET DEFAULT"), default=21)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete="CASCADE"), nullable=False)
@@ -30,8 +30,12 @@ class CardSet(db.Model):
     cards = db.relationship('FlashCard', backref='card_set', passive_deletes=True)
     saves = db.relationship('CardSetSave', backref='card_set', passive_deletes=True)
     
+    @property
+    def saves_number(self):
+        return len(self.saves)
+    
     def __repr__(self):
-        return f"<CardSet: {self.name}>"
+        return f"<CardSet: {self.title}>"
     
     
 class FlashCard(db.Model):
