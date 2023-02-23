@@ -4,7 +4,7 @@ from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from .forms import LoginForm, RegisterForm
 from app.extensions import db
-from app.models import User, FlashCard
+from app.models import User, CardSet
 
 
 @bp.route('/login', methods=['POST', 'GET'])
@@ -63,13 +63,7 @@ def register():
 @bp.route('/profile')
 @login_required
 def profile():
-    # user_cards = FlashCard.query.filter_by(user_id=current_user.get_id()).all()
-    # user_cards_len = len(user_cards)
-    # for card in user_cards:
-    #     title_len = len(card.title)
-    #     content_len = len(card.content)
-    #     if title_len > 20:
-    #         card.title = card.title[:19] + '..'
-    #     if content_len > 90:
-    #         card.content = card.content[:89] + '..'
+    own_card_sets = current_user.card_sets
+    saved_card_sets = current_user.saved_card_sets
+    print(own_card_sets, saved_card_sets)
     return render_template('users/profile.html')
