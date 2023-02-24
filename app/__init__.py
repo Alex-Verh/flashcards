@@ -37,9 +37,5 @@ def create_app(config_class=Config):
     from app.common import bp as common_bp
     app.register_blueprint(common_bp)
 
-
-    @app.route('/test')
-    def test_page():
-        return '<h1>Testing the Flask Application</h1>'
     
     return app

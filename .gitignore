@@ -11,3 +11,4 @@
 .env
 base.db
 example.json
+make_fake_data.py
