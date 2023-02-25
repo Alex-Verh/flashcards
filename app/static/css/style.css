@@ -33,7 +33,7 @@ body {
 #container {
     margin : 1%;
     padding : 1%;
-    border : solid #000 0.1vh;
+    border : 0.1vh solid #000;
     background-color: #000000b7;
     border-radius: 1vh;
     color: #fff;
@@ -69,7 +69,7 @@ a {
 /* Search bar */
 #searchBox {
     display: inline-block;
-    border: #faebd7 0.3vh solid;
+    border: 0.3vh solid #faebd7;
     border-radius: 5vh;
     padding: 0.5vh;
 }
@@ -400,7 +400,7 @@ input:-webkit-autofill{
 } */
 
 .set {
-    border : #faebd7 0.1vh solid;
+    border : 0.1vh solid #faebd7;
     font-size : 2.3vh;
     margin : 0 1% 1% 1%;
     float : left;
@@ -412,7 +412,7 @@ input:-webkit-autofill{
 }
 
 .set-screen {
-    padding:0 5% 0 5%;
+    padding: 0 5% 0 5%;
     display: flex;
     position: relative;
     align-items: center;
@@ -493,7 +493,7 @@ input:-webkit-autofill{
     width: 85%;
     float: left;
     text-align: center;
-    margin:3% 0 0 5%;
+    margin: 3% 0 0 5%;
 }
 
 
@@ -528,7 +528,7 @@ input:-webkit-autofill{
     top: 50%;
     translate : -50% -50%;
     border-radius: 50%;
-    position:absolute;
+    position: absolute;
     overflow: hidden;
     background-image: linear-gradient(to bottom right, #ff0000, #ffff00);
     animation : rotate 20s infinite;
@@ -618,7 +618,7 @@ input:-webkit-autofill{
 
 .window {
     background-color: #000000ca;
-    border: antiquewhite solid 0.5vh;
+    border: 0.5vh solid #faebd7;
     border-radius: 0.5vh;
     margin-left: -35%;
     text-align:center;
