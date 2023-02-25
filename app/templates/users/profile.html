@@ -30,15 +30,15 @@
 
             <h1>Your own sets:</h1>
             <div class = "flash-list">
-                {% for saved_card_set in current_user.card_sets -%}
-                <div class = "flashcard-unit"><div class = "flashcard-unit-text">{{saved_card_set.title}}</div><div class = "flashcard-unit-image" onclick = "deleteConf()"><img src="{{ url_for('static', filename='images/remove.png') }}" alt="Delete"></div></div>
+                {% for own_card_set in current_user.own_card_sets -%}
+                <div class = "flashcard-unit"><div class = "flashcard-unit-text">{{own_card_set.title}}</div><div class = "flashcard-unit-image" onclick = "deleteConf()"><img src="{{ url_for('static', filename='images/remove.png') }}" alt="Delete"></div></div>
                 {% endfor -%}
             </div>
 
             <h1>Your saved sets:</h1>
             <div class = "flash-list">
                 {% for saved_card_set in current_user.saved_card_sets -%}
-                <div class = "flashcard-unit"><div class = "flashcard-unit-text">{{saved_card_set.card_set.title}}</div><div class = "flashcard-unit-image" onclick = "deleteConf()"><img src="{{ url_for('static', filename='images/remove.png') }}" alt="Delete"></div></div>
+                <div class = "flashcard-unit"><div class = "flashcard-unit-text">{{saved_card_set.title}}</div><div class = "flashcard-unit-image" onclick = "deleteConf()"><img src="{{ url_for('static', filename='images/remove.png') }}" alt="Delete"></div></div>
                 {% endfor -%}
             </div>
         </div>

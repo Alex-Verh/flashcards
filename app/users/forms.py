@@ -3,6 +3,7 @@ from wtforms.fields import StringField, SubmitField, PasswordField
 from wtforms.validators import DataRequired, Length, EqualTo, Regexp, ValidationError
 from app.models import User
 
+
 class LoginForm(FlaskForm):
     username = StringField('Username:', validators=[DataRequired("Please enter your username")])
     password = PasswordField('Password:', validators=[DataRequired("Please enter your password")])
@@ -17,6 +18,6 @@ class RegisterForm(FlaskForm):
     submit = SubmitField('Register')
     
     def validate_username(self, username):
-        existing_user_name = User.query.filter_by(username=username.data).first()
-        if existing_user_name:
+        user = User.query.filter_by(username=username.data).first()
+        if user:
             raise ValidationError('User with this username already exists')

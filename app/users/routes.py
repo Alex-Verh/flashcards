@@ -4,7 +4,7 @@ from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from .forms import LoginForm, RegisterForm
 from app.extensions import db
-from app.models import User, CardSet
+from app.models import User
 
 
 @bp.route('/login', methods=['POST', 'GET'])
@@ -22,7 +22,7 @@ def login():
             else:
                 form.password.errors.append("Wrong password")
         else:
-            form.username.errors.append("That user doesn't exist")
+            form.username.errors.append("Such user does not exist")
 
     return render_template('users/login.html', form=form)
 
@@ -63,7 +63,4 @@ def register():
 @bp.route('/profile')
 @login_required
 def profile():
-    own_card_sets = current_user.card_sets
-    saved_card_sets = current_user.saved_card_sets
-    print(own_card_sets, saved_card_sets)
     return render_template('users/profile.html')
