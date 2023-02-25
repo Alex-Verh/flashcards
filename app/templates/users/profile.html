@@ -20,8 +20,8 @@
             </h1>
             <div class = "profile-value"><strong>Name:</strong> <div class = "value">{{current_user.name}}</div></div>
             <div class = "profile-value"><strong>Username:</strong>  <div class = "value">{{current_user.username}}</div></div>
-            <div class = "profile-value"><strong>Sets:</strong> <div class = "value"> ### </div></div>
-            <div class = "profile-value"><strong>Flash-cards:</strong><div class = "value">{{user_cards_len}}</div></div>
+            <div class = "profile-value"><strong>Sets:</strong> <div class = "value">{{current_user.own_card_sets | length}}</div></div>
+            <div class = "profile-value"><strong>Flash-cards:</strong><div class = "value">{{current_user.flashcards_amount}}</div></div>
             <a href = "{{url_for('users.logout')}}">
                 <button class="guest" role="button">Logout</button>
             </a>
@@ -30,15 +30,15 @@
 
             <h1>Your own sets:</h1>
             <div class = "flash-list">
-                {% for own_card_set in current_user.own_card_sets -%}
-                <div class = "flashcard-unit"><div class = "flashcard-unit-text">{{own_card_set.title}}</div><div class = "flashcard-unit-image" onclick = "deleteConf()"><img src="{{ url_for('static', filename='images/remove.png') }}" alt="Delete"></div></div>
+                {% for card_set in current_user.own_card_sets -%}
+                <div class = "flashcard-unit"><div class = "flashcard-unit-text">{{card_set.title}}</div><div class = "flashcard-unit-image" onclick = "deleteConf()"><img src="{{ url_for('static', filename='images/remove.png') }}" alt="Delete"></div></div>
                 {% endfor -%}
             </div>
 
             <h1>Your saved sets:</h1>
             <div class = "flash-list">
-                {% for saved_card_set in current_user.saved_card_sets -%}
-                <div class = "flashcard-unit"><div class = "flashcard-unit-text">{{saved_card_set.title}}</div><div class = "flashcard-unit-image" onclick = "deleteConf()"><img src="{{ url_for('static', filename='images/remove.png') }}" alt="Delete"></div></div>
+                {% for card_set in current_user.saved_card_sets -%}
+                <div class = "flashcard-unit"><div class = "flashcard-unit-text">{{card_set.title}}</div><div class = "flashcard-unit-image" onclick = "deleteConf()"><img src="{{ url_for('static', filename='images/remove.png') }}" alt="Delete"></div></div>
                 {% endfor -%}
             </div>
         </div>

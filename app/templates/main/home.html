@@ -87,10 +87,10 @@
             {% for card_set in card_sets -%}
             <div class="set">
                 <div class = "set-screen">
-                    {{ card_set[1] }}
+                    {{ card_set.set.title }}
                 </div>
                 <div class = "set-modulate">
-                    <span>{{ card_set[2] }}</span>
+                    <span>{{ card_set.total_saves }}</span>
                     <img class = "image-save" src="{{ url_for('static', filename='images/save.png') }}" alt="Save">
                 </div>
             </div>
