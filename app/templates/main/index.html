@@ -2,43 +2,25 @@
 
 {% block title %}Main Page - {% endblock %}
   
-{% block container -%}
-    <div id="header"> <!-- !TODO will be imported using python instead of writting it-->
-        <div class="links">
-            {% if current_user.is_authenticated -%}
-            <a href = "{{url_for('users.profile')}}"> <strong>{{current_user.name}}</strong></a>
-            {% else -%}
-            <a href = "{{url_for('users.login')}}"> Login </a>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <a href = "{{url_for('users.register')}}"> Register </a>
-            {% endif -%}
-        </div>
-    </div>
+{% block rechts %}
+{% endblock %}
 
-    <div id = "main">
-        <div id = "mainText">
-            <h1>
-                Unlock Your Memory's Potential with the Power of Flashcards
-            </h1>
-            <p>Welcome to our website, a leading resource for memory improvement and enhanced learning. 
-                Our focus is on providing a comprehensive and user-friendly platform for creating and viewing flashcards, 
-                which are a proven tool for retaining and recalling information. Each flashcard features a term or concept 
-                on one side and its definition on the other, making it a simple and effective method for memorizing important information. 
-                Whether you're a student studying for exams, a professional seeking to improve your knowledge base, or anyone looking to enhance 
-                their memory, our website is the ideal resource for you. Start utilizing the power of flashcards today and improve your ability 
-                to retain and recall important information!
-            </p>  
-        </div>
-        
-        <a href="{{url_for('main.home')}}">
-            <button class="guest" role="button">Try Now</button>
-        </a>
-    </div>
-
-    <div id="footer"> <!-- !TODO will be imported using python instead of writting it-->
-        <a class = "footerButtons" href = "{{url_for('common.contact')}}"> Contact Us </a>
-        <a class = "footerButtons" href = "{{url_for('common.help')}}"> Help </a>
-        <a class = "footerButtons" href = "{{url_for('common.about')}}"> About Us </a>
+{% block main %}
+    <div id = "mainText">
+        <h1>
+            Unlock Your Memory's Potential with the Power of Flashcards
+        </h1>
+        <p>Welcome to our website, a leading resource for memory improvement and enhanced learning. 
+            Our focus is on providing a comprehensive and user-friendly platform for creating and viewing flashcards, 
+            which are a proven tool for retaining and recalling information. Each flashcard features a term or concept 
+            on one side and its definition on the other, making it a simple and effective method for memorizing important information. 
+            Whether you're a student studying for exams, a professional seeking to improve your knowledge base, or anyone looking to enhance 
+            their memory, our website is the ideal resource for you. Start utilizing the power of flashcards today and improve your ability 
+            to retain and recall important information!
+        </p>  
     </div>
     
+    <a href="{{url_for('main.home')}}">
+        <button class="guest" role="button">Try Now</button>
+    </a>
 {% endblock -%}

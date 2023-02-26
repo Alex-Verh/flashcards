@@ -16,15 +16,12 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(500), nullable=False)
     created_at = db.Column(db.DateTime(timezone=True), default=func.now())
     
-    own_card_sets = db.relationship('CardSet', backref='author', passive_deletes=True, lazy=True)
-    saved_card_sets = db.relationship('CardSet', secondary=user_cardset_assn, back_populates='followers', lazy=True)
+    own_cardsets = db.relationship('CardSet', backref='author', passive_deletes=True, lazy='dynamic')
+    saved_cardsets = db.relationship('CardSet', secondary=user_cardset_assn, back_populates='followers', lazy='dynamic')
 
     @property
-    def flashcards_amount(self):
-        amount = 0
-        for cardset in self.own_card_sets:
-            amount += len(cardset.flash_cards)
-        return amount
+    def flashcards_number(self):
+        return self.own_cardsets.join(FlashCard).count()
     
     def __repr__(self):
         return f"User({self.id}, '{self.name}', '{self.username}')"
@@ -39,8 +36,8 @@ class CardSet(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete="CASCADE"), nullable=False)
     created_at = db.Column(db.DateTime(timezone=True), default=func.now())
     
-    flash_cards = db.relationship('FlashCard', backref='card_set', passive_deletes=True, lazy=True)
-    followers = db.relationship('User', secondary=user_cardset_assn, back_populates='saved_card_sets', lazy=True)
+    flash_cards = db.relationship('FlashCard', backref='card_set', passive_deletes=True, lazy='dynamic')
+    followers = db.relationship('User', secondary=user_cardset_assn, back_populates='saved_cardsets', lazy='dynamic')
     
     def __repr__(self):
         return f"CardSet({self.id}, '{self.title}')"

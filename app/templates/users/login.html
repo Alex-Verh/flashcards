@@ -2,47 +2,42 @@
 
 {% block title -%}Login - {% endblock -%}
 
-{% block container -%}
-    <div id="header"> <!-- !TODO will be imported using python instead of writting it-->
-        <div class="links">
-            <a href = "{{url_for('main.index')}}"> Main Page </a>
-        </div>
-    </div>
+{% block rechts %}
+{% endblock %}
 
-    <div id = "main">
-        <div id = "mainText"  style = "margin-bottom : 3%">
-            <h1>
-                Login
-            </h1>
+{% block links %}
+    <a href = "{{url_for('main.index')}}"> Main Page </a>
+{% endblock %}
 
-            {% for cat, msg in get_flashed_messages(True) -%}
-            <em class="{{cat}}-msg">{{msg}}</em>
-            {% else -%}
-            <em>"Welcome back! Let's get started."</em>
+
+{% block main %}
+    <div id = "mainText"  style = "margin-bottom : 3%">
+        <h1>
+            Login
+        </h1>
+
+        {% for cat, msg in get_flashed_messages(True) -%}
+        <em class="{{cat}}-msg">{{msg}}</em>
+        {% else -%}
+        <em>"Welcome back! Let's get started."</em>
+        {% endfor -%}
+        
+
+        <form novalidate class="login" action="" method="POST">
+            {{ form.hidden_tag() }}
+            {% for field in form if field.name not in ['csrf_token', 'submit'] -%}
+                {{ field.label() -}}
+                {% if field.errors -%}
+                    {{ field(class='invalid', value = '', placeholder = field.errors[0]) }}
+                {% else -%}
+                    {{ field() -}} 
+                {% endif -%}
             {% endfor -%}
-            
-
-            <form novalidate class="login" action="" method="POST">
-                {{ form.hidden_tag() }}
-                {% for field in form if field.name not in ['csrf_token', 'submit'] -%}
-                    {{ field.label() -}}
-                    {% if field.errors -%}
-                        {{ field(class='invalid', value = '', placeholder = field.errors[0]) }}
-                    {% else -%}
-                        {{ field() -}} 
-                    {% endif -%}
-                {% endfor -%}
-                {{ form.submit() }}  
-            </form>
-            <p>Don't you have an account?  &nbsp;&nbsp;
-                <a class = "navButtons" href = "{{url_for('users.register')}}" style = "text-decoration: underline;">Register</a>
-            </p>
-        </div>
+            {{ form.submit() }}  
+        </form>
+        <p>Don't you have an account?  &nbsp;&nbsp;
+            <a class = "navButtons" href = "{{url_for('users.register')}}" style = "text-decoration: underline;">Register</a>
+        </p>
     </div>
+{% endblock %}
 
-    <div id="footer"> <!-- !TODO will be imported using python instead of writting it-->
-        <a class = "footerButtons" href = "{{url_for('common.contact')}}"> Contact Us </a>
-        <a class = "footerButtons" href = "{{url_for('common.help')}}"> Help </a>
-        <a class = "footerButtons" href = "{{url_for('common.about')}}"> About Us </a>
-    </div>
-{% endblock -%}

@@ -1,0 +1,45 @@
+<div class="around-creation" aria-hidden="true">
+    <div class="window">
+        <div class="window-header">
+            <h2>Create new set</h2>
+            <a href="#" class="close-creation" aria-hidden="true">×</a>
+        </div>
+        
+        <div class="window-main">
+            <input id="window-name" novalidate type="text" name="set-name" placeholder="Enter set name" required/>
+        
+            <br>
+
+            <div class="dropdown">
+                <div class="select">
+                <span>Select Category</span>
+                </div>
+                <input type="hidden" name="category">
+                <ul class="dropdown-menu">
+                    {% for category in categories -%}
+                    <li>{{category.title}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <br>
+
+            <div id = "window-choice">
+                <input type="radio" name="select" id="option-1">
+                <input type="radio" name="select" id="option-2" checked>
+                <label for="option-1" class="option option-1">
+                <div class="dot"></div>
+                    <span>Public</span>
+                    </label>
+                <label for="option-2" class="option option-2">
+                <div class="dot"></div>
+                    <span>Private</span>
+                </label>
+            </div>
+        </div>
+
+        <div class="window-bottom">
+            <a href="#" class="create-set">Create</a>
+        </div>
+    </div>
+</div>

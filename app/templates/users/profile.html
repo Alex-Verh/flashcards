@@ -2,54 +2,36 @@
 
 {% block title %}Home - {% endblock %}
 
-{% block container -%}
+{% block container %}
+{{ super() }}
+{% include "snippets/create_cardset.html" %}
+{% endblock %}
 
-    <div id="header"> <!-- !TODO will be imported using python instead of writting it-->
-        <div class="rechts">
-            <a href = "#"> Add new set </a>
-        </div>
-        <div class="links">
-            <a href = "{{url_for('main.home')}}"> Home </a>
-        </div>
+{% block main %}
+    <div id = "flash-profile">
+        <h1>
+            Your Profile:
+        </h1>
+        <div class = "profile-value"><strong>Name:</strong> <div class = "value">{{current_user.name}}</div></div>
+        <div class = "profile-value"><strong>Username:</strong>  <div class = "value">{{current_user.username}}</div></div>
+        <div class = "profile-value"><strong>Sets:</strong> <div class = "value">{{current_user.own_cardsets.count()}}</div></div>
+        <div class = "profile-value"><strong>Flash-cards:</strong><div class = "value">{{current_user.flashcards_number}}</div></div>
+
     </div>
+    <div id = "flashcard-set-profile">
 
-    <div id = "main">
-        <div id = "flash-profile">
-            <h1>
-                Your Profile:
-            </h1>
-            <div class = "profile-value"><strong>Name:</strong> <div class = "value">{{current_user.name}}</div></div>
-            <div class = "profile-value"><strong>Username:</strong>  <div class = "value">{{current_user.username}}</div></div>
-            <div class = "profile-value"><strong>Sets:</strong> <div class = "value">{{current_user.own_card_sets | length}}</div></div>
-            <div class = "profile-value"><strong>Flash-cards:</strong><div class = "value">{{current_user.flashcards_amount}}</div></div>
-            <a href = "{{url_for('users.logout')}}">
-                <button class="guest" role="button">Logout</button>
-            </a>
+        <h1>Your own sets:</h1>
+        <div class = "flash-list">
+            {% for card_set in current_user.own_cardsets -%}
+            <div class = "flashcard-unit"><div class = "flashcard-unit-text">{{card_set.title}}</div><div class = "flashcard-unit-image" onclick = "deleteConf()"><img src="{{ url_for('static', filename='images/remove.png') }}" alt="Delete"></div></div>
+            {% endfor -%}
         </div>
-        <div id = "flashcard-set-profile">
 
-            <h1>Your own sets:</h1>
-            <div class = "flash-list">
-                {% for card_set in current_user.own_card_sets -%}
-                <div class = "flashcard-unit"><div class = "flashcard-unit-text">{{card_set.title}}</div><div class = "flashcard-unit-image" onclick = "deleteConf()"><img src="{{ url_for('static', filename='images/remove.png') }}" alt="Delete"></div></div>
-                {% endfor -%}
-            </div>
-
-            <h1>Your saved sets:</h1>
-            <div class = "flash-list">
-                {% for card_set in current_user.saved_card_sets -%}
-                <div class = "flashcard-unit"><div class = "flashcard-unit-text">{{card_set.title}}</div><div class = "flashcard-unit-image" onclick = "deleteConf()"><img src="{{ url_for('static', filename='images/remove.png') }}" alt="Delete"></div></div>
-                {% endfor -%}
-            </div>
+        <h1>Your saved sets:</h1>
+        <div class = "flash-list">
+            {% for card_set in current_user.saved_cardsets -%}
+            <div class = "flashcard-unit"><div class = "flashcard-unit-text">{{card_set.title}}</div><div class = "flashcard-unit-image" onclick = "deleteConf()"><img src="{{ url_for('static', filename='images/remove.png') }}" alt="Delete"></div></div>
+            {% endfor -%}
         </div>
-        
-    </div>
-
-    <div id="footer">
-        <a class = "footerButtons" href = "{{url_for('common.contact')}}"> Contact Us </a>
-        <a class = "footerButtons" href = "{{url_for('common.help')}}"> Help </a>
-        <a class = "footerButtons" href = "{{url_for('common.about')}}"> About Us </a>
-        <a id = "deleteProfile" href = "#"> Delete Profile </a>
-    </div>
-    
-{% endblock -%}
+    </div>    
+{% endblock %}

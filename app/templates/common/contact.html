@@ -2,28 +2,25 @@
 
 {% block title -%}Contact Us - {% endblock -%}
 
-{% block container %}
-    <div id="header"> <!-- !TODO will be imported using python instead of writting it-->
-        <div class="links">
-            <a href = "{{url_for('main.index')}}"> Main Page </a>
-        </div>
-    </div>
+{% block rechts %}
+{% endblock %}
 
-    <div id = "main">
-        <div id = "mainText">
-            <h1>
-                Contact Us
-            </h1>
-            <p>Thank you for visiting our website. 
-                If you have any questions, comments, or feedback, we would love to hear from you. 
-                You can reach us by filling out the contact form on this page. 
-                Our team will make every effort to respond to your inquiry as soon as possible. 
-                We value your business and appreciate the opportunity to serve you.
-            </p>
-               
-        </div>
-    </div>
-    
+{% block links %}
+    <a href = "{{url_for('main.index')}}"> Main Page </a>
+{% endblock %}
+
+{% block main %}
+    <div id = "mainText">
+        <h1>
+            Contact Us
+        </h1>
+        <p>Thank you for visiting our website. 
+            If you have any questions, comments, or feedback, we would love to hear from you. 
+            You can reach us by filling out the contact form on this page. 
+            Our team will make every effort to respond to your inquiry as soon as possible. 
+            We value your business and appreciate the opportunity to serve you.
+        </p>  
+    </div> 
     <form novalidate class="contact-us " action="{{url_for('common.contact')}}" method="POST">
         {{ form.hidden_tag() }}
         {% for field in form if field.name not in ['csrf_token', 'submit'] -%}

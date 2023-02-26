@@ -2,112 +2,48 @@
 
 {% block title %}Home - {% endblock %}
 
-{% block container -%}
-    <div class="around-creation" aria-hidden="true">
-        <div class="window">
-            <div class="window-header">
-                <h2>Create new set</h2>
-                <a href="#" class="close-creation" aria-hidden="true">×</a>
+{% block container %}
+{{ super() }}
+{% include "snippets/create_cardset.html" %}
+{% endblock %}
+
+{% block rechts %}
+{{ super() }}
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <a href = "#"> Sort By </a>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <form id="searchBox" action = "" method = "GET">
+        <input id="searchInput" type="text" name="q" placeholder="Search.." autocomplete="off" onfocusout = "useValue()" required>
+        <button id="searchButton" href="#">
+            <img src="{{ url_for('static', filename='images/search.png') }}" alt="S">
+        </button>
+    </form>
+{% endblock %}
+
+{% block main %}
+    {% if search_query -%}
+    <h3 style="text-align: left; font-size: 3vh;">Search results for "{{ search_query }}"</h3>
+    {% else -%}
+    <h3 style="text-align: left; font-size: 3vh;">Popular sets:</h3>
+    {% endif -%}
+
+    <div id = "dash">
+        {% for card_set in card_sets -%}
+        <div class="set">
+            <div class = "set-screen">
+                {{ card_set.set.title }}
             </div>
-            
-            <div class="window-main">
-                <input id="window-name" novalidate type="text" name="set-name" placeholder="Enter set name" required/>
-               
-                <br>
-
-                <div class="dropdown">
-                    <div class="select">
-                      <span>Select Category</span>
-                    </div>
-                    <input type="hidden" name="category">
-                    <ul class="dropdown-menu">
-                        {% for category in categories -%}
-                        <li>{{category.title}}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-
-                <br>
-
-                <div id = "window-choice">
-                    <input type="radio" name="select" id="option-1">
-                    <input type="radio" name="select" id="option-2" checked>
-                    <label for="option-1" class="option option-1">
-                    <div class="dot"></div>
-                        <span>Public</span>
-                        </label>
-                    <label for="option-2" class="option option-2">
-                    <div class="dot"></div>
-                        <span>Private</span>
-                    </label>
-                </div>
-            </div>
-        
-            <div class="window-bottom">
-                <a href="#" class="create-set">Create</a>
+            <div class = "set-modulate">
+                <span>{{ card_set.total_saves }}</span>
+                <img class = "image-save" src="{{ url_for('static', filename='images/save.png') }}" alt="Save">
             </div>
         </div>
+        {% endfor -%}
     </div>
-    
-    <div id="header"> 
-        
-        <div class="rechts">
-            <a href = "#"> Sort By </a>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            {% if current_user.is_authenticated -%}
-            <a href = "#" class="open-window"> Create </a>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            {% endif -%}
-            <form id="searchBox" action = "{{url_for('main.home')}}" method = "GET">
-                <input id="searchInput" type="text" name="search" placeholder="Search.." autocomplete="off" onfocusout = "useValue()" required>
-                <button id="searchButton" href="#">
-                    <img src="{{ url_for('static', filename='images/search.png') }}" alt="S">
-                </button>
-            </form>
-        </div>
-        <div class="links">
-            {% if current_user.is_authenticated -%}
-            <a href = "{{url_for('users.profile')}}"><strong> {{current_user.name}} </strong></a>
-            {% else -%}
-            <a href = "{{url_for('users.login')}}"> Login </a>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <a href = "{{url_for('users.register')}}"> Register </a>
-            {% endif -%}
-        </div>
+    <div id = "aside">
+        <h3 style = "text-align: left;">Categories:</h3>
+        {% for category in categories -%}
+        <a href="#"><div class = "category">{{category.title}}</div></a>
+        {% endfor %}
     </div>
-
-    <div id = "main">
-        {% if search_query -%}
-        <h3 style="text-align: left; font-size: 3vh;">Search results for "{{ search_query }}"</h3>
-        {% else -%}
-        <h3 style="text-align: left; font-size: 3vh;">Popular sets:</h3>
-        {% endif -%}
-
-        <div id = "dash">
-            {% for card_set in card_sets -%}
-            <div class="set">
-                <div class = "set-screen">
-                    {{ card_set.set.title }}
-                </div>
-                <div class = "set-modulate">
-                    <span>{{ card_set.total_saves }}</span>
-                    <img class = "image-save" src="{{ url_for('static', filename='images/save.png') }}" alt="Save">
-                </div>
-            </div>
-            {% endfor -%}
-        </div>
-        <div id = "aside">
-            <h3 style = "text-align: left;">Categories:</h3>
-            {% for category in categories -%}
-            <a href="#"><div class = "category">{{category.title}}</div></a>
-            {% endfor %}
-        </div>
-    </div>
-
-    <div id="footer"> 
-        <a class = "footerButtons" href = "{{url_for('common.contact')}}"> Contact Us </a>
-        <a class = "footerButtons" href = "{{url_for('common.help')}}"> Help </a>
-        <a class = "footerButtons" href = "{{url_for('common.about')}}"> About Us </a>
-    </div>
-
-{% endblock -%}
+{% endblock %}
