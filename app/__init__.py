@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 
 from config import Config
 
@@ -37,5 +37,9 @@ def create_app(config_class=Config):
     from app.common import bp as common_bp
     app.register_blueprint(common_bp)
 
+    
+    @app.errorhandler(404)
+    def page_not_found(error):
+        return render_template('common/error.html', error='Page Not Found!')
     
     return app

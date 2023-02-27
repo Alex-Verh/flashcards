@@ -23,6 +23,7 @@ def contact():
                   sender=('FlashCards', 'noreply@demo.com'),
                   recipients=['denis.bargan2006@gmail.com', 'signey03@gmail.com'])
         msg.body = f'Name: {form.name.data}\n\nEmail: {form.email.data}\n\nTitle: {form.title.data}\n\nMessage:\n{form.message.data}'
+        print(msg)
         mail.send(msg)
         flash('Your message has been sent successfully', category='success')
         return redirect(url_for('common.contact'))
@@ -32,4 +33,4 @@ def contact():
 
 @bp.errorhandler(404)
 def page_not_found(error):
-    return render_template('main/index.html', message='Page not found')
+    return render_template('common/page_not_found.html', message='Page not found')
