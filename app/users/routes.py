@@ -4,7 +4,7 @@ from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from .forms import LoginForm, RegisterForm
 from app.extensions import db
-from app.models import User
+from app.models import User, CardSetCategory
 
 
 @bp.route('/login', methods=['POST', 'GET'])
@@ -63,4 +63,4 @@ def register():
 @bp.route('/profile')
 @login_required
 def profile():
-    return render_template('users/profile.html')
+    return render_template('users/profile.html', categories=CardSetCategory.query.all())

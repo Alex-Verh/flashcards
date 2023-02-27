@@ -16,5 +16,8 @@ def create_cardset():
 def delete_cardset(id):
     cardset = CardSet.query.get_or_404(id)
     return
-            
-    
+
+@bp.route('/cardset/<int:id>')
+def cardset(id):
+    cardset = CardSet.query.get_or_404(id)
+    return render_template("cards/cardset.html", cardset=cardset)
