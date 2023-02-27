@@ -69,11 +69,12 @@ window.onmousewheel = document.onmousewheel = wheel;
   // Add click event listeners to each option
   options.forEach(option => {
       option.addEventListener('click', () => {
+        const categoryId = option.dataset.categoryId;
           // Update the input value with the selected option's text content
-          input.value = option.textContent.trim();
+          input.value = categoryId;
           
           // Update the select element's text to display the selected option
           select.querySelector('span').textContent = option.textContent.trim();
       });
   });
-// end categpry
+// end category
