@@ -57,3 +57,23 @@ function handle(delta) {
 
 if (window.addEventListener) {window.addEventListener('DOMMouseScroll', wheel, false);}
 window.onmousewheel = document.onmousewheel = wheel;
+//end scroll
+
+//  Category of new set 
+  const dropdown = document.querySelector('.dropdown');
+  const input = dropdown.querySelector('input[name="category"]');
+  const select = dropdown.querySelector('.select');
+  const dropdownMenu = dropdown.querySelector('.dropdown-menu');
+  const options = dropdownMenu.querySelectorAll('li');
+  
+  // Add click event listeners to each option
+  options.forEach(option => {
+      option.addEventListener('click', () => {
+          // Update the input value with the selected option's text content
+          input.value = option.textContent.trim();
+          
+          // Update the select element's text to display the selected option
+          select.querySelector('span').textContent = option.textContent.trim();
+      });
+  });
+// end categpry

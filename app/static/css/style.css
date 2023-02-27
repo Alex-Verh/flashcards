@@ -5,7 +5,7 @@ body {
     margin: 0;
     padding: 0;
     height : 100%;
-    background: url("../images/background.jpg") no-repeat center top / cover fixed;
+    background: url("../images/background2.jpg") no-repeat center top / cover fixed;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -530,7 +530,7 @@ input:-webkit-autofill{
     border-radius: 50%;
     position: absolute;
     overflow: hidden;
-    background-image: linear-gradient(to bottom right, #ff0000, #ffff00);
+    background-image: linear-gradient(to bottom right, #00ad1d, #005303);
     animation : rotate 20s infinite;
     filter : blur(35vh);
     pointer-events: none;
@@ -564,6 +564,7 @@ input:-webkit-autofill{
     transition: color .1s ease;
     margin:1%;
     transition: all .5s ease-in-out;
+    background: none;
 }
 
 .create-set:hover {
@@ -699,7 +700,7 @@ input:-webkit-autofill{
     border-radius: 0 0.1vh 0.2vh 0.2vh;
     overflow: scroll;
     display: none;
-    max-height: 14vh;
+    max-height: 19vh;
     overflow-y: auto;
     z-index: 9;
     scroll-snap-type: y mandatory;
