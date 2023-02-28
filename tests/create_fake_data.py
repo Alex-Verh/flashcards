@@ -8,7 +8,7 @@ from app.models import User, CardSet, FlashCard, CardSetCategory
 
 fake = Faker()
 
-def create_categories():
+def create_categories(db):
     categories = ["Math","Science","Language","History","Geography","Literature","Art","Music","Philosophy","Religion","Sports","Health and Medicine","Business and Economics","Law","Technology","Social Sciences","Psychology","Education","Politics","Environmental Studies","Other"]
     for category in categories:
         cardset_cat = CardSetCategory(title=category)
@@ -17,7 +17,7 @@ def create_categories():
     print('Card set categories has been created')
 
 
-def create_users(quantity=1000):
+def create_users(db, quantity=1000):
     for _ in range(quantity):
         username = fake.unique.user_name()
         user = User(
@@ -31,7 +31,7 @@ def create_users(quantity=1000):
     print('Users has been created')
 
 
-def create_cardsets(quantity=5000):
+def create_cardsets(db, quantity=5000):
     users = User.query.all()
     for _ in range(quantity):
         user = random.choice(users)
@@ -47,7 +47,7 @@ def create_cardsets(quantity=5000):
     print('Card sets has been created')     
     
 
-def create_flashcards(quantity=50000):
+def create_flashcards(db, quantity=50000):
     cardsets = CardSet.query.all()
     
     for _ in range(quantity):
@@ -76,7 +76,7 @@ def create_flashcards(quantity=50000):
     print('Flash cards has been created')
 
 
-def create_user_cardset_assns():
+def create_user_cardset_assns(db):
     users = User.query.all()
     cardsets = CardSet.query.filter_by(is_public=True).all()
     
@@ -90,11 +90,9 @@ def create_user_cardset_assns():
     
 
 def create_fake_data(database):
-    global db
-    db = database
-    # create_categories()
-    # create_users()
-    # create_cardsets()
-    # create_flashcards()
-    create_user_cardset_assns()
+    create_categories(database)
+    create_users(database)
+    create_cardsets(database)
+    create_flashcards(database)
+    create_user_cardset_assns(database)
     
