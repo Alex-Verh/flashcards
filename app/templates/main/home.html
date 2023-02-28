@@ -2,16 +2,8 @@
 
 {% block title %}Home - {% endblock %}
 
-{% block container %}
-{{ super() }}
-{% include "snippets/create_cardset.html" %}
-{% endblock %}
-
 {% block rechts %}
 {{ super() }}
-    &nbsp;&nbsp;&nbsp;&nbsp;
-    <a href = "#"> Sort By </a>
-    &nbsp;&nbsp;&nbsp;&nbsp;
     <form id="searchBox" action = "" method = "GET">
         <input id="searchInput" type="text" name="q" placeholder="Search.." autocomplete="off" onfocusout = "useValue()" required>
         <button id="searchButton" href="#">
