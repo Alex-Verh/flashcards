@@ -8,7 +8,7 @@ def get_most_popular_cardsets(amount=48):
         .join(user_cardset_assn).filter(CardSet.is_public)\
         .group_by(CardSet.id).order_by(db.text('total_saves DESC')).limit(amount)
         
-    card_sets = [{'set': row[0], 'total_saves': row[1]} for row in query]
+    card_sets = [{'cardset': row[0], 'total_saves': row[1]} for row in query]
     return card_sets
 
 
@@ -31,7 +31,7 @@ def get_cardset_search_results(search_query: str, sort_by: Literal['saves', 'dat
     
         query = query.order_by(order_param) 
     
-    card_sets = [{'set': row[0], 'total_saves': row[1]} for row in query]
+    card_sets = [{'cardset': row[0], 'total_saves': row[1]} for row in query]
     return card_sets
 
     
