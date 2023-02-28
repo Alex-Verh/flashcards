@@ -78,3 +78,14 @@ window.onmousewheel = document.onmousewheel = wheel;
       });
   });
 // end category
+
+//background setter
+const backgroundImage = document.querySelector('body');
+const images = document.querySelectorAll('.background');
+images.forEach(image => {
+  image.addEventListener('click', () => {
+    //TODO save in cookies
+    backgroundImage.style.backgroundImage = `url(${image.src})`;
+  });
+});
+//end background
