@@ -10,13 +10,32 @@ document.body.onpointermove = event => {
     }, { duration : 3000, fill: "forwards" });
 }
 
-function deleteConf() {
-    let text = "Are you sure you want to delete this set?";
+
+function deleteCardSet(cardSetId) {
+    const text = "Are you sure you want to delete this set?";
     if (confirm(text) == true) {
-        text = "You have succesfully deleted it!";
-      } else {
-        text = "You canceled!";
+        const cardSetEl = document.getElementById(`cardset-${cardSetId}`);
+        fetch(`/cardset/delete/${cardSetId}`, { method: "POST" })
+        .then(cardSetEl.remove())
+        .catch((e) => alert('Card set does not exist or it is not your own or saved card set'));
       }
+}
+
+function saveCardSet(cardSetId) {
+    const saveCount = document.getElementById(`saves-count-${cardSetId}`);
+    const saveButton = document.getElementById(`save-cardset-${cardSetId}`);
+
+    fetch(`/cardset/save/${cardSetId}`, { method: "POST" })
+        .then((res) => res.json())
+    .then((data) => {
+        saveCount.innerHTML = data["saves"];
+        if (data["saved"] === true) {
+            saveButton.src = data["image_url"];
+        } else {
+            saveButton.src = data["image_url"];
+        }
+    })
+    .catch((e) => alert("Could not save cardset."));
 }
 
 /*Dropdown Menu*/

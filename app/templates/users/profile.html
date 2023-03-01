@@ -8,6 +8,7 @@
 {% endblock -%}
 
 {% block main %}
+    <div id="flash-message"></div>
     <div id = "flash-profile">
         <h1>
             Your Profile:
@@ -23,14 +24,20 @@
         <h1>Your own sets:</h1>
         <div class = "flash-list">
             {% for card_set in current_user.own_cardsets -%}
-            <div class = "flashcard-unit"><div class = "flashcard-unit-text">{{card_set.title}}</div><div class = "flashcard-unit-image" onclick = "deleteConf()"><img src="{{ url_for('static', filename='images/remove.png') }}" alt="Delete"></div></div>
+            <div id="cardset-{{card_set.id}}" class = "flashcard-unit">
+                <div class = "flashcard-unit-text">{{card_set.title}}</div>
+                <div class = "flashcard-unit-image" onclick = "deleteCardSet({{card_set.id}})"><img src="{{ url_for('static', filename='images/remove.png') }}" alt="Delete"></div>
+            </div>
             {% endfor -%}
         </div>
 
         <h1>Your saved sets:</h1>
         <div class = "flash-list">
             {% for card_set in current_user.saved_cardsets -%}
-            <div class = "flashcard-unit"><div class = "flashcard-unit-text">{{card_set.title}}</div><div class = "flashcard-unit-image" onclick = "deleteConf()"><img src="{{ url_for('static', filename='images/remove.png') }}" alt="Delete"></div></div>
+            <div id="cardset-{{card_set.id}}" class = "flashcard-unit">
+                <div class = "flashcard-unit-text">{{card_set.title}}</div>
+                <div class = "flashcard-unit-image" onclick = "deleteCardSet({{card_set.id}})"><img src="{{ url_for('static', filename='images/remove.png') }}" alt="Delete"></div>
+            </div>
             {% endfor -%}
         </div>
     </div>    
