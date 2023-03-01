@@ -2,9 +2,10 @@
 
 {% block title -%}Cardset - {% endblock -%}
 
-{% block rechts %}
-    <a href = "{{url_for('main.home')}}"> Home </a> 
-{% endblock %}
+{% block header -%}
+    {{super()}}
+    <a id = "return" onclick="history.back()"><img src="../static/images/return.png" alt="Return Back"> </a>
+{% endblock -%}
 
 {% block main %}
     <h1>{{cardset.title}}</h1>

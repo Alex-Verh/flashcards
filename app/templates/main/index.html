@@ -1,15 +1,13 @@
 {% extends 'base.html' %}
 
 {% block title %}Main Page - {% endblock %}
-  
-{% block rechts %}
-{% endblock %}
 
 {% block main %}
     <div id = "mainText">
         <h1>
             Unlock Your Memory's Potential with the Power of Flashcards
         </h1>
+        <br>
         <p>Welcome to our website, a leading resource for memory improvement and enhanced learning. 
             Our focus is on providing a comprehensive and user-friendly platform for creating and viewing flashcards, 
             which are a proven tool for retaining and recalling information. Each flashcard features a term or concept 
@@ -17,10 +15,12 @@
             Whether you're a student studying for exams, a professional seeking to improve your knowledge base, or anyone looking to enhance 
             their memory, our website is the ideal resource for you. Start utilizing the power of flashcards today and improve your ability 
             to retain and recall important information!
-        </p>  
+        </p>
+        <br>
+        <br>
+        <br>
+  
     </div>
     
-    <a href="{{url_for('main.home')}}">
-        <button class="guest" role="button">Try Now</button>
-    </a>
+    <a id="button" href="{{url_for('main.home')}}">Try Now</a>
 {% endblock -%}

@@ -4,8 +4,10 @@
 
 {% block title -%}Contact Us - {% endblock -%}
 
-{% block rechts %}
-{% endblock %}
+{% block header -%}
+    {{super()}}
+    <a id = "return" onclick="history.back()"><img src="../static/images/return.png" alt="Return Back"> </a>
+{% endblock -%}
 
 {% block main %}
     <div id = "mainText">

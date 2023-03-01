@@ -1,0 +1,29 @@
+<div>
+    <input type="checkbox" id="active">
+    <label for="active" class="menu-btn"><span></span></label>
+    <div id="menu">
+        <nav class="navMenu">
+            <a href="{{url_for('main.home')}}" style = "color:rgb(27, 133, 0);">Home</a>
+            {% if current_user.is_authenticated -%}
+            <a href="{{url_for('users.profile')}}">Profile</a>
+            <a href="#">Learn</a>
+            <a href="#" class="open-window">Create</a>
+            {% endif -%}
+            <a href="{{url_for('common.help')}}">Help</a>
+            <a href="{{url_for('common.contact')}}">Contact</a>
+            <a href="{{url_for('common.about')}}">About</a>
+            {% if current_user.is_authenticated -%}
+            <a href="{{url_for('users.logout')}}" style = "color: #a62b2b;">Exit</a>
+            {% else -%}
+            <a href = "{{url_for('users.login')}}" style = "color:#5f9ea0;"> Login </a>
+            <a href = "{{url_for('users.register')}}" style = "color:#5f9ea0;"> Register </a>
+            {% endif -%}
+        </nav>
+        <div class="images">
+            <div class="image"><img class = "background" src="../static/images/background1.jpg" alt="background"></div>
+            <div class="image"><img class = "background" src="../static/images/background2.jpg" alt="background"></div>
+            <div class="image"><img class = "background" src="../static/images/background3.jpg" alt="background"></div>
+            <div class="image"><img class = "background" src="../static/images/background4.jpg" alt="background"></div>
+        </div>
+    </div>
+</div>

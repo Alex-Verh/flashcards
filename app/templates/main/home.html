@@ -2,14 +2,9 @@
 
 {% block title %}Home - {% endblock %}
 
-{% block rechts %}
-{{ super() }}
-    <form id="searchBox" action = "" method = "GET">
-        <input id="searchInput" type="text" name="q" placeholder="Search.." autocomplete="off" onfocusout = "useValue()" required>
-        <button id="searchButton" href="#">
-            <img src="{{ url_for('static', filename='images/search.png') }}" alt="S">
-        </button>
-    </form>
+{% block header %}
+    {{ super() }}
+    {% include "snippets/search.html" %}
 {% endblock %}
 
 {% block main %}
@@ -33,9 +28,11 @@
         {% endfor -%}
     </div>
     <div id = "aside">
-        <h3 style = "text-align: left;">Categories:</h3>
-        {% for category in categories -%}
-        <a href="#"><div class = "category">{{category.title}}</div></a>
-        {% endfor %}
+        <h3>Categories:</h3>
+        <div id = "aside-list">
+            {% for category in categories -%}
+            <a href="#"><div class = "category">{{category.title}}</div></a>
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}
