@@ -25,17 +25,20 @@ def create_app(config_class=Config):
     mail.init_app(app)
     
     # Register blueprints here
-    from app.main import bp as main_bp
+    from .main import bp as main_bp
     app.register_blueprint(main_bp)
     
-    from app.users import bp as users_bp
+    from .users import bp as users_bp
     app.register_blueprint(users_bp)
     
-    from app.cards import bp as cards_bp
+    from .cards import bp as cards_bp
     app.register_blueprint(cards_bp)
     
-    from app.common import bp as common_bp
+    from .common import bp as common_bp
     app.register_blueprint(common_bp)
+    
+    from .api import bp as api_bp
+    app.register_blueprint(api_bp)
 
     
     @app.errorhandler(404)

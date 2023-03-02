@@ -42,7 +42,7 @@ function deleteCardSet(cardSetId) {
     const text = "Are you sure you want to delete this set?";
     if (confirm(text) == true) {
         const cardSetEl = document.getElementById(`cardset-${cardSetId}`);
-        fetch(`/cardset/delete/${cardSetId}`, { method: "POST" })
+        fetch(`/api/delete-cardset/${cardSetId}`, { method: "GET" })
         .then(cardSetEl.remove())
         .catch((e) => alert('Card set does not exist or it is not your own or saved card set'));
       }
@@ -52,7 +52,7 @@ function saveCardSet(cardSetId) {
     const saveCount = document.getElementById(`saves-count-${cardSetId}`);
     const saveButton = document.getElementById(`save-cardset-${cardSetId}`);
 
-    fetch(`/cardset/save/${cardSetId}`, { method: "POST" })
+    fetch(`/api/save-cardset/${cardSetId}`, { method: "POST" })
         .then((res) => res.json())
     .then((data) => {
         saveCount.innerHTML = data["saves"];
