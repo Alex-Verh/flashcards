@@ -26,9 +26,9 @@
             {% for card_set in current_user.own_cardsets -%}
             <div id="cardset-{{card_set.id}}" class = "flashcard-unit">
                 <div class = "flashcard-unit-text">{{card_set.title}}</div>
-                <div class = "flashcard-unit-image" onclick = "deleteCardSet({{card_set.id}})"><img src="{{ url_for('static', filename='images/remove.png') }}" alt="Delete"></div>
+                <div class = "flashcard-unit-image" onclick = "deleteCardSet('{{card_set.id}}')"><img src="{{ url_for('static', filename='images/remove.png') }}" alt="Delete"></div>
             </div>
-            {% endfor -%}
+            {% endfor -%}'
         </div>
 
         <h1>Your saved sets:</h1>
@@ -36,7 +36,7 @@
             {% for card_set in current_user.saved_cardsets -%}
             <div id="cardset-{{card_set.id}}" class = "flashcard-unit">
                 <div class = "flashcard-unit-text">{{card_set.title}}</div>
-                <div class = "flashcard-unit-image" onclick = "deleteCardSet({{card_set.id}})"><img src="{{ url_for('static', filename='images/remove.png') }}" alt="Delete"></div>
+                <div class = "flashcard-unit-image" onclick = "deleteCardSet('{{card_set.id}}')"><img src="{{ url_for('static', filename='images/remove.png') }}" alt="Delete"></div>
             </div>
             {% endfor -%}
         </div>
