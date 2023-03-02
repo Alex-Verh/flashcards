@@ -291,6 +291,7 @@ a  {
     letter-spacing: 0.1vh;
     transition: all 0.15s linear;
     font-size: 2vh;
+    margin: 1vh;
 }
 
 /* END Login-Register form CSS*/
