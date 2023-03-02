@@ -17,7 +17,7 @@ def create_categories(db):
     print('Card set categories has been created')
 
 
-def create_users(db, quantity=1000):
+def create_users(db, quantity=500):
     for _ in range(quantity):
         username = fake.unique.user_name()
         user = User(
@@ -31,12 +31,12 @@ def create_users(db, quantity=1000):
     print('Users has been created')
 
 
-def create_cardsets(db, quantity=5000):
+def create_cardsets(db, quantity=2500):
     users = User.query.all()
     for _ in range(quantity):
         user = random.choice(users)
         cardset = CardSet(
-            title=fake.sentence(),
+            title=fake.text(50),
             is_public=random.choices([True, False], [70, 30])[0],
             category_id=random.randrange(1, 22),
             user_id=user.id,
@@ -47,7 +47,7 @@ def create_cardsets(db, quantity=5000):
     print('Card sets has been created')     
     
 
-def create_flashcards(db, quantity=50000):
+def create_flashcards(db, quantity=10000):
     cardsets = CardSet.query.all()
     
     for _ in range(quantity):
@@ -65,7 +65,7 @@ def create_flashcards(db, quantity=50000):
             }
         
         flashcard = FlashCard(
-            title=fake.sentence(),
+            title=fake.text(50),
             content=fake.paragraph(),
             attachments=attachments,
             cardset_id = cardset.id,
@@ -83,7 +83,7 @@ def create_user_cardset_assns(db):
     for user in users:
         k = random.randint(7, 20)
         saved_card_sets = random.sample(cardsets, k)
-        user.saved_card_sets.extend(saved_card_sets)
+        user.saved_cardsets.extend(saved_card_sets)
     
     db.session.commit()
     print('Card set saves has been created')

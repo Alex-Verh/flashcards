@@ -20,10 +20,10 @@
             {% endif -%}
         </nav>
         <div class="images">
-            <div class="image"><img class = "background" src="../static/images/background1.jpg" alt="background"></div>
-            <div class="image"><img class = "background" src="../static/images/background2.jpg" alt="background"></div>
-            <div class="image"><img class = "background" src="../static/images/background3.jpg" alt="background"></div>
-            <div class="image"><img class = "background" src="../static/images/background4.jpg" alt="background"></div>
+            <div class="image"><img class = "background" src="{{url_for('static', filename='images/background1.jpg')}}" alt="background"></div>
+            <div class="image"><img class = "background" src="{{url_for('static', filename='images/background2.jpg')}}" alt="background"></div>
+            <div class="image"><img class = "background" src="{{url_for('static', filename='images/background3.jpg')}}" alt="background"></div>
+            <div class="image"><img class = "background" src="{{url_for('static', filename='images/background4.jpg')}}" alt="background"></div>
         </div>
     </div>
 </div>

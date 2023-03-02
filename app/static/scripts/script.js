@@ -1,3 +1,30 @@
+// Work with cookie
+function setCookie(name, value, exdays=30) {
+    const date = new Date();
+    date.setTime(date.getTime() + (exdays*24*60*60*1000));
+    let expires = "expires="+ date.toUTCString();
+    document.cookie = name + "=" + value + ";" + expires + ";path=/";
+  }
+
+function getCookie(name) {
+    name += "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let decCookie = decodedCookie.split(';');
+    for(let i = 0; i < decCookie.length; i++) {
+      let cookie = decCookie[i];
+      while (cookie.charAt(0) == ' ') {
+        cookie = cookie.substring(1);
+      }
+      if (cookie.indexOf(name) == 0) {
+        return cookie.substring(name.length, cookie.length);
+      }
+    }
+    return "";
+  }
+
+
+document.querySelector('body').style.backgroundImage = getCookie('background_url')
+
 // JavaScript for cursor visual effect
 const blob = document.getElementById("blob");
 
@@ -80,7 +107,8 @@ const images = document.querySelectorAll('.background');
 images.forEach(image => {
   image.addEventListener('click', () => {
     //TODO save in cookies
-    backgroundImage.style.backgroundImage = `url(${image.src})`;
+    backgroundImage.style.backgroundImage = `${image.src}`;
+    setCookie('background_url', `${image.src}`)
   });
 });
 //end background
