@@ -104,11 +104,13 @@ $('.dropdown .dropdown-menu li').click(function () {
 //background setter
 const backgroundImage = document.querySelector('body');
 const images = document.querySelectorAll('.background');
+backgroundImage.style.backgroundImage = getCookie('background_url')
+
 images.forEach(image => {
   image.addEventListener('click', () => {
     //TODO save in cookies
-    backgroundImage.style.backgroundImage = `${image.src}`;
-    setCookie('background_url', `${image.src}`)
+    backgroundImage.style.backgroundImage = `url(${image.src})`;
+    setCookie('background_url', `url(${image.src})`)
   });
 });
 //end background
