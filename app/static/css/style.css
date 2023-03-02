@@ -166,6 +166,7 @@ a  {
     letter-spacing: 0.1vh;
     transition: all 0.15s linear;
     font-size: 3vh;
+    cursor: pointer;
 }
   
 #button:hover {
@@ -293,6 +294,7 @@ a  {
     transition: all 0.15s linear;
     font-size: 2vh;
     margin: 1vh;
+    cursor: pointer;
 }
 
 /* END Login-Register form CSS*/
