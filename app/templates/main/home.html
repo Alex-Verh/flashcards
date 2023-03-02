@@ -8,28 +8,29 @@
 {% endblock %}
 
 {% block main %}
-    {% if search_query -%}
-    <h3 style="text-align: left; font-size: 3vh;">Search results for "{{ search_query }}"</h3>
-    {% else -%}
-    <h3 style="text-align: left; font-size: 3vh;">Popular sets:</h3>
-    {% endif -%}
-
     <div id = "dash">
-        {% for card_set_info in card_sets -%}
-        <div class="set">
-            <div class = "set-screen">
-                {{ card_set_info.cardset.title }}
+        {% if search_query -%}
+        <h3 style="text-align: left; font-size: 3vh;">Search results for "{{ search_query }}"</h3>
+        {% else -%}
+        <h3 style="text-align: left; font-size: 3vh;">Popular sets:</h3>
+        {% endif -%}
+        <div id = dash-list>
+            {% for card_set_info in card_sets -%}
+            <div class="set">
+                <div class = "set-screen">
+                    {{ card_set_info.cardset.title }}
+                </div>
+                <div class = "set-modulate">
+                    <span id="saves-count-{{card_set_info.cardset.id}}">{{ card_set_info.total_saves }}</span>
+                    {% if current_user in card_set_info.cardset.followers.all() -%}
+                    <img id="save-cardset-{{card_set_info.cardset.id}}" onclick="saveCardSet('{{card_set_info.cardset.id}}')" class = "image-save" src="{{ url_for('static', filename='images/save1.png') }}" alt="Save">
+                    {% else -%}
+                    <img id="save-cardset-{{card_set_info.cardset.id}}" onclick="saveCardSet('{{card_set_info.cardset.id}}')" class = "image-save" src="{{ url_for('static', filename='images/save2.png') }}" alt="Save">
+                    {% endif -%}
+                </div>
             </div>
-            <div class = "set-modulate">
-                <span id="saves-count-{{card_set_info.cardset.id}}">{{ card_set_info.total_saves }}</span>
-                {% if current_user in card_set_info.cardset.followers.all() -%}
-                <img id="save-cardset-{{card_set_info.cardset.id}}" onclick="saveCardSet('{{card_set_info.cardset.id}}')" class = "image-save" src="{{ url_for('static', filename='images/save1.png') }}" alt="Save">
-                {% else -%}
-                <img id="save-cardset-{{card_set_info.cardset.id}}" onclick="saveCardSet('{{card_set_info.cardset.id}}')" class = "image-save" src="{{ url_for('static', filename='images/save2.png') }}" alt="Save">
-                {% endif -%}
-            </div>
+            {% endfor -%}
         </div>
-        {% endfor -%}
     </div>
     <div id = "aside">
         <h3>Categories:</h3>
