@@ -1,3 +1,7 @@
+document.querySelector('body').style.backgroundImage = getCookie('background_url')
+
+let page = 0
+
 // Work with cookie
 function setCookie(name, value, exdays=30) {
     const date = new Date();
@@ -23,7 +27,63 @@ function getCookie(name) {
   }
 
 
-document.querySelector('body').style.backgroundImage = getCookie('background_url')
+const dashListEl = document.getElementById('dash-list')
+const cardSetTemplate = document.getElementById('cardset-template')
+const sentinel = document.getElementById('sentinel')
+
+
+function loadCardSets(page, cardSetsOnPage, searchQuery='', sortBy='', sortOrder='') {
+
+    const postData = new FormData();
+    postData.append('page', page);
+    postData.append('cardsets_quantity', cardSetsOnPage);
+    postData.append('search_q', searchQuery);
+    postData.append('sort_by', sortBy);
+    postData.append('ort_order', sortOrder);
+
+
+    fetch('/api/cardsets', {
+        method: 'POST',
+        body: postData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (!data.length) {
+            console.log('if')
+        }
+        for (var i=0; i<data.length; i++) {
+            // let template_clone = cardSetTemplate.content.cloneNode(true);
+            let template_clone = document.importNode(cardSetTemplate.content, true)
+            template_clone.getElementById('cardset-title').innerHTML = data[i].title
+
+            template_clone.getElementById('saves-count').innerHTML = data[i].saves
+            template_clone.getElementById('saves-count').id += `-${data[i].id}`
+
+            template_clone.getElementById('save-cardset').onclick = `saveCardSet(${data[i].id})`
+            template_clone.getElementById('save-cardset').src = data[i].save_img_url
+            template_clone.getElementById('save-cardset').id += `-${data[i].id}`
+            dashListEl.appendChild(template_clone)
+            
+        }
+        dashListEl.removeChild(sentinel)
+        dashListEl.appendChild(sentinel)  
+
+    })
+}
+
+
+var intersectionObserver = new IntersectionObserver(entries => {
+    if (entries[0].intersectionRatio <= 0) {
+        return;
+    }
+    page += 1
+
+    loadCardSets(page, 24)
+})
+intersectionObserver.observe(sentinel)
+
+
+
 
 // JavaScript for cursor visual effect
 const blob = document.getElementById("blob");
@@ -104,7 +164,7 @@ $('.dropdown .dropdown-menu li').click(function () {
 //background setter
 const backgroundImage = document.querySelector('body');
 const images = document.querySelectorAll('.background');
-backgroundImage.style.backgroundImage = getCookie('background_url')
+
 
 images.forEach(image => {
   image.addEventListener('click', () => {

@@ -15,18 +15,19 @@
         <h3 style="text-align: left; font-size: 3vh;">Popular sets:</h3>
         {% endif -%}
         <div id = dash-list>
-            {% for card_set in card_sets -%}
-            <div class="set">
-                <div class = "set-screen">
-                    {{ card_set.title }}
+            <template id="cardset-template">
+                <div class="set">
+                    <div class = "set-screen" id="cardset-title"></div>
+                    <div class = "set-modulate">
+                        <span id="saves-count"></span>
+                        <img id="save-cardset" onclick="" class = "image-save" src="" alt="Save">
+                    </div>
                 </div>
-                <div class = "set-modulate">
-                    <span id="saves-count-{{card_set.id}}">{{ card_set.saves }}</span>
-                    <img id="save-cardset-{{card_set.id}}" onclick="saveCardSet('{{card_set.id}}')" class = "image-save" src="{{ card_set.save_img_url }}" alt="Save">
+            </template>
 
-                </div>
+            <div style="float: left", id="sentinel">
+                <img id="loading-gif" src="{{url_for('static', filename='images/loading.gif')}}" width="50px">
             </div>
-            {% endfor -%}
         </div>
     </div>
     <div id = "aside">
