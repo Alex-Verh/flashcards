@@ -123,8 +123,7 @@ a  {
 
 #main {
     text-align: center;
-    padding : 2%;
-    height: 83%;
+    height: 85%;
     overflow: scroll;
 }
 
@@ -132,12 +131,14 @@ a  {
     float : right;
     width : 25%;
     font-size: 2.5vh;
+    text-align: left;
 }
 
 #aside-list {
     overflow: scroll;
-    height: 55vh;
+    height: 65vh;
     scroll-snap-type: y mandatory;
+    text-align: center;
 }
 
 .category {
@@ -333,60 +334,45 @@ input:-webkit-autofill{
 /* CSS for flashcards in dashboard */
 #dash {
     float : left;
-    width : 73%;
+    width : 70%;
     font-size: 2vh;
-    overflow: scroll;
-    height: 49vh;
     text-align: left;
+    margin-left: 2%; 
+}
+
+#dash-list {
+    overflow: scroll;
+    height: 66vh;
     scroll-snap-type: y mandatory;
 }
 
-*::-webkit-scrollbar-corner {
-    display: none;
-}
-
-*::-webkit-scrollbar {
-    width: 0.8vh;               /* width of the entire scrollbar */
-}
-
-*::-webkit-scrollbar-thumb {
-    background-color: #faebd7;    /* color of the scroll thumb */
-    border-radius: 2vh;       /* roundness of the scroll thumb */
-  }
-
-/* .flashcard {
-    border : #faebd7 0.1vh solid;
-    font-size : 2vh;
-    margin : 1%;
-    float : left;
-    border-radius: 1.5vh;
-}
-
-.flash-screen {
-    height: 15vh;
-    width: 30vh;
-    position: relative;
-    text-align: center;
-    transition: transform 0.8s;
-    transform-style: preserve-3d;
-} */
-
 .set {
-    border : 0.1vh solid #faebd7;
     font-size : 2.3vh;
-    margin : 0 1% 1% 1%;
+    margin : 0 1% 1% 2%;
     float : left;
     border-radius: 1.5vh;
-    scroll-snap-align: start;
-    width: 22%;
-    height: 30%;
+    scroll-snap-align: end;
+    height: 23%;
+    width: 28vh;  
+    border: 0.1vh solid #ffffff00;
+    border-top: 0.1vh solid #fff;
+    box-shadow: rgba(255, 255, 255, 0.25) 0.5vh 1.4vh 2vh, rgba(255, 255, 255, 0.22) 0 1vh 1vh;
+    transition: all 1s ease-in-out;
+    cursor: pointer;
+}
 
+.set:hover {
+    border: 0.1vh solid #fff;
+    box-shadow: none;
+}
+
+.set:focus {
+    box-shadow: rgba(255, 255, 255, 0.25) 0.5vh 1.4vh 2.8vh, rgba(255, 255, 255, 0.22) 0 1vh 1vh;
 }
 
 .set-screen {
     padding: 0 5% 0 5%;
     display: flex;
-    position: relative;
     align-items: center;
     justify-content: center;
     height: 75%;
@@ -406,60 +392,72 @@ input:-webkit-autofill{
     cursor: pointer;
 }
 
-/* Do an horizontal flip when you move the mouse over the flip box container */
+/* .flashcard {
+    border : #faebd7 0.1vh solid;
+    font-size : 2vh;
+    margin : 1%;
+    float : left;
+    border-radius: 1.5vh;
+}
+
+.flash-screen {
+    height: 15vh;
+    width: 30vh;
+    position: relative;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+} */
+
+/* Do an horizontal flip when you move the mouse over the flip box container
 .flashcard:hover .flash-screen {
     transform: rotateY(180deg);
-}
+} */
   
 /* Position the front and back side */
-.flash-card-front, .flash-card-back {
+/* .flash-card-front, .flash-card-back {
     position: absolute;
-    -webkit-backface-visibility: hidden; /* Safari */
+    -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
-}
+} */
   
 /* Style the front side (fallback if image is missing) */
-.flash-card-front {
+/* .flash-card-front {
     height: 15vh;
     width: 30vh;
     margin : auto;
-}
+} */
   
 /* Style the back side */
-.flash-card-back {
+/* .flash-card-back {
     height: 15vh;
     width: 30vh;
     transform: rotateY(180deg);
-}
+} */
 
 .flash-list {
     overflow: scroll;
     width: 68%;
     float: right;
-    height : 22vh;
+    height : 29vh;
     text-align: left;
     scroll-snap-type: y mandatory;
 }
 
-.flashcard-unit {
-    border: 0.1vh solid #faebd7;
-    border-radius: 1.5vh;
-    float:left;
-    margin: 0 2vh 1.5vh 1vh;
-    height: 36%;
-    width: 28%;
-    scroll-snap-align: end;
-    padding:0.7%;
+.flash-list .set {
+    height: 29%;
+    width: 25vh;
+    font-size: 2vh;
 }
 
 .flashcard-unit-image {
     width: 6%;
     float: right;
+    margin:2%;
 }
 
 .flashcard-unit-image img {
     width: 100%;
-    float: right;
 }
 
 .flashcard-unit-text {
@@ -467,11 +465,6 @@ input:-webkit-autofill{
     float: left;
     text-align: center;
     margin: 3% 0 0 5%;
-}
-
-
-#flashcard-set-profile {
-    font-size: 2vh;
 }
 
 #flash-profile {
@@ -486,10 +479,6 @@ input:-webkit-autofill{
     text-align: left;
     display: flex;
     padding: 2vh;
-}
-
-.value {
-    margin-left : 3vh;
 }
 
 /* CSS for pointer blur */
@@ -896,3 +885,17 @@ input[type="radio"]{
     transform: scale(1.2);
 }
   /* end CSS for menu */
+
+  
+*::-webkit-scrollbar-corner {
+    display: none;
+}
+
+*::-webkit-scrollbar {
+    width: 0.8vh;               /* width of the entire scrollbar */
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #faebd7;    /* color of the scroll thumb */
+    border-radius: 2vh;       /* roundness of the scroll thumb */
+  }
