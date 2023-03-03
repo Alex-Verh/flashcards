@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
 
+{% block head -%}
+    {{super()}}
+    <link href="{{ url_for('static', filename='css/users.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
+
 {% from 'macro.html' import create_form %}
 
 {% block title -%}Login - {% endblock -%}

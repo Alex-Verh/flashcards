@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
 
+{% block head -%}
+    {{super()}}
+    <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
+
 {% block title %}Home - {% endblock %}
 
 {% block header %}
@@ -20,8 +25,8 @@
         <h3 style="text-align: left; font-size: 3vh;">Popular sets:</h3>
         {% endif -%}
         <div id = dash-list>
-            <div style="float: left", id="sentinel">
-                <img id="loading-gif" src="{{url_for('static', filename='images/loading.gif')}}" width="50px">
+            <div id="sentinel">
+                <img id="loading-gif" src="{{url_for('static', filename='images/loading.gif')}}" width="50vh">
             </div>
         </div>
     </div>

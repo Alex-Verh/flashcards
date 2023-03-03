@@ -1,12 +1,17 @@
 {% extends 'base.html' %}
 
+{% block head -%}
+    {{super()}}
+    <link href="{{ url_for('static', filename='css/common.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
+
 {% from 'macro.html' import create_form %}
 
 {% block title -%}Contact Us - {% endblock -%}
 
 {% block header -%}
     {{super()}}
-    <a id = "return" onclick="history.back()"><img src="../static/images/return.png" alt="Return Back"> </a>
+    {% include "snippets/return.html" %}
 {% endblock -%}
 
 {% block main %}

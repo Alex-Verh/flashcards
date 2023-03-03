@@ -1,0 +1,81 @@
+/* Contact Us form CSS*/
+.contact-us {
+	width: 45%;
+	padding: 2% 2.5% 0.5% 2.5%;
+	border: 0.4vh solid #faebd7;
+    border-radius: 1.5vh;
+    margin: 0 auto;
+    color: #fff;
+    margin-bottom: 1.5%;
+    font-size: 2.5vh;
+}
+.contact-us input[type=submit],
+.contact-us input[type=text],
+.contact-us input[type=email]
+{
+    color: #fff;
+}
+
+.contact-us label {
+	margin-bottom: 4%;
+    width: 20%;
+    display: inline-block;
+}
+
+.contact-us input[type=text],
+.contact-us input[type=email] {
+	background: transparent;
+	border: hidden;
+	border-bottom: 0.1vh dashed #faebd7;
+	width: 65%;
+	outline: none;
+	font-style: italic;
+    margin-bottom: 4%;
+    font-size: 2.5vh;
+    margin-left : 6%;
+}
+
+.contact-us input[type=submit] {
+    background: none;
+	border: none;
+    box-shadow: 0px 0.1vh 0 rgb(255, 255, 255);
+    padding:1vh;
+    letter-spacing: 0.1vh;
+    transition: all 0.15s linear;
+    font-size: 2vh;
+    margin: 1vh;
+    cursor: pointer;
+}
+
+.contact-us input[type=text]:focus,
+.contact-us input[type=email]:focus {
+	border-bottom: 0.1vh dashed #d8ffa8;
+}
+
+.contact-us input[type=submit]:focus {
+    color:#007d04
+}
+
+.contact-us input[type=submit]:hover {
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    box-shadow: #faebd726 0 0.8vh 1.5vh;
+    transform: translateY(-0.4vh);
+}
+
+/* END Contact Us form CSS*/
+
+#faq {
+    margin: 5%;
+}
+
+.faq summary {
+    cursor: pointer;
+    color:#fff;
+    text-decoration:0.1vh underline;
+    font-size: 3vh;
+    margin-bottom: 2.8%;
+}
+
+#about {
+    margin-bottom: 11.5%;
+}
