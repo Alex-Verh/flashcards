@@ -73,11 +73,21 @@
     border-radius: 1.5vh;
     margin: 3%;
     scroll-snap-align: end;
+    transition: all 0.5s ease-in-out;
+}
+
+.category:hover {
+    box-shadow: rgba(255, 255, 255, 0.25) 0.5vh 1.4vh 2.8vh, rgba(255, 255, 255, 0.22) 0 1vh 1vh;
+}
+
+.category:active {
+    background-color: #ffffff50;
 }
 
 /* CSS for flashcards in dashboard */
 #sentinel {
-    float:left;
+    float: left;
+    margin-left: 45%;
 }
 
 #dash {
@@ -94,13 +104,12 @@
     scroll-snap-type: y mandatory;
 }
 
-
 .set:hover {
     border: 0.1vh solid #fff;
     box-shadow: none;
 }
 
-.set:focus {
+.set:active {
     box-shadow: rgba(255, 255, 255, 0.25) 0.5vh 1.4vh 2.8vh, rgba(255, 255, 255, 0.22) 0 1vh 1vh;
 }
 

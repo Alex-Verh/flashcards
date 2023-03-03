@@ -52,7 +52,7 @@
 	border-bottom: 0.1vh dashed #d8ffa8;
 }
 
-.contact-us input[type=submit]:focus {
+.contact-us input[type=submit]:active {
     color:#007d04
 }
 

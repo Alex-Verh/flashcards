@@ -54,7 +54,7 @@
     cursor: pointer;
 }
 
-.login input[type=submit]:focus {
+.login input[type=submit]:active {
     color:#007d04
 }
 
@@ -78,6 +78,10 @@
 .flash-list .set {
     height: 29%;
     width: 25vh;
+    font-size: 2vh;
+}
+
+#flashcard-set-profile {
     font-size: 2vh;
 }
 
