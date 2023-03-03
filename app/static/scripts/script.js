@@ -57,7 +57,9 @@ function getCookie(name) {
 
 
 // Background
-background.onload = function() {background.style.backgroundImage = getCookie('background_url')};
+$( document ).ready(function() {
+  background.style.backgroundImage = getCookie('background_url');
+});
 
 images.forEach(image => {
   image.addEventListener('click', () => {
