@@ -1,21 +1,21 @@
-<div class="around-creation" aria-hidden="true">
-    <form action = '{{url_for("cards.create_cardset")}}' method = POST class="window">
-        <div class="window-header">
+<div id="around-creation" aria-hidden="true">
+    <form action = '{{url_for("cards.create_cardset")}}' method = POST id="window">
+        <div id="window-header">
             <h2>Create new set</h2>
-            <a href="#" class="close-creation" aria-hidden="true">×</a>
+            <a href="#" id="close-creation" aria-hidden="true">×</a>
         </div>
         
-        <div class="window-main">
+        <div id="window-main">
             <input id="window-name" novalidate type="text" name="title" placeholder="Enter set name" required/>
         
             <br>
 
-            <div class="dropdown">
+            <div id="dropdown">
                 <div class="select">
                 <span>Select Category</span>
                 </div>
                 <input type="hidden" name="category" value="none">
-                <ul class="dropdown-menu">
+                <ul id="dropdown-menu">
                     {% for category in categories -%}
                     <li id='{{category.id}}'>{{category.title}}</li>
                     {% endfor %}
@@ -38,8 +38,8 @@
             </div>
         </div>
 
-        <div class="window-bottom">
-            <input type = "submit" class="create-set" value = "Create">
+        <div id="window-bottom">
+            <input type = "submit" id="window-submit" value = "Create">
         </div>
     </form>
 </div>

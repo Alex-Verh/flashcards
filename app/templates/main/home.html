@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 
-{% block css -%}<link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet" type="text/css">{% endblock %}
+{% block head -%}
+    {{super()}}
+    <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
 
 {% block title %}Home - {% endblock %}
 
@@ -12,6 +15,12 @@
             <img src="{{ url_for('static', filename='images/search.png') }}" alt="S">
         </button>
     </form>
+    <!-- <nav id="sort">
+        <a href="#link">Most popular</a>
+        <a href="#link">New to old</a>
+        <a href="#link">Old to new</a>
+        <a href="#link">Randomize</a>
+    </nav> -->
 {% endblock %}
 
 {% block main %}
