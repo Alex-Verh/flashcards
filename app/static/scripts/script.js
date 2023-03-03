@@ -57,7 +57,9 @@ function getCookie(name) {
 
 
 // Background
-background.onload = function() {background.style.backgroundImage = getCookie('background_url')};
+$( document ).ready(function() {
+  background.style.backgroundImage = getCookie('background_url');
+});
 
 images.forEach(image => {
   image.addEventListener('click', () => {
@@ -80,11 +82,9 @@ document.body.onpointermove = event => {
 // Search
 function searchCardSets(event) {
   event.preventDefault();
-  dashListEl.innerHTML = ''
-  dashListEl.appendChild(sentinel)
-  page = 1
+  dashListEl.replaceChildren(sentinel)
+  page = 0
   searchQuery = searchInput.value
-  loadCardSets()
 }
 searchBox.addEventListener('submit', searchCardSets);
 
@@ -105,22 +105,22 @@ function loadCardSets() {
   })
     .then(response => response.json())
     .then(data => {
-      if (!data.length) {
-        sentinel.innerHTML = ''
-      }
-      dashListEl.removeChild(sentinel)
+      sentinel.remove();
+
+      if (!data.length) {return}
+
       for (var i = 0; i < data.length; i++) {
-        const cardSetEl = document.createElement('div')
-        cardSetEl.classList.add('set')
+        const cardSetEl = document.createElement('div');
+        cardSetEl.classList.add('set');
         cardSetEl.innerHTML = 
            `<div class = "set-screen">${data[i].title}</div>
             <div class = "set-modulate">
                 <span id="saves-count-${data[i].id}">${data[i].saves}</span>
                 <img id="save-cardset-${data[i].id}" onclick="saveCardSet(${data[i].id})" class = "image-save" src="${data[i].save_img_url}" alt="Save">
-            </div>`
-        dashListEl.appendChild(cardSetEl)
+            </div>`;
+        dashListEl.appendChild(cardSetEl);
       }
-      dashListEl.appendChild(sentinel)
+      if (data.length >= 24) {dashListEl.appendChild(sentinel);}
     })
 }
 
@@ -128,9 +128,8 @@ var intersectionObserver = new IntersectionObserver(entries => {
   if (entries[0].intersectionRatio <= 0) {
     return;
   }
-  page += 1
-
-  loadCardSets()
+  page += 1;
+  loadCardSets();
 })
 intersectionObserver.observe(sentinel)
 
@@ -153,6 +152,7 @@ function saveCardSet(cardSetId) {
   fetch(`/api/save-cardset/${cardSetId}`, { method: "POST" })
     .then((res) => res.json())
     .then((data) => {
+      console.log(data)
       saveCount.innerHTML = data["saves"];
       if (data["saved"] === true) {
         saveButton.src = data["image_url"];
@@ -170,4 +170,29 @@ options.forEach(option => {
     input.value = categoryId;
     select.querySelector('span').textContent = option.textContent.trim();
   });
+});
+
+
+// New card set creation
+$('.open-window').click(function (e) {
+  e.preventDefault();
+  $('.around-creation').addClass('transit');
+  });
+$('.close-creation').click(function (e) {
+e.preventDefault();
+$('.around-creation').removeClass('transit');
+});
+
+$('.dropdown').click(function () {
+  $(this).attr('tabindex', 1).focus();
+  $(this).toggleClass('active');
+  $(this).find('.dropdown-menu').slideToggle(300);
+});
+$('.dropdown').focusout(function () {
+  $(this).removeClass('active');
+  $(this).find('.dropdown-menu').slideUp(300);
+});
+$('.dropdown .dropdown-menu li').click(function () {
+  $(this).parents('.dropdown').find('span').text($(this).text());
+  $(this).parents('.dropdown').find('input').attr('value', $(this).attr('id'));
 });

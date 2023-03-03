@@ -1,9 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-{% block head %} 
-{% include "snippets/header.html" %}
-{% endblock %}
+    <!--Basic info--------------------------------------------------------->
+    <meta charset="utf-8">
+    <meta name="description" content="FlashCards">
+    <meta name="author" content="Verhovetchi Alexandru">
+    <meta name="author" content="Bargan Denis">
+    <title>{% block title %}{% endblock %}FlashCards</title>
+    <!--Mobile--------------------------------------------------------->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--CSS--------------------------------------------------------->
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" type="text/css">
+    {% block css %}{% endblock %}
+    <!--Favicon--------------------------------------------------------->
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/icon.png') }}">
 </head>
 
 <body>
@@ -30,6 +40,7 @@
 </body>
 </html>
 
+<!--JQuery--------------------------------------------------------->
+<script src="{{url_for('static', filename='scripts/jquery.js')}}"></script>
 <!--JS--------------------------------------------------------->
 <script src = "{{ url_for('static', filename='scripts/script.js') }}"></script>
-<script src = "{{ url_for('static', filename='scripts/jquery.js') }}"></script>
