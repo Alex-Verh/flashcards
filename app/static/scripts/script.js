@@ -57,22 +57,18 @@ function getCookie(name) {
 
 
 // Background
-$( document ).ready(function() {
+$(document).ready(function() {
   background.style.backgroundImage = getCookie('background_url');
 });
 
-images.forEach(image => {
-  image.addEventListener('click', () => {
-    background.style.backgroundImage = `url(${image.src})`;
-    setCookie('background_url', `url(${image.src})`)
-  });
-});
-
+$('.background').click(function() {
+  $('body').css('backgroundImage', `url(${this.src})`)
+  setCookie('background_url', `url(${this.src})`)
+})
 
 // Cursor visual effect
 document.body.onpointermove = event => {
   const { clientX, clientY } = event;
-
   blob.animate({
     left: `${clientX}px`,
     top: `${clientY}px`
