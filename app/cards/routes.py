@@ -1,5 +1,5 @@
 from . import bp
-from flask import render_template, redirect, url_for, request, jsonify
+from flask import render_template, redirect, url_for, request
 from flask_login import  login_required, current_user
 from ..models import CardSet
 from ..extensions import db

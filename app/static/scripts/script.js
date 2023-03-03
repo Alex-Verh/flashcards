@@ -22,10 +22,10 @@ var sortBy = ''
 var sortOrder = ''
 
 // New card set creation
-const dropdown = document.querySelector('.dropdown');
+const dropdown = document.querySelector('#dropdown');
 const input = dropdown.querySelector('input[name="category"]');
 const select = dropdown.querySelector('.select');
-const dropdownMenu = dropdown.querySelector('.dropdown-menu');
+const dropdownMenu = dropdown.querySelector('#dropdown-menu');
 const options = dropdownMenu.querySelectorAll('li');
 
 

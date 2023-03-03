@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms.fields import StringField, SubmitField
-from wtforms.validators import DataRequired, Email, Length, Regexp
+from wtforms.validators import DataRequired, Email, Length
 
 class ContactForm(FlaskForm):
     name = StringField('Enter Name:', validators=[DataRequired("Please enter your name"), Length(3, 30, "Length must be between 3-30 characters.")])

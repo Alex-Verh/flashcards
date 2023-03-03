@@ -1,8 +1,6 @@
 from . import bp
-from flask import render_template, request
-from ..extensions import db
-from ..models import User, CardSet, CardSetCategory, user_cardset_assn
-from ..funcs import get_most_popular_cardsets, get_cardset_search_results
+from flask import render_template
+from ..models import CardSetCategory
 
 
 @bp.route('/')
