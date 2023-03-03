@@ -165,7 +165,8 @@ function saveCardSet(cardSetId) {
 
 options.forEach(option => {
   option.addEventListener('click', () => {
-    const categoryId = option.dataset.categoryId;
+    const categoryId = option.id;
+    console.log(categoryId)
     input.value = categoryId;
     select.querySelector('span').textContent = option.textContent.trim();
   });

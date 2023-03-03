@@ -14,6 +14,7 @@ def cardset(id):
 @bp.route('/cardset/create', methods=['POST'])
 @login_required
 def create_cardset():
+    print(request.form)
     cardset = CardSet(
         title=request.form.get('title'),
         is_public=int(request.form.get('is_public')),
