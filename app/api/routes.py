@@ -61,15 +61,15 @@ def cardsets():
         return jsonify({'error': 'Invalid request parameters'}), 400
         
     
-    query = db.session.query(CardSet, db.func.count().label('total_saves'))\
-        .join(user_cardset_assn).filter(CardSet.is_public)
+    query = db.session.query(CardSet, db.text('count(user_cardset_assn.cardset_id) AS total_saves'))\
+        .join(user_cardset_assn, isouter = True).filter(CardSet.is_public)
         
     if search_query:
         query = query.filter(CardSet.title.like('%' + search_query + '%'))
         
     query = query.group_by(CardSet.id).order_by(db.text(f"{dict_sort_by[sort_by]} {sort_order}"))\
         .limit(cardsets_quantity).offset((page-1)*cardsets_quantity)
-    
+    print(query)
     result = []
     for row in query:
         try:
