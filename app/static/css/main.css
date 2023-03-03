@@ -1,0 +1,182 @@
+/* Search bar */
+#searchBox {
+    position: absolute;
+    z-index: 2;
+    left: 1%;
+    top: 30%;
+    border: 0.3vh solid #fff;
+    border-radius: 5vh;
+    padding: 0.5vh;
+}
+
+#searchBox:hover > #searchInput,
+#searchInput:not(:placeholder-shown) {
+    width: 50vh;
+    padding: 0 0 0 1vh;
+}
+
+#searchBox:hover > #searchButton {
+  color : #2f3640;
+  cursor: pointer;
+}
+
+#searchButton {
+    border: 0.1vh solid #fff;
+    float: right;
+    width: 3vh;
+    height: 3vh;
+    border-radius: 50%;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.4s;
+}
+
+#searchButton img {
+   width : 2vh;
+   height : 2vh;
+}
+
+#searchInput {
+    border:none;
+    background: none;
+    outline:none;
+    padding: 0;
+    color: #fff;
+    font-size: 2vh;
+    transition: 0.4s;
+    line-height: 3vh;
+    width:0;
+}
+
+/* end search bar */
+
+#aside {
+    float : right;
+    width : 25%;
+    font-size: 2.5vh;
+    text-align: left;
+}
+
+#aside-list {
+    overflow: scroll;
+    height: 72vh;
+    scroll-snap-type: y mandatory;
+    text-align: center;
+}
+
+.category {
+    padding : 2%; 
+    border-bottom: 0.1vh solid #fff;
+    border-top: 0.1vh solid #ffffff20;
+    border-radius: 1.5vh;
+    margin: 3%;
+    scroll-snap-align: end;
+    transition: all 0.5s ease-in-out;
+}
+
+.category:hover {
+    box-shadow: rgba(255, 255, 255, 0.25) 0.5vh 1.4vh 2.8vh, rgba(255, 255, 255, 0.22) 0 1vh 1vh;
+}
+
+.category:active {
+    background-color: #ffffff50;
+}
+
+/* CSS for flashcards in dashboard */
+#sentinel {
+    float: left;
+    margin-left: 45%;
+}
+
+#dash {
+    float : left;
+    width : 70%;
+    font-size: 2vh;
+    text-align: left;
+    margin-left: 2%; 
+}
+
+#dash-list {
+    overflow: scroll;
+    height: 72vh;
+    scroll-snap-type: y mandatory;
+}
+
+.set:hover {
+    border: 0.1vh solid #fff;
+    box-shadow: none;
+}
+
+.set:active {
+    box-shadow: rgba(255, 255, 255, 0.25) 0.5vh 1.4vh 2.8vh, rgba(255, 255, 255, 0.22) 0 1vh 1vh;
+}
+
+.set-screen {
+    padding: 0 5% 0 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 75%;
+}
+
+.set-modulate {
+    overflow: hidden;
+    margin : 2%;
+}
+
+.image-save {
+    margin-right: 3%;
+    margin-bottom: 10%;
+    float : right;
+    width : 8%;
+    aspect-ratio: 1;
+    cursor: pointer;
+}
+
+
+
+
+/* .flashcard {
+    border : #faebd7 0.1vh solid;
+    font-size : 2vh;
+    margin : 1%;
+    float : left;
+    border-radius: 1.5vh;
+}
+
+.flash-screen {
+    height: 15vh;
+    width: 30vh;
+    position: relative;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+} */
+
+/* Do an horizontal flip when you move the mouse over the flip box container
+.flashcard:hover .flash-screen {
+    transform: rotateY(180deg);
+} */
+  
+/* Position the front and back side */
+/* .flash-card-front, .flash-card-back {
+    position: absolute;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+} */
+  
+/* Style the front side (fallback if image is missing) */
+/* .flash-card-front {
+    height: 15vh;
+    width: 30vh;
+    margin : auto;
+} */
+  
+/* Style the back side */
+/* .flash-card-back {
+    height: 15vh;
+    width: 30vh;
+    transform: rotateY(180deg);
+} */

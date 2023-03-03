@@ -1,0 +1,117 @@
+/* Login-Register form CSS*/
+.login {
+	width: 60%;
+	padding: 1.8% 2.5% 0.5% 2.5%;
+    border-radius: 15px;
+    margin: .5% auto;
+    color: #fff;
+    margin-top: 7%;
+    font-size: 2.5vh;
+
+}
+.login input[type=submit],
+.login input[type=password],
+.login input[type=text]
+{
+	color: #fff;
+
+}
+.login label {
+	margin-bottom: 4%;
+    width: 30%;
+    display: inline-block;
+    text-align: left;
+}
+
+.login input[type=text],
+.login input[type=password] {
+	background: transparent;
+	border: hidden;
+	border-bottom: 0.1vh dashed #faebd7;
+	width: 63%;
+	outline: none;
+	font-style: italic;
+    margin-bottom: 1.5%;
+    font-size: 2.5vh;
+    margin-left : 4%;
+}
+
+
+.login input[type=text]:focus,
+.login input[type=password]:focus {
+	border-bottom: 0.1vh dashed #d9ffa9;
+}
+
+.login input[type=submit] {
+    background: none;
+	border: none;
+    box-shadow: 0px 0.1vh 0 rgb(255, 255, 255);
+    padding:1vh;
+    letter-spacing: 0.1vh;
+    transition: all 0.15s linear;
+    font-size: 2vh;
+    margin: 1vh;
+    cursor: pointer;
+}
+
+.login input[type=submit]:active {
+    color:#007d04
+}
+
+.login input[type=submit]:hover {
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    box-shadow: #faebd726 0 0.8vh 1.5vh;
+    transform: translateY(-0.4vh);
+}
+/* END Login-Register form CSS*/
+
+/* Profile page CSS */
+.flash-list {
+    overflow: scroll;
+    width: 68%;
+    float: right;
+    height : 29vh;
+    text-align: left;
+    scroll-snap-type: y mandatory;
+}
+
+.flash-list .set {
+    height: 29%;
+    width: 25vh;
+    font-size: 2vh;
+}
+
+#flashcard-set-profile {
+    font-size: 2vh;
+}
+
+.flashcard-unit-image {
+    width: 6%;
+    float: right;
+    margin:2%;
+}
+
+.flashcard-unit-image img {
+    width: 100%;
+}
+
+.flashcard-unit-text {
+    width: 85%;
+    float: left;
+    text-align: center;
+    margin: 3% 0 0 5%;
+}
+
+#flash-profile {
+    font-size: 3vh;
+    float: left;
+    width: 31%;
+    height : 60vh;
+    overflow: scroll;
+}
+
+.profile-value {
+    text-align: left;
+    display: flex;
+    padding: 2vh;
+}

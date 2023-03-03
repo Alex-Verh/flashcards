@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
 
+{% block head -%}
+    {{super()}}
+    <link href="{{ url_for('static', filename='css/users.css') }}" rel="stylesheet" type="text/css">
+{% endblock %}
+
 {% block title %}Home - {% endblock %}
 
 {% block header -%}
@@ -28,7 +33,7 @@
                 <div class = "flashcard-unit-text">{{card_set.title}}</div>
                 <div class = "flashcard-unit-image" onclick = "deleteCardSet('{{card_set.id}}')"><img src="{{ url_for('static', filename='images/remove.png') }}" alt="Delete"></div>
             </div>
-            {% endfor -%}'
+            {% endfor -%}
         </div>
 
         <h1>Your saved sets:</h1>

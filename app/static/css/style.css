@@ -37,7 +37,6 @@ body {
     color: #fff;
     overflow: hidden;
     position: relative;
-    height: 92vh;
 }
 
 a  {
@@ -67,96 +66,20 @@ a  {
     aspect-ratio: 1;
 }
 
-/* Search bar */
-#searchBox {
-    position: absolute;
-    z-index: 2;
-    left: 1%;
-    top: 30%;
-    border: 0.3vh solid #fff;
-    border-radius: 5vh;
-    padding: 0.5vh;
+#return img:hover {
+    transform: scale(1.2);
 }
-
-#searchBox:hover > #searchInput,
-#searchInput:not(:placeholder-shown) {
-    width: 50vh;
-    padding: 0 0 0 1vh;
-}
-
-#searchBox:hover > #searchButton {
-  color : #2f3640;
-  cursor: pointer;
-}
-
-#searchButton {
-    border: 0.1vh solid #fff;
-    float: right;
-    width: 3vh;
-    height: 3vh;
-    border-radius: 50%;
-    background: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: 0.4s;
-}
-
-#searchButton img {
-   width : 2vh;
-   height : 2vh;
-}
-
-#searchInput {
-    border:none;
-    background: none;
-    outline:none;
-    padding: 0;
-    color: #fff;
-    font-size: 2vh;
-    transition: 0.4s;
-    line-height: 3vh;
-    width:0;
-}
-
-/* end search bar */
 
 #main {
     text-align: center;
-    height: 85%;
+    height: 87vh;
     overflow: scroll;
-}
 
-#aside {
-    float : right;
-    width : 25%;
-    font-size: 2.5vh;
-    text-align: left;
-}
-
-#aside-list {
-    overflow: scroll;
-    height: 65vh;
-    scroll-snap-type: y mandatory;
-    text-align: center;
-}
-
-.category {
-    padding : 2%; 
-    border-bottom: 0.1vh solid #fff;
-    border-top: 0.1vh solid #ffffff20;
-    border-radius: 1.5vh;
-    margin: 3%;
-    scroll-snap-align: end;
 }
 
 #mainText {
     margin: 0 20%;
     font-size: 2.5vh;
-}
-
-#about {
-    margin-bottom: 11.5%;
 }
 
 /* Enter button CSS*/
@@ -173,138 +96,12 @@ a  {
     box-shadow: 0px 0.1vh 0 #007d04;
 }
 
-#button:focus {
+#button:active {
     color:#007d04
 }
 /* END Enter as a Guest button CSS*/
 
-/* Contact Us form CSS*/
-.contact-us {
-	width: 45%;
-	padding: 2% 2.5% 0.5% 2.5%;
-	border: 0.4vh solid #faebd7;
-    border-radius: 1.5vh;
-    margin: 0 auto;
-    color: #fff;
-    margin-bottom: 1.5%;
-    font-size: 2.5vh;
-}
-.contact-us input[type=submit],
-.contact-us input[type=text],
-.contact-us input[type=email]
-{
-    color: #fff;
-}
 
-.contact-us label {
-	margin-bottom: 4%;
-    width: 20%;
-    display: inline-block;
-}
-
-.contact-us input[type=text],
-.contact-us input[type=email] {
-	background: transparent;
-	border: hidden;
-	border-bottom: 0.1vh dashed #faebd7;
-	width: 65%;
-	outline: none;
-	font-style: italic;
-    margin-bottom: 4%;
-    font-size: 2.5vh;
-    margin-left : 6%;
-}
-
-
-.contact-us input[type=text]:focus,
-.contact-us input[type=email]:focus {
-	border-bottom: 0.1vh dashed #d8ffa8;
-}
-
-.login input[type=submit]:focus,
-.contact-us input[type=submit]:focus {
-    color:#007d04
-}
-
-/* END Contact Us form CSS*/
-
-#faq {
-    margin: 5%;
-}
-
-.faq summary {
-    cursor: pointer;
-    color:#fff;
-    text-decoration:0.1vh underline;
-    font-size: 3vh;
-    margin-bottom: 2.8%;
-}
-
-/* Login-Register form CSS*/
-.login {
-	width: 60%;
-	padding: 1.8% 2.5% 0.5% 2.5%;
-    border-radius: 15px;
-    margin: .5% auto;
-    color: #fff;
-    margin-top: 7%;
-    font-size: 2.5vh;
-
-}
-.login input[type=submit],
-.login input[type=password],
-.login input[type=text]
-{
-	color: #fff;
-
-}
-.login label {
-	margin-bottom: 4%;
-    width: 30%;
-    display: inline-block;
-    text-align: left;
-}
-
-.login input[type=text],
-.login input[type=password] {
-	background: transparent;
-	border: hidden;
-	border-bottom: 0.1vh dashed #faebd7;
-	width: 63%;
-	outline: none;
-	font-style: italic;
-    margin-bottom: 1.5%;
-    font-size: 2.5vh;
-    margin-left : 4%;
-}
-
-
-.login input[type=text]:focus,
-.login input[type=password]:focus {
-	border-bottom: 0.1vh dashed #d9ffa9;
-}
-
-.contact-us input[type=submit],
-.login input[type=submit] {
-    background: none;
-	border: none;
-    box-shadow: 0px 0.1vh 0 rgb(255, 255, 255);
-    padding:1vh;
-    letter-spacing: 0.1vh;
-    transition: all 0.15s linear;
-    font-size: 2vh;
-    margin: 1vh;
-    cursor: pointer;
-}
-
-/* END Login-Register form CSS*/
-
-.contact-us input[type=submit]:hover,
-.login input[type=submit]:hover {
-    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
-    box-shadow: #faebd726 0 0.8vh 1.5vh;
-    transform: translateY(-0.4vh);
-}
 
 .invalid::placeholder {
     color: #ff0000bf;
@@ -333,154 +130,22 @@ input:-webkit-autofill{
     margin-left: 3.3%;
 }
 
-/* CSS for flashcards in dashboard */
-#dash {
-    float : left;
-    width : 70%;
-    font-size: 2vh;
-    text-align: left;
-    margin-left: 2%; 
-}
 
-#dash-list {
-    overflow: scroll;
-    height: 66vh;
-    scroll-snap-type: y mandatory;
-}
-
+/* CSS part of users and main page */
 .set {
     font-size : 2.3vh;
-    margin : 0 1% 1% 2%;
+    margin : 0 1% 1.5% 2%;
     float : left;
     border-radius: 1.5vh;
-    scroll-snap-align: end;
-    height: 23%;
-    width: 28vh;  
+    scroll-snap-align: start;
+    height: 22%;
+    width: 21%;
+    min-width: 15vh;  
     border: 0.1vh solid #ffffff00;
     border-top: 0.1vh solid #fff;
     box-shadow: rgba(255, 255, 255, 0.25) 0.5vh 1.4vh 2vh, rgba(255, 255, 255, 0.22) 0 1vh 1vh;
     transition: all 0.5s ease-in-out;
     cursor: pointer;
-}
-
-.set:hover {
-    border: 0.1vh solid #fff;
-    box-shadow: none;
-}
-
-.set:focus {
-    box-shadow: rgba(255, 255, 255, 0.25) 0.5vh 1.4vh 2.8vh, rgba(255, 255, 255, 0.22) 0 1vh 1vh;
-}
-
-.set-screen {
-    padding: 0 5% 0 5%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 75%;
-}
-
-.set-modulate {
-    overflow: hidden;
-    margin : 2%;
-}
-
-.image-save {
-    margin-right: 3%;
-    margin-bottom: 10%;
-    float : right;
-    width : 8%;
-    aspect-ratio: 1;
-    cursor: pointer;
-}
-
-/* .flashcard {
-    border : #faebd7 0.1vh solid;
-    font-size : 2vh;
-    margin : 1%;
-    float : left;
-    border-radius: 1.5vh;
-}
-
-.flash-screen {
-    height: 15vh;
-    width: 30vh;
-    position: relative;
-    text-align: center;
-    transition: transform 0.8s;
-    transform-style: preserve-3d;
-} */
-
-/* Do an horizontal flip when you move the mouse over the flip box container
-.flashcard:hover .flash-screen {
-    transform: rotateY(180deg);
-} */
-  
-/* Position the front and back side */
-/* .flash-card-front, .flash-card-back {
-    position: absolute;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-} */
-  
-/* Style the front side (fallback if image is missing) */
-/* .flash-card-front {
-    height: 15vh;
-    width: 30vh;
-    margin : auto;
-} */
-  
-/* Style the back side */
-/* .flash-card-back {
-    height: 15vh;
-    width: 30vh;
-    transform: rotateY(180deg);
-} */
-
-.flash-list {
-    overflow: scroll;
-    width: 68%;
-    float: right;
-    height : 29vh;
-    text-align: left;
-    scroll-snap-type: y mandatory;
-}
-
-.flash-list .set {
-    height: 29%;
-    width: 25vh;
-    font-size: 2vh;
-}
-
-.flashcard-unit-image {
-    width: 6%;
-    float: right;
-    margin:2%;
-}
-
-.flashcard-unit-image img {
-    width: 100%;
-}
-
-.flashcard-unit-text {
-    width: 85%;
-    float: left;
-    text-align: center;
-    margin: 3% 0 0 5%;
-}
-
-#flash-profile {
-    font-size: 3vh;
-    float: left;
-    width: 31%;
-    height : 60vh;
-    overflow: scroll;
-}
-
-.profile-value {
-    text-align: left;
-    display: flex;
-    padding: 2vh;
 }
 
 /* CSS for pointer blur */
@@ -766,6 +431,7 @@ input[type="radio"]{
   color: #fff;
 }
 /*end radio-choice*/
+/*end create-set window CSS */
 
 /* CSS for menu */
 #menu{
@@ -850,6 +516,10 @@ input[type="radio"]{
     border-bottom: 0.3vh solid rgb(255, 255, 255);
 } 
 
+.navMenu a:active {
+    border-bottom: 0.3vh solid rgb(0, 145, 7);
+} 
+
 #active[type="checkbox"]{
     display: none;
 }
@@ -886,7 +556,7 @@ input[type="radio"]{
 .image:hover{
     transform: scale(1.2);
 }
-  /* end CSS for menu */
+/* end CSS for menu */
 
   
 *::-webkit-scrollbar-corner {
