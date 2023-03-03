@@ -4,7 +4,12 @@
 
 {% block header %}
     {{ super() }}
-    {% include "snippets/search.html" %}
+    <form id="searchBox">
+        <input id="searchInput" type="text" name="q" placeholder="Search.." autocomplete="off" required>
+        <button id="searchButton" href="#">
+            <img src="{{ url_for('static', filename='images/search.png') }}" alt="S">
+        </button>
+    </form>
 {% endblock %}
 
 {% block main %}
@@ -15,16 +20,6 @@
         <h3 style="text-align: left; font-size: 3vh;">Popular sets:</h3>
         {% endif -%}
         <div id = dash-list>
-            <template id="cardset-template">
-                <div class="set">
-                    <div class = "set-screen" id="cardset-title"></div>
-                    <div class = "set-modulate">
-                        <span id="saves-count"></span>
-                        <img id="save-cardset" onclick="" class = "image-save" src="" alt="Save">
-                    </div>
-                </div>
-            </template>
-
             <div style="float: left", id="sentinel">
                 <img id="loading-gif" src="{{url_for('static', filename='images/loading.gif')}}" width="50px">
             </div>

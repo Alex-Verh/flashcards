@@ -47,7 +47,6 @@ def save_cardset(id):
 @bp.route('/cardsets', methods=['POST'])
 def cardsets():
     dict_sort_by = {'saves': 'total_saves', 'date': 'card_sets.created_at', 'title': 'card_sets.title'}
-    print(request.form)
     try:
         page = int(request.form.get('page'))
         cardsets_quantity = int(request.form.get('cardsets_quantity'))
