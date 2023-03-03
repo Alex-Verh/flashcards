@@ -82,27 +82,6 @@ a  {
     font-size: 2.5vh;
 }
 
-/* Enter button CSS*/
-#button {
-    box-shadow: 0px 0.1vh 0 rgb(255, 255, 255);
-    padding:1vh;
-    letter-spacing: 0.1vh;
-    transition: all 0.15s linear;
-    font-size: 3vh;
-    cursor: pointer;
-}
-  
-#button:hover {
-    box-shadow: 0px 0.1vh 0 #007d04;
-}
-
-#button:active {
-    color:#007d04
-}
-/* END Enter as a Guest button CSS*/
-
-
-
 .invalid::placeholder {
     color: #ff0000bf;
     font-size : 2vh;
@@ -146,6 +125,7 @@ input:-webkit-autofill{
     box-shadow: rgba(255, 255, 255, 0.25) 0.5vh 1.4vh 2vh, rgba(255, 255, 255, 0.22) 0 1vh 1vh;
     transition: all 0.5s ease-in-out;
     cursor: pointer;
+    background-color: #00000059;
 }
 
 /* CSS for pointer blur */
@@ -179,39 +159,38 @@ input:-webkit-autofill{
 }
 
 /* CSS for window-creation of new sets */
-.create-set {
-    border: 0.5vh solid #faebd7;
-    color: #faebd7;
-    display: inline-block;
-    font-size: 3vh;
-    border-radius: 3vh;
-    padding: 1% 2%;
-    text-decoration: none;
-    text-align: center;
-    position: relative;
-    transition: color .1s ease;
-    margin:1%;
-    transition: all .5s ease-in-out;
+#window-submit {
     background: none;
+    color:#fff;
+    font-size: 3vh;
+    margin: 2vh;
+    border: 0.1vh solid #fff;
+    padding: 1vh;
+    border-radius: 0.5vh;
+    cursor: pointer;
+    transition: all 0.15s linear;
 }
 
-.create-set:hover {
-    background: #faebd780;
+#window-submit:hover {
+    box-shadow:0 0.5vh 1vh #ffffff80;
 }
 
-.window-bottom, 
-.window-main {
+#window-submit:hover {
+    box-shadow:0 0.5vh 1vh #ffffff80;
+}
+
+#window-bottom, 
+#window-main {
     padding: 1vh 2vh;
 }
 
-.window-header {
+#window-header {
     border-bottom: #eee solid 1px;
     padding: 1vh 2vh;
     font-size: 3vh;
-
 }
 
-.close-creation {
+#close-creation {
     color: #e60023;
     font-size: 5vh;
     text-decoration: none;
@@ -221,11 +200,11 @@ input:-webkit-autofill{
     top: 0;
 }
   
-.close-creation:hover {
+#close-creation:hover {
     color: #333;
 }
   
-.around-creation:before {
+#around-creation:before {
     content: "";
     display: none;
     background: rgba(0, 0, 0, 0.7);
@@ -240,14 +219,14 @@ input:-webkit-autofill{
     display: block;
 }
 
-.transit .window {
+.transit #window {
     transform: translate(0, 0);
     top: 15%;
 }
 
-.window {
-    background-color: #000000ca;
-    border: 0.5vh solid #faebd7;
+#window {
+    background-color: #000;
+    border: 0.5vh solid #fff;
     border-radius: 0.5vh;
     margin-left: -35%;
     text-align:center;
@@ -256,7 +235,7 @@ input:-webkit-autofill{
     top: -100%;
     z-index: 11;
     width: 70%;
-    box-shadow:0 5vh 10vh #ffffff80;
+    box-shadow: 0 5vh 10vh #ffffff80;
     transform: translate(0, -500%);
     transition: transform 0.3s ease-out;
 }
@@ -273,7 +252,7 @@ input:-webkit-autofill{
     margin-top: 1vh;
     background: transparent;
 	border: hidden;
-	border-bottom: 0.1vh dashed #faebd7;
+	border-bottom: 0.1vh dashed #fff;
 }
 
 #window-name:focus {
@@ -281,7 +260,7 @@ input:-webkit-autofill{
 }
 
 /*Styling Selectbox*/
-.dropdown {
+#dropdown {
     width: 32vh;
     display: inline-block;
     background-color: #000;
@@ -295,29 +274,29 @@ input:-webkit-autofill{
     text-align: left
 }
 
-.dropdown .select {
+#dropdown .select {
     cursor: pointer;
     display: block;
     padding: 1vh;
     text-align: center;
 }
 
-.dropdown:hover {
+#dropdown:hover {
     box-shadow: 0 0 0.5vh #ccc;
 }
 
-.dropdown:active {
+#dropdown:active {
     background-color: #000;
 }
 
-.dropdown.active:hover,
-.dropdown.active {
+#dropdown.active:hover,
+#dropdown.active {
     box-shadow: 0 0 0.4vh #ccc;
     border-radius: 0.2vh 0.2vh 0 0;
     background-color: #000;
 }
 
-.dropdown .dropdown-menu {
+#dropdown #dropdown-menu {
     position: absolute;
     background-color: #000;
     width: 100%;
@@ -333,22 +312,22 @@ input:-webkit-autofill{
     scroll-snap-type: y mandatory;
 }
 
-.dropdown .dropdown-menu li {
+#dropdown #dropdown-menu li {
     padding: 1vh;
     transition: all .2s ease-in-out;
     cursor: pointer;
     scroll-snap-align: start;
 } 
-.dropdown .dropdown-menu {
+#dropdown #dropdown-menu {
     padding: 0;
     list-style: none;
 }
 
-.dropdown .dropdown-menu li:hover {
+#dropdown #dropdown-menu li:hover {
     background-color: #323232;
 }
 
-.dropdown .dropdown-menu li:active {
+#dropdown #dropdown-menu li:active {
     background-color: #1f1f1f
 }
 
@@ -518,6 +497,7 @@ input[type="radio"]{
 
 .navMenu a:active {
     border-bottom: 0.3vh solid rgb(0, 145, 7);
+    transition: 0.1s;
 } 
 
 #active[type="checkbox"]{
@@ -557,7 +537,6 @@ input[type="radio"]{
     transform: scale(1.2);
 }
 /* end CSS for menu */
-
   
 *::-webkit-scrollbar-corner {
     display: none;
@@ -568,6 +547,6 @@ input[type="radio"]{
 }
 
 *::-webkit-scrollbar-thumb {
-    background-color: #faebd7;    /* color of the scroll thumb */
+    background-color: #fff;    /* color of the scroll thumb */
     border-radius: 2vh;       /* roundness of the scroll thumb */
   }

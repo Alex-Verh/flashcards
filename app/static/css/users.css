@@ -27,7 +27,7 @@
 .login input[type=password] {
 	background: transparent;
 	border: hidden;
-	border-bottom: 0.1vh dashed #faebd7;
+	border-bottom: 0.1vh dashed #fff;
 	width: 63%;
 	outline: none;
 	font-style: italic;
@@ -60,7 +60,7 @@
 
 .login input[type=submit]:hover {
     transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
-    box-shadow: #faebd726 0 0.8vh 1.5vh;
+    box-shadow: #ffffff26 0 0.8vh 1.5vh;
     transform: translateY(-0.4vh);
 }
 /* END Login-Register form CSS*/
