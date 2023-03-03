@@ -80,11 +80,9 @@ document.body.onpointermove = event => {
 // Search
 function searchCardSets(event) {
   event.preventDefault();
-  dashListEl.innerHTML = ''
-  dashListEl.appendChild(sentinel)
-  page = 1
+  dashListEl.replaceChildren(sentinel)
+  page = 0
   searchQuery = searchInput.value
-  loadCardSets()
 }
 searchBox.addEventListener('submit', searchCardSets);
 
@@ -105,22 +103,22 @@ function loadCardSets() {
   })
     .then(response => response.json())
     .then(data => {
-      if (!data.length) {
-        sentinel.innerHTML = ''
-      }
-      dashListEl.removeChild(sentinel)
+      sentinel.remove();
+
+      if (!data.length) {return}
+
       for (var i = 0; i < data.length; i++) {
-        const cardSetEl = document.createElement('div')
-        cardSetEl.classList.add('set')
+        const cardSetEl = document.createElement('div');
+        cardSetEl.classList.add('set');
         cardSetEl.innerHTML = 
            `<div class = "set-screen">${data[i].title}</div>
             <div class = "set-modulate">
                 <span id="saves-count-${data[i].id}">${data[i].saves}</span>
                 <img id="save-cardset-${data[i].id}" onclick="saveCardSet(${data[i].id})" class = "image-save" src="${data[i].save_img_url}" alt="Save">
-            </div>`
-        dashListEl.appendChild(cardSetEl)
+            </div>`;
+        dashListEl.appendChild(cardSetEl);
       }
-      dashListEl.appendChild(sentinel)
+      if (data.length >= 24) {dashListEl.appendChild(sentinel);}
     })
 }
 
@@ -128,9 +126,8 @@ var intersectionObserver = new IntersectionObserver(entries => {
   if (entries[0].intersectionRatio <= 0) {
     return;
   }
-  page += 1
-
-  loadCardSets()
+  page += 1;
+  loadCardSets();
 })
 intersectionObserver.observe(sentinel)
 
