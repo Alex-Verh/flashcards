@@ -358,7 +358,7 @@ input:-webkit-autofill{
     border: 0.1vh solid #ffffff00;
     border-top: 0.1vh solid #fff;
     box-shadow: rgba(255, 255, 255, 0.25) 0.5vh 1.4vh 2vh, rgba(255, 255, 255, 0.22) 0 1vh 1vh;
-    transition: all 1s ease-in-out;
+    transition: all 0.5s ease-in-out;
     cursor: pointer;
 }
 

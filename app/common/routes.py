@@ -1,8 +1,7 @@
 from . import bp
 from flask import render_template, flash, redirect, url_for
 from .forms import ContactForm
-from flask_mail import Message
-from app.extensions import mail
+from ..funcs import send_feedback_email
 
 
 @bp.route('/about')
@@ -19,12 +18,7 @@ def help():
 def contact():
     form = ContactForm()
     if form.validate_on_submit():
-        msg = Message('Feedback',
-                  sender=('FlashCards', 'noreply@demo.com'),
-                  recipients=['denis.bargan2006@gmail.com', 'signey03@gmail.com'])
-        msg.body = f'Name: {form.name.data}\n\nEmail: {form.email.data}\n\nTitle: {form.title.data}\n\nMessage:\n{form.message.data}'
-        print(msg)
-        mail.send(msg)
+        send_feedback_email(form)
         flash('Your message has been sent successfully', category='success')
         return redirect(url_for('common.contact'))
     

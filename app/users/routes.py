@@ -3,8 +3,8 @@ from flask import render_template, redirect, url_for, request, flash
 from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from .forms import LoginForm, RegisterForm
-from app.extensions import db
-from app.models import User, CardSetCategory
+from ..extensions import db
+from ..models import User, CardSetCategory
 
 
 @bp.route('/login', methods=['POST', 'GET'])
