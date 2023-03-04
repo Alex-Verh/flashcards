@@ -11,6 +11,4 @@
 /migrations/versions/__pycache__
 /tests/__pycache__
 .env
-.env.example
 base.db
-example.json
