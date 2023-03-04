@@ -46,7 +46,6 @@ def save_cardset(id):
 
 @bp.route('/cardsets', methods=['POST'])
 def cardsets():
-    print(request.form)
     dict_sort_by = {'saves': 'total_saves', 'date': 'card_sets.created_at', 'title': 'card_sets.title'}
     try:
         page = int(request.form.get('page'))
@@ -74,7 +73,6 @@ def cardsets():
         
     query = query.group_by(CardSet.id).order_by(db.text(f"{dict_sort_by[sort_by]} {sort_order}"))\
         .limit(cardsets_quantity).offset((page-1)*cardsets_quantity)
-    print(query)
     result = []
     for row in query:
         try:

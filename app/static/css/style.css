@@ -175,10 +175,6 @@ input:-webkit-autofill{
     box-shadow:0 0.5vh 1vh #ffffff80;
 }
 
-#window-submit:hover {
-    box-shadow:0 0.5vh 1vh #ffffff80;
-}
-
 #window-bottom, 
 #window-main {
     padding: 1vh 2vh;
