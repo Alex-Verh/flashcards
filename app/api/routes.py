@@ -53,9 +53,11 @@ def cardsets():
         search_query = request.form.get('search_q')
         sort_by = request.form.get('sort_by') or 'saves'
         sort_order = request.form.get('sort_order') or 'desc'
+        category = int(request.form.get('category'))
         
         if page <= 0 or cardsets_quantity <= 0 or sort_by not in dict_sort_by or sort_order not in ['asc', 'desc']:
             raise ValueError
+        
     except (ValueError, TypeError):
         return jsonify({'error': 'Invalid request parameters'}), 400
         
@@ -65,6 +67,9 @@ def cardsets():
         
     if search_query:
         query = query.filter(CardSet.title.like('%' + search_query + '%'))
+    
+    if category:
+        query = query.filter(CardSet.category_id == category)
         
     query = query.group_by(CardSet.id).order_by(db.text(f"{dict_sort_by[sort_by]} {sort_order}"))\
         .limit(cardsets_quantity).offset((page-1)*cardsets_quantity)

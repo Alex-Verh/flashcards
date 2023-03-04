@@ -20,6 +20,7 @@ const searchInput = document.getElementById('searchInput')
 var searchQuery = ''
 var sortBy = ''
 var sortOrder = ''
+var categoryId = '0'
 
 // New card set creation
 const dropdown = document.querySelector('#dropdown');
@@ -76,13 +77,19 @@ document.body.onpointermove = event => {
 }
 
 // Search
-function searchCardSets(event) {
+$('#searchBox').on('submit', function (event) {
   event.preventDefault();
   dashListEl.replaceChildren(sentinel)
   page = 0
   searchQuery = searchInput.value
-}
-searchBox.addEventListener('submit', searchCardSets);
+})
+
+$('.category').click(function(event) {
+  dashListEl.replaceChildren(sentinel)
+  page = 0
+  categoryId = this.id
+  console.log(categoryId)
+})
 
 
 // Card set dynamic loading
@@ -94,6 +101,7 @@ function loadCardSets() {
   postData.append('search_q', searchQuery);
   postData.append('sort_by', sortBy);
   postData.append('ort_order', sortOrder);
+  postData.append('category', categoryId)
 
   fetch('/api/cardsets', {
     method: 'POST',

@@ -36,8 +36,9 @@
     <div id = "aside">
         <h3>Categories:</h3>
         <div id = "aside-list">
+            <div id="0" class = "category">All categories</div>
             {% for category in categories -%}
-            <a href="#"><div class = "category">{{category.title}}</div></a>
+                <div id="{{category.id}}" class = "category">{{category.title}}</div>
             {% endfor %}
         </div>
     </div>
