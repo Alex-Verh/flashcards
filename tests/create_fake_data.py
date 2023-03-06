@@ -21,8 +21,8 @@ def create_users(db, quantity=500):
     for _ in range(quantity):
         username = fake.unique.user_name()
         user = User(
+            email = fake.unique.email(),
             username=username,
-            name=fake.name(),
             password=generate_password_hash(username.capitalize()),
             created_at=fake.date_time_this_year()
             )

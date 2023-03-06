@@ -11,8 +11,8 @@ user_cardset_assn = db.Table('user_cardset_assn',
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50), nullable=False)
     username = db.Column(db.String(50), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(500), nullable=False)
     created_at = db.Column(db.DateTime(timezone=True), default=func.now())
     
