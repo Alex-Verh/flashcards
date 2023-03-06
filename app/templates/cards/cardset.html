@@ -9,4 +9,13 @@
 
 {% block main %}
     <h1>{{cardset.title}}</h1>
+    <div id = "card_set-buttons">
+        <a href="#">Add new card</a>
+        <a href="#">Learn</a>
+    </div>
+    <div id = "flashcards">
+        {% for card_set in current_user.own_cardsets -%}
+        
+        {% endfor -%}
+    </div>
 {% endblock %}

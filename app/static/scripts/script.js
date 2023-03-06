@@ -117,7 +117,10 @@ function loadCardSets() {
         const cardSetEl = document.createElement('div');
         cardSetEl.classList.add('set');
         cardSetEl.innerHTML = 
-           `<div class = "set-screen">${data[i].title}</div>
+        //!TODO fix a link href
+          ` <a href="{{ url_for('cards.cardset', id=card_set.id) }}">
+            <div class = "set-screen">${data[i].title}</div>
+            </a>
             <div class = "set-modulate">
                 <span id="saves-count-${data[i].id}">${data[i].saves}</span>
                 <img id="save-cardset-${data[i].id}" onclick="saveCardSet(${data[i].id})" class = "image-save" src="${data[i].save_img_url}" alt="Save">
