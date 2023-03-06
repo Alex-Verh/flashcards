@@ -122,11 +122,22 @@ input:-webkit-autofill{
     min-width: 15vh;  
     border: 0.1vh solid #ffffff00;
     border-top: 0.1vh solid #fff;
-    box-shadow: rgba(255, 255, 255, 0.25) 0.5vh 1.4vh 2vh, rgba(255, 255, 255, 0.22) 0 1vh 1vh;
+    box-shadow: rgba(255, 255, 255, 0.25) 0.3vh 1vh 1.6vh, rgba(255, 255, 255, 0.22) 0 0.8vh 0.8vh;
     transition: all 0.5s ease-in-out;
     cursor: pointer;
     background-color: #00000059;
 }
+
+.set:hover {
+    border: 0.1vh solid #fff;
+    box-shadow: none;
+}
+
+.set:active {
+    box-shadow: rgba(255, 255, 255, 0.25) 0.5vh 1.4vh 2.8vh, rgba(255, 255, 255, 0.22) 0 1vh 1vh;
+    transition: 0.1s;
+}
+
 
 /* CSS for pointer blur */
 #blob {
