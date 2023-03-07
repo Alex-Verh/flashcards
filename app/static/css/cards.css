@@ -21,7 +21,7 @@
     top: -100%;
     z-index: 11;
     width: 90%;
-    box-shadow: 0 5vh 10vh #ffffff80;
+    box-shadow: 0 3vh 5vh #ffffff80;
     transform: translate(0, -500%);
     transition: transform 0.3s ease-out;
 }
@@ -49,11 +49,22 @@
     color: #333;
 }
 
+#constructor-bottom {
+    margin : 1%;
+    padding: 1%;
+}
+
 .flashcard-part {
     display: inline-block;
     border: 0.1vh solid #fff;
     border-radius: 5vh;
-    width: 70vh;
+    width: 75vh;
     height:50vh;
     margin-top:10%;
+    margin-bottom: 5%;
+    margin-inline: 1%;
+}
+
+.flashcard-part:focus {
+    border: 0.3vh solid #fff;
 }
