@@ -184,6 +184,16 @@ options.forEach(option => {
   });
 });
 
+// New flashcard creation
+$('#create-flashcard').click(function (e) {
+  e.preventDefault();
+  console.log('open')
+  $('#constructor').addClass('transit');
+  });
+$('#close-addition').click(function (e) {
+e.preventDefault();
+$('#constructor').removeClass('transit');
+});
 
 // New card set creation
 $('#open-window').click(function (e) {

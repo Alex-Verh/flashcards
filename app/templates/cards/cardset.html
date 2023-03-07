@@ -5,17 +5,19 @@
 {% block header -%}
     {{super()}}
     <a id = "return" onclick="history.back()"><img src="../static/images/return.png" alt="Return Back"> </a>
+    {%  include "snippets/constructor.html" %}
 {% endblock -%}
 
 {% block main %}
     <h1>{{cardset.title}}</h1>
     <div id = "card_set-buttons">
-        <a href="#">Add new card</a>
+        <a href="#" id="create-flashcard">Add new</a>
+
         <a href="#">Learn</a>
     </div>
     <div id = "flashcards">
-        {% for card_set in current_user.own_cardsets -%}
-        
+        {% for flashcard in cardset.flashcards -%}
+
         {% endfor -%}
     </div>
 {% endblock %}
