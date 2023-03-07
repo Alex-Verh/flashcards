@@ -6,7 +6,7 @@
 
 {% block header %}
     {{ super() }}
-    <form id="searchBox", onsubmit="search()">
+    <form id="searchBox">
         <input id="searchInput" type="text" name="q" placeholder="Search.." autocomplete="off" required>
         <button id="searchButton" href="#">
             <img src="{{ url_for('static', filename='images/search.png') }}" alt="S">
@@ -36,9 +36,9 @@
     <div id = "aside">
         <h3>Categories:</h3>
         <div id = "aside-list">
-            <div id="0" class = "category">All categories</div>
+            <div data-id="0" class = "category">All categories</div>
             {% for category in categories -%}
-                <div id="{{category.id}}" class = "category">{{category.title}}</div>
+                <div data-id="{{category.id}}" class = "category">{{category.title}}</div>
             {% endfor %}
         </div>
     </div>

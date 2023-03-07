@@ -17,7 +17,7 @@
                 <input type="hidden" name="category" value="none">
                 <ul id="dropdown-menu">
                     {% for category in categories -%}
-                    <li id='{{category.id}}'>{{category.title}}</li>
+                    <li data-id="{{category.id}}">{{category.title}}</li>
                     {% endfor %}
                 </ul>
             </div>
