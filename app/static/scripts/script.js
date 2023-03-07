@@ -58,14 +58,18 @@ function getCookie(name) {
 
 
 // Background
-$(document).ready(function() {
+document.addEventListener("DOMContentLoaded", function(event) { 
   background.style.backgroundImage = getCookie('background_url');
 });
 
-$('.background').click(function() {
-  $('body').css('backgroundImage', `url(${this.src})`)
-  setCookie('background_url', `url(${this.src})`)
+document.querySelectorAll('.background').forEach((element) => {
+  element.addEventListener('click', () => {
+    document.body.style.backgroundImage = `url(${element.src})`
+    setCookie('background_url', `url(${element.src})`)
+  })
+  
 })
+
 
 // Cursor visual effect
 document.body.onpointermove = event => {
@@ -76,13 +80,14 @@ document.body.onpointermove = event => {
   }, { duration: 3000, fill: "forwards" });
 }
 
-// Search
+
 $('#searchBox').on('submit', function (event) {
   event.preventDefault();
   dashListEl.replaceChildren(sentinel)
   page = 0
   searchQuery = searchInput.value
 })
+
 
 $('.category').click(function(event) {
   dashListEl.replaceChildren(sentinel)
@@ -118,7 +123,7 @@ function loadCardSets() {
         cardSetEl.classList.add('set');
         cardSetEl.innerHTML = 
         //!TODO fix a link href
-          ` <a href="{{ url_for('cards.cardset', id=card_set.id) }}">
+          ` <a href="${data[i].url}">
             <div class = "set-screen">${data[i].title}</div>
             </a>
             <div class = "set-modulate">
@@ -138,7 +143,7 @@ var intersectionObserver = new IntersectionObserver(entries => {
   page += 1;
   loadCardSets();
 })
-intersectionObserver.observe(sentinel)
+if (sentinel) {intersectionObserver.observe(sentinel)}
 
 
 // Card Set
@@ -183,6 +188,7 @@ options.forEach(option => {
 // New card set creation
 $('#open-window').click(function (e) {
   e.preventDefault();
+  console.log('open')
   $('#around-creation').addClass('transit');
   });
 $('#close-creation').click(function (e) {

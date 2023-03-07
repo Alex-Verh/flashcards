@@ -81,7 +81,8 @@ def cardsets():
             saved = False
         save_img_fn = 'images/save1.png' if saved else 'images/save2.png'
         save_img_url = url_for('static', filename=save_img_fn)
-        cardset = {'id': row[0].id, 'title': row[0].title, 'saves': row[1], 'saved':saved, 'save_img_url':save_img_url }
+        url = url_for('cards.cardset', id=row[0].id)
+        cardset = {'id': row[0].id, 'title': row[0].title, 'saves': row[1], 'saved': saved, 'save_img_url': save_img_url, 'url': url }
         result.append(cardset)
         
     return jsonify(result), 200

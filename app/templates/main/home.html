@@ -6,7 +6,7 @@
 
 {% block header %}
     {{ super() }}
-    <form id="searchBox">
+    <form id="searchBox", onsubmit="search()">
         <input id="searchInput" type="text" name="q" placeholder="Search.." autocomplete="off" required>
         <button id="searchButton" href="#">
             <img src="{{ url_for('static', filename='images/search.png') }}" alt="S">

@@ -13,5 +13,5 @@ def send_verification_email(verification_url, recipient):
     msg = Message('Verify your email',
                   sender=('FlashCards', 'noreply@demo.com'),
                   recipients=[recipient])
-    msg.body = f'Verify your email please: {verification_url}'
+    msg.body = f'Please, verify your email: {verification_url}'
     mail.send(msg)

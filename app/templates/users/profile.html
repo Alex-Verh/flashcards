@@ -4,10 +4,10 @@
 
 {% block title %}Home - {% endblock %}
 
-{% block header -%}
+{% block header %}
     {{ super() }}
     <div id = "return" onclick="{history.back()}"><img src="{{url_for('static', filename='images/return.png')}}" alt="Return Back"></div>
-{% endblock -%}
+{% endblock %}
 
 {% block main %}
     <div id="flash-message"></div>
@@ -15,8 +15,8 @@
         <h1>
             Your Profile:
         </h1>
-        <div class = "profile-value"><strong>Name:</strong>&emsp;<span>{{current_user.name}}</span></div>
         <div class = "profile-value"><strong>Username:</strong>&emsp;<span>{{current_user.username}}</span></div>
+        <div class = "profile-value"><strong>Email:</strong>&emsp;<span>{{current_user.email}}</span></div>
         <div class = "profile-value"><strong>Total Sets:</strong>&emsp;<span>{{current_user.own_cardsets.count()}}</span></div>
         <div class = "profile-value"><strong>Sets saved:</strong>&emsp;<span>{{current_user.own_cardsets.count()}}</span></div>
         <div class = "profile-value"><strong>Sets learned:</strong>&emsp;<span>{{current_user.own_cardsets.count()}}</span></div>

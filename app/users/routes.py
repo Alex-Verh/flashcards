@@ -49,7 +49,7 @@ def register():
         user_data = {'username':form.username.data,
                      'email': email,
                      'password': hashed_psw}
-        token = serializer.dumps(user_data, salt='email-confirm')
+        token = serializer.dumps(user_data, salt='email-confirm').encode('utf-8')
         verification_url = url_for('.confirm_email', token=token, _external=True)
         
         send_verification_email(verification_url, email)
