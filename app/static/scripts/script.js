@@ -1,33 +1,32 @@
-// GLOBAL CONSTANTS AND VARIABLES
-
-// Background
-const background = document.querySelector('body');
-const images = document.querySelectorAll('.background');
+// GLOBAL CONSTANTS AND VARIABLESownMe
 
 // Cursor visual effect
 const blob = document.getElementById("blob");
 
+// New card set creation
+const cardSetCreationDiv = document.querySelector('#around-creation');
+const dropdown = cardSetCreationDiv.querySelector('#dropdown');
+const dropdownMenu = dropdown.querySelector('#dropdown-menu')
+const categoryInput = dropdown.querySelector('input[name="category"]');
+const dropdownSpan = dropdown.querySelector('span');
+
+
+// HOME PAGE CONSTANTS AND VARIABLES
+
 // Cardsets loading
-var page = 0
-const cardSetsOnPage = 24
-const dashListEl = document.getElementById('dash-list')
-const sentinel = document.getElementById('sentinel')
+let page = 0;
+const cardSetsOnPage = 24;
+const dashListEl = document.getElementById('dash-list');
+const sentinel = document.getElementById('sentinel');
 
 // Search
-const searchBox = document.getElementById('searchBox')
-const searchButton = document.getElementById('searchButton')
-const searchInput = document.getElementById('searchInput')
-var searchQuery = ''
-var sortBy = ''
-var sortOrder = ''
-var categoryId = '0'
-
-// New card set creation
-const dropdown = document.querySelector('#dropdown');
-const input = dropdown.querySelector('input[name="category"]');
-const select = dropdown.querySelector('.select');
-const dropdownMenu = dropdown.querySelector('#dropdown-menu');
-const options = dropdownMenu.querySelectorAll('li');
+const searchBox = document.getElementById('searchBox');
+const searchButton = document.getElementById('searchButton');
+const searchInput = document.getElementById('searchInput');
+let searchQuery = '';
+let sortBy = '';
+let sortOrder = '';
+let categoryId = '0';
 
 
 // FUNCTIONS
@@ -57,20 +56,6 @@ function getCookie(name) {
 }
 
 
-// Background
-document.addEventListener("DOMContentLoaded", function(event) { 
-  background.style.backgroundImage = getCookie('background_url');
-});
-
-document.querySelectorAll('.background').forEach((element) => {
-  element.addEventListener('click', () => {
-    document.body.style.backgroundImage = `url(${element.src})`
-    setCookie('background_url', `url(${element.src})`)
-  })
-  
-})
-
-
 // Cursor visual effect
 document.body.onpointermove = event => {
   const { clientX, clientY } = event;
@@ -81,20 +66,47 @@ document.body.onpointermove = event => {
 }
 
 
-$('#searchBox').on('submit', function (event) {
+// Background
+function changeBackground(backgroundUrl) {
+  document.body.style.backgroundImage = backgroundUrl;
+}
+
+document.addEventListener("DOMContentLoaded", function(event) { 
+  changeBackground(getCookie('background_url'));
+});
+
+document.querySelector('.images').addEventListener('click', function(event) {
+  const backgroundImage = event.target.closest('.image .background');
+  if (backgroundImage) {
+    changeBackground(`url(${backgroundImage.src})`)
+    setCookie('background_url', `url(${backgroundImage.src})`)
+  }
+});
+
+
+// Search & sorting
+try {
+  document.querySelector('#searchBox').addEventListener('submit', function (event) {
   event.preventDefault();
   dashListEl.replaceChildren(sentinel)
   page = 0
   searchQuery = searchInput.value
 })
+}
+catch (e) {console.log(e)}
 
-
-$('.category').click(function(event) {
-  dashListEl.replaceChildren(sentinel)
-  page = 0
-  categoryId = this.id
-  console.log(categoryId)
-})
+try {
+  document.querySelector('#aside-list').addEventListener('click', function(event) {
+    const category = event.target.closest('.category')
+    if (category) {
+      dashListEl.replaceChildren(sentinel)
+      page = 0
+      categoryId = category.dataset.id
+      console.log(categoryId)
+    }
+  })
+}
+catch (e) {console.log(e)}
 
 
 // Card set dynamic loading
@@ -136,14 +148,15 @@ function loadCardSets() {
     })
 }
 
-var intersectionObserver = new IntersectionObserver(entries => {
+const intersectionObserver = new IntersectionObserver(entries => {
   if (entries[0].intersectionRatio <= 0) {
     return;
   }
   page += 1;
   loadCardSets();
 })
-if (sentinel) {intersectionObserver.observe(sentinel)}
+try {intersectionObserver.observe(sentinel)}
+catch (e) {console.log(e)}
 
 
 // Card Set
@@ -196,25 +209,55 @@ $('#constructor').removeClass('transit');
 });
 
 // New card set creation
-$('#open-window').click(function (e) {
-  e.preventDefault();
+dropdownMenu.addEventListener('click', function(event) {
+  const category = event.target.closest('li');
+  if (category) {
+    categoryInput.value = category.dataset.id
+    dropdownSpan.textContent = category.textContent.trim();
+  }
+})
+
+document.querySelector('#open-window').addEventListener('click', function(event) {
+  event.preventDefault();
   console.log('open')
-  $('#around-creation').addClass('transit');
+  $('#constructor').addClass('transit');
   });
-$('#close-creation').click(function (e) {
+$('#close-addition').click(function (e) {
 e.preventDefault();
-$('#around-creation').removeClass('transit');
+$('#constructor').removeClass('transit');
 });
 
-$('#dropdown').click(function () {
+// New card set creation
+dropdownMenu.addEventListener('click', function(event) {
+  const category = event.target.closest('li');
+  if (category) {
+    categoryInput.value = category.dataset.id
+    dropdownSpan.textContent = category.textContent.trim();
+  }
+})
+
+document.querySelector('#open-window').addEventListener('click', function(event) {
+  event.preventDefault();
+  console.log('open')
+  cardSetCreationDiv.classList.add('transit')
+})
+
+document.querySelector('#close-creation').addEventListener('click', function(event) {
+  event.preventDefault();
+  cardSetCreationDiv.classList.remove('transit')
+})
+
+$(dropdown).click(function () {
   $(this).attr('tabindex', 1).focus();
   $(this).toggleClass('active');
-  $(this).find('#dropdown-menu').slideToggle(300);
+  $(this).find(dropdownMenu).slideToggle(300);
 });
-$('#dropdown').focusout(function () {
-  $(this).removeClass('active');
-  $(this).find('#dropdown-menu').slideUp(300);
+
+$(dropdown).focusout(function () {
+  $(this).removeClass('active');dropdownMenu
+  $(this).find(dropdownMenu).slideUp(300);
 });
+
 $('#dropdown #dropdown-menu li').click(function () {
   $(this).parents('#dropdown').find('span').text($(this).text());
   $(this).parents('#dropdown').find('input').attr('value', $(this).attr('id'));
