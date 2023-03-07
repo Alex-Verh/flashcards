@@ -188,44 +188,6 @@ function saveCardSet(cardSetId) {
     .catch((e) => alert("Could not save cardset."));
 }
 
-options.forEach(option => {
-  option.addEventListener('click', () => {
-    const categoryId = option.id;
-    console.log(categoryId)
-    input.value = categoryId;
-    select.querySelector('span').textContent = option.textContent.trim();
-  });
-});
-
-// New flashcard creation
-$('#create-flashcard').click(function (e) {
-  e.preventDefault();
-  console.log('open')
-  $('#constructor').addClass('transit');
-  });
-$('#close-addition').click(function (e) {
-e.preventDefault();
-$('#constructor').removeClass('transit');
-});
-
-// New card set creation
-dropdownMenu.addEventListener('click', function(event) {
-  const category = event.target.closest('li');
-  if (category) {
-    categoryInput.value = category.dataset.id
-    dropdownSpan.textContent = category.textContent.trim();
-  }
-})
-
-document.querySelector('#open-window').addEventListener('click', function(event) {
-  event.preventDefault();
-  console.log('open')
-  $('#constructor').addClass('transit');
-  });
-$('#close-addition').click(function (e) {
-e.preventDefault();
-$('#constructor').removeClass('transit');
-});
 
 // New card set creation
 dropdownMenu.addEventListener('click', function(event) {
@@ -261,4 +223,15 @@ $(dropdown).focusout(function () {
 $('#dropdown #dropdown-menu li').click(function () {
   $(this).parents('#dropdown').find('span').text($(this).text());
   $(this).parents('#dropdown').find('input').attr('value', $(this).attr('id'));
+});
+
+// New flashcard creation
+$('#create-flashcard').click(function (e) {
+  e.preventDefault();
+  console.log('open')
+  $('#constructor').addClass('transit');
+  });
+$('#close-addition').click(function (e) {
+e.preventDefault();
+$('#constructor').removeClass('transit');
 });

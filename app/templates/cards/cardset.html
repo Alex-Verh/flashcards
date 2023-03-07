@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
 {% block title -%}Cardset - {% endblock -%}
+{% block css -%}<link href="{{ url_for('static', filename='css/cards.css') }}" rel="stylesheet" type="text/css">{% endblock %}
+
 
 {% block header -%}
     {{super()}}
