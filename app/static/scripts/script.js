@@ -224,3 +224,33 @@ $('#dropdown #dropdown-menu li').click(function () {
   $(this).parents('#dropdown').find('span').text($(this).text());
   $(this).parents('#dropdown').find('input').attr('value', $(this).attr('id'));
 });
+
+
+// Flash Card constructor
+const formImage = document.getElementById('formImage')
+const imagePreview = document.getElementById('imagePreview')
+
+try {
+  formImage.addEventListener('change', () => {
+    uploadFile(formImage.files[0]);
+  })
+}
+catch (e) {console.log(e)}
+
+function uploadFile(file) {
+  if (!['image/jpeg', 'image/png', 'image/jpg'].includes(file.type)) {
+    alert('Only images are allowed!');
+    formImage.value = '';
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    imagePreview.innerHTML = `<img src="${e.target.result}" alt="Image">`
+  };
+
+  reader.onerror = function (e) {
+    alert('Error')
+  };
+  reader.readAsDataURL(file);
+}
