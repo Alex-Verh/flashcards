@@ -33,6 +33,10 @@ let categoryId = '0';
 
 // FUNCTIONS
 
+window.onload = function() {
+  document.querySelector('#active').checked = false;
+}
+
 // Cookie
 function setCookie(name, value, exdays = 30) {
   const date = new Date();
@@ -140,6 +144,7 @@ function loadCardSets() {
             <div class = "set-screen">${data[i].title}</div>
             </a>
             <div class = "set-modulate">
+                <img src="../../static/images/user.png" alt="user" width="15px">
                 <span id="saves-count-${data[i].id}">${data[i].saves}</span>
                 <img id="save-cardset-${data[i].id}" onclick="saveCardSet(${data[i].id})" class = "image-save" src="${data[i].save_img_url}" alt="Save">
             </div>`;
@@ -161,14 +166,22 @@ catch (e) {console.log(e)}
 
 
 // Card Set
-function deleteCardSet(cardSetId) {
-  const text = "Are you sure you want to delete this set?";
-  if (confirm(text) == true) {
-    const cardSetEl = document.getElementById(`cardset-${cardSetId}`);
-    fetch(`/api/delete-cardset/${cardSetId}`, { method: "GET" })
-      .then(cardSetEl.remove())
-      .catch((e) => alert('Card set does not exist or it is not your own or saved card set'));
+function deleteCardSet(cardSetId, isOwn) {
+  if (isOwn) {
+    if (confirm("Are you sure you want to delete this set?") !== true) {return;}
   }
+  const cardSetEl = document.getElementById(`cardset-${cardSetId}`);
+  fetch(`/api/delete-cardset/${cardSetId}`, { method: "GET"})
+    .then(() => {
+      if (!isOwn) {
+        document.getElementById("deleteFromSaved").src = '../../static/images/save2.png'
+        console.log('dd')
+      }
+      setTimeout(() => {cardSetEl.remove()}, 100)
+      
+    })
+    .catch((e) => {alert(e); console.log(e)});
+
 }
 
 function saveCardSet(cardSetId) {

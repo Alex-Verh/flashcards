@@ -6,7 +6,7 @@
 
 {% block header %}
     {{ super() }}
-    <div id = "return" onclick="{history.back()}"><img src="{{url_for('static', filename='images/return.png')}}" alt="Return Back"></div>
+    <div id = "return" onclick="history.back()"><img src="{{url_for('static', filename='images/return.png')}}" alt="Return Back"></div>
 {% endblock %}
 
 {% block main %}
@@ -57,24 +57,26 @@
         <h1>Your own sets:</h1>
         <div class = "flash-list">
             {% for card_set in current_user.own_cardsets -%}
-            <a href="{{ url_for('cards.cardset', id=card_set.id) }}">
                 <div id="cardset-{{card_set.id}}" class = "set">
-                    <div class = "flashcard-unit-text">{{card_set.title}}</div>
-                    <div class = "flashcard-unit-image" onclick = "deleteCardSet('{{card_set.id}}')"><img src="{{ url_for('static', filename='images/remove.png') }}" alt="Delete"></div>
+                    <a href="{{ url_for('cards.cardset', id=card_set.id) }}">
+                        <div class = "flashcard-unit-text">{{card_set.title}}</div>
+                    </a>
+                    <div class = "flashcard-unit-image" onclick = "deleteCardSet('{{card_set.id}}', true)"><img src="{{ url_for('static', filename='images/delete.png') }}" alt="Delete"></div>
+                    <div class="cardset-info"></div>    
                 </div>
-            </a>
             {% endfor -%}
         </div>
 
         <h1>Your saved sets:</h1>
         <div class = "flash-list">
             {% for card_set in current_user.saved_cardsets -%}
-            <a href="{{ url_for('cards.cardset', id=card_set.id) }}">
                 <div id="cardset-{{card_set.id}}" class = "set">
-                    <div class = "flashcard-unit-text">{{card_set.title}}</div>
-                    <div class = "flashcard-unit-image" onclick = "deleteCardSet('{{card_set.id}}')"><img src="{{ url_for('static', filename='images/remove.png') }}" alt="Delete"></div>
+                    <a href="{{ url_for('cards.cardset', id=card_set.id) }}">
+                        <div class = "flashcard-unit-text">{{card_set.title}}</div>
+                    </a> 
+                    <div class = "flashcard-unit-image" onclick = "deleteCardSet('{{card_set.id}}', false)"><img id="deleteFromSaved" src="{{ url_for('static', filename='images/save1.png') }}" alt="Delete"></div>
+                    <div class="cardset-info"></div>
                 </div>
-            </a> 
             {% endfor -%}
         </div>
     </div>    
