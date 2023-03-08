@@ -1,0 +1,70 @@
+#constructor:before {
+    content: "";
+    display: none;
+    background: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+}
+
+#window {
+    background-color: #000;
+    border: 0.5vh solid #fff;
+    border-radius: 0.5vh;
+    margin-left: -35%;
+    text-align:center;
+    position: fixed;
+    left: 40%;
+    top: -100%;
+    z-index: 11;
+    width: 90%;
+    box-shadow: 0 3vh 5vh #ffffff80;
+    transform: translate(0, -500%);
+    transition: transform 0.3s ease-out;
+}
+
+.transit:before {
+    display: block;
+}
+
+.transit #window {
+    transform: translate(0, 0);
+    top: 5%;
+}
+
+#close-addition {
+    color: #ff0026;
+    font-size: 5vh;
+    text-decoration: none;
+    padding:1%;
+    position: absolute;
+    right: 2%;
+    top: 0;
+}
+  
+#close-addition:hover {
+    color: #333;
+}
+
+#constructor-bottom {
+    margin : 1%;
+    padding: 1%;
+}
+
+.flashcard-part {
+    display: inline-block;
+    border: 0.1vh solid #fff;
+    border-radius: 5vh;
+    width: 75vh;
+    height:50vh;
+    margin-top:10%;
+    margin-bottom: 5%;
+    margin-inline: 1%;
+}
+
+.flashcard-part:focus {
+    border: 0.3vh solid #fff;
+}

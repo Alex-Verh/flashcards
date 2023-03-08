@@ -224,6 +224,18 @@ $('#dropdown #dropdown-menu li').click(function () {
   $(this).parents('#dropdown').find('input').attr('value', $(this).attr('id'));
 });
 
+// New flashcard creation
+$('#create-flashcard').click(function (e) {
+  e.preventDefault();
+  console.log('open')
+  $('#constructor').addClass('transit');
+  });
+$('#close-addition').click(function (e) {
+e.preventDefault();
+$('#constructor').removeClass('transit');
+});
+
+
 
 // Flash Card constructor
 const formImage = document.getElementById('formImage')
