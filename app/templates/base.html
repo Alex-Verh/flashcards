@@ -27,6 +27,9 @@
             {% block header %}
                 {% include "snippets/menu.html" %}  
                 {% include "snippets/create_cardset.html" %}
+                {% if not current_user.is_authenticated -%}
+                    {% include "snippets/login_register_modal.html" %}
+                {% endif -%}
             {% endblock %}
             </div>
 

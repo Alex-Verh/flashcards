@@ -31,11 +31,10 @@ let sortOrder = '';
 let categoryId = '0';
 
 
+const modal = document.getElementById("loginRegisterModal");
+
 // FUNCTIONS
 
-window.onload = function() {
-  document.querySelector('#active').checked = false;
-}
 
 // Cookie
 function setCookie(name, value, exdays = 30) {
@@ -78,8 +77,13 @@ function changeBackground(backgroundUrl) {
 }
 
 document.addEventListener("DOMContentLoaded", function(event) { 
-  changeBackground(getCookie('background_url'));
+  const backgroundUrl = getCookie('background_url') || "url(../images/background_default.jpg)"
+  changeBackground(backgroundUrl)
 });
+
+window.onload = function() {
+  document.querySelector('#active').checked = false;
+}
 
 document.querySelector('.images').addEventListener('click', function(event) {
   const backgroundImage = event.target.closest('.image .background');
@@ -191,35 +195,43 @@ function saveCardSet(cardSetId) {
   fetch(`/api/save-cardset/${cardSetId}`, { method: "POST" })
     .then((res) => res.json())
     .then((data) => {
-      saveCount.innerHTML = data["saves"];
+      saveCount.innerHTML = data["saves"];  
       if (data["saved"] === true) {
         saveButton.src = data["image_url"];
       } else {
         saveButton.src = data["image_url"];
       }
     })
-    .catch((e) => alert("Could not save cardset."));
+    .catch((e) => {
+      if (e instanceof SyntaxError) {
+        modal.style.display = "block";
+      };
+      console.log(e)
+    })
 }
 
 
 // New card set creation
-dropdownMenu.addEventListener('click', function(event) {
-  const category = event.target.closest('li');
-  if (category) {
-    categoryInput.value = category.dataset.id
-    dropdownSpan.textContent = category.textContent.trim();
-  }
-})
+try {
+  dropdownMenu.addEventListener('click', function(event) {
+    const category = event.target.closest('li');
+    if (category) {
+      categoryInput.value = category.dataset.id
+      dropdownSpan.textContent = category.textContent.trim();
+    }
+  })
 
-document.querySelector('#open-window').addEventListener('click', function(event) {
-  event.preventDefault();
-  cardSetCreationDiv.classList.add('transit')
-})
+  document.querySelector('#open-window').addEventListener('click', function(event) {
+    event.preventDefault();
+    cardSetCreationDiv.classList.add('transit')
+  })
 
-document.querySelector('#close-creation').addEventListener('click', function(event) {
-  event.preventDefault();
-  cardSetCreationDiv.classList.remove('transit')
-})
+  document.querySelector('#close-creation').addEventListener('click', function(event) {
+    event.preventDefault();
+    cardSetCreationDiv.classList.remove('transit')
+  })
+}
+catch (e) {console.log(e)}
 
 $(dropdown).click(function () {
   $(this).attr('tabindex', 1).focus();
@@ -277,4 +289,18 @@ function uploadFile(file) {
     alert('Error')
   };
   reader.readAsDataURL(file);
+}
+
+// Login/Registe Modal Box
+
+// When the user clicks on <span> (x), close the modal
+document.querySelector('.close-modal').onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
 }

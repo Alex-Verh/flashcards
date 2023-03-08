@@ -27,10 +27,11 @@ def delete_cardset(id):
 @login_required
 def save_cardset(id):
     cardset = CardSet.query.get(id)
-    saved = current_user in cardset.followers.all()
     if not cardset:
         return jsonify({'error': 'Card set does not exist.'}), 400
-    elif saved:
+    
+    saved = current_user in cardset.followers.all()
+    if saved:
         cardset.followers.remove(current_user)
         db.session.commit()
         saved = False
