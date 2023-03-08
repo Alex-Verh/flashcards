@@ -68,3 +68,28 @@
 .flashcard-part:focus {
     border: 0.3vh solid #fff;
 }
+
+.save {
+    position: absolute;
+    width : 3%;
+    cursor: pointer;
+    bottom: 4%;
+    right: 2%;
+}
+
+.cardset-button {
+    border: 0.1vh solid #fff;
+    padding: 1vh 2vh;
+    border-radius: 5vh;
+}
+
+.cardset-button:hover {
+    box-shadow: 0 0.5vh 1vh #ffffff80;
+    transition: -5%;
+
+}
+
+.cardset-button:active {
+    box-shadow: none;
+    background-color: #0000004e;
+}

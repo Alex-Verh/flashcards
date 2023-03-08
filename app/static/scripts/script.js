@@ -139,7 +139,6 @@ function loadCardSets() {
         const cardSetEl = document.createElement('div');
         cardSetEl.classList.add('set');
         cardSetEl.innerHTML = 
-        //!TODO fix a link href
           ` <a href="${data[i].url}">
             <div class = "set-screen">${data[i].title}</div>
             </a>
