@@ -1,3 +1,5 @@
+"use strict"
+
 // GLOBAL CONSTANTS AND VARIABLESownMe
 
 // Cursor visual effect
@@ -102,7 +104,6 @@ try {
       dashListEl.replaceChildren(sentinel)
       page = 0
       categoryId = category.dataset.id
-      console.log(categoryId)
     }
   })
 }
@@ -177,7 +178,6 @@ function saveCardSet(cardSetId) {
   fetch(`/api/save-cardset/${cardSetId}`, { method: "POST" })
     .then((res) => res.json())
     .then((data) => {
-      console.log(data)
       saveCount.innerHTML = data["saves"];
       if (data["saved"] === true) {
         saveButton.src = data["image_url"];
@@ -200,7 +200,6 @@ dropdownMenu.addEventListener('click', function(event) {
 
 document.querySelector('#open-window').addEventListener('click', function(event) {
   event.preventDefault();
-  console.log('open')
   cardSetCreationDiv.classList.add('transit')
 })
 
