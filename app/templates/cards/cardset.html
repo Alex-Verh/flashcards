@@ -13,9 +13,15 @@
 {% block main %}
     <h1>{{cardset.title}}</h1>
     <div id = "card_set-buttons">
-        <a href="#" id="create-flashcard">Add new</a>
+        <a href="#" id="create-flashcard" class="cardset-button">Add new</a>
 
-        <a href="#">Learn</a>
+        <a href="#" class="cardset-button">Learn</a>
+        {% if current_user.is_authenticated -%}
+        <img id="save-cardset-{{cardset.id}}" onclick="saveCardSet('{{cardset.id}}')" class = "save" src="{{url_for('static', filename='images/save2.png')}}" alt="Save">
+        {% endif -%}
+        {% if current_user.id == cardset.user_id -%}
+        <a href="#">Delete</a>
+        {% endif -%}
     </div>
     <div id = "flashcards">
         {% for flashcard in cardset.flashcards -%}
