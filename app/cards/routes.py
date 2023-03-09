@@ -1,6 +1,7 @@
-from . import bp
 from flask import render_template, redirect, url_for, request
 from flask_login import  login_required, current_user
+
+from . import bp
 from ..models import CardSet
 from ..extensions import db
 
@@ -14,13 +15,13 @@ def cardset(id):
 @bp.route('/cardset/create', methods=['POST'])
 @login_required
 def create_cardset():
-    print(request.form)
     cardset = CardSet(
         title=request.form.get('title'),
-        is_public=int(request.form.get('is_public')),
-        category_id=int(request.form.get('category')),
+        is_public=request.form.get('is_public', default=0, type=int),
+        category_id=request.form.get('category', default=21, type=int),
         user_id=current_user.id
         )
     db.session.add(cardset)
     db.session.commit()
-    return redirect(url_for('main.home'))
+    
+    return redirect(url_for('cards.cardset', id=cardset.id))

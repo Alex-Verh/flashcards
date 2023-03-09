@@ -1,11 +1,12 @@
-from . import bp
 from flask import render_template, redirect, url_for, request, flash
 from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import SignatureExpired
+
+from . import bp
 from .forms import LoginForm, RegisterForm
 from ..extensions import db, serializer
-from ..models import User, CardSetCategory
+from ..models import User
 from ..funcs import send_verification_email
 
 
@@ -83,4 +84,4 @@ def confirm_email(token):
 @bp.route('/profile')
 @login_required
 def profile():
-    return render_template('users/profile.html', categories=CardSetCategory.query.all())
+    return render_template('users/profile.html')

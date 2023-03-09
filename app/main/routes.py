@@ -1,6 +1,6 @@
-from . import bp
 from flask import render_template
-from ..models import CardSetCategory
+
+from . import bp
 
 
 @bp.route('/')
@@ -10,4 +10,4 @@ def index():
 
 @bp.route('/home', methods = ['GET'])
 def home():
-    return render_template('main/home.html', categories=CardSetCategory.query.all())
+    return render_template('main/home.html')

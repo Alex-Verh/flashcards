@@ -79,6 +79,22 @@ function changeBackground(backgroundUrl) {
 document.addEventListener("DOMContentLoaded", function(event) { 
   const backgroundUrl = getCookie('background_url') || "url(../images/background_default.jpg)"
   changeBackground(backgroundUrl)
+
+  const createCategoryElements = (categoriesData, elementTag, parent, elementClass='') => {
+    for (const category of categoriesData) {
+      const categoryEl = document.createElement(elementTag)
+      categoryEl.className = elementClass
+      categoryEl.dataset.id = category.id
+      categoryEl.textContent = category.title
+      parent.appendChild(categoryEl)
+    }
+  }
+  
+  getCardSetCategories().then((data) => {
+    createCategoryElements(data, 'li', dropdownMenu)
+    const homeCategoryList = document.querySelector("#aside-list")
+    homeCategoryList && createCategoryElements(data, 'div', homeCategoryList, 'category')
+  });
 });
 
 window.onload = function() {
@@ -211,6 +227,7 @@ function saveCardSet(cardSetId) {
 
 
 // New card set creation
+
 try {
   dropdownMenu.addEventListener('click', function(event) {
     const category = event.target.closest('li');
@@ -229,8 +246,35 @@ try {
     event.preventDefault();
     cardSetCreationDiv.classList.remove('transit')
   })
-}
-catch (e) {console.log(e)}
+
+  cardSetCreationDiv.querySelector("#window").addEventListener('submit', (event) => {
+    event.preventDefault();
+    const cardSetTitleEl = cardSetCreationDiv.querySelector("#window-name")
+    const cardSetTitle = cardSetTitleEl.value
+    const cardSetCategory = categoryInput.value
+    const cardSetPrivacy = cardSetCreationDiv.querySelector('input[name="is_public"]:checked').value
+    console.log(cardSetTitle, cardSetCategory, cardSetPrivacy)
+    if (!cardSetTitle) {
+      cardSetTitleEl.style.borderBottom = '0.3vh dashed #8a0000';
+      return;
+    }
+    if (!cardSetCategory) {
+      dropdown.style.boxShadow = '0 0 0.7vh #8a0000';
+      return;
+    }
+    
+    cardSetTitleEl.style = ''
+    dropdown.style = ''
+    event.currentTarget.submit()
+  })
+
+} catch (e) {console.log(e)}
+
+$('#dropdown #dropdown-menu li').click(function () {
+  $(this).parents('#dropdown').find('span').text($(this).text());
+  $(this).parents('#dropdown').find('input').attr('value', $(this).attr('id'));
+});
+
 
 $(dropdown).click(function () {
   $(this).attr('tabindex', 1).focus();
@@ -243,10 +287,8 @@ $(dropdown).focusout(function () {
   $(this).find(dropdownMenu).slideUp(300);
 });
 
-$('#dropdown #dropdown-menu li').click(function () {
-  $(this).parents('#dropdown').find('span').text($(this).text());
-  $(this).parents('#dropdown').find('input').attr('value', $(this).attr('id'));
-});
+
+// Flash Card constructor
 
 // New flashcard creation
 $('#create-flashcard').click(function (e) {
@@ -259,9 +301,6 @@ e.preventDefault();
 $('#constructor').removeClass('transit');
 });
 
-
-
-// Flash Card constructor
 const formImage = document.getElementById('formImage')
 const imagePreview = document.getElementById('imagePreview')
 
@@ -290,16 +329,25 @@ function uploadFile(file) {
   reader.readAsDataURL(file);
 }
 
+
 // Login/Registe Modal Box
 
 // When the user clicks on <span> (x), close the modal
-document.querySelector('.close-modal').onclick = function() {
+try {
+  document.querySelector('.close-modal').onclick = function() {
   modal.style.display = "none";
-}
+  }
+} catch (e) {console.log(e)}
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
   if (event.target == modal) {
     modal.style.display = "none";
   }
+}
+
+// Card Set Categories Loading
+const getCardSetCategories = async () => {
+  const response = await fetch('/api/cardset-categories', {method: 'GET'})
+  return response.json()
 }

@@ -6,7 +6,7 @@
         </div>
         
         <div id="window-main">
-            <input id="window-name" novalidate type="text" name="title" placeholder="Enter set name" required/>
+            <input id="window-name" novalidate type="text" name="title" placeholder="Enter set name"/>
         
             <br>
 
@@ -14,11 +14,8 @@
                 <div class="select">
                 <span>Select Category</span>
                 </div>
-                <input type="hidden" name="category" value="none">
+                <input type="hidden" name="category" required>
                 <ul id="dropdown-menu">
-                    {% for category in categories -%}
-                    <li data-id="{{category.id}}">{{category.title}}</li>
-                    {% endfor %}
                 </ul>
             </div>
 
