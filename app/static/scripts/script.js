@@ -12,6 +12,11 @@ const dropdownMenu = dropdown.querySelector('#dropdown-menu')
 const categoryInput = dropdown.querySelector('input[name="category"]');
 const dropdownSpan = dropdown.querySelector('span');
 
+// Constructor
+const selected_flashcard_parts = document.getElementsByClassName('flashcard-part')
+const uploadSound = document.getElementById("uploadSound");
+const uploadImage = document.getElementById("uploadImage");
+const imagePreview = document.getElementById('imagePreview')
 
 // HOME PAGE CONSTANTS AND VARIABLES
 
@@ -34,6 +39,88 @@ let categoryId = '0';
 const modal = document.getElementById("loginRegisterModal");
 
 // FUNCTIONS
+
+//Constructor Selection && Text
+try {
+  for (let i = 0; i < 2; i++) {
+      selected_flashcard_parts[i].addEventListener("click", function(){
+      let selectedEl = document.querySelector(".selected");
+      if(selectedEl){
+        selectedEl.classList.remove("selected");
+      }
+      this.classList.add("selected");
+      }, false);
+
+      
+      selected_flashcard_parts[i].addEventListener("dblclick", (e) => {
+        let inactive_text = e.currentTarget.querySelector(".inactive");
+        if (inactive_text) {
+          inactive_text.classList.remove("inactive");
+        }
+    });
+  }
+} catch (e) {
+  console.log(e);
+}
+
+// Constructor audio
+try {
+  uploadSound.addEventListener('change', () => {
+    uploadSoundFunction(uploadSound.files[0]);
+  })
+}
+catch (e) {console.log(e)}
+
+function uploadSoundFunction(file) {
+  if (!['audio/mpeg', 'audio/wav', 'audio/ogg'].includes(file.type)) {
+    alert('Choose another format. (MP3, WAV, OGG)');
+    uploadSound.value = '';
+    return;
+  }
+
+  const reader_sound = new FileReader();
+
+  reader_sound.addEventListener('load', () => {
+    const audio = new Audio(reader_sound.result);
+
+    const playSound = document.createElement('button');
+    playSound.textContent = 'Play';
+
+    playSound.addEventListener('click', () => {
+      audio.play();
+    });
+
+    parentDiv.appendChild(playSound);
+});
+
+  reader_sound.readAsDataURL(file);
+}
+
+// Constructor image
+try {
+  uploadImage.addEventListener('change', () => {
+    uploadImageFunction(uploadImage.files[0]);
+  })
+}
+catch (e) {console.log(e)}
+
+function uploadImageFunction(file) {
+  if (!['image/jpeg', 'image/png', 'image/svg+xml'].includes(file.type)) {
+    alert('Choose another format. (JPEG, PNG, SVG)');
+    uploadImage.value = '';
+    return;
+  }
+
+  const readerImage = new FileReader();
+  readerImage.onload = function (e) {
+    imagePreview.innerHTML = `<img src="${e.target.result}" alt="Image">`
+  };
+
+  readerImage.onerror = function (e) {
+    alert('Error')
+  };
+  readerImage.readAsDataURL(file);
+}
 
 
 // Cookie
@@ -301,36 +388,7 @@ e.preventDefault();
 $('#constructor').removeClass('transit');
 });
 
-const formImage = document.getElementById('formImage')
-const imagePreview = document.getElementById('imagePreview')
-
-try {
-  formImage.addEventListener('change', () => {
-    uploadFile(formImage.files[0]);
-  })
-}
-catch (e) {console.log(e)}
-
-function uploadFile(file) {
-  if (!['image/jpeg', 'image/png', 'image/jpg'].includes(file.type)) {
-    alert('Only images are allowed!');
-    formImage.value = '';
-    return;
-  }
-
-  const reader = new FileReader();
-  reader.onload = function (e) {
-    imagePreview.innerHTML = `<img src="${e.target.result}" alt="Image">`
-  };
-
-  reader.onerror = function (e) {
-    alert('Error')
-  };
-  reader.readAsDataURL(file);
-}
-
-
-// Login/Registe Modal Box
+// Login/Register Modal Box
 
 // When the user clicks on <span> (x), close the modal
 try {

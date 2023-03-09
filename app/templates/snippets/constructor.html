@@ -5,19 +5,27 @@
             <a href="#" id="close-addition" aria-hidden="true">×</a>
 
             <div class = "flashcard-part">
-
+                <div id="textarea-title" class = "inactive only-text" contenteditable="true">
+                    <p>Enter your title here..</p>
+                </div>
             </div>
 
             <div class = "flashcard-part">
-
+                <div id="textarea-content" class = "inactive only-text" contenteditable="true">
+                    <p>Enter your content here..</p>
+                </div>
             </div>
         </div>
 
         <div id="constructor-bottom">
-            <button>Add image</button>
-            <button>Add audio</button>
+
+            <button type = "button" class = "button" onclick="document.getElementById('uploadImage').click()">Add image</button>
+            <input type="file" id="uploadImage" name="fileImages" style="display:none">
+
+            <button type = "button" class="button" onclick="document.getElementById('uploadSound').click()">Add sound</button>
+            <input type="file" id="uploadSound" name="fileSound" style="display:none">
             
-            <input type = "submit" id="window-add" value = "Add">
+            <input class = "button" type = "submit" id="window-add" value = "Add">
         </div>
     </form>
 </div>
