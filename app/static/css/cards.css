@@ -52,7 +52,7 @@
 }
 
 #constructor-bottom {
-    margin: 1%;
+    margin: 1% 1% 0 1%;
     padding: 1%;
 }
 
@@ -72,17 +72,19 @@
     border: 0.1vh solid #00ffa2;
 }
 
-.flashcard-part textarea {
+.flashcard-part div {
     background: none;
-    color:#fff;
     border: 0.1vh solid #fff;
-    resize: none;
     font-size: 3vh;
-    text-align: center;
+    overflow-x: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
 }
 
 .only-text {
-    margin-top:10%;
+    margin: 10% auto;
     width: 80%;
     height:60%;
 }

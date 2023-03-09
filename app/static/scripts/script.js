@@ -41,24 +41,27 @@ const modal = document.getElementById("loginRegisterModal");
 // FUNCTIONS
 
 //Constructor Selection && Text
-for (let i = 0; i < 2; i++) {
-    selected_flashcard_parts[i].addEventListener("click", function(){
-    let selectedEl = document.querySelector(".selected");
-    if(selectedEl){
-      selectedEl.classList.remove("selected");
-    }
-    this.classList.add("selected");
-    }, false);
-
-    
-    selected_flashcard_parts[i].addEventListener("dblclick", (e) => {
-      let inactive_text = e.currentTarget.querySelector(".inactive");
-      if (inactive_text) {
-        inactive_text.classList.remove("inactive");
+try {
+  for (let i = 0; i < 2; i++) {
+      selected_flashcard_parts[i].addEventListener("click", function(){
+      let selectedEl = document.querySelector(".selected");
+      if(selectedEl){
+        selectedEl.classList.remove("selected");
       }
-  });
-}
+      this.classList.add("selected");
+      }, false);
 
+      
+      selected_flashcard_parts[i].addEventListener("dblclick", (e) => {
+        let inactive_text = e.currentTarget.querySelector(".inactive");
+        if (inactive_text) {
+          inactive_text.classList.remove("inactive");
+        }
+    });
+  }
+} catch (e) {
+  console.log(e);
+}
 
 // Constructor audio
 try {
