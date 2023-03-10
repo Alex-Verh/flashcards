@@ -56,47 +56,6 @@
     padding: 1%;
 }
 
-.flashcard-part {
-    border: 0.1vh solid #fff;
-    border-radius: 5vh;
-    width: 75vh;
-    height: 50vh;
-    margin-top: 10%;
-    margin-bottom: 5%;
-    margin-left: 5.5%;
-    cursor: pointer;
-    display: flex;
-    flex-wrap: wrap;
-    float:left;
-}
-
-.selected {
-    border: 0.1vh solid #00ffa2;
-}
-
-.flashcard-part div {
-    background: none;
-    border: 0.1vh solid #fff;
-    font-size: 3vh;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow-wrap: break-word;
-    word-break: break-all;
-    overflow-y: scroll;
-}
-
-.flashcard-part div:empty {
-    position: relative;
-}
-
-.only-text {
-    margin: 10% auto;
-    width: 80%;
-    height:60%;
-}
-
 .save {
     position: absolute;
     width: 3%;
@@ -191,11 +150,71 @@
     font-size: 3vh;
 }
 
-.inactive {
-    visibility: hidden;
-}
-
 .button {
     background: none;
     color:#fff;
+}
+
+
+.flashcard-part {
+    border: 0.1vh solid #fff;
+    border-radius: 5vh;
+    width: 75vh;
+    height: 50vh;
+    margin-top: 10%;
+    margin-bottom: 5%;
+    margin-left: 5.5%;
+    cursor: pointer;
+    display: flex;
+    flex-wrap: wrap;
+    float:left;
+    justify-content: center;
+    align-items: center;
+}
+
+.flashcard-part div {
+    background: none;
+    border: 0.1vh solid #fff;
+    font-size: 3vh;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-wrap: break-word;
+    word-break: break-all;
+    overflow-y: scroll;
+}
+
+.inactive {
+    display: none !important;
+}
+
+.only-text {
+    margin: 10% auto;
+    width: 80%;
+    height:60%;
+}
+
+.not-only-text {
+    margin: 0 auto;
+    margin-bottom: 10%;
+    width: 80%;
+    height:30%;
+}
+
+.selected {
+    border: 0.1vh solid #00ffa2;
+}
+
+.constructor-image {
+    border-radius: 5vh;
+    margin:1%;
+}
+.constructor-image-single {
+    width: 70%;
+    height: 70%;
+}
+.constructor-image-multiple {
+    width:40%;
+    height:30%;
 }

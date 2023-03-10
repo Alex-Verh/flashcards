@@ -225,7 +225,6 @@ document.addEventListener('DOMContentLoaded', (e) => {
     const flashcardSides = flashCardCreationBox.querySelectorAll('.flashcard-part')
     const uploadSound = flashCardCreationBox.querySelector("#uploadSound");
     const uploadImage = flashCardCreationBox.querySelector("#uploadImage");
-    const imagePreview = flashCardCreationBox.querySelector('#imagePreview')
     // Constructor Selected Side
     for (let i = 0; i < 2; i++) {
         flashcardSides[i].addEventListener("click", function(){
@@ -239,6 +238,11 @@ document.addEventListener('DOMContentLoaded', (e) => {
           let inactive_text = e.currentTarget.querySelector(".inactive");
           if (inactive_text) {
             inactive_text.classList.remove("inactive");
+            if (document.querySelector(".constructor-image")) {
+              inactive_text.classList.add("not-only-text");
+            } else {
+              inactive_text.classList.add("only-text");
+            }
           }
       });
     }
@@ -276,7 +280,13 @@ document.addEventListener('DOMContentLoaded', (e) => {
       }
       const readerImage = new FileReader();
       readerImage.onload = function (e) {
-        imagePreview.innerHTML = `<img src="${e.target.result}" alt="Image">`
+
+        //###TODO###
+        let selectedEl = flashCardCreationBox.querySelector(".selected");
+        const imagePreview = selectedEl.querySelector('.imagePreview');
+        console.log(imagePreview);
+        imagePreview.innerHTML = `<img src="${e.target.result}" alt="Image">`;
+        
       };
       readerImage.onerror = function (e) {
         alert('Error')
