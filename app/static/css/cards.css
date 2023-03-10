@@ -78,6 +78,7 @@
     padding: 1vh 2vh;
     box-shadow: #ffffff26 0 0.8vh 1.5vh;
     margin-right: 3vh;
+    font-size: 3vh;
 }
 
 .cardset-button:hover, .button:hover {
@@ -95,7 +96,7 @@
 }
 
 #flashcards {
-    height: 75%;
+    height: 76%;
     overflow: scroll;
     margin: 0 3%;
 }
@@ -172,7 +173,7 @@
     align-items: center;
 }
 
-.flashcard-part div {
+.textarea {
     background: none;
     border: 0.1vh solid #fff;
     font-size: 3vh;
@@ -206,15 +207,21 @@
     border: 0.1vh solid #00ffa2;
 }
 
+.image-preview {
+    width: 75vh;
+}
+
 .constructor-image {
     border-radius: 5vh;
     margin:1%;
 }
 .constructor-image-single {
-    width: 70%;
-    height: 70%;
+    max-width: 55vh;
+    height: 40vh;
 }
+
 .constructor-image-multiple {
-    width:40%;
-    height:30%;
+    max-width:30vh;
+    height:20vh;
+    display:inline-block;
 }

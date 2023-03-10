@@ -235,14 +235,24 @@ document.addEventListener('DOMContentLoaded', (e) => {
         this.classList.add("selected");
         }, false);
         flashcardSides[i].addEventListener("dblclick", (e) => {
+          let selectedEl = document.querySelector(".selected");
           let inactive_text = e.currentTarget.querySelector(".inactive");
-          if (inactive_text) {
-            inactive_text.classList.remove("inactive");
-            if (document.querySelector(".constructor-image")) {
-              inactive_text.classList.add("not-only-text");
-            } else {
-              inactive_text.classList.add("only-text");
+          if (selectedEl.getElementsByClassName("constructor-image").length <= 2){
+            if (inactive_text) {
+              inactive_text.classList.remove("inactive");
+              if (selectedEl.querySelector(".constructor-image")) {
+                inactive_text.classList.add("not-only-text");
+                if (selectedEl.querySelector(".constructor-image-single")) {
+                  let single_image = selectedEl.querySelector(".constructor-image-single");
+                  single_image.classList.remove("constructor-image-single");
+                  single_image.classList.add("constructor-image-multiple")
+                }
+              } else {
+                inactive_text.classList.add("only-text");
+              }
             }
+          } else {
+            alert("You can not have textarea with more than 2 images.")
           }
       });
     }
@@ -283,11 +293,37 @@ document.addEventListener('DOMContentLoaded', (e) => {
 
         //###TODO###
         let selectedEl = flashCardCreationBox.querySelector(".selected");
-        const imagePreview = selectedEl.querySelector('.imagePreview');
-        console.log(imagePreview);
-        imagePreview.innerHTML = `<img src="${e.target.result}" alt="Image">`;
-        
-      };
+        if (selectedEl) {
+          const imagePreview = selectedEl.querySelector('.image-preview'); 
+          if (imagePreview.getElementsByClassName("constructor-image").length < 4) {
+            if (!selectedEl.querySelector(".inactive") || selectedEl.querySelector(".constructor-image")) {
+              if(!selectedEl.querySelector(".inactive") && imagePreview.getElementsByClassName("constructor-image").length < 2) { 
+                imagePreview.innerHTML += `<img src="${e.target.result}" alt="Image" class="constructor-image constructor-image-multiple">`;
+              } else {
+                alert("You cannot add more picture while having a textarea.")
+              }
+              if (selectedEl.querySelector(".constructor-image-single")) {
+                let single_image = selectedEl.querySelector(".constructor-image-single");
+                single_image.classList.remove("constructor-image-single");
+                single_image.classList.add("constructor-image-multiple");
+              } 
+
+              if (selectedEl.querySelector(".only-text")) {
+                let single_text = selectedEl.querySelector(".only-text");
+                single_text.classList.remove("not-only-text");
+                single_text.classList.add("not-only-text");
+              }
+            
+            } else {
+              imagePreview.innerHTML += `<img src="${e.target.result}" alt="Image" class="constructor-image constructor-image-single">`;
+            } 
+          } else { 
+            alert("You can not upload more photos.")
+          }
+        } else {
+          alert("Select a part to upload your image on.");
+        }
+        };
       readerImage.onerror = function (e) {
         alert('Error')
       };
@@ -296,13 +332,11 @@ document.addEventListener('DOMContentLoaded', (e) => {
     // New flashcard creation
     document.querySelector('#create-flashcard').addEventListener('click', (e) => {
       e.preventDefault();
-      console.log('open')
       flashCardCreationBox.classList.add('transit');
     })
     flashCardCreationBox.querySelector('#close-addition').addEventListener('click', (e) => {
       e.preventDefault();
-      console.log('open')
-      flashCardCreationBox.classList.remove('transit')
+      flashCardCreationBox.classList.remove('transit');
     })
   }
 })
