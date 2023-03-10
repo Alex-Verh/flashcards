@@ -280,12 +280,11 @@ document.addEventListener('DOMContentLoaded', (e) => {
       }
       const readerImage = new FileReader();
       readerImage.onload = function (e) {
-
         //###TODO###
         let selectedEl = flashCardCreationBox.querySelector(".selected");
-        const imagePreview = selectedEl.querySelector('.imagePreview');
+        const imagePreview = selectedEl.querySelector('.image-preview');
         console.log(imagePreview);
-        imagePreview.innerHTML = `<img src="${e.target.result}" alt="Image">`;
+        imagePreview.innerHTML = `<img src="${e.target.result}" style="width: 300px" alt="Image">`;
         
       };
       readerImage.onerror = function (e) {
