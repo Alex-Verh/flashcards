@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
     }
   } catch (e) {console.log(e)}
   window.onclick = function(event) {
-    if (event.target == modal) {
+    if (event.target === modal) {
       modal.style.display = "none";
     }
   }
@@ -225,37 +225,38 @@ document.addEventListener('DOMContentLoaded', (e) => {
     const flashcardSides = flashCardCreationBox.querySelectorAll('.flashcard-part')
     const uploadSound = flashCardCreationBox.querySelector("#uploadSound");
     const uploadImage = flashCardCreationBox.querySelector("#uploadImage");
-    // Constructor Selected Side
-    for (let i = 0; i < 2; i++) {
-        flashcardSides[i].addEventListener("click", function(){
-        let selectedEl = document.querySelector(".selected");
-        if(selectedEl){
-          selectedEl.classList.remove("selected");
-        }
-        this.classList.add("selected");
-        }, false);
-        flashcardSides[i].addEventListener("dblclick", (e) => {
-          let selectedEl = document.querySelector(".selected");
-          let inactive_text = e.currentTarget.querySelector(".inactive");
-          if (selectedEl.getElementsByClassName("constructor-image").length <= 2){
-            if (inactive_text) {
-              inactive_text.classList.remove("inactive");
-              if (selectedEl.querySelector(".constructor-image")) {
-                inactive_text.classList.add("not-only-text");
-                if (selectedEl.querySelector(".constructor-image-single")) {
-                  let single_image = selectedEl.querySelector(".constructor-image-single");
-                  single_image.classList.remove("constructor-image-single");
-                  single_image.classList.add("constructor-image-multiple")
-                }
-              } else {
-                inactive_text.classList.add("only-text");
-              }
-            }
-          } else {
-            alert("You can not have textarea with more than 2 images.")
-          }
-      });
+
+    const unselectSide = (flashCardSideEl) => {
+      flashCardSideEl.classList.remove("selected")
+      flashCardSideEl.querySelector('.textarea').setAttribute('contenteditable', 'false')
     }
+    // Constructor Selected Side
+    flashCardCreationBox.querySelector('form').addEventListener('click', (e) => {
+      const flashCardSide = e.target.closest('.flashcard-part')
+      if (flashCardSide) {
+        // Unlock text area
+        const textArea = e.target.closest('.textarea')
+        if (textArea 
+            && flashCardSide.classList.contains('selected')
+            && (flashCardSide.querySelectorAll(".constructor-image").length <= 2)) {
+
+          textArea.setAttribute('contenteditable', 'true')
+          textArea.focus()
+        }
+        // Change flashcard side status
+        const selectedEl = document.querySelector(".selected");
+        if (selectedEl && (flashCardSide !== selectedEl)) {
+          unselectSide(selectedEl)
+        }
+        flashCardSide.classList.add("selected");
+        return;
+      
+      // Unselect the side if user clicks arround the flashcard
+      } else if (e.target.closest('#constructor-bottom') === null) {
+        flashcardSides.forEach(side => {unselectSide(side)})
+      }
+    })
+
     // Constructor audio
     uploadSound.addEventListener('change', () => {
       uploadSoundFunction(uploadSound.files[0]);
@@ -289,40 +290,44 @@ document.addEventListener('DOMContentLoaded', (e) => {
         return;
       }
       const readerImage = new FileReader();
-      readerImage.onload = function (e) {
-        //###TODO###
-        let selectedEl = flashCardCreationBox.querySelector(".selected");
+      readerImage.onload = (event) => {
+        console.log('add image')
+        const selectedEl = flashCardCreationBox.querySelector(".selected");
+        // Check for flashcard side selected
         if (selectedEl) {
           const imagePreview = selectedEl.querySelector('.image-preview'); 
-          if (imagePreview.getElementsByClassName("constructor-image").length < 4) {
-            if (!selectedEl.querySelector(".inactive") || selectedEl.querySelector(".constructor-image")) {
-              if(!selectedEl.querySelector(".inactive") && imagePreview.getElementsByClassName("constructor-image").length < 2) { 
-                imagePreview.innerHTML += `<img src="${e.target.result}" alt="Image" class="constructor-image constructor-image-multiple">`;
-              } else {
-                alert("You cannot add more picture while having a textarea.")
-              }
-              if (selectedEl.querySelector(".constructor-image-single")) {
-                let single_image = selectedEl.querySelector(".constructor-image-single");
-                single_image.classList.remove("constructor-image-single");
-                single_image.classList.add("constructor-image-multiple");
-              } 
-
-              if (selectedEl.querySelector(".only-text")) {
-                let single_text = selectedEl.querySelector(".only-text");
-                single_text.classList.remove("not-only-text");
-                single_text.classList.add("not-only-text");
-              }
-            
+          const existingImages = imagePreview.querySelectorAll(".constructor-image")
+          // Check for images number
+          if ((existingImages.length < 4)){
+            const image = document.createElement('img')
+            image.src = event.target.result
+            image.alt = "Image"
+            image.className = 'constructor-image'
+            // Check for sing on multiple image class
+            const textArea = selectedEl.querySelector(".textarea")
+            console.log(textArea.innerHTML.trim())
+            console.log(!!(textArea.innerHTML.trim() || existingImages.length))
+            if(textArea.innerHTML.trim() || existingImages.length) { 
+              image.classList.add('constructor-image-multiple') // multiple
+              if (textArea.innerHTML.trim() && existingImages.length < 2) {
+                imagePreview.appendChild(image)
+                // Update other images
+                selectedEl.querySelectorAll(".constructor-image-single").forEach(el => {
+                  el.classList.replace('constructor-image-single', 'constructor-image-multiple')
+                })
+                // Update text area
+                textArea.classList.replace("only-text", "not-only-text")
+              } else {alert("You cannot add more picture while having a textarea.")}
             } else {
-              imagePreview.innerHTML += `<img src="${e.target.result}" alt="Image" class="constructor-image constructor-image-single">`;
-            } 
-          } else { 
-            alert("You can not upload more photos.")
-          }
-        } else {
-          alert("Select a part to upload your image on.");
-        }
-        };
+              image.classList.add('constructor-image-single') // single
+              imagePreview.appendChild(image)
+              textArea.classList.add('inactive')
+            }
+
+          } else {alert("You can not upload more photos.")}
+        } else {alert("Select a part to upload your image on.")}
+      }
+        
       readerImage.onerror = function (e) {
         alert('Error')
       };
