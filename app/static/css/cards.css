@@ -57,15 +57,17 @@
 }
 
 .flashcard-part {
-    display: inline-block;
     border: 0.1vh solid #fff;
     border-radius: 5vh;
     width: 75vh;
     height: 50vh;
     margin-top: 10%;
     margin-bottom: 5%;
-    margin-inline: 1%;
+    margin-left: 5.5%;
     cursor: pointer;
+    display: flex;
+    flex-wrap: wrap;
+    float:left;
 }
 
 .selected {
@@ -76,11 +78,17 @@
     background: none;
     border: 0.1vh solid #fff;
     font-size: 3vh;
-    overflow-x: hidden;
+    text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow-wrap: break-word;
+    word-break: break-all;
+    overflow-y: scroll;
+}
 
+.flashcard-part div:empty {
+    position: relative;
 }
 
 .only-text {
@@ -120,7 +128,11 @@
 
 .cardset-button:active, .button:active {
     box-shadow: none;
-    color:#008000
+    color:#008000;
+}
+
+.button[type="submit"] {
+    color:#008000;
 }
 
 #flashcards {
@@ -160,7 +172,7 @@
     backface-visibility: hidden;
     display: flex;
     align-items: center;
-    text-align: center;
+    justify-content: center;
 }
 
 /* Style the front side (fallback if image is missing) */
