@@ -357,11 +357,13 @@ document.addEventListener('DOMContentLoaded', (e) => {
         parentDiv.appendChild(playSound);
     });
       reader_sound.readAsDataURL(file);
-    }
+    }    
+
     // Constructor image
     uploadImage.addEventListener('change', () => {
       uploadImageFunction(uploadImage.files[0]);
     })
+
     function uploadImageFunction(file) {
       if (!['image/jpeg', 'image/png', 'image/svg+xml'].includes(file.type)) {
         alert('Choose another format. (JPEG, PNG, SVG)');
@@ -379,11 +381,50 @@ document.addEventListener('DOMContentLoaded', (e) => {
       }
         
       readerImage.onerror = function (e) {
-        alert('Error')
+        alert('Error');
       };
       readerImage.readAsDataURL(file);
     }
-    // New flashcard creation
+
+    function decideImageState(e) {
+      let selectedEl = flashCardCreationBox.querySelector(".selected");
+      if (!selectedEl) {
+        alert("Select a part to upload your image on.");
+        return;
+      }
+    
+      const imagePreview = selectedEl.querySelector('.image-preview'); 
+      const constructorImages = imagePreview.getElementsByClassName("constructor-image");
+      if (constructorImages.length >= 4) {
+        alert("You can not upload more photos.");
+        return;
+      }
+      if (canAddSingleImage(selectedEl)) {
+        if (!canAddMoreImages(selectedEl)) {
+          alert("You cannot add more picture while having a textarea.");
+          return;
+        }
+        imagePreview.innerHTML += `<img src="${e.target.result}" alt="Image" class="constructor-image constructor-image-multiple">`;
+        if (selectedEl.querySelector(".constructor-image-single")) {
+          imageStateChanger(selectedEl);
+        } 
+        if (selectedEl.querySelector(".only-text")) {
+          textStateChanger(selectedEl);
+        }
+      } else {
+        imagePreview.innerHTML += `<img src="${e.target.result}" alt="Image" class="constructor-image constructor-image-single">`;
+      }
+    }    
+
+    function canAddSingleImage(element) {
+      return !element.querySelector(".inactive") || element.querySelector(".constructor-image");
+    }
+
+    function canAddMoreImages(element) {
+      return !element.querySelector(".inactive") && element.getElementsByClassName("constructor-image").length < 2;
+    }
+
+    // Constructor creation
     document.querySelector('#create-flashcard').addEventListener('click', (e) => {
       e.preventDefault();
       flashCardCreationBox.classList.add('transit');
@@ -431,3 +472,4 @@ const saveCardSet = (cardSetId) => {
       console.log(e)
     })
 }
+
