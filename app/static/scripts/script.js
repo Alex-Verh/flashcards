@@ -225,37 +225,56 @@ document.addEventListener('DOMContentLoaded', (e) => {
     const flashcardSides = flashCardCreationBox.querySelectorAll('.flashcard-part')
     const uploadSound = flashCardCreationBox.querySelector("#uploadSound");
     const uploadImage = flashCardCreationBox.querySelector("#uploadImage");
+    const MAX_IMAGES_WITH_TEXT = 2;
+
+    // Changing image state
+    function imageStateChanger(element) {
+      let single_image = element.querySelector(".constructor-image-single");
+      single_image.classList.remove("constructor-image-single");
+      single_image.classList.add("constructor-image-multiple");
+    }
+
+    // Changing textarea state
+    function textStateChanger(element) {
+      let single_text = element.querySelector(".only-text");
+      single_text.classList.remove("only-text");
+      single_text.classList.add("not-only-text");
+    }
+
     // Constructor Selected Side
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < flashcardSides.length; i++) {
         flashcardSides[i].addEventListener("click", function(){
-        let selectedEl = document.querySelector(".selected");
+        let selectedEl = flashCardCreationBox.querySelector(".selected");
         if(selectedEl){
           selectedEl.classList.remove("selected");
         }
         this.classList.add("selected");
         }, false);
+
         flashcardSides[i].addEventListener("dblclick", (e) => {
-          let selectedEl = document.querySelector(".selected");
-          let inactive_text = e.currentTarget.querySelector(".inactive");
-          if (selectedEl.getElementsByClassName("constructor-image").length <= 2){
-            if (inactive_text) {
-              inactive_text.classList.remove("inactive");
-              if (selectedEl.querySelector(".constructor-image")) {
-                inactive_text.classList.add("not-only-text");
-                if (selectedEl.querySelector(".constructor-image-single")) {
-                  let single_image = selectedEl.querySelector(".constructor-image-single");
-                  single_image.classList.remove("constructor-image-single");
-                  single_image.classList.add("constructor-image-multiple")
-                }
-              } else {
-                inactive_text.classList.add("only-text");
-              }
-            }
-          } else {
-            alert("You can not have textarea with more than 2 images.")
-          }
+          let selectedEl = flashCardCreationBox.querySelector(".selected");  
+          decideAddText(selectedEl);
       });
     }
+
+    function decideAddText(element) {
+      const constructorImages = element.getElementsByClassName("constructor-image");
+  
+      if (constructorImages.length <= MAX_IMAGES_WITH_TEXT) {
+      const inactiveText = element.querySelector(".inactive");
+      
+        if (inactiveText) {
+          inactiveText.classList.remove("inactive");
+          inactiveText.classList.add(constructorImages.length > 0 ? "not-only-text" : "only-text");
+          if (constructorImages.length === 1) {
+            imageStateChanger(element);
+          }
+        }
+      } else {
+        alert("You can not have textarea with more than 2 images.")
+      }
+    }
+    
     // Constructor audio
     uploadSound.addEventListener('change', () => {
       uploadSoundFunction(uploadSound.files[0]);
@@ -277,11 +296,13 @@ document.addEventListener('DOMContentLoaded', (e) => {
         parentDiv.appendChild(playSound);
     });
       reader_sound.readAsDataURL(file);
-    }
+    }    
+
     // Constructor image
     uploadImage.addEventListener('change', () => {
       uploadImageFunction(uploadImage.files[0]);
     })
+
     function uploadImageFunction(file) {
       if (!['image/jpeg', 'image/png', 'image/svg+xml'].includes(file.type)) {
         alert('Choose another format. (JPEG, PNG, SVG)');
@@ -290,45 +311,53 @@ document.addEventListener('DOMContentLoaded', (e) => {
       }
       const readerImage = new FileReader();
       readerImage.onload = function (e) {
-        //###TODO###
-        let selectedEl = flashCardCreationBox.querySelector(".selected");
-        if (selectedEl) {
-          const imagePreview = selectedEl.querySelector('.image-preview'); 
-          if (imagePreview.getElementsByClassName("constructor-image").length < 4) {
-            if (!selectedEl.querySelector(".inactive") || selectedEl.querySelector(".constructor-image")) {
-              if(!selectedEl.querySelector(".inactive") && imagePreview.getElementsByClassName("constructor-image").length < 2) { 
-                imagePreview.innerHTML += `<img src="${e.target.result}" alt="Image" class="constructor-image constructor-image-multiple">`;
-              } else {
-                alert("You cannot add more picture while having a textarea.")
-              }
-              if (selectedEl.querySelector(".constructor-image-single")) {
-                let single_image = selectedEl.querySelector(".constructor-image-single");
-                single_image.classList.remove("constructor-image-single");
-                single_image.classList.add("constructor-image-multiple");
-              } 
-
-              if (selectedEl.querySelector(".only-text")) {
-                let single_text = selectedEl.querySelector(".only-text");
-                single_text.classList.remove("not-only-text");
-                single_text.classList.add("not-only-text");
-              }
-            
-            } else {
-              imagePreview.innerHTML += `<img src="${e.target.result}" alt="Image" class="constructor-image constructor-image-single">`;
-            } 
-          } else { 
-            alert("You can not upload more photos.")
-          }
-        } else {
-          alert("Select a part to upload your image on.");
-        }
-        };
+          decideImageState(e);
+      };
       readerImage.onerror = function (e) {
-        alert('Error')
+        alert('Error');
       };
       readerImage.readAsDataURL(file);
     }
-    // New flashcard creation
+
+    function decideImageState(e) {
+      let selectedEl = flashCardCreationBox.querySelector(".selected");
+      if (!selectedEl) {
+        alert("Select a part to upload your image on.");
+        return;
+      }
+    
+      const imagePreview = selectedEl.querySelector('.image-preview'); 
+      const constructorImages = imagePreview.getElementsByClassName("constructor-image");
+      if (constructorImages.length >= 4) {
+        alert("You can not upload more photos.");
+        return;
+      }
+      if (canAddSingleImage(selectedEl)) {
+        if (!canAddMoreImages(selectedEl)) {
+          alert("You cannot add more picture while having a textarea.");
+          return;
+        }
+        imagePreview.innerHTML += `<img src="${e.target.result}" alt="Image" class="constructor-image constructor-image-multiple">`;
+        if (selectedEl.querySelector(".constructor-image-single")) {
+          imageStateChanger(selectedEl);
+        } 
+        if (selectedEl.querySelector(".only-text")) {
+          textStateChanger(selectedEl);
+        }
+      } else {
+        imagePreview.innerHTML += `<img src="${e.target.result}" alt="Image" class="constructor-image constructor-image-single">`;
+      }
+    }    
+
+    function canAddSingleImage(element) {
+      return !element.querySelector(".inactive") || element.querySelector(".constructor-image");
+    }
+
+    function canAddMoreImages(element) {
+      return !element.querySelector(".inactive") && element.getElementsByClassName("constructor-image").length < 2;
+    }
+
+    // Constructor creation
     document.querySelector('#create-flashcard').addEventListener('click', (e) => {
       e.preventDefault();
       flashCardCreationBox.classList.add('transit');
@@ -376,3 +405,4 @@ const saveCardSet = (cardSetId) => {
       console.log(e)
     })
 }
+
