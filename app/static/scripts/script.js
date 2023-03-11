@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
     }
   } catch (e) {console.log(e)}
   window.onclick = function(event) {
-    if (event.target == modal) {
+    if (event.target === modal) {
       modal.style.display = "none";
     }
   }
@@ -221,60 +221,94 @@ document.addEventListener('DOMContentLoaded', (e) => {
   if (window.location.href.split('/')[3] === 'cardset') {
 
     // ####################### FLASH CARD CONSTRUCTOR #########################
+    const addImageToCardSide = (imageUrl, cardSide) => {
+      const imagePreview = cardSide.querySelector('.image-preview')
+      const textArea = cardSide.querySelector('.textarea')
+      const imagesQty = imagePreview.children.length
+      // Guards
+      if (textArea.innerHTML.trim() && imagesQty > 1) {
+        alert("You cannot add more picture while having a text.");
+        return;
+      } else if (imagesQty > 3) {
+        alert("You can not upload more photos.");
+        return;
+      }
+      textArea.classList.replace('only-text', 'not-only-text')
+      // Create image element
+      let imageClass = 'constructor-image-multiple'
+      const imageEl = document.createElement('img')
+      imageEl.src = imageUrl
+      imageEl.alt = "Image"
+      imageEl.className = 'constructor-image'
+
+      // imageEl.className = 'constructor-image '+ imageClass
+      switch (imagesQty) {
+        case 0:
+          imageClass = 'constructor-image-single'
+          break;
+        case 2:
+          textArea.style.display = 'none'
+        default:
+          imagePreview.querySelectorAll(".constructor-image-single").forEach(el => {
+            el.classList.replace('constructor-image-single', 'constructor-image-multiple')})
+      }
+      imageEl.classList.add(imageClass)
+      imagePreview.appendChild(imageEl)
+    }
+
+    const removeImageFromCardSide = (imageEl, cardSide) => {
+      const imagePreview = cardSide.querySelector('.image-preview')
+      const textArea = cardSide.querySelector('.textarea')
+      const imagesQty = imagePreview.children.length
+      switch (imagesQty) {
+        case 1:
+          textArea.classList.replace('not-only-text', 'only-text')
+          break;
+        case 2:
+          imagePreview.querySelectorAll(".constructor-image-multiple").forEach(el => {
+            el.classList.replace('constructor-image-multiple', 'constructor-image-single')})
+        case 3:
+          textArea.style = ''
+      imagePreview.remove.removeChild(imageEl)
+      }
+    }
+    
     const flashCardCreationBox = document.querySelector('#constructor')
     const flashcardSides = flashCardCreationBox.querySelectorAll('.flashcard-part')
     const uploadSound = flashCardCreationBox.querySelector("#uploadSound");
     const uploadImage = flashCardCreationBox.querySelector("#uploadImage");
-    const MAX_IMAGES_WITH_TEXT = 2;
 
-    // Changing image state
-    function imageStateChanger(element) {
-      let single_image = element.querySelector(".constructor-image-single");
-      single_image.classList.remove("constructor-image-single");
-      single_image.classList.add("constructor-image-multiple");
+    const unselectSide = (flashCardSideEl) => {
+      flashCardSideEl.classList.remove("selected")
+      flashCardSideEl.querySelector('.textarea').setAttribute('contenteditable', 'false')
     }
-
-    // Changing textarea state
-    function textStateChanger(element) {
-      let single_text = element.querySelector(".only-text");
-      single_text.classList.remove("only-text");
-      single_text.classList.add("not-only-text");
-    }
-
     // Constructor Selected Side
-    for (let i = 0; i < flashcardSides.length; i++) {
-        flashcardSides[i].addEventListener("click", function(){
-        let selectedEl = flashCardCreationBox.querySelector(".selected");
-        if(selectedEl){
-          selectedEl.classList.remove("selected");
+    flashCardCreationBox.querySelector('form').addEventListener('click', (e) => {
+      const flashCardSide = e.target.closest('.flashcard-part')
+      if (flashCardSide) {
+        // Unlock text area
+        const textArea = e.target.closest('.textarea')
+        if (textArea 
+            && flashCardSide.classList.contains('selected')
+            && (flashCardSide.querySelectorAll(".constructor-image").length <= 2)) {
+
+          textArea.setAttribute('contenteditable', 'true')
+          textArea.focus()
         }
-        this.classList.add("selected");
-        }, false);
-
-        flashcardSides[i].addEventListener("dblclick", (e) => {
-          let selectedEl = flashCardCreationBox.querySelector(".selected");  
-          decideAddText(selectedEl);
-      });
-    }
-
-    function decideAddText(element) {
-      const constructorImages = element.getElementsByClassName("constructor-image");
-  
-      if (constructorImages.length <= MAX_IMAGES_WITH_TEXT) {
-      const inactiveText = element.querySelector(".inactive");
+        // Change flashcard side status
+        const selectedEl = document.querySelector(".selected");
+        if (selectedEl && (flashCardSide !== selectedEl)) {
+          unselectSide(selectedEl)
+        }
+        flashCardSide.classList.add("selected");
+        return;
       
-        if (inactiveText) {
-          inactiveText.classList.remove("inactive");
-          inactiveText.classList.add(constructorImages.length > 0 ? "not-only-text" : "only-text");
-          if (constructorImages.length === 1) {
-            imageStateChanger(element);
-          }
-        }
-      } else {
-        alert("You can not have textarea with more than 2 images.")
+      // Unselect the side if user clicks arround the flashcard
+      } else if (e.target.closest('#constructor-bottom') === null) {
+        flashcardSides.forEach(side => {unselectSide(side)})
       }
-    }
-    
+    })
+
     // Constructor audio
     uploadSound.addEventListener('change', () => {
       uploadSoundFunction(uploadSound.files[0]);
@@ -310,9 +344,15 @@ document.addEventListener('DOMContentLoaded', (e) => {
         return;
       }
       const readerImage = new FileReader();
-      readerImage.onload = function (e) {
-          decideImageState(e);
-      };
+      readerImage.onload = (event) => {
+        console.log('add image')
+        const selectedSide = flashCardCreationBox.querySelector(".selected");
+        // Check for flashcard side selected
+        if (selectedSide) {
+          addImageToCardSide(event.target.result, selectedSide)
+        } else {alert("Select a part to upload your image on.")}
+      }
+        
       readerImage.onerror = function (e) {
         alert('Error');
       };
