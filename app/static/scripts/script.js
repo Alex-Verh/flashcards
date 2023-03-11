@@ -221,6 +221,58 @@ document.addEventListener('DOMContentLoaded', (e) => {
   if (window.location.href.split('/')[3] === 'cardset') {
 
     // ####################### FLASH CARD CONSTRUCTOR #########################
+    const addImageToCardSide = (imageUrl, cardSide) => {
+      const imagePreview = cardSide.querySelector('.image-preview')
+      const textArea = cardSide.querySelector('.textarea')
+      const imagesQty = imagePreview.children.length
+      // Guards
+      if (textArea.innerHTML.trim() && imagesQty > 1) {
+        alert("You cannot add more picture while having a text.");
+        return;
+      } else if (imagesQty > 3) {
+        alert("You can not upload more photos.");
+        return;
+      }
+      textArea.classList.replace('only-text', 'not-only-text')
+      // Create image element
+      let imageClass = 'constructor-image-multiple'
+      const imageEl = document.createElement('img')
+      imageEl.src = imageUrl
+      imageEl.alt = "Image"
+      imageEl.className = 'constructor-image'
+
+      // imageEl.className = 'constructor-image '+ imageClass
+      switch (imagesQty) {
+        case 0:
+          imageClass = 'constructor-image-single'
+          break;
+        case 2:
+          textArea.style.display = 'none'
+        default:
+          imagePreview.querySelectorAll(".constructor-image-single").forEach(el => {
+            el.classList.replace('constructor-image-single', 'constructor-image-multiple')})
+      }
+      imageEl.classList.add(imageClass)
+      imagePreview.appendChild(imageEl)
+    }
+
+    const removeImageFromCardSide = (imageEl, cardSide) => {
+      const imagePreview = cardSide.querySelector('.image-preview')
+      const textArea = cardSide.querySelector('.textarea')
+      const imagesQty = imagePreview.children.length
+      switch (imagesQty) {
+        case 1:
+          textArea.classList.replace('not-only-text', 'only-text')
+          break;
+        case 2:
+          imagePreview.querySelectorAll(".constructor-image-multiple").forEach(el => {
+            el.classList.replace('constructor-image-multiple', 'constructor-image-single')})
+        case 3:
+          textArea.style = ''
+      imagePreview.remove.removeChild(imageEl)
+      }
+    }
+    
     const flashCardCreationBox = document.querySelector('#constructor')
     const flashcardSides = flashCardCreationBox.querySelectorAll('.flashcard-part')
     const uploadSound = flashCardCreationBox.querySelector("#uploadSound");
@@ -292,39 +344,10 @@ document.addEventListener('DOMContentLoaded', (e) => {
       const readerImage = new FileReader();
       readerImage.onload = (event) => {
         console.log('add image')
-        const selectedEl = flashCardCreationBox.querySelector(".selected");
+        const selectedSide = flashCardCreationBox.querySelector(".selected");
         // Check for flashcard side selected
-        if (selectedEl) {
-          const imagePreview = selectedEl.querySelector('.image-preview'); 
-          const existingImages = imagePreview.querySelectorAll(".constructor-image")
-          // Check for images number
-          if ((existingImages.length < 4)){
-            const image = document.createElement('img')
-            image.src = event.target.result
-            image.alt = "Image"
-            image.className = 'constructor-image'
-            // Check for sing on multiple image class
-            const textArea = selectedEl.querySelector(".textarea")
-            console.log(textArea.innerHTML.trim())
-            console.log(!!(textArea.innerHTML.trim() || existingImages.length))
-            if(textArea.innerHTML.trim() || existingImages.length) { 
-              image.classList.add('constructor-image-multiple') // multiple
-              if (textArea.innerHTML.trim() && existingImages.length < 2) {
-                imagePreview.appendChild(image)
-                // Update other images
-                selectedEl.querySelectorAll(".constructor-image-single").forEach(el => {
-                  el.classList.replace('constructor-image-single', 'constructor-image-multiple')
-                })
-                // Update text area
-                textArea.classList.replace("only-text", "not-only-text")
-              } else {alert("You cannot add more picture while having a textarea.")}
-            } else {
-              image.classList.add('constructor-image-single') // single
-              imagePreview.appendChild(image)
-              textArea.classList.add('inactive')
-            }
-
-          } else {alert("You can not upload more photos.")}
+        if (selectedSide) {
+          addImageToCardSide(event.target.result, selectedSide)
         } else {alert("Select a part to upload your image on.")}
       }
         

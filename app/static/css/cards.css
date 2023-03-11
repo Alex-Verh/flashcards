@@ -185,10 +185,6 @@
     overflow-y: scroll;
 }
 
-.inactive {
-    display: none !important;
-}
-
 .only-text {
     margin: 10% auto;
     width: 80%;
@@ -216,7 +212,8 @@
 }
 .constructor-image-single {
     max-width: 55vh;
-    height: 40vh;
+    height: 30vh;
+    padding-top: 3vh;
 }
 
 .constructor-image-multiple {
