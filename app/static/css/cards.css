@@ -54,6 +54,8 @@
 #constructor-bottom {
     margin: 1% 1% 0 1%;
     padding: 1%;
+    display: block;
+    height: 0%;
 }
 
 .save {
@@ -213,7 +215,6 @@
 .constructor-image-single {
     max-width: 55vh;
     height: 30vh;
-    padding-top: 3vh;
 }
 
 .constructor-image-multiple {

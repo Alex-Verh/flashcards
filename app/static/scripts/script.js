@@ -241,10 +241,12 @@ document.addEventListener('DOMContentLoaded', (e) => {
       imageEl.alt = "Image"
       imageEl.className = 'constructor-image'
 
-      // imageEl.className = 'constructor-image '+ imageClass
       switch (imagesQty) {
         case 0:
           imageClass = 'constructor-image-single'
+          if (!textArea.innerHTML.trim()) {
+            textArea.style.display = 'none'
+          }
           break;
         case 2:
           textArea.style.display = 'none'
@@ -267,16 +269,42 @@ document.addEventListener('DOMContentLoaded', (e) => {
         case 2:
           imagePreview.querySelectorAll(".constructor-image-multiple").forEach(el => {
             el.classList.replace('constructor-image-multiple', 'constructor-image-single')})
+          break;
         case 3:
           textArea.style = ''
-      imagePreview.remove.removeChild(imageEl)
+          break;
       }
+      imagePreview.remove.removeChild(imageEl)
     }
-    
+
+    const removeTextFromCardSide = (cardSide) => {
+      const textArea = cardSide.querySelector('.textarea')
+      textArea.innerHTML = ''
+      textArea.style.display = 'none'
+    }
+
     const flashCardCreationBox = document.querySelector('#constructor')
     const flashcardSides = flashCardCreationBox.querySelectorAll('.flashcard-part')
     const uploadSound = flashCardCreationBox.querySelector("#uploadSound");
     const uploadImage = flashCardCreationBox.querySelector("#uploadImage");
+
+    const textareas = document.querySelectorAll(".textarea");
+    textareas.forEach(area => {
+      area.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          const selection = window.getSelection();
+          const range = selection.getRangeAt(0);
+          const br = document.createElement("br");
+          range.deleteContents();
+          range.insertNode(br);
+          range.setStartAfter(br);
+          range.setEndAfter(br);
+          selection.removeAllRanges();
+          selection.addRange(range);
+        }
+      });
+    })
 
     const unselectSide = (flashCardSideEl) => {
       flashCardSideEl.classList.remove("selected")
@@ -287,15 +315,14 @@ document.addEventListener('DOMContentLoaded', (e) => {
       const flashCardSide = e.target.closest('.flashcard-part')
       if (flashCardSide) {
         // Unlock text area
-        const textArea = e.target.closest('.textarea')
-        if (textArea 
-            && flashCardSide.classList.contains('selected')
+        if (flashCardSide.classList.contains('selected')
             && (flashCardSide.querySelectorAll(".constructor-image").length <= 2)) {
-
+          const textArea = flashCardSide.querySelector('.textarea')
+          textArea.style = ''
           textArea.setAttribute('contenteditable', 'true')
           textArea.focus()
         }
-        // Change flashcard side status
+        // Change flashcard side status 
         const selectedEl = document.querySelector(".selected");
         if (selectedEl && (flashCardSide !== selectedEl)) {
           unselectSide(selectedEl)
@@ -304,7 +331,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
         return;
       
       // Unselect the side if user clicks arround the flashcard
-      } else if (e.target.closest('#constructor-bottom') === null) {
+      } else if (!e.target.closest('.button')) {
         flashcardSides.forEach(side => {unselectSide(side)})
       }
     })
