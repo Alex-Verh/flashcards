@@ -331,7 +331,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
         return;
       
       // Unselect the side if user clicks arround the flashcard
-      } else if (!e.target.closest('.button')) {
+      } else if (!e.target.closest('input') && !e.target.closest('.button')) {
         flashcardSides.forEach(side => {unselectSide(side)})
       }
     })
@@ -379,51 +379,11 @@ document.addEventListener('DOMContentLoaded', (e) => {
           addImageToCardSide(event.target.result, selectedSide)
         } else {alert("Select a part to upload your image on.")}
       }
-        
       readerImage.onerror = function (e) {
         alert('Error');
       };
       readerImage.readAsDataURL(file);
     }
-
-    function decideImageState(e) {
-      let selectedEl = flashCardCreationBox.querySelector(".selected");
-      if (!selectedEl) {
-        alert("Select a part to upload your image on.");
-        return;
-      }
-    
-      const imagePreview = selectedEl.querySelector('.image-preview'); 
-      const constructorImages = imagePreview.getElementsByClassName("constructor-image");
-      if (constructorImages.length >= 4) {
-        alert("You can not upload more photos.");
-        return;
-      }
-      if (canAddSingleImage(selectedEl)) {
-        if (!canAddMoreImages(selectedEl)) {
-          alert("You cannot add more picture while having a textarea.");
-          return;
-        }
-        imagePreview.innerHTML += `<img src="${e.target.result}" alt="Image" class="constructor-image constructor-image-multiple">`;
-        if (selectedEl.querySelector(".constructor-image-single")) {
-          imageStateChanger(selectedEl);
-        } 
-        if (selectedEl.querySelector(".only-text")) {
-          textStateChanger(selectedEl);
-        }
-      } else {
-        imagePreview.innerHTML += `<img src="${e.target.result}" alt="Image" class="constructor-image constructor-image-single">`;
-      }
-    }    
-
-    function canAddSingleImage(element) {
-      return !element.querySelector(".inactive") || element.querySelector(".constructor-image");
-    }
-
-    function canAddMoreImages(element) {
-      return !element.querySelector(".inactive") && element.getElementsByClassName("constructor-image").length < 2;
-    }
-
     // Constructor creation
     document.querySelector('#create-flashcard').addEventListener('click', (e) => {
       e.preventDefault();
