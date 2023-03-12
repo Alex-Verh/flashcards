@@ -236,10 +236,6 @@ document.addEventListener('DOMContentLoaded', (e) => {
       textArea.classList.replace('only-text', 'not-only-text')
       // Create image element
       let imageClass = 'constructor-image-multiple'
-      const imageEl = document.createElement('img')
-      imageEl.src = imageUrl
-      imageEl.alt = "Image"
-      imageEl.className = 'constructor-image'
 
       switch (imagesQty) {
         case 0:
@@ -254,8 +250,15 @@ document.addEventListener('DOMContentLoaded', (e) => {
           imagePreview.querySelectorAll(".constructor-image-single").forEach(el => {
             el.classList.replace('constructor-image-single', 'constructor-image-multiple')})
       }
-      imageEl.classList.add(imageClass)
-      imagePreview.appendChild(imageEl)
+
+
+      const imageEl = document.createElement('div');
+      imageEl.innerHTML = `<div class = "constImage">
+      <img src="${imageUrl}" alt="Image" class="constructor-image ${imageClass}">
+      <button type="button" class="remove-image">Remove</button>
+      </div>` ;
+
+      imagePreview.appendChild(imageEl.firstChild)
     }
 
     const removeImageFromCardSide = (imageEl, cardSide) => {

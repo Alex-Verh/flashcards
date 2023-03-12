@@ -208,10 +208,16 @@
     width: 75vh;
 }
 
-.constructor-image {
-    border-radius: 5vh;
+.constImage {
+    display:inline-block;
     margin:1%;
 }
+
+.constructor-image {
+    border-radius: 5vh;
+    transition: 0.5s all ease-in-out;
+}
+
 .constructor-image-single {
     max-width: 55vh;
     height: 30vh;
@@ -220,5 +226,8 @@
 .constructor-image-multiple {
     max-width:30vh;
     height:20vh;
-    display:inline-block;
+}
+
+.constructor-image:hover {
+    scale:1.05;
 }
