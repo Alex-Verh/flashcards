@@ -255,7 +255,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
       const imageEl = document.createElement('div');
       imageEl.innerHTML = `<div class = "constImage">
       <img src="${imageUrl}" alt="Image" class="constructor-image ${imageClass}">
-      <button type="button" class="remove-image">Remove</button>
+      <button type="button" class="remove-image">×</button>
       </div>` ;
 
       imagePreview.appendChild(imageEl.firstChild)
@@ -277,7 +277,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
           textArea.style = ''
           break;
       }
-      imagePreview.remove.removeChild(imageEl)
+      imagePreview.removeChild(imageEl)
     }
 
     const removeTextFromCardSide = (cardSide) => {
@@ -310,13 +310,23 @@ document.addEventListener('DOMContentLoaded', (e) => {
     })
 
     const unselectSide = (flashCardSideEl) => {
+      const textArea = flashCardSideEl.querySelector('.textarea')
+      if (!textArea.innerHTML.trim()) {
+        textArea.style.display = 'none'
+      }
       flashCardSideEl.classList.remove("selected")
-      flashCardSideEl.querySelector('.textarea').setAttribute('contenteditable', 'false')
+      textArea.setAttribute('contenteditable', 'false')
     }
     // Constructor Selected Side
     flashCardCreationBox.querySelector('form').addEventListener('click', (e) => {
       const flashCardSide = e.target.closest('.flashcard-part')
       if (flashCardSide) {
+
+        const removeButton = e.target.closest('.remove-image')
+        if (removeButton) {
+          removeImageFromCardSide(removeButton.parentNode, flashCardSide)
+        }
+
         // Unlock text area
         if (flashCardSide.classList.contains('selected')
             && (flashCardSide.querySelectorAll(".constructor-image").length <= 2)) {
@@ -343,23 +353,36 @@ document.addEventListener('DOMContentLoaded', (e) => {
     uploadSound.addEventListener('change', () => {
       uploadSoundFunction(uploadSound.files[0]);
     })
+
     function uploadSoundFunction(file) {
       if (!['audio/mpeg', 'audio/wav', 'audio/ogg'].includes(file.type)) {
         alert('Choose another format. (MP3, WAV, OGG)');
         uploadSound.value = '';
         return;
       }
-      const reader_sound = new FileReader();
-      reader_sound.addEventListener('load', () => {
-        const audio = new Audio(reader_sound.result);
-        const playSound = document.createElement('button');
-        playSound.textContent = 'Play';
-        playSound.addEventListener('click', () => {
-          audio.play();
-        });
-        parentDiv.appendChild(playSound);
-    });
-      reader_sound.readAsDataURL(file);
+      const readerSound = new FileReader();
+      readerSound.onload = (event) => {
+        const selectedSide = flashCardCreationBox.querySelector(".selected");
+        // Check for flashcard side selected
+        if (selectedSide) {
+          const audio = new Audio(readerSound.result);
+          const playSound = document.createElement('div');
+          playSound.className = "sound"
+          playSound.innerHTML = `<img src = "../static/images/play.png" alt="Sound">`;
+          selectedSide.appendChild(playSound);
+          playSound.onclick = function () {
+            if(audio.paused) {
+              audio.play();
+            } else {
+              audio.pause();
+            }
+          }
+        } else {alert("Select a part to upload your image on.")}
+      }
+      readerSound.onerror = function (e) {
+        alert('Error');
+      };
+      readerSound.readAsDataURL(file);
     }    
 
     // Constructor image
@@ -375,7 +398,6 @@ document.addEventListener('DOMContentLoaded', (e) => {
       }
       const readerImage = new FileReader();
       readerImage.onload = (event) => {
-        console.log('add image')
         const selectedSide = flashCardCreationBox.querySelector(".selected");
         // Check for flashcard side selected
         if (selectedSide) {

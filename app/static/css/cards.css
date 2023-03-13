@@ -173,6 +173,7 @@
     float:left;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 .textarea {
@@ -211,6 +212,7 @@
 .constImage {
     display:inline-block;
     margin:1%;
+    position: relative;
 }
 
 .constructor-image {
@@ -228,6 +230,29 @@
     height:20vh;
 }
 
-.constructor-image:hover {
-    scale:1.05;
+.remove-image {
+    color: #ff0026;
+    position: absolute;
+    top: 1%;
+    right:2%;
+    background: none;
+    border: none;
+    font-size: 4vh;
+    cursor: pointer;
+}
+
+.sound {
+    position: absolute;
+    bottom: 2%;
+    right: 3%;
+    cursor: pointer;
+    width: 4vh;
+}
+
+.sound img {
+    width: 100%;
+}
+
+.remove-image:hover {
+    color: #323232;
 }
