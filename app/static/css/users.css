@@ -142,4 +142,9 @@
 
 #achievements {
     margin-top: 10%;
+    position: relative;
+}
+
+#achievements img {
+    fill: #fff;
 }
