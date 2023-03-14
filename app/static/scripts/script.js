@@ -373,8 +373,10 @@ document.addEventListener('DOMContentLoaded', (e) => {
           playSound.onclick = function () {
             if(audio.paused) {
               audio.play();
+              playSound.innerHTML = `<img src = "../static/images/pause.png" alt="Sound">`;
             } else {
               audio.pause();
+              playSound.innerHTML = `<img src = "../static/images/play.png" alt="Sound">`;
             }
           }
         } else {alert("Select a part to upload your image on.")}
