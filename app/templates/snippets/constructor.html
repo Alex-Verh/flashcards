@@ -1,7 +1,7 @@
 <div id = "constructor"  aria-hidden="true">
     <form action = '#' method = POST id="window">
 
-        <div>
+        <div id ="constuctor-main">
             <a href="#" id="close-addition" aria-hidden="true">×</a>
 
             <div class = "flashcard-part">
@@ -16,12 +16,11 @@
         </div>
 
         <div id="constructor-bottom">
-
             <button type = "button" class = "button" onclick="document.getElementById('uploadImage').click()">Add image</button>
-            <input type="file" accept=".jpeg, .jpg, .png" id="uploadImage" name="fileImages" style="display:none">
+            <input type="file" accept=".jpeg, .png, .svg" id="uploadImage" name="fileImages" style="display:none">
 
             <button type = "button" class="button" onclick="document.getElementById('uploadSound').click()">Add sound</button>
-            <input type="file" accept=".mp3" id="uploadSound" name="fileSound" style="display:none">
+            <input type="file" accept=".mp3, .ogg, .wav" id="uploadSound" name="fileSound" style="display:none">
             
             <input class = "button" type = "submit" id="window-add" value = "Add">
         </div>

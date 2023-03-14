@@ -51,11 +51,13 @@
     color: #333;
 }
 
+#constuctor-main {
+    display: flex;
+}
+
 #constructor-bottom {
     margin: 1% 1% 0 1%;
     padding: 1%;
-    display: block;
-    height: 0%;
 }
 
 .save {
@@ -158,19 +160,16 @@
     color:#fff;
 }
 
-
 .flashcard-part {
     border: 0.1vh solid #fff;
     border-radius: 5vh;
-    width: 75vh;
+    width: 40%;
+    min-width: 30vh;
     height: 50vh;
-    margin-top: 10%;
-    margin-bottom: 5%;
-    margin-left: 5.5%;
+    margin: 10% 5% 3% 5%;
     cursor: pointer;
     display: flex;
     flex-wrap: wrap;
-    float:left;
     justify-content: center;
     align-items: center;
     position: relative;
