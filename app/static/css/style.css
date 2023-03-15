@@ -561,28 +561,35 @@ input[type="radio"]{
   }
   
   /* Modal Content/Box */
-  .modal-content {
+.modal-content {
     background-color: #000;
     margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
+    border: 0.1vh solid #888;
+    padding: 2.5vh;
+    position: relative;
     width: 80%; /* Could be more or less, depending on screen size */
-  }
-  
-  /* The Close Button */
-  .close-modal {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
-  
-  .close-modal:hover,
-  .close-modal:focus {
-    color: black;
+    color: #c7c7c7;
+    height: 30vh;
+}
+
+.modal-content a {
+    color:#5f9ea0;
+}
+
+
+.close-modal {
+    color: #ff0000;
+    position:absolute;
+    top: 1%;
+    right: 2%;
+    font-size: 5vh;
+}
+
+.close-modal:hover {
+    color: rgb(92, 92, 92);
     text-decoration: none;
     cursor: pointer;
-  }
+}
 /* End CSS for Login/Register Modal Box */
 
 *::-webkit-scrollbar-corner {

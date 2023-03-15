@@ -1,7 +1,11 @@
 <div id="loginRegisterModal" class="modal">
     <div class="modal-content">
       <span class="close-modal">&times;</span>
-      <a href="{{url_for('users.login')}}">Login</a>
-      <a href="{{url_for('users.register')}}">Register</a>
+      <h3>"Access to this feature requires you to create an account or log in."</h3>
+      <p>By creating an account, you will have access to a variety of additional features, 
+         such as the ability to create and save your own flashcard sets, receive allowances for creating flashcard sets, 
+         and share your knowledge with others by creating and sharing private sets. You can also unlock achievements as you study."</p>
+      <p><a href="{{url_for('users.register')}}"> Sign up </a> or <a href="{{url_for('users.login')}}"> log in </a> now to start exploring these exciting features.
+      </p>
     </div>
 </div>
