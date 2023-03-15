@@ -38,7 +38,7 @@
 .contact-us input[type=submit] {
     background: none;
 	border: none;
-    box-shadow: 0px 0.1vh 0 #fff;
+    box-shadow: 0 0.1vh 0 #fff;
     padding:1vh;
     letter-spacing: 0.1vh;
     transition: all 0.15s linear;

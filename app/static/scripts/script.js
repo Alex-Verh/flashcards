@@ -198,7 +198,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
                 <div class = "set-screen">${cardset.title}</div>
                 </a>
                 <div class = "set-modulate">
-                    <img src="../../static/images/user.png" alt="user" width="15px">
+                    <img src="../../static/images/user.png" alt="user" width="10%">
                     <span id="saves-count-${cardset.id}">${cardset.saves}</span>
                     <img id="save-cardset-${cardset.id}" onclick="saveCardSet(${cardset.id})" class = "image-save" src="${cardset.save_img_url}" alt="Save">
                 </div>`;

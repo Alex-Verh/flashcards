@@ -192,7 +192,7 @@ input:-webkit-autofill{
 }
 
 #window-header {
-    border-bottom: #eee solid 1px;
+    border-bottom: #eee solid 0.1vh;
     padding: 1vh 2vh;
     font-size: 3vh;
 }
@@ -361,7 +361,7 @@ input:-webkit-autofill{
     align-items: center;
     justify-content: space-evenly;
     margin: 1vh;
-    border-radius: 5px;
+    border-radius: 0.5vh;
     cursor: pointer;
     padding: 0 1vh;
     border: 0.2vh solid #d3d3d3;

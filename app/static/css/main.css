@@ -46,7 +46,6 @@
     color: #fff;
     font-size: 2vh;
     transition: 0.4s;
-    line-height: 3vh;
     width:0;
 }
 
@@ -131,7 +130,7 @@
 
 /* Enter button CSS*/
 #button {
-    box-shadow: 0px 0.1vh 0 rgb(255, 255, 255);
+    box-shadow: 0 0.1vh 0 rgb(255, 255, 255);
     padding:1vh;
     letter-spacing: 0.1vh;
     transition: all 0.15s linear;
@@ -140,7 +139,7 @@
 }
   
 #button:hover {
-    box-shadow: 0px 0.1vh 0 #007d04;
+    box-shadow: 0 0.1vh 0 #007d04;
 }
 
 #button:active {
