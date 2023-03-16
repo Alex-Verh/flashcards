@@ -11,6 +11,11 @@ def cardset(id):
     cardset = CardSet.query.get_or_404(id)
     return render_template("cards/cardset.html", cardset=cardset)
 
+@bp.route('/learn/<int:id>')
+def learn(id):
+    cardset = CardSet.query.get_or_404(id)
+    return render_template("cards/learn.html", cardset=cardset)
+
 
 @bp.route('/cardset/create', methods=['POST'])
 @login_required

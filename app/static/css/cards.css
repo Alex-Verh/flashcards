@@ -60,12 +60,17 @@
     padding: 1%;
 }
 
-.save {
-    position: absolute;
-    width: 3%;
+#save-div {
     cursor: pointer;
+    position: absolute;
     bottom: 4%;
     right: 2%;
+    width: 3%;
+    aspect-ratio: 1;
+}
+
+#save-div img {
+    width: 100%;
 }
 
 #cardset-buttons {
@@ -255,3 +260,80 @@
 .remove-image:hover {
     color: #323232;
 }
+
+/* ###### LEARN PAGE ####### */
+/* Window radio-choice css */
+#mode-choice {
+    display: inline-flex;
+    height: 7vh;
+    width: 60vh;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 2vh 1.5vh;
+    margin: 5vh;
+}
+
+#mode-choice .option{
+    background: #000;
+    height: 70%;
+    width: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 1vh;
+    border-radius: 0.5vh;
+    cursor: pointer;
+    padding: 0 1vh;
+    border: 0.2vh solid #d3d3d3;
+    transition: all 0.3s ease;
+}
+
+#mode-choice .option .dot{
+    height: 2vh;
+    width: 2vh;
+    background: #d9d9d9;
+    border-radius: 50%;
+    position: relative;
+}
+
+#mode-choice .option .dot::before{
+  position: absolute;
+  content: "";
+  top: 0.4vh;
+  left: 0.4vh;
+  width: 1.2vh;
+  height: 1.2vh;
+  background: #000;
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(1.5);
+  transition: all 0.3s ease;
+}
+input[type="radio"]{
+  display: none;
+}
+
+#title:checked:checked ~ .title,
+#content:checked:checked ~ .content{
+  border-color: #ffffff7b;
+  background: #000;
+}
+#title:checked:checked ~ .title .dot,
+#content:checked:checked ~ .content .dot{
+  background: #fff;
+}
+#title:checked:checked ~ .title .dot::before,
+#content:checked:checked ~ .content .dot::before{
+  opacity: 1;
+  transform: scale(1);
+}
+
+#window-choice .option span{
+  font-size: 3vh;
+  color: #808080;
+}
+#title:checked:checked ~ .title span,
+#content:checked:checked ~ .content span {
+  color: #fff;
+}
+/*end radio-choice*/

@@ -119,7 +119,7 @@
     text-align: right;
 }
 
-#learn {
+#logout {
     background: none;
     color:#fff;
     font-size: 3vh;
@@ -132,11 +132,11 @@
     width:50%;
 }
 
-#learn:hover {
+#logout:hover {
     box-shadow:0 0.5vh 1vh #ffffff80;
 }
 
-#learn:active {
+#logout:active {
     background-color: #ffffff80;
 }
 

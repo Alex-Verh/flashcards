@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title -%}Cardset - {% endblock -%}
+{% block css -%}<link href="{{ url_for('static', filename='css/cards.css') }}" rel="stylesheet" type="text/css">{% endblock %}
+
+
+{% block header -%}
+    {{super()}}
+    <a id = "return" onclick="history.back()"><img src="../static/images/return.png" alt="Return Back"> </a>
+{% endblock -%}
+
+{% block main %}
+    <h1 style="font-size: 5vh;">Choose mode: <span style ="font-size: 4vh; color: #a9a9a9;">{{cardset.title}}</span></h1>
+
+    <div id = "mode-choice">
+        <input type="radio" name="mode" value = "1" id="title">
+        <input type="radio" name="mode" value = "0" id="content" checked>
+
+        <label for="title" class="option title">
+            <div class="dot"></div>
+            <span>Guess title</span>
+        </label>
+
+        <label for="content" class="option content">
+            <div class="dot"></div>
+            <span>Guess content</span>
+        </label>
+    </div>
+
+
+{% endblock %}
