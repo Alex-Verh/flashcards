@@ -280,16 +280,39 @@ document.addEventListener('DOMContentLoaded', (e) => {
       imagePreview.removeChild(imageEl)
     }
 
-    const removeTextFromCardSide = (cardSide) => {
-      const textArea = cardSide.querySelector('.textarea')
-      textArea.innerHTML = ''
-      textArea.style.display = 'none'
-    }
-
     const flashCardCreationBox = document.querySelector('#constructor')
     const flashcardSides = flashCardCreationBox.querySelectorAll('.flashcard-part')
     const uploadSound = flashCardCreationBox.querySelector("#uploadSound");
     const uploadImage = flashCardCreationBox.querySelector("#uploadImage");
+
+    flashCardCreationBox.querySelector('form').addEventListener('submit', event => {
+      event.preventDefault()
+      const formData = new FormData()
+      
+      flashcardSides.forEach((side, sideIndex) => {
+        const textarea = side.querySelector('.textarea')
+        const sideText = textarea.textContent.trim()
+        formData.append(textarea.id.replace('textarea-', ''), sideText)
+
+        const imagesEls = side.querySelectorAll('.constructor-image')
+        console.log(side)
+        imagesEls.forEach((image, index) => {
+          // TODO: send files to backend
+          console.log(image)
+          const fileName = `${sideIndex}_${index}`
+          dataUrlToFile(image.src, fileName).then(data => {formData.append(fileName, data); console.log(data); return data})
+        })
+        
+      })
+      fetch('/api/create-flashcard', {method: 'POST', body: formData})
+      .then(response => console.log(response.json()))
+
+    }) 
+    async function dataUrlToFile(dataUrl, fileName) {
+      const res = await fetch(dataUrl);
+      const blob = await res.blob();
+      return new File([blob], fileName, { type: 'image/png' });
+    }
 
     const textareas = document.querySelectorAll(".textarea");
     textareas.forEach(area => {
@@ -420,6 +443,8 @@ document.addEventListener('DOMContentLoaded', (e) => {
       e.preventDefault();
       flashCardCreationBox.classList.remove('transit');
     })
+
+
   }
 })
 
@@ -432,10 +457,11 @@ const deleteCardSet = (cardSetId, isOwn) => {
   fetch(`/api/delete-cardset/${cardSetId}`, { method: "GET"})
     .then(() => {
       if (!isOwn) {
-        document.getElementById("deleteFromSaved").src = '../../static/images/save2.png'
+        cardSetEl.querySelector('#deleteFromSaved').src = '../../static/images/save2.png'
         console.log('dd')
       }
-      setTimeout(() => {cardSetEl.remove()}, 100)
+      // setTimeout(() => {cardSetEl.remove()}, 100)
+      cardSetEl.remove()
     })
     .catch((e) => {alert(e); console.log(e)});
 }
@@ -445,7 +471,10 @@ const saveCardSet = (cardSetId) => {
   fetch(`/api/save-cardset/${cardSetId}`, { method: "POST" })
     .then((res) => res.json())
     .then((data) => {
-      saveCount.innerHTML = data["saves"];  
+      console.log(data)
+      if (saveCount) {
+        saveCount.innerHTML = data["saves"];  
+      }
       if (data["saved"] === true) {
         saveButton.src = data["image_url"];
       } else {

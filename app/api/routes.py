@@ -95,3 +95,9 @@ def cardset_categories():
     categories = [{'id': cat.id, 'title': cat.title} for cat in CardSetCategory.query]
     return jsonify(categories)
 
+@bp.route('/create-flashcard', methods=['POST'])
+@login_required
+def create_flashcard():
+    print(request.form)
+    print(request.files)
+    return jsonify({'ok': 200}), 200

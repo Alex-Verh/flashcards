@@ -71,7 +71,11 @@
     </div>
     {% if current_user.is_authenticated -%}
     <div id = "save-div">
-        <img id="save-cardset-{{cardset.id}}" onclick="saveCardSet('{{cardset.id}}')" src="{{url_for('static', filename='images/save2.png')}}" alt="Save">
+        {% if cardset in current_user.saved_cardsets.all() -%}
+            <img id="save-cardset-{{cardset.id}}" onclick="saveCardSet('{{cardset.id}}')" src="{{url_for('static', filename='images/save1.png')}}" alt="Save">
+        {% else -%}
+            <img id="save-cardset-{{cardset.id}}" onclick="saveCardSet('{{cardset.id}}')" src="{{url_for('static', filename='images/save2.png')}}" alt="Save">
+        {% endif -%}
     </div>
     {% endif -%}
 {% endblock %}
