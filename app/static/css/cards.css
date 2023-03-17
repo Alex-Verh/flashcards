@@ -105,7 +105,7 @@
 }
 
 #flashcards {
-    height: 76%;
+    height: 75%;
     overflow: scroll;
     margin: 0 3%;
     scroll-snap-type: y mandatory;
@@ -114,11 +114,12 @@
 .flashcard {
     border: #fff 0.1vh solid;
     margin: 1.1%;
+    margin-top: 0;
     float: left;
     border-radius: 1.5vh;
     scroll-snap-align: start;
     padding:1.5vh;
-    height: 24vh;
+    height: 25vh;
     width: 38vh;
 }
 
@@ -140,7 +141,7 @@
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     margin: auto;
-    height: 24vh;
+    height: 25vh;
     width: 38vh;
     font-size: 3vh;
 
