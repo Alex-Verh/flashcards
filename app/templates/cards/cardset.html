@@ -14,6 +14,12 @@
     <h1 style="font-size: 5vh;">{{cardset.title}}</h1>
     <div id = "flashcards">
         {% for flashcard in cardset.flash_cards.all() -%}
+        <!-- !!!ADD CHECK COUNT OF TEXT AND IMAGES TO DETERMINE THEIR CORRECT CLASSES ON EACH SIDE OF THE CARD -->
+        <!-- IF ONLY TEXT ADD WITHOUT ANY CLASS -->
+        <!-- IF ONLY IMAGE ADD WITH CLASS flash-card-image-single -->
+        <!-- IF MULTIPLE IMAGE ADD WITH CLASS flash-card-image-multiple -->
+        <!-- IF SINGLE IMAGE AND TEXT THEN not-only-text class AND flash-card-image-single -->
+
             <div class = "flashcard">
                 <div class="flash-screen">
                     <div class="flash-card-front">
@@ -25,6 +31,35 @@
                 </div>
             </div>
         {% endfor -%}
+                
+        <!-- EXAMPLES###DELETE AFTER IMPLEMENTATION -->
+        <div class = "flashcard">
+            <div class="flash-screen">
+                <div class="flash-card-front">
+                    <img src = "../../static/images/background1.jpg" class = "flash-card-image-single">
+                    <div class = "not-only-text">I am title!</div>
+                </div>
+                <div class="flash-card-back">
+                    <img src = "../../static/images/background2.jpg" class = "flash-card-image-multiple">
+                    <img src = "../../static/images/background1.jpg" class="flash-card-image-multiple">
+                    <div class = "not-only-text">I am content!</div>
+                </div>
+            </div>
+        </div>
+        <div class = "flashcard">
+            <div class="flash-screen">
+                <div class="flash-card-front">
+                    I am title!
+                </div>
+                <div class="flash-card-back">
+                    <img src = "../../static/images/background2.jpg" class = "flash-card-image-multiple">
+                    <img src = "../../static/images/background1.jpg" class="flash-card-image-multiple">
+                    <img src = "../../static/images/background1.jpg" class="flash-card-image-multiple">
+                    <img src = "../../static/images/background1.jpg" class="flash-card-image-multiple">
+                </div>
+            </div>
+        </div>
+
     </div>
     <div id = "cardset-buttons">
         <a href="#" id="create-flashcard" class="cardset-button">Add new</a>
