@@ -74,9 +74,10 @@
 }
 
 #cardset-buttons {
-    width: 100%;
+    width: 60%;
     position: absolute;
     bottom: 3%;
+    left: 20%;
     display: flex;
     align-content: center;
     justify-content: center;
@@ -113,7 +114,7 @@
 
 .flashcard {
     border: #fff 0.1vh solid;
-    margin: 1.1%;
+    margin: 1%;
     margin-top: 0;
     float: left;
     border-radius: 1.5vh;
@@ -143,8 +144,7 @@
     margin: auto;
     height: 25vh;
     width: 38vh;
-    font-size: 3vh;
-
+    font-size: 2.5vh;
 }
 
 /* Style the back side */

@@ -13,10 +13,16 @@ def cardset(id):
         abort(403)
     return render_template("cards/cardset.html", cardset=cardset)
 
+
+@bp.route('/learn/', defaults={'id': None})
 @bp.route('/learn/<int:id>')
 def learn(id):
-    cardset = CardSet.query.get_or_404(id)
-    return render_template("cards/learn.html", cardset=cardset)
+    if id: 
+        cardset = CardSet.query.get_or_404(id)
+    else:
+        cardset = None
+    return render_template('cards/learn.html', cardset=cardset)
+
 
 
 @bp.route('/cardset/create', methods=['POST'])
