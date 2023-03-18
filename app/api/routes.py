@@ -1,9 +1,12 @@
 from flask import url_for, jsonify, request
 from flask_login import  login_required, current_user
+from PIL import Image
+import os
+import secrets
 
 from . import bp
 from ..extensions import db
-from ..models import CardSet, CardSetCategory, user_cardset_assn
+from ..models import CardSet, CardSetCategory, user_cardset_assn, FlashCard
 
 @bp.route('/delete-cardset/<int:id>')
 @login_required
@@ -95,9 +98,59 @@ def cardset_categories():
     categories = [{'id': cat.id, 'title': cat.title} for cat in CardSetCategory.query]
     return jsonify(categories)
 
+def save_image(image):
+    random_hex = secrets.token_hex(12)
+    _, f_ext = os.path.splitext(image.filename)
+    picture_fn = random_hex + f_ext
+    picture_path = os.path.join('/home/denis/Desktop/flashcards/app', 'uploads', picture_fn)
+
+    output_size = (200, 200)
+    i = Image.open(image)
+    i.thumbnail(output_size)
+    i.save(picture_path)
+
+    return picture_fn
+
 @bp.route('/create-flashcard', methods=['POST'])
 @login_required
 def create_flashcard():
-    print(request.form)
-    print(request.files)
-    return jsonify({'ok': 200}), 200
+    flashcard_attachments = {
+        'frontside': {
+            'images': [],
+        },
+        'backside': {
+            'images': [],
+        },
+    }
+    for image in request.files.getlist('front_images'):
+        image_filename = save_image(image)
+        flashcard_attachments['frontside']['images'].append(image_filename)
+    for image in request.files.getlist('back_images'):
+        image_filename = save_image(image)
+        flashcard_attachments['backside']['images'].append(image_filename)
+        
+    
+    front_audio = request.files.get('front_audio')
+    if front_audio:
+        _, f_ext = os.path.splitext(front_audio.filename)
+        audio_fn = secrets.token_hex(12) + f_ext
+        front_audio.save(os.path.join('/home/denis/Desktop/flashcards/app', 'uploads', audio_fn))
+        flashcard_attachments['frontside']['audio'] = audio_fn
+        
+    back_audio = request.files.get('back_audio')
+    if back_audio:
+        _, f_ext = os.path.splitext(back_audio.filename)
+        audio_fn = secrets.token_hex(12) + f_ext
+        back_audio.save(os.path.join('/home/denis/Desktop/flashcards/app', 'uploads', audio_fn))
+        flashcard_attachments['backside']['audio'] = audio_fn
+
+    flashcard = FlashCard(
+        title=request.form.get('title'),
+        content=request.form.get('content'),
+        attachments=flashcard_attachments,
+        cardset_id = request.form.get('cardset_id')
+    )
+    db.session.add(flashcard)
+    db.session.commit()
+    
+    return jsonify({'message': 'Files uploaded and resized successfully'}), 200

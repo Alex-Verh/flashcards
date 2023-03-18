@@ -221,6 +221,18 @@ document.addEventListener('DOMContentLoaded', (e) => {
   if (window.location.href.split('/')[3] === 'cardset') {
 
     // ####################### FLASH CARD CONSTRUCTOR #########################
+    const flashCardAttachments = {
+      frontSide: {
+        images: [],
+        audio: null
+      },
+      backSide: {
+        images: [],
+        audio: null
+      }
+    }
+
+
     const addImageToCardSide = (imageUrl, cardSide) => {
       const imagePreview = cardSide.querySelector('.image-preview')
       const textArea = cardSide.querySelector('.textarea')
@@ -288,31 +300,43 @@ document.addEventListener('DOMContentLoaded', (e) => {
     flashCardCreationBox.querySelector('form').addEventListener('submit', event => {
       event.preventDefault()
       const formData = new FormData()
-      
-      flashcardSides.forEach((side, sideIndex) => {
+
+      const cardsetId = window.location.href.split('/')[4]
+      formData.append('cardset_id', cardsetId)
+
+      flashcardSides.forEach(side => {
         const textarea = side.querySelector('.textarea')
         const sideText = textarea.textContent.trim()
         formData.append(textarea.id.replace('textarea-', ''), sideText)
+        textarea.innerHTML = ''
 
-        const imagesEls = side.querySelectorAll('.constructor-image')
-        console.log(side)
-        imagesEls.forEach((image, index) => {
-          // TODO: send files to backend
-          console.log(image)
-          const fileName = `${sideIndex}_${index}`
-          dataUrlToFile(image.src, fileName).then(data => {formData.append(fileName, data); console.log(data); return data})
+        side.querySelectorAll('.image-preview').forEach(imagePreview => {
+          imagePreview.innerHTML = ''
         })
-        
+        side.querySelectorAll('.sound').forEach(el => el.innerHTML = '')
       })
-      fetch('/api/create-flashcard', {method: 'POST', body: formData})
-      .then(response => console.log(response.json()))
 
+
+      flashCardAttachments.frontSide.images.forEach(image => {
+        formData.append('front_images', image)
+      })
+      flashCardAttachments.backSide.images.forEach(image => {
+        formData.append('back_images', image)
+      })
+      flashCardAttachments.frontSide.audio && formData.append('front_audio', flashCardAttachments.frontSide.audio)
+      flashCardAttachments.backSide.audio && formData.append('back_audio', flashCardAttachments.backSide.audio)
+
+      fetch('/api/create-flashcard', {method: 'POST', body: formData})
+      .then(response => response.json())
+
+      event.target.reset()
+      for (const side in flashCardAttachments) {
+        flashCardAttachments[side] = {
+          images: [],
+          audio: null
+        }
+      }
     }) 
-    async function dataUrlToFile(dataUrl, fileName) {
-      const res = await fetch(dataUrl);
-      const blob = await res.blob();
-      return new File([blob], fileName, { type: 'image/png' });
-    }
 
     const textareas = document.querySelectorAll(".textarea");
     textareas.forEach(area => {
@@ -347,6 +371,11 @@ document.addEventListener('DOMContentLoaded', (e) => {
 
         const removeButton = e.target.closest('.remove-image')
         if (removeButton) {
+          const sideType = flashCardSide.dataset.type + 'Side'
+          const elToRemove = removeButton.closest('.constImage')
+          const imageIndex = [...elToRemove.parentElement.children].indexOf(elToRemove)
+          flashCardAttachments[sideType].images.splice(imageIndex ,1)
+          console.log(flashCardAttachments[sideType].images)
           removeImageFromCardSide(removeButton.parentNode, flashCardSide)
         }
 
@@ -388,11 +417,12 @@ document.addEventListener('DOMContentLoaded', (e) => {
         const selectedSide = flashCardCreationBox.querySelector(".selected");
         // Check for flashcard side selected
         if (selectedSide) {
+          const sideType = selectedSide.dataset.type + 'Side'
+          flashCardAttachments[sideType].audio = file
+
           const audio = new Audio(readerSound.result);
-          const playSound = document.createElement('div');
-          playSound.className = "sound"
-          playSound.innerHTML = `<img src = "../static/images/play.png" alt="Sound">`;
-          selectedSide.appendChild(playSound);
+          const playSound = selectedSide.querySelector('.sound')
+          playSound.innerHTML = `<img src = "../static/images/play.png" alt="Sound">`
           playSound.onclick = function () {
             if(audio.paused) {
               audio.play();
@@ -426,6 +456,9 @@ document.addEventListener('DOMContentLoaded', (e) => {
         const selectedSide = flashCardCreationBox.querySelector(".selected");
         // Check for flashcard side selected
         if (selectedSide) {
+          const sideType = selectedSide.dataset.type + 'Side'
+          flashCardAttachments[sideType].images.push(file)
+
           addImageToCardSide(event.target.result, selectedSide)
         } else {alert("Select a part to upload your image on.")}
       }
