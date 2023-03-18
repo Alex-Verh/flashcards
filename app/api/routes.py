@@ -1,4 +1,4 @@
-from flask import url_for, jsonify, request
+from flask import url_for, jsonify, request, current_app
 from flask_login import  login_required, current_user
 from PIL import Image
 import os
@@ -102,7 +102,7 @@ def save_image(image):
     random_hex = secrets.token_hex(12)
     _, f_ext = os.path.splitext(image.filename)
     picture_fn = random_hex + f_ext
-    picture_path = os.path.join('/home/denis/Desktop/flashcards/app', 'uploads', picture_fn)
+    picture_path = os.path.join(current_app.root_path, current_app.config['UPLOAD_FOLDER'], picture_fn)
 
     output_size = (200, 200)
     i = Image.open(image)
@@ -110,6 +110,14 @@ def save_image(image):
     i.save(picture_path)
 
     return picture_fn
+
+def save_audio(audio):
+    _, f_ext = os.path.splitext(audio.filename)
+    audio_fn = secrets.token_hex(12) + f_ext
+    audio_path = os.path.join(current_app.root_path, current_app.config['UPLOAD_FOLDER'], audio_fn)
+    audio.save(audio_path)
+
+    return audio_fn
 
 @bp.route('/create-flashcard', methods=['POST'])
 @login_required
@@ -132,17 +140,11 @@ def create_flashcard():
     
     front_audio = request.files.get('front_audio')
     if front_audio:
-        _, f_ext = os.path.splitext(front_audio.filename)
-        audio_fn = secrets.token_hex(12) + f_ext
-        front_audio.save(os.path.join('/home/denis/Desktop/flashcards/app', 'uploads', audio_fn))
-        flashcard_attachments['frontside']['audio'] = audio_fn
+        flashcard_attachments['frontside']['audio'] = save_audio(front_audio)
         
     back_audio = request.files.get('back_audio')
     if back_audio:
-        _, f_ext = os.path.splitext(back_audio.filename)
-        audio_fn = secrets.token_hex(12) + f_ext
-        back_audio.save(os.path.join('/home/denis/Desktop/flashcards/app', 'uploads', audio_fn))
-        flashcard_attachments['backside']['audio'] = audio_fn
+        flashcard_attachments['backside']['audio'] = save_image(back_audio)
 
     flashcard = FlashCard(
         title=request.form.get('title'),

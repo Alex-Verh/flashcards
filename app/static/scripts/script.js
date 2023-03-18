@@ -375,7 +375,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
           const elToRemove = removeButton.closest('.constImage')
           const imageIndex = [...elToRemove.parentElement.children].indexOf(elToRemove)
           flashCardAttachments[sideType].images.splice(imageIndex ,1)
-          console.log(flashCardAttachments[sideType].images)
+
           removeImageFromCardSide(removeButton.parentNode, flashCardSide)
         }
 

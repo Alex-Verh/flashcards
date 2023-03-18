@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, send_from_directory
 
 from config import Config
 
@@ -44,5 +44,13 @@ def create_app(config_class=Config):
     @app.errorhandler(404)
     def page_not_found(error):
         return render_template('common/error.html', error='Page Not Found!')
+    
+    @app.errorhandler(403)
+    def page_not_found(error):
+        return render_template('common/error.html', error='This is a privat card set')
+    
+    @app.route('/uploads/<filename>')
+    def uploaded_file(filename):
+        return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
     
     return app

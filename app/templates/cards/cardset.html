@@ -20,46 +20,51 @@
         <!-- IF MULTIPLE IMAGE ADD WITH CLASS flash-card-image-multiple -->
         <!-- IF SINGLE IMAGE AND TEXT THEN not-only-text class AND flash-card-image-single -->
 
+        <!-- +++++++++++++++++ DONE ++++++++++++++++++++++ -->
+
             <div class = "flashcard">
                 <div class="flash-screen">
                     <div class="flash-card-front">
-                        {{flashcard.title}}
+                        {% set images = flashcard.attachments.frontside.images %}
+                        {% if images | length == 1 %}
+                            {% set img_class = "flash-card-image-single" %}
+                        {% else -%}
+                            {% set img_class = "flash-card-image-multiple" %}
+                        {% endif -%}
+                            
+                        {% for image in images -%} 
+                            <img src = "../../uploads/{{image}}" class = "{{ img_class }}">
+                        {% endfor -%}
+
+                        {% if images | length == 0 %}
+                            {{flashcard.title}}
+                        {% elif flashcard.title -%}
+                            <div class = "not-only-text">{{flashcard.title}}</div>
+                        {% endif -%}
                     </div>
                     <div class="flash-card-back">
-                        {{flashcard.content}}
+                        {% set images = flashcard.attachments.backside.images %}
+                        {% if images | length == 1 %}
+                            {% set img_class = "flash-card-image-single" %}
+                        {% else -%}
+                            {% set img_class = "flash-card-image-multiple" %}
+                        {% endif -%}
+                            
+                        {% for image in images -%} 
+                            <img src = "../../uploads/{{image}}" class = "{{ img_class }}">
+                        {% endfor -%}
+
+                        {% if images | length == 0 %}
+                            {{flashcard.content}}
+                        {% elif flashcard.content -%}
+                            <div class = "not-only-text">{{flashcard.content}}</div>
+                        {% endif -%}
+                        
                     </div>
                 </div>
             </div>
             
         {% endfor -%}
-                
-        <!-- EXAMPLES###DELETE AFTER IMPLEMENTATION -->
-        <div class = "flashcard">
-            <div class="flash-screen">
-                <div class="flash-card-front">
-                    <img src = "../../static/images/background1.jpg" class = "flash-card-image-single">
-                    <div class = "not-only-text">I am title!</div>
-                </div>
-                <div class="flash-card-back">
-                    <img src = "../../static/images/background2.jpg" class = "flash-card-image-multiple">
-                    <img src = "../../static/images/background1.jpg" class="flash-card-image-multiple">
-                    <div class = "not-only-text">I am content!</div>
-                </div>
-            </div>
-        </div>
-        <div class = "flashcard">
-            <div class="flash-screen">
-                <div class="flash-card-front">
-                    I am title!
-                </div>
-                <div class="flash-card-back">
-                    <img src = "../../static/images/background2.jpg" class = "flash-card-image-multiple">
-                    <img src = "../../static/images/background1.jpg" class="flash-card-image-multiple">
-                    <img src = "../../static/images/background1.jpg" class="flash-card-image-multiple">
-                    <img src = "../../static/images/background1.jpg" class="flash-card-image-multiple">
-                </div>
-            </div>
-        </div>
 
     </div>
     <div id = "cardset-buttons">
