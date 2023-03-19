@@ -14,14 +14,6 @@
     <h1 style="font-size: 5vh;">{{cardset.title}}</h1>
     <div id = "flashcards">
         {% for flashcard in cardset.flash_cards.all() -%}
-        <!-- !!!ADD CHECK COUNT OF TEXT AND IMAGES TO DETERMINE THEIR CORRECT CLASSES ON EACH SIDE OF THE CARD -->
-        <!-- IF ONLY TEXT ADD WITHOUT ANY CLASS -->
-        <!-- IF ONLY IMAGE ADD WITH CLASS flash-card-image-single -->
-        <!-- IF MULTIPLE IMAGE ADD WITH CLASS flash-card-image-multiple -->
-        <!-- IF SINGLE IMAGE AND TEXT THEN not-only-text class AND flash-card-image-single -->
-
-        <!-- +++++++++++++++++ DONE ++++++++++++++++++++++ -->
-
             <div class = "flashcard">
                 <div class="flash-screen">
                     <div class="flash-card-front">
@@ -75,11 +67,11 @@
         {% endif -%}
     </div>
     {% if current_user.is_authenticated -%}
-    <div id = "save-div">
+    <div id = "save-div"  onclick="saveCardSet('{{cardset.id}}')">
         {% if cardset in current_user.saved_cardsets.all() -%}
-            <img id="save-cardset-{{cardset.id}}" onclick="saveCardSet('{{cardset.id}}')" src="{{url_for('static', filename='images/save1.png')}}" alt="Save">
+            <img id="save-cardset-{{cardset.id}}" src="{{url_for('static', filename='images/save1.png')}}" alt="Save">
         {% else -%}
-            <img id="save-cardset-{{cardset.id}}" onclick="saveCardSet('{{cardset.id}}')" src="{{url_for('static', filename='images/save2.png')}}" alt="Save">
+            <img id="save-cardset-{{cardset.id}}" src="{{url_for('static', filename='images/save2.png')}}" alt="Save">
         {% endif -%}
     </div>
     {% endif -%}

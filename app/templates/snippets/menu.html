@@ -6,7 +6,7 @@
             <a href="{{url_for('main.home')}}" style = "color:rgb(27, 133, 0);">Home</a>
             {% if current_user.is_authenticated -%}
             <a href="{{url_for('users.profile')}}">Profile</a>
-            <a href="#">Learn</a>
+            <a href="{{url_for('cards.learn')}}">Learn</a>
             {% endif -%}
             <a href="#" id="open-window">Create</a>
             <a href="{{url_for('common.help')}}">Help</a>
