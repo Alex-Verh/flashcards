@@ -40,9 +40,58 @@
 
         {% endblock %}
     </div>
+    <!-- TODO: FIX -->
+    <script>
+        function deleteCardSet(cardSetId, isOwn) {
+            if (isOwn) {
+            if (confirm("Are you sure you want to delete this set?") !== true) {return;}
+            }
+            const cardSetEl = document.getElementById(`cardset-${cardSetId}`);
+            fetch(`/api/delete-cardset/${cardSetId}`, { method: "GET"})
+            .then(() => {
+                if (!isOwn) {
+                cardSetEl.querySelector('#deleteFromSaved').src = '../../static/images/save2.png'
+                console.log('dd')
+                }
+                // setTimeout(() => {cardSetEl.remove()}, 100)
+                cardSetEl.remove()
+            })
+            .catch((e) => {alert(e); console.log(e)});
+        }
+        
+        
+        function saveCardSet (cardSetId) {
+            const saveCount = document.getElementById(`saves-count-${cardSetId}`);
+            const saveButton = document.getElementById(`save-cardset-${cardSetId}`);
+            fetch(`/api/save-cardset/${cardSetId}`, { method: "POST" })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data)
+                if (saveCount) {
+                saveCount.innerHTML = data["saves"];  
+                }
+                if (data["saved"] === true) {
+                saveButton.src = data["image_url"];
+                } else {
+                saveButton.src = data["image_url"];
+                }
+            })
+            .catch((e) => {
+                if (e instanceof SyntaxError) {
+                document.getElementById("loginRegisterModal").style.display = "block";
+                };
+                console.log(e)
+            })
+        }
+        
+    </script>
+    <script type="module">
+        import { changeBackground } from "./../static/scripts/background.js";
+        changeBackground()
+    </script>
+    <!--JQuery--------------------------------------------------------->
+    <script src="{{url_for('static', filename='scripts/jquery.js')}}"></script>
+    <!--JS--------------------------------------------------------->
+    <script type="module" src = "{{ url_for('static', filename='scripts/script.js') }}"></script>
 </body>
 </html>
-<!--JQuery--------------------------------------------------------->
-<script src="{{url_for('static', filename='scripts/jquery.js')}}"></script>
-<!--JS--------------------------------------------------------->
-<script src = "{{ url_for('static', filename='scripts/script.js') }}"></script>

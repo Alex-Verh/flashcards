@@ -1,12 +1,12 @@
 from flask import url_for, jsonify, request, current_app
 from flask_login import  login_required, current_user
-from PIL import Image
-import os
 import secrets
+import os
 
 from . import bp
 from ..extensions import db
 from ..models import CardSet, CardSetCategory, user_cardset_assn, FlashCard
+from ..funcs import save_image, save_audio, delete_cardset_files
 
 @bp.route('/delete-cardset/<int:id>')
 @login_required
@@ -16,6 +16,9 @@ def delete_cardset(id):
         return jsonify({'error': 'Card set does not exist.'}), 400
     
     if cardset.user_id == current_user.id:
+        uploads_dir_path = os.path.join(current_app.root_path, current_app.config['UPLOAD_FOLDER']) 
+        delete_cardset_files(current_user.id, cardset.id, uploads_dir_path)
+        
         db.session.delete(cardset)
         db.session.commit()
     elif current_user in cardset.followers.all():
@@ -98,59 +101,60 @@ def cardset_categories():
     categories = [{'id': cat.id, 'title': cat.title} for cat in CardSetCategory.query]
     return jsonify(categories)
 
-def save_image(image):
-    random_hex = secrets.token_hex(12)
-    _, f_ext = os.path.splitext(image.filename)
-    picture_fn = random_hex + f_ext
-    picture_path = os.path.join(current_app.root_path, current_app.config['UPLOAD_FOLDER'], picture_fn)
-
-    output_size = (200, 200)
-    i = Image.open(image)
-    i.thumbnail(output_size)
-    i.save(picture_path)
-
-    return picture_fn
-
-def save_audio(audio):
-    _, f_ext = os.path.splitext(audio.filename)
-    audio_fn = secrets.token_hex(12) + f_ext
-    audio_path = os.path.join(current_app.root_path, current_app.config['UPLOAD_FOLDER'], audio_fn)
-    audio.save(audio_path)
-
-    return audio_fn
 
 @bp.route('/create-flashcard', methods=['POST'])
 @login_required
 def create_flashcard():
-    flashcard_attachments = {
-        'frontside': {
-            'images': [],
-        },
-        'backside': {
-            'images': [],
-        },
-    }
-    for image in request.files.getlist('front_images'):
-        image_filename = save_image(image)
-        flashcard_attachments['frontside']['images'].append(image_filename)
-    for image in request.files.getlist('back_images'):
-        image_filename = save_image(image)
-        flashcard_attachments['backside']['images'].append(image_filename)
+    cardset_id = request.form.get('cardset_id')
+    cardset = CardSet.query.get(cardset_id)
+    
+    if cardset not in current_user.own_cardsets.all():
+        return jsonify({'error': 'This card set is not yours'}), 400
         
+    front_images = request.files.getlist('front_images')
+    back_images = request.files.getlist('back_images')
     
     front_audio = request.files.get('front_audio')
-    if front_audio:
-        flashcard_attachments['frontside']['audio'] = save_audio(front_audio)
-        
     back_audio = request.files.get('back_audio')
+    
+    base_filename = f"{current_user.id}_{cardset_id}_"
+    uploads_dir_path = os.path.join(current_app.root_path, current_app.config['UPLOAD_FOLDER']) 
+    
+    flashcard_attachments = {
+        'frontside': {
+            'images': []
+        },
+        'backside': {
+            'images': []
+        },
+    }
+    
+    for image in front_images:
+        image_filename = save_image(image,
+                                    base_filename + secrets.token_hex(6), 
+                                    uploads_dir_path)
+        flashcard_attachments['frontside']['images'].append(image_filename)
+    for image in back_images:
+        image_filename = save_image(image, 
+                                    base_filename + secrets.token_hex(6), 
+                                    uploads_dir_path)
+        flashcard_attachments['backside']['images'].append(image_filename)
+        
+    if front_audio:
+        flashcard_attachments['frontside']['audio'] = save_audio(front_audio,
+                                                                 base_filename + secrets.token_hex(6),
+                                                                 uploads_dir_path)
+        
     if back_audio:
-        flashcard_attachments['backside']['audio'] = save_image(back_audio)
+        flashcard_attachments['backside']['audio'] = save_audio(back_audio,
+                                                                base_filename + secrets.token_hex(6),
+                                                                uploads_dir_path)
 
     flashcard = FlashCard(
-        title=request.form.get('title'),
-        content=request.form.get('content'),
-        attachments=flashcard_attachments,
-        cardset_id = request.form.get('cardset_id')
+        title = request.form.get('title'),
+        content = request.form.get('content'),
+        attachments = flashcard_attachments,
+        cardset_id = cardset_id
     )
     db.session.add(flashcard)
     db.session.commit()

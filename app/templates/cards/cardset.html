@@ -68,9 +68,9 @@
 
     </div>
     <div id = "cardset-buttons">
-        <a href="#" id="create-flashcard" class="cardset-button">Add new</a>
         <a href="{{url_for('cards.learn', id=cardset.id)}}" class="cardset-button">Learn</a>
         {% if current_user.id == cardset.user_id -%}
+            <a href="#" id="create-flashcard" class="cardset-button">Add new</a>
             <a href="#" class="cardset-button" style="color:#ff0000cc">Delete</a>
         {% endif -%}
     </div>

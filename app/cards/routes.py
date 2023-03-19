@@ -9,6 +9,7 @@ from ..extensions import db
 @bp.route('/cardset/<int:id>')
 def cardset(id):
     cardset = CardSet.query.get_or_404(id)
+    
     if (not cardset.is_public) and current_user != cardset.author:
         abort(403)
     return render_template("cards/cardset.html", cardset=cardset)
