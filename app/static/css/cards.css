@@ -345,3 +345,22 @@ input[type="radio"]{
   color: #fff;
 }
 /*end radio-choice*/
+
+.cardset-to-add {
+    border: 0.1vh solid #fff;
+    width: 25vh;
+    height: 10vh;
+    display: inline-block;
+    font-size: 2.5vh;
+    border-radius: 1vh;
+    margin-inline: 1vh;
+    overflow: scroll;
+}
+
+#more-sets {
+    overflow: auto;
+    white-space: nowrap;
+    height: 11vh;
+    margin: 1vh auto;
+    width: 60%;
+}

@@ -15,7 +15,23 @@
     <div id = "more-sets">
         {% set all_cardsets = current_user.own_cardsets.union(current_user.saved_cardsets).all() %}
         {% for card_set in all_cardsets -%}
-            <div id="cardset-{{card_set.id}}">
+            <div id="cardset-{{card_set.id}}" class = "cardset-to-add">
+                <a href="{{ url_for('cards.cardset', id=card_set.id) }}">
+                    <div class = "add_set_text">{{card_set.title}}</div>
+                </a>
+                <div class = "add_set_button">
+                    <!-- image of add button -->
+                </div>
+            </div>
+            <div id="cardset-{{card_set.id}}" class = "cardset-to-add">
+                <a href="{{ url_for('cards.cardset', id=card_set.id) }}">
+                    <div class = "add_set_text">{{card_set.title}}</div>
+                </a>
+                <div class = "add_set_button">
+                    <!-- image of add button -->
+                </div>
+            </div>
+            <div id="cardset-{{card_set.id}}" class = "cardset-to-add">
                 <a href="{{ url_for('cards.cardset', id=card_set.id) }}">
                     <div class = "add_set_text">{{card_set.title}}</div>
                 </a>
@@ -24,7 +40,6 @@
                 </div>
             </div>
         {% endfor -%}
-        
     </div>
 
     <div id = "mode-choice">
