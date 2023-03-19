@@ -597,7 +597,8 @@ input[type="radio"]{
 }
 
 *::-webkit-scrollbar {
-    width: 0.8vh;               /* width of the entire scrollbar */
+    width: 0.8vh;   
+    height: 0.8vh;            /* width of the entire scrollbar */
 }
 
 *::-webkit-scrollbar-thumb {

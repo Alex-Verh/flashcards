@@ -14,24 +14,16 @@
 
     <div id = "more-sets">
         {% set all_cardsets = current_user.own_cardsets.union(current_user.saved_cardsets).all() %}
+        {% if cardset and cardset not in all_cardsets %}
+            {% set all_cardsets = [cardset] + all_cardsets %}
+        {% endif -%}
         {% for card_set in all_cardsets -%}
-            <div id="cardset-{{card_set.id}}" class = "cardset-to-add">
-                <a href="{{ url_for('cards.cardset', id=card_set.id) }}">
-                    <div class = "add_set_text">{{card_set.title}}</div>
-                </a>
-                <div class = "add_set_button">
-                    <!-- image of add button -->
-                </div>
-            </div>
-            <div id="cardset-{{card_set.id}}" class = "cardset-to-add">
-                <a href="{{ url_for('cards.cardset', id=card_set.id) }}">
-                    <div class = "add_set_text">{{card_set.title}}</div>
-                </a>
-                <div class = "add_set_button">
-                    <!-- image of add button -->
-                </div>
-            </div>
-            <div id="cardset-{{card_set.id}}" class = "cardset-to-add">
+            {% if cardset and card_set.id == cardset.id%}
+                {% set class = "set selected-set" %}
+            {% else -%}
+                {% set class = "set" %}
+            {% endif %}
+            <div id="cardset-{{card_set.id}}" class = "{{class}}">
                 <a href="{{ url_for('cards.cardset', id=card_set.id) }}">
                     <div class = "add_set_text">{{card_set.title}}</div>
                 </a>
