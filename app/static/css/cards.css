@@ -282,7 +282,6 @@
 }
 
 #mode-choice .option{
-    background: #000;
     height: 70%;
     width: 70%;
     display: flex;
@@ -324,7 +323,7 @@ input[type="radio"]{
 #title:checked:checked ~ .title,
 #content:checked:checked ~ .content{
   border-color: #ffffff7b;
-  background: #000;
+  box-shadow: #11ff0026 0.3vh 1vh 1.6vh, #11ff0026 0 0.8vh 0.8vh;
 }
 #title:checked:checked ~ .title .dot,
 #content:checked:checked ~ .content .dot{
@@ -362,11 +361,32 @@ input[type="radio"]{
     overflow: auto;
     white-space: nowrap;
     height: 15vh;
-    margin: 1vh auto;
+    margin: 0 auto;
     width: 60%;
 }
 
 .selected-set {
-    box-shadow: rgba(0, 255, 76, 0.25) 0.3vh 1vh 1.6vh, rgba(9, 255, 0, 0.22) 0 0.8vh 0.8vh;
-    border-top: 0.1vh solid #096f00;
+    box-shadow: #11ff0026 0.3vh 1vh 1.6vh, #11ff0026 0 0.8vh 0.8vh;
+    border-top: 0.1vh solid #11ff0026;
+}
+
+#start_learning {
+    padding:1vh;
+    letter-spacing: 0.1vh;
+    transition: all 0.15s linear;
+    font-size: 3vh;
+    margin: 1vh auto;
+    width: 15%;
+    cursor: pointer;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    box-shadow: #11ff0026 0 0.8vh 1.5vh;
+}
+
+#start_learning:hover {
+    box-shadow: 0 0.1vh 0 rgb(255, 255, 255);
+    transform: translateY(+0.4vh);
+}
+
+#start_learning:active {
+    box-shadow: 0 0.1vh 0 rgb(0, 102, 24);
 }

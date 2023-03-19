@@ -10,7 +10,7 @@
 {% endblock -%}
 
 {% block main %}
-    <h1 style="font-size: 5vh;">Choose your settings:</h1>
+    <h1 style="font-size: 5vh; margin-bottom: 5%;">Choose your settings:</h1>
 
     <div id = "more-sets">
         {% set all_cardsets = current_user.own_cardsets.union(current_user.saved_cardsets).all() %}
