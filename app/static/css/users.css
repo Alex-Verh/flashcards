@@ -119,7 +119,7 @@
     text-align: right;
 }
 
-#logout {
+.profile-button {
     background: none;
     color:#fff;
     font-size: 3vh;
@@ -129,14 +129,14 @@
     border-radius: 0.5vh;
     cursor: pointer;
     transition: all 0.2s linear;
-    width:50%;
+    width:30vh;
 }
 
-#logout:hover {
+.profile-button:hover {
     box-shadow:0 0.5vh 1vh #ffffff80;
 }
 
-#logout:active {
+.profile-button:active {
     background-color: #ffffff80;
 }
 
@@ -145,3 +145,13 @@
     position: relative;
 }
 
+#logout {
+    position: absolute;
+    bottom:1%;
+    right:1%;
+}
+
+#logout:hover {
+    box-shadow:0 0.5vh 1vh #ff000080;
+    border:0.1vh solid #ff0000;
+}

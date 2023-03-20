@@ -20,7 +20,8 @@
         <div class = "profile-value"><strong>Own Sets:</strong>&emsp;<span>{{current_user.own_cardsets.count()}}</span></div>
         <div class = "profile-value"><strong>Sets saved:</strong>&emsp;<span>{{current_user.saved_cardsets.count()}}</span></div>
         <div class = "profile-value"><strong>Flash-cards:</strong>&emsp;<span>{{current_user.flashcards_number}}</span></div>
-        <div id = "logout"><a href = "{{url_for('users.logout')}}">Log Out</a></div>
+        <div class = "profile-button" id="edit-profile">Edit profile</div>
+        <div class = "profile-button" id = "logout"><a href = "{{url_for('users.logout')}}">Log Out</a></div>
         <div id = "achievements">
             <p><strong>{{current_user.username}}'s</strong> achievements:</p>
             
