@@ -24,9 +24,7 @@
                 {% set class = "set" %}
             {% endif %}
             <div id="cardset-{{card_set.id}}" class = "{{class}}">
-                <a href="{{ url_for('cards.cardset', id=card_set.id) }}">
-                    <div class = "add_set_text">{{card_set.title}}</div>
-                </a>
+                <div class = "add_set_text">{{card_set.title}}</div>
                 <div class = "add_set_button">
                     <!-- image of add button -->
                 </div>

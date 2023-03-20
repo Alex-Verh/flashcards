@@ -58,15 +58,23 @@
             
         {% endfor -%}
 
+        {% if cardset.flash_cards %}
+            <div style = "position: absolute; top:40%; color: #929292; left: 20%;">
+                <h1>Create some cards for this set to be able to learn it.</h1>
+            </div>
+        {% endif %}
+
     </div>
     <div id = "cardset-buttons">
+        {% if not cardset.flash_cards %}
         <a href="{{url_for('cards.learn', id=cardset.id)}}" class="cardset-button">Learn</a>
+        {% endif %}
         {% if current_user.id == cardset.user_id -%}
-            <a href="#" id="create-flashcard" class="cardset-button">Add new</a>
+            <a href="#" id="create-flashcard" class="cardset-button">Add card</a>
             <a href="#" class="cardset-button" style="color:#ff0000cc">Delete</a>
         {% endif -%}
     </div>
-    {% if current_user.is_authenticated -%}
+    {% if current_user.is_authenticated and current_user.id != cardset.user_id  -%}
     <div id = "save-div"  onclick="saveCardSet('{{cardset.id}}')">
         {% if cardset in current_user.saved_cardsets.all() -%}
             <img id="save-cardset-{{cardset.id}}" src="{{url_for('static', filename='images/save1.png')}}" alt="Save">

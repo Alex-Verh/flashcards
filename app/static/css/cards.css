@@ -279,6 +279,7 @@
     justify-content: space-evenly;
     padding: 2vh 1.5vh;
     margin: 5vh;
+    font-size: 2.5vh;
 }
 
 #mode-choice .option{
@@ -325,10 +326,12 @@ input[type="radio"]{
   border-color: #ffffff7b;
   box-shadow: #11ff0026 0.3vh 1vh 1.6vh, #11ff0026 0 0.8vh 0.8vh;
 }
+
 #title:checked:checked ~ .title .dot,
 #content:checked:checked ~ .content .dot{
   background: #fff;
 }
+
 #title:checked:checked ~ .title .dot::before,
 #content:checked:checked ~ .content .dot::before{
   opacity: 1;
@@ -336,9 +339,9 @@ input[type="radio"]{
 }
 
 #window-choice .option span{
-  font-size: 3vh;
   color: #808080;
 }
+
 #title:checked:checked ~ .title span,
 #content:checked:checked ~ .content span {
   color: #fff;
@@ -350,19 +353,21 @@ input[type="radio"]{
     width: 25vh;
     height: 10vh;
     font-size: 2.5vh;
-    margin-inline: 1vh;
+    margin: 0.5vh;
     white-space:normal;
     overflow: auto;
     padding:1vh;
     display: inline-block;
+    scroll-snap-align: center;
 }
 
 #more-sets {
     overflow: auto;
     white-space: nowrap;
-    height: 15vh;
+    height: 18vh;
     margin: 0 auto;
     width: 60%;
+    scroll-snap-type: x mandatory;
 }
 
 .selected-set {
@@ -379,7 +384,7 @@ input[type="radio"]{
     width: 15%;
     cursor: pointer;
     transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
-    box-shadow: #11ff0026 0 0.8vh 1.5vh;
+    box-shadow: #ffffff26 0 0.8vh 1.5vh;
 }
 
 #start_learning:hover {
