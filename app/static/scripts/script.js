@@ -6,6 +6,7 @@ import { initCardSetCreator } from "./cardset.js";
 import { initFlashCardConstructor } from "./flashcard.js";
 import { initCardSetsLoadingAndSearch } from "./cardsetsLoadingAndSearch.js";
 import { initModalBoxes } from "./modalBoxes.js";
+import { edit_profile } from "./editProfile.js";
 
 document.addEventListener('DOMContentLoaded', (e) => {
 
@@ -37,6 +38,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
   loadCategories()
   initModalBoxes()
   initCardSetCreator()
+  edit_profile()
 
   if (window.location.href.endsWith('home')) {
     initCardSetsLoadingAndSearch()

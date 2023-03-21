@@ -7,6 +7,7 @@
 {% block header %}
     {{ super() }}
     <div id = "return" onclick="history.back()"><img src="{{url_for('static', filename='images/return.png')}}" alt="Return Back"></div>
+    {% include "snippets/edit_profile_modal.html" %}
 {% endblock %}
 
 {% block main %}
