@@ -155,3 +155,26 @@
     box-shadow:0 0.5vh 1vh #ff000080;
     border:0.1vh solid #ff0000;
 }
+
+.transition:before {
+    display: block;
+}
+
+.transition #edit-content {
+    transform: translate(0, 0);
+    top: 15%;
+}
+
+#edit-content {
+    width: 70%;
+    height: 20vh;
+    border: 0.1vh solid #fff;
+    content: "";
+    position: fixed;
+    left: 15%;
+    top: -100%;
+    z-index: 11;
+    transform: translate(0, -500%);
+    transition: transform 0.3s ease-out;
+    background-color: #000;
+}

@@ -4,12 +4,12 @@ function edit_profile() {
 
     document.getElementById("edit-profile").addEventListener('click', function(event) {
         event.preventDefault();
-        edit_modal.classList.add('transit')
+        edit_modal.classList.add('transition')
     });
 
     edit_modal.querySelector('#edit-close').addEventListener('click', function(event) {
         event.preventDefault();
-        edit_modal.classList.remove('transit')
+        edit_modal.classList.remove('transition')
     });
 }
 
