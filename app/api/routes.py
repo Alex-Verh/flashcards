@@ -36,6 +36,8 @@ def save_cardset(id):
     cardset = CardSet.query.get(id)
     if not cardset:
         return jsonify({'error': 'Card set does not exist.'}), 400
+    if cardset in current_user.own_cardsets.all():
+        return jsonify({'error': 'You can not save your own card set'}), 400
     
     saved = current_user in cardset.followers.all()
     if saved:
@@ -85,12 +87,14 @@ def cardsets():
     for row in query:
         try:
             saved = row[0] in current_user.saved_cardsets.all()
+            own = row[0] in current_user.own_cardsets.all()
         except AttributeError:
             saved = False
+            own = False
         save_img_fn = 'images/save1.png' if saved else 'images/save2.png'
         save_img_url = url_for('static', filename=save_img_fn)
         url = url_for('cards.cardset', id=row[0].id)
-        cardset = {'id': row[0].id, 'title': row[0].title, 'saves': row[1], 'saved': saved, 'save_img_url': save_img_url, 'url': url }
+        cardset = {'id': row[0].id, 'title': row[0].title, 'saves': row[1], 'saved': saved, 'own': own, 'save_img_url': save_img_url, 'url': url }
         result.append(cardset)
         
     return jsonify(result), 200

@@ -15,7 +15,7 @@ const loadCardSets = ({page, searchQuery, sortBy, sortOrder, categoryId},
       sentinel.remove();
       if (!data.length) {return}
 
-      for (const cardset of data) {
+      data.forEach(cardset => {
         const cardSetEl = document.createElement('div');
         cardSetEl.classList.add('set');
         cardSetEl.innerHTML = 
@@ -25,10 +25,14 @@ const loadCardSets = ({page, searchQuery, sortBy, sortOrder, categoryId},
             <div class = "set-modulate">
                 <img src="../../static/images/user.png" alt="user" width="10%">
                 <span id="saves-count-${cardset.id}">${cardset.saves}</span>
-                <img id="save-cardset-${cardset.id}" onclick="saveCardSet(${cardset.id})" class = "image-save" src="${cardset.save_img_url}" alt="Save">
+                ${cardset.own 
+                  ? '' 
+                  : `<img id="save-cardset-${cardset.id}" onclick="saveCardSet(${cardset.id})" class = "image-save" src="${cardset.save_img_url}" alt="Save">`
+                }
             </div>`;
         dashList.appendChild(cardSetEl);
-      }
+      });
+
       if (data.length >= 24) {dashList.appendChild(sentinel);}
     })
 }
