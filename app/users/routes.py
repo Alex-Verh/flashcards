@@ -1,13 +1,14 @@
-from flask import render_template, redirect, url_for, request, flash
+from flask import render_template, redirect, url_for, request, flash, current_app
 from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import SignatureExpired
+import os
 
 from . import bp
 from .forms import LoginForm, RegisterForm
 from ..extensions import db, serializer
 from ..models import User
-from ..funcs import send_verification_email
+from ..funcs import send_verification_email, delete_user_files
 
 
 @bp.route('/login', methods=['POST', 'GET'])
@@ -85,3 +86,15 @@ def confirm_email(token):
 @login_required
 def profile():
     return render_template('users/profile.html')
+
+
+@bp.route('/delete-profile')
+@login_required
+def delete_profile():
+    uploads_dir_path = os.path.join(current_app.root_path, current_app.config['UPLOAD_FOLDER'])
+    delete_user_files(current_user.id, uploads_dir_path)
+    db.session.delete(current_user)
+    db.session.commit()
+    logout_user()
+    flash("Your account was deleted successfully", "success")
+    return redirect(url_for('users.register'))

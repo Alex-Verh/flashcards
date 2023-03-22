@@ -46,8 +46,12 @@ def save_audio(audio, name, destination):
 
 def delete_cardset_files(user_id, cardset_id, dir):
     files = glob(f'{user_id}_{cardset_id}_*', root_dir=dir)
-    print(f'{user_id}_{cardset_id}_*')
-    print(files)
+    for file in files:
+        os.remove(os.path.join(dir, file))
+        
+
+def delete_user_files(user_id, dir):
+    files = glob(f'{user_id}_*', root_dir=dir)
     for file in files:
         os.remove(os.path.join(dir, file))
         

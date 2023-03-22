@@ -9,7 +9,11 @@
 {% block main %}
     <div id = "mainText" style = "margin-bottom : 4%">
 
-        <h3><em>"Become a part of our community today."</em></h3>
+        {% for cat, msg in get_flashed_messages(True) -%}
+            <em class="{{cat}}-msg" style="color: brown">{{msg}}</em>
+        {% else -%}
+            <h3><em>"Become a part of our community today."</em></h3>
+        {% endfor -%}
 
         {{ create_form(form, 'login')}}
         

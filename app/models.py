@@ -24,7 +24,7 @@ class User(db.Model, UserMixin):
         return self.own_cardsets.join(FlashCard).count()
     
     def __repr__(self):
-        return f"User({self.id}, '{self.name}', '{self.username}')"
+        return f"User({self.id}, '{self.username}')"
     
     
 class CardSet(db.Model):
