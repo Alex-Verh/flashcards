@@ -1,6 +1,7 @@
 from flask import current_app
 from flask_mail import Message
 from PIL import Image
+from pydub import AudioSegment
 from glob import glob
 import os
 
@@ -36,10 +37,14 @@ def save_image(image, name, destination):
 
 
 def save_audio(audio, name, destination):
-    _, f_ext = os.path.splitext(audio.filename)
-    audio_fn = name + f_ext
-    audio_path = os.path.join(destination, audio_fn)
-    audio.save(audio_path)
+    try:
+        _, f_ext = os.path.splitext(audio.filename)
+        audio_fn = name + '.mp3'
+        audio_path = os.path.join(destination, audio_fn)
+        audio_segment = AudioSegment.from_file(audio, format=f_ext.lstrip('.'))
+        audio_segment.export(audio_path, format="mp3", bitrate="64k")
+    except Exception as e:
+        print(e)
 
     return audio_fn
 

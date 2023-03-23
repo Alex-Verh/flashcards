@@ -102,10 +102,16 @@ const onImageRemove = (removeButton, flashCardSide) => {
   removeImageFromCardSide(removeButton.parentNode, flashCardSide);
 };
 
-const uploadSound = (event, file, flashCardAttachments) => {
+const uploadSound = (event, flashCardAttachments) => {
+  const file = event.target.files[0];
   if (!["audio/mpeg", "audio/wav", "audio/ogg"].includes(file.type)) {
     alert("Choose another format. (MP3, WAV, OGG)");
     event.target.value = "";
+    return;
+  }
+  if (file.size > 1024 * 1024 * 10) {
+    alert("File size must be less than 10 MB");
+    audioInput.value = "";
     return;
   }
   const readerSound = new FileReader();
@@ -138,7 +144,9 @@ const uploadSound = (event, file, flashCardAttachments) => {
   readerSound.readAsDataURL(file);
 };
 
-const uploadImage = (event, file, flashCardAttachments) => {
+const uploadImage = (event, flashCardAttachments) => {
+  const file = event.target.files[0];
+
   if (!["image/jpeg", "image/png", "image/svg+xml"].includes(file.type)) {
     alert("Choose another format. (JPEG, PNG, SVG)");
     event.target.value = "";
@@ -167,20 +175,43 @@ const submitFlashCard = (event, flashcardSides, flashCardAttachments) => {
   event.preventDefault();
   const formData = new FormData();
 
-  const cardsetId = window.location.href.split("/")[4];
+  const cardSetTitleEl = document.querySelector('h1')
+
+  const cardsetId = +cardSetTitleEl.dataset.id
   formData.append("cardset_id", cardsetId);
 
+ 
+  let errors = 0
+  const isPublicCardSet = !!+cardSetTitleEl.dataset.is_public
+  const isOnlyEnglishRegEx = /^[a-z0-9!" #\$%&'\(\)\*\+,-\./:;<=>\?@\[\\\]\^_`\{\|\}~]*$/i
+
   flashcardSides.forEach((side) => {
+    const sideName = side.dataset.type + "Side";
     const textarea = side.querySelector(".textarea");
     const sideText = textarea.textContent.trim();
-    formData.append(textarea.id.replace("textarea-", ""), sideText);
-    textarea.innerHTML = "";
 
-    side.querySelectorAll(".image-preview").forEach((imagePreview) => {
-      imagePreview.innerHTML = "";
-    });
-    side.querySelectorAll(".sound").forEach((el) => (el.innerHTML = ""));
+    if (
+      !sideText &&
+      !flashCardAttachments[sideName].images.length &&
+      !flashCardAttachments[sideName].audio
+    ) {
+      alert("Flash card side can not be empty!");
+      errors += 1
+      return;
+    }
+
+    if (isPublicCardSet && !isOnlyEnglishRegEx.test(sideText)) {
+      alert("You must use English in public card sets");
+      errors += 1
+      return;
+    }
+
+    formData.append(textarea.id.replace("textarea-", ""), sideText);
   });
+
+  if (errors) {
+    return;
+  }
 
   flashCardAttachments.frontSide.images.forEach((image) => {
     formData.append("front_images", image);
@@ -284,11 +315,11 @@ function initFlashCardConstructor() {
   });
 
   uploadSoundEl.addEventListener("change", (e) => {
-    uploadSound(e, uploadSoundEl.files[0], flashCardAttachments);
+    uploadSound(e, flashCardAttachments);
   });
 
   uploadImageEl.addEventListener("change", (e) => {
-    uploadImage(e, uploadImageEl.files[0], flashCardAttachments);
+    uploadImage(e, flashCardAttachments);
   });
 
   flashCardCreationBox.querySelector("form").addEventListener("submit", (e) => {

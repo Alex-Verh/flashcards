@@ -34,14 +34,13 @@ function initCardSetCreator() {
       dropdown.style = ''
     }
 
-    const isOnlyEnglishRegEx = /^[A-Za-z0-9!"№#\$%&'\(\)\*\+,-\./:;<=>\?@\[\\\]\^_`\{\|\}~]*$/i
+    const isOnlyEnglishRegEx = /^[a-z0-9!" #\$%&'\(\)\*\+,-\./:;<=>\?@\[\\\]\^_`\{\|\}~]*$/i
     if (cardSetCreationDiv.querySelector('#option-1').checked
         && !isOnlyEnglishRegEx.test(cardSetTitleEl.value)) {
           cardSetTitleEl.style.borderBottom = '0.3vh dashed #8a0000';
           errors += 1
         }
     
-
     if (!errors) {
       event.currentTarget.submit()
     }
