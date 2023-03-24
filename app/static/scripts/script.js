@@ -7,6 +7,8 @@ import { initFlashCardConstructor } from "./flashcard.js";
 import { initCardSetsLoadingAndSearch } from "./cardsetsLoadingAndSearch.js";
 import { initModalBoxes } from "./modalBoxes.js";
 import { initEditProfile } from "./editProfile.js";
+import { chooseLearn } from "./learn.js";
+
 
 document.addEventListener("DOMContentLoaded", (e) => {
   document.querySelector(".navMenu").addEventListener("click", (e) => {
@@ -38,8 +40,13 @@ document.addEventListener("DOMContentLoaded", (e) => {
   });
 
   loadCategories();
-  initModalBoxes();
   initCardSetCreator();
+  initModalBoxes();
+  try {
+    chooseLearn();
+  } catch (e) {
+    console.log(e);
+  }
 
   if (window.location.href.endsWith("home")) {
     initCardSetsLoadingAndSearch();
