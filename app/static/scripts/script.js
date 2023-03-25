@@ -42,10 +42,8 @@ document.addEventListener("DOMContentLoaded", (e) => {
   loadCategories();
   initCardSetCreator();
   initModalBoxes();
-  try {
+  if (window.location.href.includes('learn')) {
     chooseLearn();
-  } catch (e) {
-    console.log(e);
   }
 
   if (window.location.href.endsWith("home")) {
