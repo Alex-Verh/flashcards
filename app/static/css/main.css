@@ -98,6 +98,7 @@
     font-size: 2vh;
     text-align: left;
     margin-left: 2%; 
+    position: relative;
 }
 
 #dash-list {
@@ -146,3 +147,69 @@
     color:#007d04
 }
 /* END Enter as a Guest button CSS*/
+
+#sort {
+    position: absolute;
+    top:4.5%;
+    right:1%;
+    width: 20vh;
+    transition: all .5s ease;
+    font-size: 2.5vh;
+    color: #fff;
+    text-align: left
+}
+
+#sort:hover {
+    box-shadow: 0 0 0.5vh #ccc;
+}
+
+#sort:active {
+    background-color: #000;
+}
+
+#sort.active:hover,
+#sort.active {
+    box-shadow: 0 0 0.4vh #ccc;
+    border-radius: 0.2vh 0.2vh 0 0;
+    background-color: #000;
+}
+
+#sort .select {
+    cursor: pointer;
+    display: block;
+    padding: 1vh;
+    text-align: center;
+}
+
+#sort #dropdown-filter {
+    position: absolute;
+    background-color: #000;
+    width: 100%;
+    left: 0;
+    margin-top: 0.1vh;
+    box-shadow: 0 0.1vh 0.2vh #ccc;
+    border-radius: 0 0.1vh 0.2vh 0.2vh;
+    overflow: scroll;
+    display: none;
+    max-height: 19vh;
+    overflow-y: auto;
+    z-index: 9;
+    scroll-snap-type: y mandatory;
+    padding: 0;
+    list-style: none;
+}
+
+#sort #dropdown-filter li {
+    padding: 1vh;
+    transition: all .2s ease-in-out;
+    cursor: pointer;
+    scroll-snap-align: start;
+} 
+
+#sort #dropdown-filter li:hover {
+    background-color: #323232;
+}
+
+#sort #dropdown-filter li:active {
+    background-color: #1f1f1f
+}

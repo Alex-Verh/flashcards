@@ -8,6 +8,7 @@ import { initCardSetsLoadingAndSearch } from "./cardsetsLoadingAndSearch.js";
 import { initModalBoxes } from "./modalBoxes.js";
 import { initEditProfile } from "./editProfile.js";
 import { chooseLearn } from "./learn.js";
+import { sortSelect } from "./sort.js";
 
 
 document.addEventListener("DOMContentLoaded", (e) => {
@@ -42,15 +43,15 @@ document.addEventListener("DOMContentLoaded", (e) => {
   loadCategories();
   initCardSetCreator();
   initModalBoxes();
-  if (window.location.href.includes('learn')) {
-    chooseLearn();
-  }
 
   if (window.location.href.endsWith("home")) {
     initCardSetsLoadingAndSearch();
+    sortSelect();
   } else if (window.location.href.split("/")[3] === "cardset") {
     initFlashCardConstructor();
   } else if (window.location.href.endsWith("profile")) {
     initEditProfile();
+  } else if (window.location.href.includes('learn')) {
+    chooseLearn();
   }
 });

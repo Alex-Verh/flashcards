@@ -27,6 +27,24 @@
         {% else -%}
         <h3 style="text-align: left; font-size: 3vh;">Popular sets:</h3>
         {% endif -%}
+
+        <div id = "sort">
+            <div class="select">
+            <span>Sort By</span>
+            </div>
+            <ul id="dropdown-filter">
+                <li>
+                    Popularity
+                </li>
+                <li>
+                    Newest
+                </li>
+                <li>
+                    Oldest
+                </li>
+            </ul>
+        </div>
+
         <div id = dash-list>
             <div id="sentinel">
                 <img id="loading-gif" src="{{url_for('static', filename='images/loading.gif')}}" width="70vh">

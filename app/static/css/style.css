@@ -278,7 +278,7 @@ input:-webkit-autofill{
     font-size: 3vh;
     color: #fff;
     height: 100%;
-    text-align: left
+    text-align: left;
 }
 
 #dropdown .select {
@@ -317,6 +317,8 @@ input:-webkit-autofill{
     overflow-y: auto;
     z-index: 9;
     scroll-snap-type: y mandatory;
+    padding: 0;
+    list-style: none;
 }
 
 #dropdown #dropdown-menu li {
@@ -325,10 +327,6 @@ input:-webkit-autofill{
     cursor: pointer;
     scroll-snap-align: start;
 } 
-#dropdown #dropdown-menu {
-    padding: 0;
-    list-style: none;
-}
 
 #dropdown #dropdown-menu li:hover {
     background-color: #323232;
