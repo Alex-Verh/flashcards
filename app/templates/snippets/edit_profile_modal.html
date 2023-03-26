@@ -1,13 +1,14 @@
+{% from 'macro.html' import create_form %}
+
+
 <div id="edit_profile_modal">
     <div id="edit-content">
         <span id="edit-close">&times;</span>
         <h1>Edit profile</h1>
         <hr style="width : 60%">
         <br>
-        <button>Change username</button>
-        <button>Change email</button>
-        <button>Reset profile (Delete all sets) </button>
-        <button>Change password</button>
+        {{ create_form(form, 'edit') }}
+        <button style="color:#915000">Reset profile</button>
         <button id="deleteAccount" style="color:#bd0202">Delete account</button>
     </div>
 </div>
