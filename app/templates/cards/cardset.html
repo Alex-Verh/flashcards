@@ -13,7 +13,7 @@
 {% block main %}
     <h1 data-is_public="{{cardset.is_public | int}}" data-id="{{cardset.id}}" style="font-size: 5vh;">{{cardset.title}}</h1>
     <div id = "flashcards">
-        {% for flashcard in cardset.flash_cards.all() -%}
+        <!-- {% for flashcard in cardset.flash_cards.all() -%}
             <div class = "flashcard">
                 <div class="flash-screen">
                     <div class="flash-card-front">
@@ -51,18 +51,20 @@
                         {% elif flashcard.content -%}
                             <div class = "not-only-text">{{flashcard.content}}</div>
                         {% endif -%}
-                        
                     </div>
                 </div>
             </div>
-            
         {% endfor -%}
 
         {% if not cardset.flash_cards.count() %}
             <div style = "position: absolute; top:40%; color: #929292; left: 20%;">
                 <h1>Create some cards for this set to be able to learn it.</h1>
             </div>
-        {% endif %}
+        {% endif %} -->
+
+        <div id="sentinel">
+            <img id="loading-gif" src="{{url_for('static', filename='images/loading.gif')}}" width="70vh">
+        </div>
 
     </div>
     <div id = "cardset-buttons">

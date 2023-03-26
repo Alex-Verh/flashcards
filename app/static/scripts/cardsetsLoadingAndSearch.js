@@ -19,7 +19,7 @@ const loadCardSets = ({page, searchQuery, sortBy, sortOrder, categoryId},
         const cardSetEl = document.createElement('div');
         cardSetEl.classList.add('set');
         cardSetEl.innerHTML = 
-          ` <a href="${cardset.url}">
+          `<a href="${cardset.url}">
             <div class = "set-screen">${cardset.title}</div>
             </a>
             <div class = "set-modulate">
@@ -30,7 +30,7 @@ const loadCardSets = ({page, searchQuery, sortBy, sortOrder, categoryId},
                   : `<img id="save-cardset-${cardset.id}" onclick="saveCardSet(${cardset.id})" class = "image-save" src="${cardset.save_img_url}" alt="Save">`
                 }
             </div>`;
-        dashList.appendChild(cardSetEl);
+        dashList.append(cardSetEl);
       });
 
       if (data.length >= 24) {dashList.appendChild(sentinel);}

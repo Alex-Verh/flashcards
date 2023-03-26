@@ -164,3 +164,25 @@ def create_flashcard():
     db.session.commit()
     
     return jsonify({'message': 'Files uploaded and resized successfully'}), 200
+
+@bp.route('/flashcards', methods=['POST'])
+def flashcards():
+    cardset_id = request.form.get('cardset_id', type=int)
+    cardset = CardSet.query.get(cardset_id)
+    if not cardset:
+        return jsonify({'error': 'Card set does not exist.'}), 400
+    
+    if (not cardset.is_public) and cardset.author != current_user:
+        return jsonify({'error': 'You can not access this card set'}), 403
+    
+    response = []
+    
+    for flash_card in cardset.flash_cards:
+        response.append({
+            'id': flash_card.id,
+            'title': flash_card.title,
+            'content': flash_card.content,
+            'attachments': flash_card.attachments
+        })
+    
+    return jsonify(response)

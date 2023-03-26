@@ -60,7 +60,7 @@ function initCardSetCreator() {
     $(this).find(dropdownMenu).slideToggle(300);
   });
   $(dropdown).focusout(function () {
-    $(this).removeClass('active');dropdownMenu
+    $(this).removeClass('active');
     $(this).find(dropdownMenu).slideUp(300);
   });
 }

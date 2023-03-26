@@ -3,7 +3,7 @@
 import { changeBackground } from "./background.js";
 import { loadCategories } from "./categoryLoading.js";
 import { initCardSetCreator } from "./cardset.js";
-import { initFlashCardConstructor } from "./flashcard.js";
+import { initFlashCardConstructor, loadFlashCards } from "./flashcard.js";
 import { initCardSetsLoadingAndSearch } from "./cardsetsLoadingAndSearch.js";
 import { initModalBoxes } from "./modalBoxes.js";
 import { initEditProfile } from "./editProfile.js";
@@ -48,6 +48,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
     initCardSetsLoadingAndSearch();
     sortSelect();
   } else if (window.location.href.split("/")[3] === "cardset") {
+    loadFlashCards(window.location.href.split("/")[4])
     initFlashCardConstructor();
   } else if (window.location.href.endsWith("profile")) {
     initEditProfile();

@@ -175,15 +175,15 @@ const submitFlashCard = (event, flashcardSides, flashCardAttachments) => {
   event.preventDefault();
   const formData = new FormData();
 
-  const cardSetTitleEl = document.querySelector('h1')
+  const cardSetTitleEl = document.querySelector("h1");
 
-  const cardsetId = +cardSetTitleEl.dataset.id
+  const cardsetId = +cardSetTitleEl.dataset.id;
   formData.append("cardset_id", cardsetId);
 
- 
-  let errors = 0
-  const isPublicCardSet = !!+cardSetTitleEl.dataset.is_public
-  const isOnlyEnglishRegEx = /^[a-z0-9!" #\$%&'\(\)\*\+,-\./:;<=>\?@\[\\\]\^_`\{\|\}~]*$/i
+  let errors = 0;
+  const isPublicCardSet = !!+cardSetTitleEl.dataset.is_public;
+  const isOnlyEnglishRegEx =
+    /^[a-z0-9!" #\$%&'\(\)\*\+,-\./:;<=>\?@\[\\\]\^_`\{\|\}~]*$/i;
 
   flashcardSides.forEach((side) => {
     const sideName = side.dataset.type + "Side";
@@ -196,13 +196,13 @@ const submitFlashCard = (event, flashcardSides, flashCardAttachments) => {
       !flashCardAttachments[sideName].audio
     ) {
       alert("Flash card side can not be empty!");
-      errors += 1
+      errors += 1;
       return;
     }
 
     if (isPublicCardSet && !isOnlyEnglishRegEx.test(sideText)) {
       alert("You must use English in public card sets");
-      errors += 1
+      errors += 1;
       return;
     }
 
@@ -327,4 +327,48 @@ function initFlashCardConstructor() {
   });
 }
 
-export { initFlashCardConstructor };
+const getFlashCardSideHTML = (text, sideAttachments) => {
+  const imagesClass =
+    sideAttachments.images.length <= 1
+      ? "flash-card-image-single"
+      : "flash-card-image-multiple";
+  const imagesHTML = sideAttachments.images
+    .map((image) => {
+      return `<img src = "../../uploads/${image}" class = "${imagesClass}">`;
+    })
+    .join("\n");
+
+  const textHTML = sideAttachments.images.length && text
+    ? `<div class = "not-only-text">${text}</div>`
+    : text;
+  return imagesHTML + "\n" + textHTML;
+};
+
+function loadFlashCards(cardSetId) {
+  const sentinel = document.querySelector("#sentinel");
+  const flashcardsDiv = document.querySelector('#flashcards')
+  const formData = new FormData();
+  formData.append("cardset_id", cardSetId);
+  fetch("/api/flashcards", { method: "POST", body: formData })
+    .then((response) => response.json())
+    .then((data) => {
+      sentinel.remove();
+      data.forEach((flashcard) => {
+        const flashcardEl = document.createElement("div");
+        flashcardEl.classList.add("flashcard");
+        flashcardEl.innerHTML = `
+        <div class="flash-screen">
+          <div class="flash-card-front">
+            ${getFlashCardSideHTML(flashcard.title, flashcard.attachments.frontside)}
+          </div>
+          <div class="flash-card-back">
+            ${getFlashCardSideHTML(flashcard.content, flashcard.attachments.backside)}
+          </div>
+        </div>
+        `;
+        flashcardsDiv.append(flashcardEl)
+      });
+    });
+}
+
+export { initFlashCardConstructor, loadFlashCards };
