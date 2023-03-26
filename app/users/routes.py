@@ -5,7 +5,7 @@ from itsdangerous import SignatureExpired
 import os
 
 from . import bp
-from .forms import LoginForm, RegisterForm, EditForm
+from .forms import LoginForm, RegisterForm
 from ..extensions import db, serializer
 from ..models import User
 from ..funcs import send_verification_email, delete_user_files
@@ -85,11 +85,10 @@ def confirm_email(token):
 @bp.route('/profile', methods=['POST', 'GET'])
 @login_required
 def profile():
-    form = EditForm()
-    if form.validate_on_submit():
-        username = form.username.data
-        email = form.email.data
-    return render_template('users/profile.html', form = form)
+    if request.method == 'POST':
+        username = request.form.get('username')
+        email = request.form.get('email')
+    return render_template('users/profile.html')
 
 
 @bp.route('/delete-profile')

@@ -28,6 +28,7 @@
 .login input[type=text],
 .edit input[type=text],
 .login input[type=password] {
+    color: #fff;
 	background: transparent;
 	border: hidden;
 	border-bottom: 0.1vh dashed #fff;
