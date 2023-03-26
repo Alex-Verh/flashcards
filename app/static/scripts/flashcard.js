@@ -207,6 +207,7 @@ const submitFlashCard = (event, flashcardSides, flashCardAttachments) => {
     }
 
     formData.append(textarea.id.replace("textarea-", ""), sideText);
+    textarea.innerHTML = ''
   });
 
   if (errors) {
@@ -225,7 +226,7 @@ const submitFlashCard = (event, flashcardSides, flashCardAttachments) => {
     formData.append("back_audio", flashCardAttachments.backSide.audio);
 
   fetch("/api/create-flashcard", { method: "POST", body: formData }).then(
-    (response) => response.json()
+    (response) => loadFlashCards(cardsetId)
   );
 
   event.target.reset();
@@ -235,8 +236,7 @@ const submitFlashCard = (event, flashcardSides, flashCardAttachments) => {
       audio: null,
     };
   }
-
-  window.location.reload();
+  event.target.parentElement.classList.remove("transit");
 };
 
 function initFlashCardConstructor() {
@@ -345,14 +345,18 @@ const getFlashCardSideHTML = (text, sideAttachments) => {
 };
 
 function loadFlashCards(cardSetId) {
-  const sentinel = document.querySelector("#sentinel");
+  const sentinel = document.createElement('div');
+  sentinel.id = "sentinel"
+  sentinel.innerHTML = '<img id="loading-gif" src="{{url_for("static", filename="images/loading.gif")}}" width="70vh">'
   const flashcardsDiv = document.querySelector('#flashcards')
+  flashcardsDiv.append(sentinel)
+
   const formData = new FormData();
   formData.append("cardset_id", cardSetId);
   fetch("/api/flashcards", { method: "POST", body: formData })
     .then((response) => response.json())
     .then((data) => {
-      sentinel.remove();
+      flashcardsDiv.innerHTML = ''
       data.forEach((flashcard) => {
         const flashcardEl = document.createElement("div");
         flashcardEl.classList.add("flashcard");
