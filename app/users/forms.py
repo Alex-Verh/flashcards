@@ -9,7 +9,6 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password:', validators=[DataRequired("Please enter your password")])
     submit = SubmitField('Login')
 
-    
 class RegisterForm(FlaskForm):
     username = StringField('Username:', validators=[DataRequired("Please enter your username"), Regexp('^\w+$', message="Username must contain only letters or numbers"),  Length(3, 30, message="Length must be between 3-30 characters")])
     email = StringField('Email Address:', validators=[DataRequired("Please enter your email address"), Email("Enter valid email"), Length(3, 50, "Length must be between 3-50 characters.")])

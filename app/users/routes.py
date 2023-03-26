@@ -82,9 +82,12 @@ def confirm_email(token):
     return redirect(url_for('users.login'))
     
 
-@bp.route('/profile')
+@bp.route('/profile', methods=['POST', 'GET'])
 @login_required
 def profile():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        email = request.form.get('email')
     return render_template('users/profile.html')
 
 

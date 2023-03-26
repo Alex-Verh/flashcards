@@ -1,5 +1,5 @@
 /* Login-Register form CSS*/
-.login {
+.login, .edit {
 	width: 60%;
 	padding: 1.8% 2.5% 0.5% 2.5%;
     border-radius: 1.5vh;
@@ -10,13 +10,15 @@
 
 }
 .login input[type=submit],
+.edit input[type=submit],
 .login input[type=password],
 .login input[type=text]
 {
 	color: #fff;
 
 }
-.login label {
+.login label,
+.edit label {
 	margin-bottom: 4%;
     width: 30%;
     display: inline-block;
@@ -24,7 +26,9 @@
 }
 
 .login input[type=text],
+.edit input[type=text],
 .login input[type=password] {
+    color: #fff;
 	background: transparent;
 	border: hidden;
 	border-bottom: 0.1vh dashed #fff;
@@ -38,11 +42,13 @@
 
 
 .login input[type=text]:focus,
+.edit input[type=text]:focus,
 .login input[type=password]:focus {
 	border-bottom: 0.1vh dashed #d9ffa9;
 }
 
-.login input[type=submit] {
+.login input[type=submit],
+.edit input[type=submit] {
     background: none;
 	border: none;
     padding:1vh;
@@ -55,11 +61,13 @@
     box-shadow: #ffffff26 0 0.8vh 1.5vh;
 }
 
-.login input[type=submit]:active {
+.login input[type=submit]:active,
+.edit input[type=submit]:active {
     color:#007d04
 }
 
-.login input[type=submit]:hover {
+.login input[type=submit]:hover,
+.edit input[type=submit]:hover {
     box-shadow: 0 0.1vh 0 rgb(255, 255, 255);
     transform: translateY(+0.4vh);
 }
@@ -180,6 +188,7 @@
     text-align: center;
     border-radius: 5vh;
     padding: 1vh;
+    font-size: 3vh;
 }
 
 #edit_profile_modal {
@@ -187,11 +196,12 @@
 }
 
 #edit-content button {
-    display: block;
+    display: inline-block;
     margin: 3vh auto;
     background: none;
     color: #fff;
     padding: 1vh;
+    font-size: 2.5vh;
 }
 
 #edit-close {
@@ -205,4 +215,8 @@
 #edit-close:hover {
     cursor: pointer;
     color:#808080;
+}
+
+.edit {
+    margin-top: 1%;
 }
