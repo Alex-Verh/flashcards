@@ -136,7 +136,7 @@
     padding: 1vh;
     border-radius: 0.5vh;
     cursor: pointer;
-    transition: all 0.2s linear;
+    transition: all 0.3s linear;
     width:30vh;
 }
 
@@ -197,11 +197,19 @@
 
 #edit-content button {
     display: inline-block;
-    margin: 3vh auto;
+    margin: 5vh auto;
     background: none;
     color: #fff;
     padding: 1vh;
-    font-size: 2.5vh;
+    font-size: 2vh;
+    margin-inline: 2vh;
+    transition: all 0.5s ease-in-out;
+
+}
+
+#edit-content button:hover {
+    box-shadow:0 0.5vh 1vh #ff000080;
+    cursor: pointer;
 }
 
 #edit-close {
