@@ -400,3 +400,43 @@ input[type="radio"]{
 #start_learning:active {
     box-shadow: 0 0.1vh 0 rgb(0, 102, 24);
 }
+
+.transition:before {
+    display: block;
+}
+
+.transition #learn-content {
+    transform: translate(0, 0);
+    top: 5%;
+}
+
+#learn-content {
+    width: 90%;
+    height: 90%;
+    border: 0.1vh solid #fff;
+    content: "";
+    position: fixed;
+    left: 5%;
+    top: -100%;
+    z-index: 11;
+    transform: translate(0, -500%);
+    transition: transform 0.3s ease-out;
+    background-color: #000000e4;
+    text-align: center;
+    border-radius: 5vh;
+    padding: 1vh;
+    font-size: 3vh;
+}
+
+#learn-close {
+    position: absolute;
+    top: 2%;
+    right: 2%;
+    font-size: 5vh;
+    color:#ff0000;
+}
+
+#learn-close:hover {
+    cursor: pointer;
+    color:#808080;
+}

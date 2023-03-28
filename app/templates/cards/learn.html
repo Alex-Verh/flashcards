@@ -7,6 +7,8 @@
 {% block header -%}
     {{super()}}
     <a id = "return" onclick="history.back()"><img src="../static/images/return.png" alt="Return Back"> </a>
+    {% include "snippets/learn_modal.html" %}
+
 {% endblock -%}
 
 {% block main %}
@@ -45,7 +47,7 @@
     </div>
 
     <div id = "start_learning"> 
-        <a href="#">Start</a>
+        Start
     </div>
 
 {% endblock %}

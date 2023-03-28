@@ -7,7 +7,7 @@ import { initFlashCardConstructor, loadFlashCards } from "./flashcard.js";
 import { initCardSetsLoadingAndSearch } from "./cardsetsLoadingAndSearch.js";
 import { initModalBoxes } from "./modalBoxes.js";
 import { initEditProfile } from "./editProfile.js";
-import { chooseLearn } from "./learn.js";
+import { chooseLearn, learn_modal } from "./learn.js";
 import { sortSelect } from "./sort.js";
 
 
@@ -54,5 +54,6 @@ document.addEventListener("DOMContentLoaded", (e) => {
     initEditProfile();
   } else if (window.location.href.includes('learn')) {
     chooseLearn();
+    learn_modal();
   }
 });
