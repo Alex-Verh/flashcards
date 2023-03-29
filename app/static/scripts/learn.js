@@ -61,8 +61,7 @@ function learnModal() {
 function beginLearning(flashcards, mode) {
   const learnContainer = document.querySelector('#learn-content')
   const flashcardEl = document.createElement("div");
-  flashcardEl.classList.add("flashcard");
-  // flashcardEl.classList.add('learning-flashcard')
+  flashcardEl.classList.add('learning-flashcard')
   flashcardEl.innerHTML = `
   <div class="flash-screen">
     <div class="flash-card-front">

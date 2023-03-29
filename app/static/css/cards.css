@@ -456,3 +456,11 @@ input[type="radio"]{
     display: inline-block;
     margin-inline: 2vh;
 }
+
+.learning-flashcard {
+    width: 65%;
+    height: 60%;
+    display: block;
+    margin:0 auto;
+    border: #fff 0.1vh solid;
+}
