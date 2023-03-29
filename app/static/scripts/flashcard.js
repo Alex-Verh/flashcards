@@ -375,4 +375,4 @@ function loadFlashCards(cardSetId) {
     });
 }
 
-export { initFlashCardConstructor, loadFlashCards };
+export { initFlashCardConstructor, loadFlashCards, getFlashCardSideHTML };

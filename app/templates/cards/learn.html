@@ -15,7 +15,7 @@
     <h1 style="font-size: 5vh; margin-bottom: 5%;">Choose your settings:</h1>
 
     <div id = "more-sets">
-        {% set all_cardsets = current_user.own_cardsets.union(current_user.saved_cardsets).all() %}
+        {% set all_cardsets = current_user.own_cardsets.union(current_user.saved_cardsets).all() if current_user.is_authenticated else [] %}
         {% if cardset and cardset not in all_cardsets %}
             {% set all_cardsets = [cardset] + all_cardsets %}
         {% endif -%}
