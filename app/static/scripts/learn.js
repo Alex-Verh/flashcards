@@ -29,12 +29,13 @@ function learnModal() {
 
         // Checks what mode is checked
         if (document.querySelector('input[name="mode"]:checked').value == 1) {
-          learnTitle.innerHTML = "Guess content:";
+          learnTitle.innerHTML = "Guess content:&nbsp;&nbsp;&nbsp;&nbsp;<span id='card-count'>3/15</span>";
           getFlashcards().then((flashcards) =>
             beginLearning(flashcards, "content")
           );
+          
         } else {
-          learnTitle.innerHTML = "Guess title:";
+          learnTitle.innerHTML = "Guess title: &nbsp;&nbsp;&nbsp;&nbsp; <span id='card-count'>3/15</span>";
           getFlashcards().then((flashcards) =>
             beginLearning(flashcards, "title")
           );
@@ -60,8 +61,7 @@ function learnModal() {
 function beginLearning(flashcards, mode) {
   const learnContainer = document.querySelector('#learn-content')
   const flashcardEl = document.createElement("div");
-  flashcardEl.classList.add("flashcard");
-  // flashcardEl.classList.add('learning-flashcard')
+  flashcardEl.classList.add('learning-flashcard')
   flashcardEl.innerHTML = `
   <div class="flash-screen">
     <div class="flash-card-front">

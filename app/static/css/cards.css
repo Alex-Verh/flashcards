@@ -380,7 +380,7 @@ input[type="radio"]{
     border : 0.1vh solid #005c00;
 }
 
-#start_learning {
+#start_learning, .learn-button{
     padding:1vh;
     letter-spacing: 0.1vh;
     transition: all 0.15s linear;
@@ -392,12 +392,12 @@ input[type="radio"]{
     box-shadow: #ffffff26 0 0.8vh 1.5vh;
 }
 
-#start_learning:hover {
+#start_learning:hover, .learn-button:hover {
     box-shadow: 0 0.1vh 0 rgb(255, 255, 255);
     transform: translateY(+0.4vh);
 }
 
-#start_learning:active {
+#start_learning:active, .learn-button:active {
     box-shadow: 0 0.1vh 0 rgb(0, 102, 24);
 }
 
@@ -421,7 +421,7 @@ input[type="radio"]{
     z-index: 11;
     transform: translate(0, -500%);
     transition: transform 0.3s ease-out;
-    background-color: #000000e4;
+    background-color: #000;
     text-align: center;
     border-radius: 5vh;
     padding: 1vh;
@@ -439,4 +439,28 @@ input[type="radio"]{
 #learn-close:hover {
     cursor: pointer;
     color:#808080;
+}
+
+#card-count {
+    font-size: 5vh;
+}
+
+#learn-buttons {
+    position: absolute;
+    bottom: 5%;
+    width: 80%;
+    left:10%;
+}
+
+.learn-button {
+    display: inline-block;
+    margin-inline: 2vh;
+}
+
+.learning-flashcard {
+    width: 65%;
+    height: 60%;
+    display: block;
+    margin:0 auto;
+    border: #fff 0.1vh solid;
 }
