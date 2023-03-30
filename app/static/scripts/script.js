@@ -1,8 +1,6 @@
 "use strict";
 
-import { changeBackground } from "./background.js";
 import { initFlashCardConstructor, loadFlashCards } from "./flashcard.js";
-import { initCardSetsLoadingAndSearch } from "./cardsetsLoadingAndSearch.js";
 import { initEditProfile } from "./editProfile.js";
 import { chooseLearn, learnModal } from "./learn.js";
 import { sortSelect } from "./sort.js";
@@ -16,6 +14,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
     }
   });
 
+  changeBackground()
   initCursorVisualEffect()
   initBackgroundChanging()
   loadCategories()
@@ -142,6 +141,11 @@ document.addEventListener("DOMContentLoaded", (e) => {
     };
   }
 
+  function changeBackground() {
+    const backgroundUrl = localStorage.getItem('backgroundUrl') || "url(/static/images/background_default.jpg)"
+    document.body.style.backgroundImage = backgroundUrl;
+  }
+
   function initBackgroundChanging() {
     document.querySelector(".images").addEventListener("click", (event) => {
       const backgroundImage = event.target.closest(".image .background");
@@ -155,7 +159,6 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
 
   if (window.location.href.endsWith("home")) {
-    initCardSetsLoadingAndSearch();
     sortSelect();
   } else if (window.location.href.split("/")[3] === "cardset") {
     loadFlashCards(window.location.href.split("/")[4])

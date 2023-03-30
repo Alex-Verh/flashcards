@@ -30,7 +30,7 @@ def delete_cardset(id):
     return jsonify({'message': 'Card set has been deleted'})
 
 
-@bp.route('/save-cardset/<int:id>', methods=['POST'])
+@bp.route('/save-cardset/<int:id>')
 @login_required
 def save_cardset(id):
     cardset = CardSet.query.get(id)
@@ -44,14 +44,12 @@ def save_cardset(id):
         cardset.followers.remove(current_user)
         db.session.commit()
         saved = False
-        img_url = url_for('static', filename='images/save2.png')
     else:
         cardset.followers.append(current_user)
         db.session.commit()
         saved = True
-        img_url = url_for('static', filename='images/save1.png')
 
-    return jsonify({"saves": cardset.followers.count(), "saved": saved, "image_url":img_url}), 200
+    return jsonify({"saves": cardset.followers.count(), "saved": saved})
 
 
 @bp.route('/cardsets', methods=['POST'])
