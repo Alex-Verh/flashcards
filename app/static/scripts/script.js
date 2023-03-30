@@ -1,12 +1,10 @@
 "use strict";
 
 import { initFlashCardConstructor, loadFlashCards } from "./flashcard.js";
-import { initEditProfile } from "./editProfile.js";
 import { chooseLearn, learnModal } from "./learn.js";
-import { sortSelect } from "./sort.js";
 
 
-document.addEventListener("DOMContentLoaded", (e) => {
+document.addEventListener("DOMContentLoaded", () => {
   document.querySelector(".navMenu").addEventListener("click", (e) => {
     const navLink = e.target.closest("a");
     if (navLink && navLink.id !== "open-window") {
@@ -100,15 +98,18 @@ document.addEventListener("DOMContentLoaded", (e) => {
       }
     })
     // Dropdown menu animation
-    $(dropdown).click(function () {
-      $(this).attr('tabindex', 1).focus();
-      $(this).toggleClass('active');
-      $(this).find(dropdownMenu).slideToggle(300);
-    });
-    $(dropdown).focusout(function () {
-      $(this).removeClass('active');
-      $(this).find(dropdownMenu).slideUp(300);
-    });
+    dropdown.addEventListener('click', (event) => {
+      dropdown.setAttribute('tabindex', 1)
+      dropdown.focus()
+      dropdown.classList.toggle('active')
+      slideToggle(dropdownMenu, 200)
+    })
+    dropdown.addEventListener('focusout', (event) => {
+      dropdown.classList.remove('active')
+      slideUp(dropdownMenu, 200)
+  
+    })
+
   }
 
   function initUnauthorizedModalBox() {
@@ -158,13 +159,9 @@ document.addEventListener("DOMContentLoaded", (e) => {
   }
 
 
-  if (window.location.href.endsWith("home")) {
-    sortSelect();
-  } else if (window.location.href.split("/")[3] === "cardset") {
+  if (window.location.href.split("/")[3] === "cardset") {
     loadFlashCards(window.location.href.split("/")[4])
     initFlashCardConstructor();
-  } else if (window.location.href.endsWith("profile")) {
-    initEditProfile();
   } else if (window.location.href.includes('learn')) {
     chooseLearn();
     learnModal();

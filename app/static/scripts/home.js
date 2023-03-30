@@ -1,132 +1,146 @@
-initCardSetsLoadingAndSearch()
+"use strict";
 
-function deleteCardSet(cardSetId, isOwn) {
-  if (isOwn) {
-    if (confirm("Are you sure you want to delete this set?") !== true) {
-      return;
+document.addEventListener("DOMContentLoaded", () => {
+  initCardSetsLoadingAndSearch();
+
+  document.querySelector("#sort").addEventListener("click", (event) => {
+    const sortDropdown = event.currentTarget;
+    sortDropdown.setAttribute("tabindex", 1);
+    sortDropdown.focus();
+    sortDropdown.classList.toggle("active");
+    const sortingList = sortDropdown.lastElementChild;
+    slideToggle(sortingList, 200);
+  });
+
+  document.querySelector("#sort").addEventListener("focusout", (event) => {
+    event.currentTarget.classList.remove("active");
+    const sortingList = event.currentTarget.lastElementChild;
+    slideUp(sortingList, 200);
+  });
+
+  document.querySelector("#dash-list").addEventListener("click", (event) => {
+    if (event.target.matches(".set .image-save")) {
+      const cardSetElement = event.target.parentElement.parentElement;
+      saveCardSet(cardSetElement);
     }
-  }
-  const cardSetEl = document.getElementById(`cardset-${cardSetId}`);
-  fetch(`/api/delete-cardset/${cardSetId}`, { method: "GET" })
-    .then(() => {
-      if (!isOwn) {
-        cardSetEl.querySelector("#deleteFromSaved").src =
-          "../../static/images/save2.png";
-        console.log("dd");
-      }
-      cardSetEl.remove();
-    })
-    .catch((e) => {
-      alert(e);
-      console.log(e);
-    });
-}
+  });
 
-function saveCardSet(cardSetId) {
-  const saveCount = document.getElementById(`saves-count-${cardSetId}`);
-  const saveButton = document.getElementById(`save-cardset-${cardSetId}`);
-  sendSaveCardSetRequest(cardSetId)
-    .then((response) => {
-      if (saveCount) {
-        saveCount.innerHTML = response.saves;
-      }
-      if (response.saved) {
-        saveButton.src = "../../static/images/save1.png";
-      } else {
-        saveButton.src = "../../static/images/save2.png";
-      }
-    })
-    .catch((e) => {
-      alert(e.message);
-      if (e instanceof SyntaxError) {
-        document.getElementById("loginRegisterModal").style.display = "block";
-      }
-    });
-}
-
-const loadCardSets = (
-  { page, searchQuery, sortBy, sortOrder, categoryId },
-  dashList,
-  sentinel,
-  cardSetsOnPage
-) => {
-  const formData = new FormData();
-  formData.append("page", page);
-  formData.append("cardsets_quantity", cardSetsOnPage);
-  formData.append("search_q", searchQuery);
-  formData.append("sort_by", sortBy);
-  formData.append("ort_order", sortOrder);
-  formData.append("category", categoryId);
-
-  fetch("/api/cardsets", { method: "POST", body: formData })
-    .then((response) => response.json())
-    .then((data) => {
-      sentinel.remove();
-      if (!data.length) {
-        return;
-      }
-
-      data.forEach((cardset) => {
-        const cardSetEl = document.createElement("div");
-        cardSetEl.classList.add("set");
-        cardSetEl.innerHTML = `<a href="${cardset.url}">
-<div class = "set-screen">${cardset.title}</div>
-</a>
-<div class = "set-modulate">
-<img src="../../static/images/user.png" alt="user" width="10%">
-<span id="saves-count-${cardset.id}">${cardset.saves}</span>
-${
-  cardset.own
-    ? ""
-    : `<img id="save-cardset-${cardset.id}" onclick="saveCardSet(${cardset.id})" class = "image-save" src="${cardset.save_img_url}" alt="Save">`
-}
-</div>`;
-        dashList.append(cardSetEl);
+  const saveCardSet = (cardSetElement) => {
+    const cardSetId = cardSetElement.dataset.cardsetId;
+    const saveCount = cardSetElement.querySelector(".saves-count");
+    const saveButton = cardSetElement.querySelector(".image-save");
+    sendSaveCardSetRequest(cardSetId)
+      .then((response) => {
+        if (saveCount) {
+          saveCount.innerHTML = response.saves;
+        }
+        if (response.saved) {
+          saveButton.src = "../../static/images/save1.png";
+        } else {
+          saveButton.src = "../../static/images/save2.png";
+        }
+      })
+      .catch((e) => {
+        alert(e.message);
+        if (e instanceof SyntaxError) {
+          document.getElementById("loginRegisterModal").style.display = "block";
+        }
       });
-
-      if (data.length >= 24) {
-        dashList.appendChild(sentinel);
-      }
-    });
-};
-
-function initCardSetsLoadingAndSearch() {
-  const state = {
-    page: 0,
-    searchQuery: "",
-    sortBy: "",
-    sortOrder: "",
-    categoryId: 0,
   };
 
-  const cardSetsOnPage = 24;
-  const dashListEl = document.getElementById("dash-list");
-  const sentinel = document.getElementById("sentinel");
-  const searchInput = document.getElementById("searchInput");
-  document
-    .querySelector("#searchBox")
-    .addEventListener("submit", function (event) {
+  const loadCardSets = (requestBody, dashList, sentinel) => {
+    fetch("/api/cardsets", {
+      method: "POST",
+      body: JSON.stringify(requestBody),
+      headers: {
+        "Content-type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        sentinel.remove();
+        if (!data.length) {
+          return;
+        }
+
+        data.forEach((cardSet) => {
+          dashList.insertAdjacentHTML("beforeend", getCardSetHTML(cardSet));
+        });
+
+        if (data.length >= 24) {
+          dashList.appendChild(sentinel);
+        }
+      });
+  };
+
+  const getCardSetHTML = (cardSet) => {
+    const cardSetHTML = `
+      <div class="set" data-cardset-id="${cardSet.id}">
+          <a href="${cardSet.url}">
+              <div class="set-screen">${cardSet.title}</div>
+          </a>
+          <div class="set-modulate">
+              <img src="../../static/images/user.png" alt="user" width="10%">
+              <span class="saves-count">${cardSet.saves}</span>
+              ${
+                cardSet.own
+                  ? ""
+                  : `<img class="image-save" src="${cardSet.save_img_url}" alt="Save">`
+              }
+          </div>
+      </div>
+    `;
+    return cardSetHTML;
+  };
+
+  function initCardSetsLoadingAndSearch() {
+    const cardSetsRequest = {
+      page: 0,
+      searchQuery: "",
+      sortBy: "",
+      sortOrder: "",
+      categoryId: 0,
+      cardSetsOnPage: 24,
+    };
+
+    const dashListEl = document.getElementById("dash-list");
+    const sentinel = document.getElementById("sentinel");
+    const searchInput = document.getElementById("searchInput");
+
+    document.querySelector("#searchBox").addEventListener("submit", (event) => {
       event.preventDefault();
       dashListEl.replaceChildren(sentinel);
-      state.page = 0;
-      state.searchQuery = searchInput.value;
+      cardSetsRequest.page = 0;
+      cardSetsRequest.searchQuery = searchInput.value;
     });
 
-  document
-    .querySelector("#aside-list")
-    .addEventListener("click", function (event) {
+    document.querySelector("#aside-list").addEventListener("click", (event) => {
       const category = event.target.closest(".category");
       if (category) {
         dashListEl.replaceChildren(sentinel);
-        state.page = 0;
-        state.categoryId = +category.dataset.id;
+        cardSetsRequest.page = 0;
+        cardSetsRequest.categoryId = +category.dataset.id;
       }
     });
 
-  const intersectionObserver = new IntersectionObserver((entries) => {
-    if (entries[0].intersectionRatio <= 0) return;
-    state.page += 1;
-    loadCardSets(state, dashListEl, sentinel, cardSetsOnPage);
-  });
-  intersectionObserver.observe(sentinel);
-}
+    document
+      .querySelector("#dropdown-filter")
+      .addEventListener("click", (event) => {
+        if (event.target.matches("#dropdown-filter li")) {
+          const [sortBy, sortOrder] = event.target.dataset.value.split(" ");
+          console.log(sortBy, sortOrder);
+          dashListEl.replaceChildren(sentinel);
+          cardSetsRequest.page = 0;
+          cardSetsRequest.sortBy = sortBy;
+          cardSetsRequest.sortOrder = sortOrder;
+        }
+      });
+
+    const intersectionObserver = new IntersectionObserver((entries) => {
+      if (entries[0].intersectionRatio <= 0) return;
+      cardSetsRequest.page += 1;
+      loadCardSets(cardSetsRequest, dashListEl, sentinel);
+    });
+    intersectionObserver.observe(sentinel);
+  }
+});

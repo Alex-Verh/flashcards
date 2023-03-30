@@ -52,27 +52,31 @@
     <div id = "flashcard-set-profile">
 
         <h1>Your own sets:</h1>
-        <div class = "flash-list">
+        <div data-own-sets-list class = "flash-list">
             {% for card_set in current_user.own_cardsets -%}
-                <div id="cardset-{{card_set.id}}" class = "set">
+                <div data-id="{{card_set.id}}" class = "set">
                     <a href="{{ url_for('cards.cardset', id=card_set.id) }}">
                         <div class = "flashcard-unit-text">{{card_set.title}}</div>
                     </a>
-                    <div class = "flashcard-unit-image" onclick = "deleteCardSet('{{card_set.id}}', true)"><img src="{{ url_for('static', filename='images/delete.png') }}" alt="Delete"></div>
+                    <div class = "flashcard-unit-image"><img src="{{ url_for('static', filename='images/delete.png') }}" alt="Delete"></div>
                 </div>
             {% endfor -%}
         </div>
 
         <h1>Your saved sets:</h1>
-        <div class = "flash-list">
+        <div data-saved-sets-list class = "flash-list">
             {% for card_set in current_user.saved_cardsets -%}
-                <div id="cardset-{{card_set.id}}" class = "set">
+                <div data-id="{{card_set.id}}" class = "set">
                     <a href="{{ url_for('cards.cardset', id=card_set.id) }}">
                         <div class = "flashcard-unit-text">{{card_set.title}}</div>
                     </a> 
-                    <div class = "flashcard-unit-image" onclick = "deleteCardSet('{{card_set.id}}', false)"><img id="deleteFromSaved" src="{{ url_for('static', filename='images/save1.png') }}" alt="Delete"></div>
+                    <div class = "flashcard-unit-image"><img src="{{ url_for('static', filename='images/save1.png') }}" alt="Delete"></div>
                 </div>
             {% endfor -%}
         </div>
     </div>    
+{% endblock %}
+
+{% block script -%}
+    <script src="{{ url_for('static', filename='scripts/profile.js') }}"></script>
 {% endblock %}

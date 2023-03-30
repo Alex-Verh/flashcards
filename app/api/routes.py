@@ -21,11 +21,8 @@ def delete_cardset(id):
         
         db.session.delete(cardset)
         db.session.commit()
-    elif current_user in cardset.followers.all():
-        cardset.followers.remove(current_user)
-        db.session.commit()
     else:
-        return jsonify({'error': 'Card set is not own or saved for this user'}), 400
+        return jsonify({'error': 'You do not have permission to delete this card set'}), 400
 
     return jsonify({'message': 'Card set has been deleted'})
 
@@ -56,12 +53,12 @@ def save_cardset(id):
 def cardsets():
     dict_sort_by = {'saves': 'total_saves', 'date': 'card_sets.created_at', 'title': 'card_sets.title'}
     try:
-        page = int(request.form.get('page'))
-        cardsets_quantity = int(request.form.get('cardsets_quantity'))
-        search_query = request.form.get('search_q')
-        sort_by = request.form.get('sort_by') or 'saves'
-        sort_order = request.form.get('sort_order') or 'desc'
-        category = int(request.form.get('category'))
+        page = int(request.json.get('page'))
+        cardsets_quantity = int(request.json.get('cardSetsOnPage'))
+        search_query = request.json.get('searchQuery')
+        sort_by = request.json.get('sortBy') or 'saves'
+        sort_order = request.json.get('sortOrder') or 'desc'
+        category = int(request.json.get('categoryId'))
         
         if page <= 0 or cardsets_quantity <= 0 or sort_by not in dict_sort_by or sort_order not in ['asc', 'desc']:
             raise ValueError
