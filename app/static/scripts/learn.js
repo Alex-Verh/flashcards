@@ -18,7 +18,8 @@ function chooseLearn() {
 
 function learnModal() {
   const learnModal = document.getElementById("learn_modal");
-  const learnTitle = document.getElementById("learn-title");
+  const learnTitle = document.getElementById("learn-title");  
+  const flipCard = document.querySelector("#flip");
 
   document
     .getElementById("start_learning")
@@ -33,7 +34,6 @@ function learnModal() {
           getFlashcards().then((flashcards) =>
             beginLearning(flashcards, "content")
           );
-          
         } else {
           learnTitle.innerHTML = "Guess title: &nbsp;&nbsp;&nbsp;&nbsp; <span id='card-count'>3/15</span>";
           getFlashcards().then((flashcards) =>
@@ -45,7 +45,13 @@ function learnModal() {
       }
     });
 
-  learnModal
+
+    flipCard.addEventListener('click', function(event) {
+      event.preventDefault();
+    })
+    
+
+    learnModal
     .querySelector("#learn-close")
     .addEventListener("click", function (event) {
       event.preventDefault();
@@ -54,24 +60,30 @@ function learnModal() {
       );
       if (userConfirm) {
         learnModal.classList.remove("transition");
+        learnModal.querySelector(".learning-flashcard").remove();
       }
     });
+
 }
 
 function beginLearning(flashcards, mode) {
   const learnContainer = document.querySelector('#learn-content')
   const flashcardEl = document.createElement("div");
   flashcardEl.classList.add('learning-flashcard')
-  flashcardEl.innerHTML = `
-  <div class="flash-screen">
-    <div class="flash-card-front">
+  if (mode === "content") {
+    flashcardEl.innerHTML = `
+    <div class="learn-screen front">
       ${getFlashCardSideHTML(flashcards[0].title, flashcards[0].attachments.frontside)}
     </div>
-    <div class="flash-card-back">
+    `;
+  } else if (mode === "title") {
+    flashcardEl.innerHTML = `
+    <div class="learn-screen back">
       ${getFlashCardSideHTML(flashcards[0].content, flashcards[0].attachments.backside)}
     </div>
-  </div>
-  `;
+    `;
+  }
+  
   learnContainer.append(flashcardEl)
 }
 
