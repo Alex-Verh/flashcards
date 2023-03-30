@@ -340,7 +340,7 @@ const getFlashCardSideHTML = (text, sideAttachments) => {
 
   const textHTML = sideAttachments.images.length && text
     ? `<div class = "not-only-text">${text}</div>`
-    : text;
+    : `<div class = "only-text">${text}</div>`;
   return imagesHTML + "\n" + textHTML;
 };
 

@@ -72,13 +72,13 @@ function beginLearning(flashcards, mode) {
   flashcardEl.classList.add('learning-flashcard')
   if (mode === "content") {
     flashcardEl.innerHTML = `
-    <div class="learn-screen front">
+    <div class="learn-screen">
       ${getFlashCardSideHTML(flashcards[0].title, flashcards[0].attachments.frontside)}
     </div>
     `;
   } else if (mode === "title") {
     flashcardEl.innerHTML = `
-    <div class="learn-screen back">
+    <div class="learn-screen">
       ${getFlashCardSideHTML(flashcards[0].content, flashcards[0].attachments.backside)}
     </div>
     `;

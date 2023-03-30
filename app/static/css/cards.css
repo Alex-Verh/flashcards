@@ -464,3 +464,31 @@ input[type="radio"]{
     margin:0 auto;
     border: #fff 0.1vh solid;
 }
+
+.learn-screen {
+    height: 90%;
+    margin:5%;
+}
+
+.learn-screen .flash-card-image-single {
+    max-width: 100%;
+    height: 80%;
+}
+
+.learn-screen .flash-card-image-multiple {
+    max-width: 100%;
+    height: 40%;
+    display:inline-block;
+    margin:1%;
+}
+
+.learn-screen .only-text {
+    width: 80%;
+    height:80%;
+}
+
+.learn-screen .not-only-text {
+    margin: 0 auto;
+    width: 80%;
+    height:30%;
+}
