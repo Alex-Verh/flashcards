@@ -14,7 +14,7 @@
     <div id="flash-message"></div>
     <div id = "flash-profile">
         <h1>
-            Your Profile:
+            Profile:
         </h1>
         <div class = "profile-value"><strong>Username:</strong>&emsp;<span>{{current_user.username}}</span></div>
         <div class = "profile-value"><strong>Email:</strong>&emsp;<span>{{current_user.email}}</span></div>
@@ -51,7 +51,7 @@
     </div>
     <div id = "flashcard-set-profile">
 
-        <h1>Your own sets:</h1>
+        <h1>Own sets:</h1>
         <div data-own-sets-list class = "flash-list">
             {% for card_set in current_user.own_cardsets -%}
                 <div data-id="{{card_set.id}}" class = "set">
@@ -63,7 +63,7 @@
             {% endfor -%}
         </div>
 
-        <h1>Your saved sets:</h1>
+        <h1>Saved sets:</h1>
         <div data-saved-sets-list class = "flash-list">
             {% for card_set in current_user.saved_cardsets -%}
                 <div data-id="{{card_set.id}}" class = "set">
