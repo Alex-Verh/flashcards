@@ -97,7 +97,8 @@
 .flashcard-unit-image {
     width: 8%;
     float: right;
-    margin: 2%;
+    margin-top: 6vh;
+    margin-right: 0.5vh;
 }
 
 .flashcard-unit-image img {
@@ -106,6 +107,7 @@
 
 .flashcard-unit-text {
     width: 85%;
+    height:100%;
     float: left;
     text-align: center;
     margin: 3% 0 0 5%;
@@ -153,10 +155,14 @@
     position: relative;
 }
 
+#achievements img {
+    width:3vh;
+}
+
 #logout {
     position: absolute;
     bottom:1%;
-    right:1%;
+    left:7%;
 }
 
 #logout:hover {
