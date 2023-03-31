@@ -47,7 +47,7 @@ def create_app(config_class=Config):
     
     @app.errorhandler(403)
     def page_not_found(error):
-        return render_template('common/error.html', error='This is a privat card set')
+        return render_template('common/error.html', error='This is a private card set >:( Create your own one.')
     
     @app.route('/uploads/<filename>')
     def uploaded_file(filename):
