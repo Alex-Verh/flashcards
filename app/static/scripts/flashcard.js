@@ -93,7 +93,7 @@ const removeImageFromCardSide = (imageEl, cardSide) => {
   imagePreview.removeChild(imageEl);
 };
 
-const onImageRemove = (removeButton, flashCardSide) => {
+const onImageRemove = (removeButton, flashCardSide, flashCardAttachments) => {
   const sideType = flashCardSide.dataset.type + "Side";
   const elToRemove = removeButton.closest(".constImage");
   const imageIndex = [...elToRemove.parentElement.children].indexOf(elToRemove);
@@ -274,7 +274,7 @@ function initFlashCardConstructor() {
     if (flashCardSide) {
       const removeButton = e.target.closest(".remove-image");
       if (removeButton) {
-        onImageRemove(removeButton, flashCardSide);
+        onImageRemove(removeButton, flashCardSide, flashCardAttachments);
       }
 
       // Unlock text area
@@ -340,7 +340,7 @@ const getFlashCardSideHTML = (text, sideAttachments) => {
 
   const textHTML = sideAttachments.images.length && text
     ? `<div class = "not-only-text">${text}</div>`
-    : text;
+    : `<div class = "only-text">${text}</div>`;
   return imagesHTML + "\n" + textHTML;
 };
 
