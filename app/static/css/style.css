@@ -44,6 +44,13 @@ a  {
     text-decoration: none;
 }
 
+.disable {
+    display: none;
+}
+.hide {
+    visibility: hidden;
+}
+
 #header {
     overflow: hidden;
 	position: relative;
