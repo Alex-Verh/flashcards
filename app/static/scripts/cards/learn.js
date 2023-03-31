@@ -23,13 +23,13 @@ document.addEventListener("DOMContentLoaded", () => {
           learnTitle.innerHTML =
             "Guess content:&nbsp;&nbsp;&nbsp;&nbsp;<span id='card-count'>3/15</span>";
           getFlashcards().then((flashcards) =>
-            beginLearning(flashcards, "content")
+            new FlashCardsLearn(flashcards, "content", "#learn-content")
           );
         } else {
           learnTitle.innerHTML =
             "Guess title: &nbsp;&nbsp;&nbsp;&nbsp; <span id='card-count'>3/15</span>";
           getFlashcards().then((flashcards) =>
-            beginLearning(flashcards, "title")
+            new FlashCardsLearn(flashcards, "title", "#learn-content")
           );
         }
       } else {
@@ -45,13 +45,11 @@ document.addEventListener("DOMContentLoaded", () => {
       );
       if (userConfirm) {
         learnModal.classList.remove("transition");
-        learnModal.querySelector(".learning-flashcard").remove();
+        learnModal.querySelector(".learning-flashcard").innerHTML = "";
+        learnModal.querySelector("#correct").classList.add("hide");
+        learnModal.querySelector("#incorrect").classList.add("hide");
       }
     });
-
-  function beginLearning(flashcards, mode) {
-    new FlashCardsLearn(flashcards, mode, "#learn-content").start();
-  }
 
   async function getFlashcards() {
     const cardSetsIds = [];
@@ -77,22 +75,29 @@ document.addEventListener("DOMContentLoaded", () => {
   class FlashCardsLearn {
     constructor(flashcards, mode, learnModalSelector) {
       this.flashcards = flashcards;
-      this.currentFlashcard = flashcards[flashcards.length-1]
+      this.shuffleFlashcards()
+      this.currentFlashcard = this.flashcards[this.flashcards.length - 1];
       this.mode = mode;
+      this.totalCards = flashcards.length;
       this.learnModal = document.querySelector(learnModalSelector);
-      this.defineOpenAndClosedSide();
-      this.learnModal.addEventListener("click", this.onLearnModalButtonsClick.bind(this));
+      this.bindButtonsClickEvents();
+      this.displayCard();
+      this.updateCounter();
     }
 
-    start() {
-      this.showFlashCard(this.currentFlashcard, 'open');
-    }
-    showFlashCard(flashcard, side) {
+    displayCard() {
       const flashcardHTML = `
-          <div class="learn-screen">
+          <div class="learn-screen${this.mode === "content" ? "" : " disable"}">
           ${getFlashCardSideHTML(
-            flashcard[this[`${side}Text`]],
-            flashcard.attachments[this[`${side}Side`]],
+            this.currentFlashcard.title,
+            this.currentFlashcard.attachments.frontside,
+            true
+          )}
+          </div>
+          <div class="learn-screen${this.mode === "title" ? "" : " disable"}">
+          ${getFlashCardSideHTML(
+            this.currentFlashcard.content,
+            this.currentFlashcard.attachments.backside,
             true
           )}
           </div>
@@ -100,31 +105,55 @@ document.addEventListener("DOMContentLoaded", () => {
       this.learnModal.querySelector(".learning-flashcard").innerHTML =
         flashcardHTML;
     }
-    onLearnModalButtonsClick(event) {
-      const target = event.target;
-      if (target.closest("#correct")) {
-        // code for correct
-        console.log("correct");
-      } else if (target.closest("#incorrect")) {
-        // code for incorrect
-        console.log("incorrect");
-      } else if (target.closest("#flip")) {
-        // code for flip
-        this.showFlashCard(this.currentFlashcard, 'closed')
-      }
+
+    flipCard() {
+      this.learnModal
+        .querySelectorAll(".learn-screen")
+        .forEach((screen) => screen.classList.toggle("disable"));
+      this.learnModal
+        .querySelectorAll(".learn-button")
+        .forEach((button) => button.classList.remove("hide"));
     }
 
-    defineOpenAndClosedSide() {
-      if (this.mode === "content") {
-        this.openSide = "frontside";
-        this.openText = "title";
-        this.closedSide = "backside";
-        this.closedText = "content";
-      } else if (this.mode === "title") {
-        this.openSide = "backside";
-        this.openText = "content";
-        this.closedSide = "frontside";
-        this.closedText = "title";
+    markCorrect() {
+      this.flashcards.pop();
+      if (this.flashcards.length <= 0) {
+        // TODO: make changes when finish learning
+        return;
+      }
+      this.showNextCard()
+    }
+
+    markIncorrect() {
+      this.flashcards.unshift(this.flashcards.pop())
+      this.showNextCard()
+    }
+
+    updateCounter() {
+      this.learnModal.querySelector("#card-count").textContent = `${
+        this.totalCards - this.flashcards.length + 1
+      }/${this.totalCards}`;
+    }
+
+    showNextCard() {
+      this.currentFlashcard = this.flashcards[this.flashcards.length - 1];
+      learnModal.querySelector("#correct").classList.add("hide");
+      learnModal.querySelector("#incorrect").classList.add("hide");
+      this.updateCounter();
+      this.displayCard();
+    }
+
+    bindButtonsClickEvents() {
+      this.learnModal.querySelector("#flip").onclick = this.flipCard.bind(this);
+      this.learnModal.querySelector("#correct").onclick = this.markCorrect.bind(this);
+      this.learnModal.querySelector("#incorrect").onclick = this.markIncorrect.bind(this);
+
+    }
+
+    shuffleFlashcards() {
+      for (let i = this.flashcards.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [this.flashcards[i], this.flashcards[j]] = [this.flashcards[j], this.flashcards[i]];
       }
     }
   }
