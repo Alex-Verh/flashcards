@@ -1,9 +1,5 @@
 "use strict";
 
-import { initFlashCardConstructor, loadFlashCards } from "./flashcard.js";
-import { chooseLearn, learnModal } from "./learn.js";
-
-
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelector(".navMenu").addEventListener("click", (e) => {
     const navLink = e.target.closest("a");
@@ -113,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function initUnauthorizedModalBox() {
-    const modal = document.getElementById("loginRegisterModal");
+    const modal = document.querySelector("#loginRegisterModal");
     try {
       document.querySelector(".close-modal").onclick = function () {
         modal.style.display = "none";
@@ -129,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function initCursorVisualEffect() {
-    const blob = document.getElementById("blob");
+    const blob = document.querySelector("#blob");
     document.body.onpointermove = (event) => {
       const { clientX, clientY } = event;
       blob.animate(
@@ -156,14 +152,5 @@ document.addEventListener("DOMContentLoaded", () => {
         changeBackground();
       }
     });
-  }
-
-
-  if (window.location.href.split("/")[3] === "cardset") {
-    loadFlashCards(window.location.href.split("/")[4])
-    initFlashCardConstructor();
-  } else if (window.location.href.includes('learn')) {
-    chooseLearn();
-    learnModal();
   }
 });

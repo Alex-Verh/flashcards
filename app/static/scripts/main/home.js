@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .catch((e) => {
         alert(e.message);
         if (e instanceof SyntaxError) {
-          document.getElementById("loginRegisterModal").style.display = "block";
+          document.querySelector("#loginRegisterModal").style.display = "block";
         }
       });
   };
@@ -103,9 +103,9 @@ document.addEventListener("DOMContentLoaded", () => {
       cardSetsOnPage: 24,
     };
 
-    const dashListEl = document.getElementById("dash-list");
-    const sentinel = document.getElementById("sentinel");
-    const searchInput = document.getElementById("searchInput");
+    const dashListEl = document.querySelector("#dash-list");
+    const sentinel = document.querySelector("#sentinel");
+    const searchInput = document.querySelector("#searchInput");
 
     document.querySelector("#searchBox").addEventListener("submit", (event) => {
       event.preventDefault();

@@ -51,10 +51,10 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   function initEditProfile() {
-    const editModal = document.getElementById("edit_profile_modal");
+    const editModal = document.querySelector("#edit_profile_modal");
 
     document
-      .getElementById("edit-profile")
+      .querySelector("#edit-profile")
       .addEventListener("click", function (event) {
         event.preventDefault();
         editModal.classList.add("transition");

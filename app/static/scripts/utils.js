@@ -62,3 +62,21 @@ function slideToggle(dropdown, speed) {
     slideUp(dropdown, speed);
   }
 }
+
+function getFlashCardSideHTML(text, sideAttachments, onlyTextInDiv=false) {
+  const imagesClass =
+    sideAttachments.images.length <= 1
+      ? "flash-card-image-single"
+      : "flash-card-image-multiple";
+  const imagesHTML = sideAttachments.images
+    .map((image) => {
+      return `<img src = "../../uploads/${image}" class = "${imagesClass}">`;
+    })
+    .join("\n");
+
+  const textHTML =
+    sideAttachments.images.length && text
+      ? `<div class = "not-only-text">${text}</div>`
+      : onlyTextInDiv ? `<div class = "only-text">${text}</div>` : text
+  return imagesHTML + "\n" + textHTML;
+};
