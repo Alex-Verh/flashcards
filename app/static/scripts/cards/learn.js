@@ -40,14 +40,14 @@ document.addEventListener("DOMContentLoaded", () => {
   learnModal
     .querySelector("#learn-close")
     .addEventListener("click", function (event) {
+      preventDefault(event);
       const userConfirm = confirm(
         "Are you sure you want to quit learning process?"
       );
       if (userConfirm) {
         learnModal.classList.remove("transition");
         learnModal.querySelector(".learning-flashcard").innerHTML = "";
-        learnModal.querySelector("#correct").classList.add("hide");
-        learnModal.querySelector("#incorrect").classList.add("hide");
+        learnModal.querySelector("#flip").classList.remove("hide");
       }
     });
 
@@ -116,17 +116,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     markCorrect() {
+      this.hideButtons();
       this.flashcards.pop();
       if (this.flashcards.length <= 0) {
-        // TODO: make changes when finish learning
+        this.finishLearn();
         return;
       }
       this.showNextCard()
     }
 
     markIncorrect() {
-      this.flashcards.unshift(this.flashcards.pop())
-      this.showNextCard()
+      this.hideButtons();
+      this.flashcards.unshift(this.flashcards.pop());
+      this.showNextCard();
     }
 
     updateCounter() {
@@ -137,17 +139,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
     showNextCard() {
       this.currentFlashcard = this.flashcards[this.flashcards.length - 1];
-      learnModal.querySelector("#correct").classList.add("hide");
-      learnModal.querySelector("#incorrect").classList.add("hide");
       this.updateCounter();
       this.displayCard();
+    }
+
+    hideButtons() {
+      learnModal.querySelector("#correct").classList.add("hide");
+      learnModal.querySelector("#incorrect").classList.add("hide");
+    }
+
+    finishLearn() {
+      learnModal.querySelectorAll(".learn-button").forEach(element => element.classList.add("hide"));
+      this.learnModal.querySelector(".learning-flashcard").innerHTML = `
+        <div class = "only-text">
+          <p>The learning has finished.</p>
+          <p>You can restart or exit current process.</p>
+        </div>`
+      learnModal.querySelector("#restart").classList.remove("disable");
+        
+      learnModal
+      .querySelector("#restart")
+      .addEventListener("click", function (event) {
+      getFlashcards().then((flashcards) =>
+        new FlashCardsLearn(flashcards, this.mode, "#learn-content")
+      );
+      learnModal.querySelector("#restart").classList.add("disable");
+      this.showNextCard();
+      learnModal.querySelector("#flip").classList.remove("hide");
+      }
+    );
     }
 
     bindButtonsClickEvents() {
       this.learnModal.querySelector("#flip").onclick = this.flipCard.bind(this);
       this.learnModal.querySelector("#correct").onclick = this.markCorrect.bind(this);
       this.learnModal.querySelector("#incorrect").onclick = this.markIncorrect.bind(this);
-
     }
 
     shuffleFlashcards() {

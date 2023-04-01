@@ -380,7 +380,7 @@ input[type="radio"]{
     border : 0.1vh solid #005c00;
 }
 
-#start_learning, .learn-button{
+#start_learning, .learn-button, #restart{
     padding:1vh;
     letter-spacing: 0.1vh;
     transition: all 0.15s linear;
@@ -392,12 +392,12 @@ input[type="radio"]{
     box-shadow: #ffffff26 0 0.8vh 1.5vh;
 }
 
-#start_learning:hover, .learn-button:hover {
+#start_learning:hover, .learn-button:hover, #restart:hover {
     box-shadow: 0 0.1vh 0 rgb(255, 255, 255);
     transform: translateY(+0.4vh);
 }
 
-#start_learning:active, .learn-button:active {
+#start_learning:active, .learn-button:active, #restart:active {
     box-shadow: 0 0.1vh 0 rgb(0, 102, 24);
 }
 
