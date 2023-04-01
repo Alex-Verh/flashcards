@@ -3,6 +3,10 @@
 document.addEventListener("DOMContentLoaded", () => {
   const learnModal = document.querySelector("#learn_modal");
   const learnTitle = document.querySelector("#learn-title");
+  const flipButton = learnModal.querySelector("#flip");
+  const correctButton = learnModal.querySelector("#correct");
+  const incorrectButton = learnModal.querySelector("#incorrect")
+  const restartButton = learnModal.querySelector("#restart");
 
   document.querySelector("#more-sets").addEventListener("click", (event) => {
     const cardSet = event.target.closest(".set");
@@ -21,13 +25,13 @@ document.addEventListener("DOMContentLoaded", () => {
         // Checks what mode is checked
         if (document.querySelector('input[name="mode"]:checked').value == 1) {
           learnTitle.innerHTML =
-            "Guess content:&nbsp;&nbsp;&nbsp;&nbsp;<span id='card-count'>3/15</span>";
+            "Guess content &nbsp;&nbsp;&nbsp;&nbsp;<span id='card-count'>3/15</span>";
           getFlashcards().then((flashcards) =>
             new FlashCardsLearn(flashcards, "content", "#learn-content")
           );
         } else {
           learnTitle.innerHTML =
-            "Guess title: &nbsp;&nbsp;&nbsp;&nbsp; <span id='card-count'>3/15</span>";
+            "Guess title &nbsp;&nbsp;&nbsp;&nbsp; <span id='card-count'>3/15</span>";
           getFlashcards().then((flashcards) =>
             new FlashCardsLearn(flashcards, "title", "#learn-content")
           );
@@ -47,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (userConfirm) {
         learnModal.classList.remove("transition");
         learnModal.querySelector(".learning-flashcard").innerHTML = "";
-        learnModal.querySelector("#flip").classList.remove("hide");
+        flipButton.classList.remove("hide");
       }
     });
 
@@ -144,8 +148,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     hideButtons() {
-      learnModal.querySelector("#correct").classList.add("hide");
-      learnModal.querySelector("#incorrect").classList.add("hide");
+      correctButton.classList.add("hide");
+      incorrectButton.classList.add("hide");
     }
 
     finishLearn() {
@@ -155,25 +159,27 @@ document.addEventListener("DOMContentLoaded", () => {
           <p>The learning has finished.</p>
           <p>You can restart or exit current process.</p>
         </div>`
-      learnModal.querySelector("#restart").classList.remove("disable");
+
+      // Restart
+      restartButton.classList.remove("disable");
         
+      // TOFIX some 500 errors are occuring
       learnModal
       .querySelector("#restart")
       .addEventListener("click", function (event) {
       getFlashcards().then((flashcards) =>
-        new FlashCardsLearn(flashcards, this.mode, "#learn-content")
+        new FlashCardsLearn(flashcards, learnTitle.textContent.split(' ')[1], "#learn-content")
       );
-      learnModal.querySelector("#restart").classList.add("disable");
-      this.showNextCard();
-      learnModal.querySelector("#flip").classList.remove("hide");
+      restartButton.classList.add("disable");
+      flipButton.classList.remove("hide");
       }
     );
     }
 
     bindButtonsClickEvents() {
-      this.learnModal.querySelector("#flip").onclick = this.flipCard.bind(this);
-      this.learnModal.querySelector("#correct").onclick = this.markCorrect.bind(this);
-      this.learnModal.querySelector("#incorrect").onclick = this.markIncorrect.bind(this);
+      flipButton.onclick = this.flipCard.bind(this);
+      correctButton.onclick = this.markCorrect.bind(this);
+      incorrectButton.onclick = this.markIncorrect.bind(this);
     }
 
     shuffleFlashcards() {
