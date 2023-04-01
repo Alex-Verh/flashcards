@@ -485,6 +485,7 @@ input[type="radio"]{
 .learn-screen .only-text {
     width: 80%;
     height:80%;
+    margin-bottom: 0;
 }
 
 .learn-screen .not-only-text {

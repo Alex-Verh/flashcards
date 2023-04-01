@@ -44,7 +44,6 @@ document.addEventListener("DOMContentLoaded", () => {
   learnModal
     .querySelector("#learn-close")
     .addEventListener("click", function (event) {
-      preventDefault(event);
       const userConfirm = confirm(
         "Are you sure you want to quit learning process?"
       );
@@ -156,7 +155,8 @@ document.addEventListener("DOMContentLoaded", () => {
       learnModal.querySelectorAll(".learn-button").forEach(element => element.classList.add("hide"));
       this.learnModal.querySelector(".learning-flashcard").innerHTML = `
         <div class = "only-text">
-          <p>The learning has finished.</p>
+          <h3>The learning has finished.</h3>
+          <br>
           <p>You can restart or exit current process.</p>
         </div>`
 
