@@ -45,8 +45,9 @@ a  {
 }
 
 .disable {
-    display: none;
+    display:none;
 }
+
 .hide {
     visibility: hidden;
 }

@@ -3,6 +3,10 @@
 document.addEventListener("DOMContentLoaded", () => {
   const learnModal = document.querySelector("#learn_modal");
   const learnTitle = document.querySelector("#learn-title");
+  const flipButton = learnModal.querySelector("#flip");
+  const correctButton = learnModal.querySelector("#correct");
+  const incorrectButton = learnModal.querySelector("#incorrect")
+  const restartButton = learnModal.querySelector("#restart");
 
   document.querySelector("#more-sets").addEventListener("click", (event) => {
     const cardSet = event.target.closest(".set");
@@ -21,13 +25,13 @@ document.addEventListener("DOMContentLoaded", () => {
         // Checks what mode is checked
         if (document.querySelector('input[name="mode"]:checked').value == 1) {
           learnTitle.innerHTML =
-            "Guess content:&nbsp;&nbsp;&nbsp;&nbsp;<span id='card-count'>3/15</span>";
+            "Guess content &nbsp;&nbsp;&nbsp;&nbsp;<span id='card-count'>3/15</span>";
           getFlashcards().then((flashcards) =>
             new FlashCardsLearn(flashcards, "content", "#learn-content")
           );
         } else {
           learnTitle.innerHTML =
-            "Guess title: &nbsp;&nbsp;&nbsp;&nbsp; <span id='card-count'>3/15</span>";
+            "Guess title &nbsp;&nbsp;&nbsp;&nbsp; <span id='card-count'>3/15</span>";
           getFlashcards().then((flashcards) =>
             new FlashCardsLearn(flashcards, "title", "#learn-content")
           );
@@ -46,8 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (userConfirm) {
         learnModal.classList.remove("transition");
         learnModal.querySelector(".learning-flashcard").innerHTML = "";
-        learnModal.querySelector("#correct").classList.add("hide");
-        learnModal.querySelector("#incorrect").classList.add("hide");
+        flipButton.classList.remove("hide");
       }
     });
 
@@ -116,17 +119,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     markCorrect() {
+      this.hideButtons();
       this.flashcards.pop();
       if (this.flashcards.length <= 0) {
-        // TODO: make changes when finish learning
+        this.finishLearn();
         return;
       }
       this.showNextCard()
     }
 
     markIncorrect() {
-      this.flashcards.unshift(this.flashcards.pop())
-      this.showNextCard()
+      this.hideButtons();
+      this.flashcards.unshift(this.flashcards.pop());
+      this.showNextCard();
     }
 
     updateCounter() {
@@ -137,17 +142,44 @@ document.addEventListener("DOMContentLoaded", () => {
 
     showNextCard() {
       this.currentFlashcard = this.flashcards[this.flashcards.length - 1];
-      learnModal.querySelector("#correct").classList.add("hide");
-      learnModal.querySelector("#incorrect").classList.add("hide");
       this.updateCounter();
       this.displayCard();
     }
 
-    bindButtonsClickEvents() {
-      this.learnModal.querySelector("#flip").onclick = this.flipCard.bind(this);
-      this.learnModal.querySelector("#correct").onclick = this.markCorrect.bind(this);
-      this.learnModal.querySelector("#incorrect").onclick = this.markIncorrect.bind(this);
+    hideButtons() {
+      correctButton.classList.add("hide");
+      incorrectButton.classList.add("hide");
+    }
 
+    finishLearn() {
+      learnModal.querySelectorAll(".learn-button").forEach(element => element.classList.add("hide"));
+      this.learnModal.querySelector(".learning-flashcard").innerHTML = `
+        <div class = "only-text">
+          <h3>The learning has finished.</h3>
+          <br>
+          <p>You can restart or exit current process.</p>
+        </div>`
+
+      // Restart
+      restartButton.classList.remove("disable");
+        
+      // TOFIX some 500 errors are occuring
+      learnModal
+      .querySelector("#restart")
+      .addEventListener("click", function (event) {
+      getFlashcards().then((flashcards) =>
+        new FlashCardsLearn(flashcards, learnTitle.textContent.split(' ')[1], "#learn-content")
+      );
+      restartButton.classList.add("disable");
+      flipButton.classList.remove("hide");
+      }
+    );
+    }
+
+    bindButtonsClickEvents() {
+      flipButton.onclick = this.flipCard.bind(this);
+      correctButton.onclick = this.markCorrect.bind(this);
+      incorrectButton.onclick = this.markIncorrect.bind(this);
     }
 
     shuffleFlashcards() {
