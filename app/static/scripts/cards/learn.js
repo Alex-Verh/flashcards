@@ -78,11 +78,12 @@ document.addEventListener("DOMContentLoaded", () => {
   class FlashCardsLearn {
     constructor(flashcards, mode, learnModalSelector) {
       this.flashcards = flashcards;
+      this.remainingCards = this.flashcards.map((_, index) => index)
       this.shuffleFlashcards()
-      this.currentFlashcard = this.flashcards[this.flashcards.length - 1];
+      this.currentFlashcard = this.flashcards[this.remainingCards.slice(-1)[0]];
       this.mode = mode;
-      this.totalCards = flashcards.length;
       this.learnModal = document.querySelector(learnModalSelector);
+      this.statistics = {correct: 0, incorrect: 0}
       this.bindButtonsClickEvents();
       this.displayCard();
       this.updateCounter();
@@ -120,8 +121,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     markCorrect() {
       this.hideButtons();
-      this.flashcards.pop();
-      if (this.flashcards.length <= 0) {
+
+      this.statistics.correct++
+      this.remainingCards.pop();
+      if (this.remainingCards.length <= 0) {
         this.finishLearn();
         return;
       }
@@ -130,22 +133,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
     markIncorrect() {
       this.hideButtons();
-      this.flashcards.unshift(this.flashcards.pop());
+
+      this.statistics.incorrect++
+      this.remainingCards.unshift(this.remainingCards.pop());
       this.showNextCard();
     }
 
     updateCounter() {
       this.learnModal.querySelector("#card-count").textContent = `${
-        this.totalCards - this.flashcards.length + 1
-      }/${this.totalCards}`;
+        this.flashcards.length - this.remainingCards.length + 1
+      }/${this.flashcards.length}`;
     }
 
     showNextCard() {
-      this.currentFlashcard = this.flashcards[this.flashcards.length - 1];
+      const currentCardIndex = this.remainingCards.slice(-1)[0]
+      this.currentFlashcard = this.flashcards[currentCardIndex];
       this.updateCounter();
       this.displayCard();
     }
-
+   
     hideButtons() {
       correctButton.classList.add("hide");
       incorrectButton.classList.add("hide");
@@ -153,39 +159,43 @@ document.addEventListener("DOMContentLoaded", () => {
 
     finishLearn() {
       learnModal.querySelectorAll(".learn-button").forEach(element => element.classList.add("hide"));
+      restartButton.classList.remove("disable")
+
+      const totalAnswers = this.statistics.correct + this.statistics.incorrect
+      const correctness = Math.round(this.statistics.correct / totalAnswers * 100)
       this.learnModal.querySelector(".learning-flashcard").innerHTML = `
         <div class = "only-text">
           <h3>The learning has finished.</h3>
+          <h2>Your correctness is ${correctness}%</h2>
           <br>
           <p>You can restart or exit current process.</p>
-        </div>`
+        </div>
+      `
+    }
 
-      // Restart
-      restartButton.classList.remove("disable");
-        
-      // TOFIX some 500 errors are occuring
-      learnModal
-      .querySelector("#restart")
-      .addEventListener("click", function (event) {
-      getFlashcards().then((flashcards) =>
-        new FlashCardsLearn(flashcards, learnTitle.textContent.split(' ')[1], "#learn-content")
-      );
+    restartLearn() {
       restartButton.classList.add("disable");
       flipButton.classList.remove("hide");
-      }
-    );
+      this.remainingCards = this.flashcards.map((_, index) => index)
+      this.shuffleFlashcards()
+      this.currentFlashcard = this.flashcards[this.remainingCards.slice(-1)[0]];
+      this.statistics = {correct: 0, incorrect: 0}
+      this.displayCard();
+      this.updateCounter();
     }
 
     bindButtonsClickEvents() {
       flipButton.onclick = this.flipCard.bind(this);
       correctButton.onclick = this.markCorrect.bind(this);
       incorrectButton.onclick = this.markIncorrect.bind(this);
+      restartButton.onclick = this.restartLearn.bind(this)
+
     }
 
     shuffleFlashcards() {
-      for (let i = this.flashcards.length - 1; i > 0; i--) {
+      for (let i = this.remainingCards.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [this.flashcards[i], this.flashcards[j]] = [this.flashcards[j], this.flashcards[i]];
+        [this.remainingCards[i], this.remainingCards[j]] = [this.remainingCards[j], this.remainingCards[i]];
       }
     }
   }
