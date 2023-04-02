@@ -25,7 +25,7 @@
         {% endif -%}
     </div>
     {% if current_user.is_authenticated and current_user.id != cardset.user_id  -%}
-    <div id = "save-div"  onclick="saveCardSet('{{cardset.id}}')">
+    <div id = "save-div">
         {% if cardset in current_user.saved_cardsets.all() -%}
             <img id="save-cardset-{{cardset.id}}" src="{{url_for('static', filename='images/save1.png')}}" alt="Save">
         {% else -%}

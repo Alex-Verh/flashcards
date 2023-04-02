@@ -49,7 +49,8 @@ document.addEventListener("DOMContentLoaded", () => {
       );
       if (userConfirm) {
         learnModal.classList.remove("transition");
-        learnModal.querySelector(".learning-flashcard").innerHTML = "";
+        learnModal.querySelector(".learning-flashcard").innerHTML = 
+          `<img style="margin-top: 20vh" id="loading-gif" src="../../static/images/loading.gif" width="70vh">`;
         flipButton.classList.remove("hide");
       }
     });

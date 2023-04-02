@@ -5,6 +5,25 @@ document.addEventListener("DOMContentLoaded", () => {
   loadFlashCards(cardsetId);
   initFlashCardConstructor();
 
+  document.querySelector("#save-div").addEventListener("click", (event) => {
+    const saveImg = event.currentTarget.firstElementChild;
+    console.log("save");
+    sendSaveCardSetRequest(cardsetId)
+      .then((response) => {
+        if (response.saved) {
+          saveImg.src = "../../static/images/save1.png";
+        } else {
+          saveImg.src = "../../static/images/save2.png";
+        }
+      })
+      .catch((e) => {
+        alert(e.message);
+        if (e instanceof SyntaxError) {
+          document.querySelector("#loginRegisterModal").style.display = "block";
+        }
+      });
+  });
+
   // Functions
 
   function loadFlashCards(cardSetId) {
@@ -298,9 +317,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const uploadSoundEl = flashCardCreationBox.querySelector("#uploadSound");
     const uploadImageEl = flashCardCreationBox.querySelector("#uploadImage");
 
-    document
-      .querySelector("#create-flashcard")
-      .addEventListener("click", (e) => {
+    const createCardBtn = document.querySelector("#create-flashcard");
+    createCardBtn &&
+      createCardBtn.addEventListener("click", (e) => {
         e.preventDefault();
         flashCardCreationBox.classList.add("transit");
       });
