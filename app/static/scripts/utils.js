@@ -20,46 +20,49 @@ async function sendDeleteFlashcardRequest() {
 
 }
 
-function slideDown(dropdown, speed) {
+function slideDown(dropdown, step) {
   dropdown.style.cssText = "display: block; overflow: hidden;";
+
   const targetHeight = parseFloat(window.getComputedStyle(dropdown).height);
-  dropdown.style.height = "0px";
+  let currentHeight = 0
 
-  const step = targetHeight / (speed / 4);
-  const intervalId = setInterval(() => {
-    const currentHeight = parseFloat(dropdown.style.height);
-    if (currentHeight >= targetHeight) {
-      dropdown.style.cssText = "display: block;";
-      clearInterval(intervalId);
-    } else {
-      dropdown.style.height = currentHeight + step + "px";
-    }
-  });
+  dropdown.style.height = '0px'
+  requestAnimationFrame(frame)
+
+  function frame() {
+    currentHeight += step
+    dropdown.style.height = currentHeight + "px";
+    if (currentHeight < targetHeight) {
+      requestAnimationFrame(frame)
+    } else dropdown.style.cssText = "display: block;";
+  }
 }
 
-function slideUp(dropdown, speed) {
+function slideUp(dropdown, step) {
   dropdown.style.cssText = "display: block; overflow: hidden;";
+
+  const targetHeight = 0
   let currentHeight = parseFloat(window.getComputedStyle(dropdown).height);
-  const step = currentHeight / (speed / 4);
-  const intervalId = setInterval(() => {
-    if (currentHeight <= 0) {
-      dropdown.style.cssText = "display: none;";
-      clearInterval(intervalId);
-    } else {
-      currentHeight = currentHeight - step;
-      dropdown.style.height = currentHeight + "px";
-    }
-  });
+
+  requestAnimationFrame(frame)
+
+  function frame() {
+    currentHeight -= step
+    dropdown.style.height = currentHeight + "px";
+    if (currentHeight > targetHeight) {
+      requestAnimationFrame(frame)
+    } else dropdown.style.cssText = "display: none;";
+  }
 }
 
-function slideToggle(dropdown, speed) {
+function slideToggle(dropdown, step) {
   if (
     parseFloat(window.getComputedStyle(dropdown).height) <= 0 ||
     window.getComputedStyle(dropdown).display === "none"
   ) {
-    slideDown(dropdown, speed);
+    slideDown(dropdown, step);
   } else {
-    slideUp(dropdown, speed);
+    slideUp(dropdown, step);
   }
 }
 

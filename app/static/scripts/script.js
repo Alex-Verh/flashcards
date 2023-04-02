@@ -98,12 +98,11 @@ document.addEventListener("DOMContentLoaded", () => {
       dropdown.setAttribute('tabindex', 1)
       dropdown.focus()
       dropdown.classList.toggle('active')
-      slideToggle(dropdownMenu, 200)
+      slideToggle(dropdownMenu, 10)
     })
     dropdown.addEventListener('focusout', (event) => {
       dropdown.classList.remove('active')
-      slideUp(dropdownMenu, 200)
-  
+      window.getComputedStyle(dropdownMenu).display !== 'none' && slideUp(dropdownMenu, 10);
     })
 
   }

@@ -9,13 +9,13 @@ document.addEventListener("DOMContentLoaded", () => {
     sortDropdown.focus();
     sortDropdown.classList.toggle("active");
     const sortingList = sortDropdown.lastElementChild;
-    slideToggle(sortingList, 200);
+    slideToggle(sortingList, 10);
   });
 
   document.querySelector("#sort").addEventListener("focusout", (event) => {
     event.currentTarget.classList.remove("active");
     const sortingList = event.currentTarget.lastElementChild;
-    slideUp(sortingList, 200);
+    window.getComputedStyle(sortingList).display !== 'none' && slideUp(sortingList, 10);
   });
 
   document.querySelector("#dash-list").addEventListener("click", (event) => {
