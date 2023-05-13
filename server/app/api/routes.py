@@ -8,6 +8,7 @@ from ..extensions import db
 from ..models import CardSet, CardSetCategory, user_cardset_assn, FlashCard
 from ..funcs import save_image, save_audio, delete_cardset_files
 
+
 @bp.route('/delete-cardset/<int:id>')
 @login_required
 def delete_cardset(id):

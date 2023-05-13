@@ -3,8 +3,7 @@ from flask_login import LoginManager
 from flask_mail import Mail
 from flask_migrate import Migrate
 from itsdangerous import URLSafeTimedSerializer
-from os import getenv
-
+from os import environ
 
 # SQLAlchemy
 db = SQLAlchemy()
@@ -19,4 +18,4 @@ mail = Mail()
 migrate = Migrate()
 
 # Serializer
-serializer = URLSafeTimedSerializer(getenv('SECRET_KEY'))
+serializer = URLSafeTimedSerializer(environ.get("SECRET_KEY"))

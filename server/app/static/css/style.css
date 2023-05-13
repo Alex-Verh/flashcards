@@ -15,7 +15,7 @@ body::-webkit-scrollbar {
 
 /* Disable copy, paste and cut on the webpage */
 body{
-    user-select : none;
+    /* user-select : none; */
 }  
 
 /* Hide scrollbar for IE, Edge and Firefox */

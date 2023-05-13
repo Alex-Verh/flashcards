@@ -41,10 +41,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       })
       .catch((e) => {
-        alert(e.message);
         if (e instanceof SyntaxError) {
           document.querySelector("#loginRegisterModal").style.display = "block";
+          return;
         }
+        alert(e.message);
       });
   };
 
