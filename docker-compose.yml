@@ -14,6 +14,7 @@ services:
       - db:/var/lib/postgresql/data
     networks:
       - custom
+
   db_test:
     container_name: "db_test"
     image: postgres:14.1-alpine
