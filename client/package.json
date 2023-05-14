@@ -4,11 +4,9 @@
   "description": "",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --env MODE=production",
     "build-dev": "webpack --env MODE=development",
-    "watch": "webpack --env MODE=development --watch",
-    "start": "webpack serve --open"
+    "start": "webpack serve --env MODE=development"
   },
   "author": "",
   "license": "ISC",

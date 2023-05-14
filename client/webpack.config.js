@@ -4,10 +4,11 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 
+// Pages list
 pages = ["main"];
 
 const filename = (ext = "[ext]") =>
-  mode === "production" ? `[name].[hash].${ext}` : `[name].${ext}`;
+  mode === "production" ? `[name].[hash]${ext}` : `[name]${ext}`;
 
 const entry = () =>
   pages.reduce(
@@ -19,7 +20,7 @@ const entry = () =>
   );
 
 const output = () => ({
-  filename: filename("js"),
+  filename: filename(".js"),
   path: path.resolve(__dirname, "dist"),
   clean: true,
 });
@@ -39,6 +40,7 @@ const optimization = () => {
 
 const devServer = () => ({
   static: path.resolve(__dirname, "dist"),
+  open: true,
 });
 
 const devtool = () => (mode === "production" ? "source-map" : "eval");
@@ -66,6 +68,10 @@ const rules = () => [
       filename: "fonts/" + filename(),
     },
   },
+  {
+    test: /\.html$/i,
+    loader: "html-loader",
+  },
 ];
 
 const htmlPlugins = () =>
@@ -82,12 +88,13 @@ const htmlPlugins = () =>
 const plugins = () => [
   ...htmlPlugins(),
   new MiniCssExtractPlugin({
-    filename: "css/" + filename("css"),
+    filename: "css/" + filename(".css"),
   }),
 ];
 
 module.exports = (env) => {
   global.mode = env.MODE;
+  console.log(mode);
   return {
     context: path.resolve(__dirname, "src"),
     mode: mode,
