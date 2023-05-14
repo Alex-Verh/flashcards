@@ -6,7 +6,7 @@ const TerserPlugin = require("terser-webpack-plugin");
 
 const htmlPlugin = (name) =>
   new HtmlWebpackPlugin({
-    template: `./src/${name}.html`,
+    template: `./templates/${name}.html`,
     filename: `${name}.html`,
     chunks: [name],
     minify: {
@@ -22,17 +22,21 @@ const htmlPlugin = (name) =>
 
 module.exports = (env, argv) => ({
   context: path.resolve(__dirname, "src"),
+  mode: "development",
   entry: {
-    main: "./main.js",
-    cards: "./cards.js",
-    cardsets: "./cardsets.js",
-    login: "./login.js",
-    register: "./register.js",
+    main: "./js/main.js",
+    // cards: "./cards.js",
+    // cardsets: "./cardsets.js",
+    // login: "./login.js",
+    // register: "./register.js",
   },
   output: {
-    filename: "[name].[contenthash].js",
+    filename: "[name].js",
     path: path.resolve(__dirname, "dist"),
     clean: true,
+  },
+  devServer: {
+    static: path.resolve(__dirname, "dist"),
   },
   optimization: {
     minimizer: [new TerserPlugin(), new CssMinimizerPlugin()],
@@ -40,24 +44,37 @@ module.exports = (env, argv) => ({
   module: {
     rules: [
       {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: ["babel-loader"],
+        test: /\.css$/,
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
       {
         test: /\.s[ac]ss$/,
         use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
       },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: "asset/resource",
+        generator: {
+          filename: "img/[name].[hash][ext]",
+        },
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        type: "asset/resource",
+        generator: {
+          filename: "fonts/[name].[hash][ext]",
+        },
+      },
     ],
   },
   plugins: [
     htmlPlugin("main"),
-    htmlPlugin("cards"),
-    htmlPlugin("cardsets"),
-    htmlPlugin("login"),
-    htmlPlugin("register"),
+    // htmlPlugin("cards"),
+    // htmlPlugin("cardsets"),
+    // htmlPlugin("login"),
+    // htmlPlugin("register"),
     new MiniCssExtractPlugin({
-      filename: "css/[name].[contenthash].css",
+      filename: "css/[name].css",
     }),
   ],
 });
