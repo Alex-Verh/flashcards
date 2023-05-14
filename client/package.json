@@ -5,8 +5,9 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --mode production",
-    "watch": "webpack --mode production --watch",
+    "build": "webpack --env MODE=production",
+    "build-dev": "webpack --env MODE=development",
+    "watch": "webpack --env MODE=development --watch",
     "start": "webpack serve --open"
   },
   "author": "",
@@ -14,6 +15,7 @@
   "devDependencies": {
     "css-loader": "^6.7.3",
     "css-minimizer-webpack-plugin": "^5.0.0",
+    "html-loader": "^4.2.0",
     "html-webpack-plugin": "^5.5.1",
     "mini-css-extract-plugin": "^2.7.5",
     "sass": "^1.62.1",
