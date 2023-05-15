@@ -40,7 +40,6 @@ $boxShadow :  3px 3px 14px rgba(157, 157, 157, 0.54);
 
   &__btn {
     background: #13cca3;
-    /* shadow */
     box-shadow: $boxShadow;
     border-radius: 10px;
     padding: 8px 30px;
@@ -84,6 +83,7 @@ $boxShadow :  3px 3px 14px rgba(157, 157, 157, 0.54);
 }
 
 .main {
+  //TODO Add breakpoints
   &__search {
     width: 100%;
     height: 70px;
@@ -91,12 +91,46 @@ $boxShadow :  3px 3px 14px rgba(157, 157, 157, 0.54);
     margin-top: 160px;
     border-radius: 20px;
     box-shadow: $boxShadow;
-
+    padding: 15px 70px 0 70px;
     span {
       font-family: $fontHeader;
       font-weight: 700;
       font-size: 18px;
+      margin-top: 6px;
+      display:inline-block;
     }
-
+    input {
+      border: 2px solid #BBC8D4;
+      border-radius: 20px;
+      line-height: 28px;
+      font-size: 16px;
+      font-family: $fontText;
+      height: 40px;
+      padding: 15px;
+    }
   }
+
+  &__cardsets {
+    margin-top: 56px;
+    .card-set {
+      background-color: #fff;
+      border-radius: 20px;
+      box-shadow: $boxShadow;
+      width:268px;
+      height: 116px;
+      margin: 10px;
+    }
+  }
+}
+
+// Color for placeholders
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #BBC8D4;
+  opacity: 1; /* Firefox */
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #BBC8D4;
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: #BBC8D4;
 }
