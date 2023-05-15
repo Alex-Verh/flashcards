@@ -45,7 +45,7 @@
           </div>
           <div class="col">
             <div class="header__image">
-              <img src="../img/header-img.svg" alt="Company Logo">
+              <img src="../img/header-img.svg" alt="Company Logo" />
             </div>
           </div>
         </div>
@@ -54,8 +54,63 @@
 
     <main class="main">
       <div class="container">
-        <div class="main__search"></div>
+        
+        <div class="main__search">
+          <div class="container">
+            <div class="row">
+
+              <div class="col">
+                <span>Start learning now</span>
+              </div>
+
+              <div class="col">
+                <!-- TODO change id naming -->
+                <form id="searchBox">
+                  <input
+                    id="searchInput"
+                    type="text"
+                    name="q"
+                    placeholder="Search"
+                    autocomplete="off"
+                  />
+                  <button id="searchButton" href="#"></button>
+                </form>
+              </div>
+
+              <div class="col">
+                <!-- TODO change to category select -->
+                <form id="searchBox">
+                  <input
+                    id="searchInput"
+                    type="text"
+                    name="q"
+                    placeholder="Category"
+                    autocomplete="off"
+                  />
+                  <button id="searchButton" href="#"></button>
+                </form>
+              </div>
+
+              <div class="col">
+                <!-- TODO change to sort by -->
+                <form id="searchBox">
+                  <input
+                    id="searchInput"
+                    type="text"
+                    name="q"
+                    placeholder="Sort by"
+                    autocomplete="off"
+                  />
+                  <button id="searchButton" href="#"></button>
+                </form>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
         <div class="main__cardsets"></div>
+
         <div class="main__load-more"></div>
       </div>
     </main>
