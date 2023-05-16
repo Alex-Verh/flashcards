@@ -109,7 +109,6 @@ $boxShadow :  3px 3px 14px rgba(157, 157, 157, 0.54);
       height: 40px;
       padding: 15px;
       width: 100%;
-      
     }
     @media screen and (max-width: 1600px) and (min-width: 1000px) {
       span {
@@ -124,9 +123,26 @@ $boxShadow :  3px 3px 14px rgba(157, 157, 157, 0.54);
       background-color: #fff;
       border-radius: 20px;
       box-shadow: $boxShadow;
-      width:268px;
+      width:100%;
       height: 116px;
-      margin: 10px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      &__counter{
+        position: absolute;
+        top: 6%;
+        left: 5%;
+      }
+      &__name{
+        font-family: $fontHeader;
+        font-weight: 400;
+        font-size: 15px;
+        line-height: 175%;
+        margin: 0 30px;
+        text-align: center;
+        text-transform: capitalize;
+      }
     }
   }
 }
