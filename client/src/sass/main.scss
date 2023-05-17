@@ -118,7 +118,7 @@ $boxShadow :  3px 3px 14px rgba(157, 157, 157, 0.54);
   }
 
   &__cardsets {
-    margin-top: 56px;
+    margin: 50px 0;
     .card-set {
       background-color: #fff;
       border-radius: 20px;
@@ -129,7 +129,7 @@ $boxShadow :  3px 3px 14px rgba(157, 157, 157, 0.54);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 25px 0;
+      margin-top: 25px;
       &__counter{
         position: absolute;
         top: 6%;
@@ -186,6 +186,10 @@ $boxShadow :  3px 3px 14px rgba(157, 157, 157, 0.54);
     font-weight: 700;
     font-size: 18px;
   }
+}
+
+.section{
+  margin-top: 100px;
 }
 
 // Color for placeholders
