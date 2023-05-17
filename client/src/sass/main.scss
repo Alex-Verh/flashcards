@@ -92,7 +92,7 @@ $boxShadow :  3px 3px 14px rgba(157, 157, 157, 0.54);
     margin-top: 160px;
     border-radius: 20px;
     box-shadow: $boxShadow;
-    padding: 15px 70px 15px 70px;
+    padding: 15px 70px 10px 70px;
     span {
       font-family: $fontHeader;
       font-weight: 700;
@@ -109,6 +109,7 @@ $boxShadow :  3px 3px 14px rgba(157, 157, 157, 0.54);
       height: 40px;
       padding: 15px;
       width: 100%;
+      margin-bottom: 5px;
     }
     @media screen and (max-width: 1600px) and (min-width: 1000px) {
       span {
@@ -129,10 +130,38 @@ $boxShadow :  3px 3px 14px rgba(157, 157, 157, 0.54);
       display: flex;
       align-items: center;
       justify-content: center;
+      margin: 25px 0;
       &__counter{
         position: absolute;
         top: 6%;
         left: 5%;
+        padding-top: 1px;
+      }
+      &__saved{
+        position: absolute;
+        right: 5%;
+        bottom: 7.5%;
+      }
+      &__category{
+        position: absolute;
+        right: 3%;
+        top: 7%;
+        border-radius: 20px;
+        background: #B300B7;
+        width: 25%;
+        text-align: center;
+        color: #fff;
+        font-weight: 400;
+        font-size: 13px;
+        font-family: $fontText;
+      }
+      &__author{
+        position: absolute;
+        left: 4.5%;
+        bottom: 4%;
+        font-family: $fontText;
+        font-weight: 300;
+        font-size: 12px;
       }
       &__name{
         font-family: $fontHeader;
@@ -145,6 +174,7 @@ $boxShadow :  3px 3px 14px rgba(157, 157, 157, 0.54);
       }
     }
   }
+
 }
 
 // Color for placeholders
@@ -157,4 +187,15 @@ $boxShadow :  3px 3px 14px rgba(157, 157, 157, 0.54);
 }
 ::-ms-input-placeholder { /* Microsoft Edge */
   color: #BBC8D4;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+body::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+body {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
