@@ -85,7 +85,6 @@ $boxShadow :  3px 3px 14px rgba(157, 157, 157, 0.54);
 }
 
 .main {
-  //TODO Add breakpoints
   &__search {
     width: 100%;
     background-color: #fff;
@@ -140,7 +139,7 @@ $boxShadow :  3px 3px 14px rgba(157, 157, 157, 0.54);
       &__saved{
         position: absolute;
         right: 5%;
-        bottom: 7.5%;
+        bottom: 6%;
       }
       &__category{
         position: absolute;
@@ -175,6 +174,18 @@ $boxShadow :  3px 3px 14px rgba(157, 157, 157, 0.54);
     }
   }
 
+  #load-more {
+    margin: 0 auto;
+    text-align: center;
+    box-shadow: $boxShadow;
+    width: 174px;
+    background: #FFFFFF;
+    border-radius: 20px;
+    padding: 7px 35px;
+    font-family: $fontHeader;
+    font-weight: 700;
+    font-size: 18px;
+  }
 }
 
 // Color for placeholders
