@@ -212,6 +212,26 @@ $boxShadow :  3px 3px 14px rgba(157, 157, 157, 0.54);
   }
 }
 
+.footer{
+  background-color: #fff;
+  width: 100%;
+  padding: 30px 75px;
+  margin-top: 75px;
+  &__logo{
+    font-weight: 700;
+    font-size: 18px;
+    font-family: $fontHeader;
+  }
+  a {
+    font-weight: 300;
+    font-size: 16px;
+    color: #000;
+    text-decoration: none;
+    font-family: $fontHeader;
+    margin-right:30px;
+  }
+}
+
 // Color for placeholders
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: #BBC8D4;
