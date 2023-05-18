@@ -190,6 +190,26 @@ $boxShadow :  3px 3px 14px rgba(157, 157, 157, 0.54);
 
 .section{
   margin-top: 100px;
+  &__title{
+    margin-top: 45px;
+    font-weight: 700;
+    font-size: 45px;
+    text-transform: capitalize;
+    font-family: $fontHeader;
+  }
+  #questions{
+    margin-top: 60px;
+  }
+  &__question{
+    width: 584px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 24px;
+    font-family: $fontText;
+    background-color: #fff;
+    padding: 15px 35px;
+    margin-bottom: 35px;
+  }
 }
 
 // Color for placeholders
