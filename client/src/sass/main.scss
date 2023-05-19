@@ -1,6 +1,9 @@
 body {
   background: url(../img/main-bg.png) no-repeat center center/cover;
 }
+html {
+  scroll-behavior: smooth;
+}
 
 $fontHeader : "Montserrat", sans-serif;
 $fontText : "Open Sans", sans-serif;
@@ -53,7 +56,7 @@ $boxShadow :  3px 3px 14px rgba(157, 157, 157, 0.54);
   &__title {
     font-family: $fontHeader;
     font-weight: 700;
-    line-height: 90px;
+    line-height: 110px;
     font-size: 80px;
     text-transform: capitalize;
     margin-top: 35px;
