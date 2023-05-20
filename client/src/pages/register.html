@@ -34,6 +34,7 @@
     <main class="register">
         <div class="container">
             <form action="#" method="POST">
+              <div class="register__field">
                 <label class="label" for="username">Username</label>
                 <input
                 id="search-input"
@@ -43,17 +44,19 @@
                 placeholder="Enter your username.."
                 autocomplete="off"
                 />
-                <div class="register_field">
-                    <label class="label" for="email">Email</label>
-                    <input
-                    id="search-input"
-                    class="input"
-                    type="text"
-                    name="email"
-                    placeholder="Enter your email.."
-                    autocomplete="off"
-                    />
-                 </div>
+              </div>    
+              <div class="register__field">
+                <label class="label" for="email">Email</label>
+                <input
+                id="search-input"
+                class="input"
+                type="text"
+                name="email"
+                placeholder="Enter your email.."
+                autocomplete="off"
+                />
+              </div>    
+              <div class="register__field">
                 <label class="label" for="password">Password</label>
                 <input
                 id="search-input"
@@ -63,6 +66,8 @@
                 placeholder="Enter your password.."
                 autocomplete="off"
                 />
+              </div>    
+              <div class="register__field">
                 <label class="label" for="repeat-password">Repeat password</label>
                 <input
                 id="search-input"
@@ -72,13 +77,15 @@
                 placeholder="Repeat your password.."
                 autocomplete="off"
                 />
-                <input
-                id="search-input"
-                class="button"
-                type="submit"
-                name="q"
-                value="Submit"
-                />
+              </div>    
+              
+              <input
+              id="search-input"
+              class="button"
+              type="submit"
+              name="q"
+              value="Submit"
+              />
             </form>
             <p>Already have an account? <a href="#">Login</a></p>
         </div>

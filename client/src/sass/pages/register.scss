@@ -11,6 +11,9 @@
 
 body {
   background: url(../../img/main-bg.png) no-repeat center center/cover;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 html {
@@ -19,19 +22,33 @@ html {
 
 .register {
   margin-top: 80px;
+  margin-bottom: 110px;
   text-align: center;
-
-  .input{
-    width: 25%;
-    display: block;
+  &__field {
+    // Mobile phone
+    @media (max-width: 414px) {
+      width: 80%;
+    }
+    // Tablet/ipad   
+    @media (max-width: 768px) {
+      width: 55%;
+    }
+    // Laptop
+    @media (max-width: 1200px) {
+      width: 40%;
+    }
+    width: 25%; 
+    text-align: left;
     margin: 3px auto 20px auto;
+
+    .label{
+      margin-left: 15px;
+    }
   }
-  .label{
-    margin-right: 200px;
-  }
+
   .button{
     display: block;
-    margin:0 auto 18px auto;
+    margin:35px auto 18px auto;
     border: none;
   }
 

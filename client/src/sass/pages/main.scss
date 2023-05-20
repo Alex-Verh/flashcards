@@ -11,6 +11,9 @@
 
 body {
   background: url(../../img/main-bg.png) no-repeat center center/cover;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 html {
   scroll-behavior: smooth;
@@ -82,6 +85,7 @@ html {
 
 .help {
   margin-top: 100px;
+  margin-bottom: 75px;
   &__title {
     margin-top: 45px;
     font-weight: 700;
