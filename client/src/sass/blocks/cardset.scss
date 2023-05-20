@@ -1,0 +1,53 @@
+.card-set {
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: $box-shadow;
+  width: 100%;
+  height: 116px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 25px;
+  &__counter {
+    position: absolute;
+    top: 6%;
+    left: 5%;
+    padding-top: 1px;
+  }
+  &__saved {
+    position: absolute;
+    right: 5%;
+    bottom: 6%;
+  }
+  &__category {
+    position: absolute;
+    right: 3%;
+    top: 7%;
+    border-radius: 20px;
+    background: #b300b7;
+    width: 25%;
+    text-align: center;
+    color: #fff;
+    font-weight: 400;
+    font-size: 13px;
+    font-family: $font-text;
+  }
+  &__author {
+    position: absolute;
+    left: 4.5%;
+    bottom: 4%;
+    font-family: $font-text;
+    font-weight: 300;
+    font-size: 12px;
+  }
+  &__name {
+    font-family: $font-header;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 175%;
+    margin: 0 30px;
+    text-align: center;
+    text-transform: capitalize;
+  }
+}

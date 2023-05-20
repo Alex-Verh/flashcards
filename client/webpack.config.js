@@ -5,7 +5,7 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 
 // Pages list
-pages = ["main"];
+pages = ["main", "cardsets"];
 
 const filename = (ext = "[ext]") =>
   mode === "production" ? `[name].[hash]${ext}` : `[name]${ext}`;
@@ -52,7 +52,19 @@ const rules = () => [
   },
   {
     test: /\.s[ac]ss$/i,
-    use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+    use: [
+      MiniCssExtractPlugin.loader,
+      "css-loader",
+      {
+        loader: "postcss-loader",
+        options: {
+          postcssOptions: {
+            plugins: [["autoprefixer"]],
+          },
+        },
+      },
+      "sass-loader",
+    ],
   },
   {
     test: /\.(png|svg|jpg|jpeg|gif)$/i,
@@ -94,7 +106,6 @@ const plugins = () => [
 
 module.exports = (env) => {
   global.mode = env.MODE;
-  console.log(mode);
   return {
     context: path.resolve(__dirname, "src"),
     mode: mode,
