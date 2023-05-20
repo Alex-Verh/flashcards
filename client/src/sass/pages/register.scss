@@ -21,8 +21,8 @@ html {
 }
 
 .register {
-  margin-top: 80px;
-  margin-bottom: 110px;
+  margin-top: 40px;
+  margin-bottom: 40px;
   text-align: center;
   &__field {
     // Mobile phone
@@ -37,6 +37,11 @@ html {
     @media (max-width: 1200px) {
       width: 40%;
     }
+    @media (min-height: 800px) {
+      margin-top: 80px;
+      margin-bottom: 110px;
+    }
+
     width: 25%; 
     text-align: left;
     margin: 3px auto 20px auto;
