@@ -1,0 +1,26 @@
+@import "../../css/bootstrap-grid.min.css";
+@import "../../css/bootstrap-reboot.min.css";
+
+@import "../../fonts/fonts.css";
+@import "../variables.scss";
+
+@import "../blocks/ui.scss";
+@import "../blocks/nav.scss";
+@import "../blocks/cardset.scss";
+@import "../blocks/footer.scss";
+
+body {
+  background: url(../../img/main-bg.png) no-repeat center center/cover;
+}
+html {
+  scroll-behavior: smooth;
+}
+
+::placeholder {
+  color: gray;
+}
+@media (min-resolution: 2dppx) {
+  .image {
+    background-color: bisque;
+  }
+}

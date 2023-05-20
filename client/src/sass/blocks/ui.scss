@@ -1,0 +1,31 @@
+.input {
+  border: 2px solid #bbc8d4;
+  border-radius: 20px;
+  line-height: 28px;
+  font-size: 16px;
+  font-family: $font-text;
+  height: 40px;
+  padding: 15px;
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.button {
+  margin: 0 auto;
+  text-align: center;
+  box-shadow: $box-shadow;
+  width: 174px;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 7px 35px;
+  font-family: $font-header;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+// Color for placeholders
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #bbc8d4;
+  opacity: 1; /* Firefox */
+}

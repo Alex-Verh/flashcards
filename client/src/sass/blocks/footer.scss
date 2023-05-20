@@ -1,0 +1,19 @@
+.footer {
+  background-color: #fff;
+  width: 100%;
+  padding: 30px 75px;
+  margin-top: 75px;
+  &__logo {
+    font-weight: 700;
+    font-size: 18px;
+    font-family: $font-header;
+  }
+  a {
+    font-weight: 300;
+    font-size: 16px;
+    color: #000;
+    text-decoration: none;
+    font-family: $font-header;
+    margin-right: 30px;
+  }
+}

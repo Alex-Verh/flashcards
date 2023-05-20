@@ -1,0 +1,39 @@
+.nav {
+  font-family: $font-header;
+  padding: 15px 0;
+  a {
+    color: #000;
+    text-decoration: none;
+  }
+  &__logo {
+    font-weight: 700;
+    font-size: 18px;
+  }
+  &__links {
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 260px;
+    margin: 0 auto;
+    font-weight: 600;
+  }
+  &__link {
+    font-size: 16px;
+  }
+  &__auth {
+    text-align: right;
+    font-weight: 600;
+  }
+  &__btn {
+    background: #13cca3;
+    box-shadow: $box-shadow;
+    border-radius: 10px;
+    padding: 8px 30px;
+    margin-left: 20px;
+  }
+}
+.line {
+  border-bottom: 1.5px solid #000;
+  margin-top: 15px;
+}
