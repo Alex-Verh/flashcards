@@ -23,6 +23,13 @@
   font-size: 18px;
 }
 
+.label {
+  font-weight: 300;
+  font-size: 14px;
+  font-family: $font-text;
+  color: #8A8A8A;
+}
+
 // Color for placeholders
 ::placeholder {
   /* Chrome, Firefox, Opera, Safari 10.1+ */
