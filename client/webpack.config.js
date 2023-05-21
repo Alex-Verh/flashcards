@@ -5,7 +5,7 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 
 // Pages list
-pages = ["main", "cardsets", "register"];
+pages = ["main", "cardsets", "register", "login"];
 
 const filename = (ext = "[ext]") =>
   mode === "production" ? `[name].[hash]${ext}` : `[name]${ext}`;

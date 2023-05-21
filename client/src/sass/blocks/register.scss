@@ -1,0 +1,51 @@
+.register {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    text-align: center;
+    @media (min-height: 800px) {
+      margin-top: 80px;
+      margin-bottom: 110px;
+    }
+  
+    a {
+        text-decoration: none;
+    }
+
+    &__field {
+      // Mobile phone
+      @media (max-width: 414px) {
+        width: 80%;
+      }
+      // Tablet/ipad   
+      @media (max-width: 768px) {
+        width: 55%;
+      }
+      // Laptop
+      @media (max-width: 1200px) {
+        width: 40%;
+      }
+  
+      width: 25%; 
+      text-align: left;
+      margin: 3px auto 20px auto;
+      
+      .label{
+        margin-left: 15px;
+      }
+    }
+  
+    .button{
+      display: block;
+      margin:40px auto 18px auto;
+      border: none;
+    }
+  
+    &__forget-pass {
+        font-weight: 300;
+        font-size: 12px;
+        float: right;
+        font-family: $font-text;
+        color: #000;
+        text-decoration: none;
+    }
+  }
