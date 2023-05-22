@@ -37,8 +37,7 @@
     height: 30px;
     border-radius: 50%;
     background: $background-gradient;
-    float: right;
-    display: flex;
+    display:inline-flex;
     align-items: center;
     justify-content: center;
     img {

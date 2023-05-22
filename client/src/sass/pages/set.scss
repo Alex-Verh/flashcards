@@ -1,0 +1,68 @@
+@import "../../css/bootstrap-grid.min.css";
+@import "../../css/bootstrap-reboot.min.css";
+
+@import "../../fonts/fonts.css";
+@import "../variables.scss";
+
+@import "../blocks/ui.scss";
+@import "../blocks/nav.scss";
+@import "../blocks/footer.scss";
+
+
+
+body {
+    background: url(../../img/main-bg.png) no-repeat center center/cover;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+html {
+    scroll-behavior: smooth;
+}
+
+.flashcards{
+    font-weight: 700;
+    font-size: 32px;
+    font-family: $font-header;
+
+    &__heading-tools{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    &__tool{
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: $background-gradient;
+        display:inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 15px;
+        img {
+          width: 55%;
+        }
+    }
+    &__list{
+        margin-top: 40px;
+    }
+    &__card{
+        background-color: #fff;
+        border-radius: 20px;
+        padding:80px 130px;
+        margin: 15px;
+    }
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+body::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Hide scrollbar for IE, Edge and Firefox */
+  body {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  
