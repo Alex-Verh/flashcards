@@ -23,6 +23,16 @@
   font-size: 18px;
 }
 
+.rnd-button {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  display:inline-flex;
+  justify-content: center;
+  img {
+    width: 50%;
+  }
+}
+
 .label {
   font-weight: 300;
   font-size: 14px;
