@@ -45,13 +45,38 @@ html {
         }
     }
     &__list{
-        margin-top: 40px;
+        margin-top: 25px;
     }
-    &__card{
+    &__card,&__card-active{
         background-color: #fff;
         border-radius: 20px;
-        padding:80px 130px;
+        height: 160px;
+        width: 260px;        
         margin: 15px;
+        transition: transform 1s;
+        transform-style: preserve-3d;
+
+      .card-front,
+      .card-back {
+          position: absolute;
+          -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+          height: 160px;
+          width: 260px;  
+          font-size: 16px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-family: $font-text;
+          font-weight: 400;
+          padding: 10px 15px;
+      }  
+      .card-back {
+          transform: rotateY(180deg);
+      }
+    }   
+    &__card-active{
+        transform: rotateY(180deg);
     }
 }
 
