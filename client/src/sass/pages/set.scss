@@ -8,116 +8,135 @@
 @import "../blocks/nav.scss";
 @import "../blocks/footer.scss";
 
-
-
 body {
-    background: url(../../img/main-bg.png) no-repeat center center/cover;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-
-html {
-    scroll-behavior: smooth;
+  background: url(../../img/main-bg.png) no-repeat center center/cover;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-.flashcards{
-    font-weight: 700;
-    font-size: 32px;
-    font-family: $font-header;
+html {
+  scroll-behavior: smooth;
+}
 
-    &__heading-tools{
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-    &__tool{
-        width: 40px;
-        background: $background-gradient;
-        margin-left: 15px;
-    }
-    &__list{
-        margin-top: 25px;
-    }
-    &__card,&__card-active{
-        background-color: #fff;
-        border-radius: 20px;
-        height: 160px;
-        width: 260px;        
-        margin: 15px;
-        transition: transform 1s;
-        transform-style: preserve-3d;
+.flashcards {
+  font-weight: 700;
+  font-size: 32px;
+  font-family: $font-header;
 
-      .card-front,
-      .card-back {
-          position: absolute;
-          -webkit-backface-visibility: hidden;
-          backface-visibility: hidden;
-          height: 160px;
-          width: 260px;  
-          font-size: 16px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-family: $font-text;
-          font-weight: 400;
-          padding: 10px 15px;
-      }  
-      .card-back {
-          transform: rotateY(180deg);
-      }
-    }   
-    &__card-active{
-        transform: rotateY(180deg);
+  &__heading-tools {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__tool {
+    width: 40px;
+    background: $background-gradient;
+    margin-left: 15px;
+  }
+  &__list {
+    margin-top: 25px;
+  }
+  &__card,
+  &__card-active {
+    background-color: #fff;
+    border-radius: 20px;
+    height: 160px;
+    margin: 15px;
+    transition: transform 1s;
+    transform-style: preserve-3d;
+
+    .card-front,
+    .card-back {
+      position: absolute;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      height: 160px;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: $font-text;
+      font-weight: 400;
+      padding: 10px 15px;
     }
+    .card-back {
+      transform: rotateY(180deg);
+    }
+  }
+  &__card-active {
+    transform: rotateY(180deg);
+  }
 }
 
 .constructor {
   margin-top: 50px;
   margin-bottom: 80px;
-  &__title{
+  &__title {
     text-align: center;
     font-family: $font-header;
     font-weight: 600;
     font-size: 32px;
   }
-  &__parts{
+  &__parts {
     margin: 40px 0;
   }
-  &__part{
-    width: 565px;
-    height: 293px;
-    background-color: #fff;
-    border-radius: 20px;
-    margin: 10px auto;
-    position: relative;
-  }
-  &__tools{
-    position: absolute;
-    left:20px;
-    bottom:5px;
-    .tool{
-      width: 30px;
-      background-color: #BCBCBC;
-    }
-  }
-  &__workspace{
+}
+
+.flashcard-side {
+  max-width: 565px;
+  height: 293px;
+  background-color: #fff;
+  border-radius: 20px;
+  margin: 10px auto;
+  position: relative;
+  &__workspace {
     display: flex;
+    max-width: 565px;
+    height: 293px;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+    row-gap: 10px;
+    padding: 0 20px;
+  }
+  &__text {
     text-align: center;
-    height: 100%;
+  }
+  &__images {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    row-gap: 20px;
+    align-items: center;
     width: 100%;
+  }
+  &__image {
+    object-fit: contain;
+    width: 130px;
+    max-height: 130px;
+  }
+  &__image_big {
+    max-height: 300px;
+  }
+  &__tools {
+    position: absolute;
+    left: 20px;
+    bottom: 5px;
+    .tool {
+      width: 30px;
+      background-color: #bcbcbc;
+    }
   }
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
 body::-webkit-scrollbar {
-    display: none;
-  }
-  
-  /* Hide scrollbar for IE, Edge and Firefox */
-  body {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
-  }
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+body {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}

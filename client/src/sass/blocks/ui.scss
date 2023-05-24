@@ -1,6 +1,7 @@
 .input {
-  border: 2px solid #bbc8d4;
-  border-radius: 20px;
+  border: none;
+  border-radius: 10px;
+  box-shadow: $box-shadow;
   line-height: 28px;
   font-size: 16px;
   font-family: $font-text;
@@ -8,6 +9,7 @@
   padding: 15px;
   width: 100%;
   margin-bottom: 5px;
+  outline: none;
 }
 
 .button {
@@ -16,7 +18,7 @@
   box-shadow: $box-shadow;
   width: 174px;
   background: #ffffff;
-  border-radius: 20px;
+  border-radius: 10px;
   padding: 7px 35px;
   font-family: $font-header;
   font-weight: 700;
@@ -26,7 +28,7 @@
 .rnd-button {
   aspect-ratio: 1;
   border-radius: 50%;
-  display:inline-flex;
+  display: inline-flex;
   justify-content: center;
   img {
     width: 50%;
@@ -34,15 +36,17 @@
 }
 
 .label {
-  font-weight: 300;
-  font-size: 14px;
+  font-weight: 400;
+  font-size: 15px;
   font-family: $font-text;
-  color: #8A8A8A;
+  color: #272727;
+  margin-bottom: 5px;
 }
 
 // Color for placeholders
 ::placeholder {
   /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: #bbc8d4;
+  color: #dddddd;
   opacity: 1; /* Firefox */
+  font-size: 14px;
 }
