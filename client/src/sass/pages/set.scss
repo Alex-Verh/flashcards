@@ -42,12 +42,13 @@ html {
     background-color: #fff;
     border-radius: 20px;
     height: 160px;
-    margin: 15px;
+    width: 100%;
+    margin: 15px auto;
     transition: transform 1s;
     transform-style: preserve-3d;
-
     .card-front,
     .card-back {
+      width: 100%;
       position: absolute;
       -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
@@ -60,6 +61,10 @@ html {
       font-weight: 400;
       padding: 10px 15px;
     }
+
+  @media screen and (max-width: 576px) {
+    width: 50%;
+  }
     .card-back {
       transform: rotateY(180deg);
     }
