@@ -11,6 +11,7 @@
 
 body {
   // background: url(../../img/main-bg.png) no-repeat center center/cover;
+  background: #FFF1E9;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -25,16 +26,17 @@ html {
   &__title {
     font-family: $font-header;
     font-weight: 700;
-    line-height: 90px;
-    font-size: 80px;
+
+    font-size: 100px;
+    line-height: 110px;
     text-transform: capitalize;
-    margin-top: 35px;
+    margin-top: 70px;
   }
   &__description {
     margin-top: 50px;
     font-family: $font-text;
     font-weight: 400;
-    font-size: 15px;
+    font-size: 17px;
   }
   &__image {
     img {
@@ -46,13 +48,14 @@ html {
     height: 100%;
   }
 
-  @media screen and (min-height: 800px) {
-    margin-top: 70px;
+  @media screen and (max-height: 700px) {
+    margin-top: 35px;
     &__title {
-      font-size: 90px;
+      line-height: 90px;
+      font-size: 80px;
     }
     &__description {
-      font-size: 17px;
+      font-size: 15px;
     }
   }
 }
