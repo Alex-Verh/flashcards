@@ -10,7 +10,7 @@
 
 body {
   // background: url(../../img/main-bg.png) no-repeat center center/cover;
-  background: #FFF1E9;
+  background: $background-color;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -32,7 +32,7 @@ html {
   }
   &__tool {
     width: 40px;
-    background: #EB996E;
+    background: $main-color;
     margin-left: 15px;
   }
   &__tool:hover {

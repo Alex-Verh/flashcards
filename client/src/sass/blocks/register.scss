@@ -50,7 +50,7 @@
         text-decoration: none;
     }
     &__forget-pass:hover, a:hover {
-      color: #EB996E;
+      color: $main-color;
       text-decoration: underline;
       cursor: pointer;
   }
