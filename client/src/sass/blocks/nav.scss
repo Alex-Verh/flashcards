@@ -38,6 +38,9 @@
     box-shadow: $box-shadow-hover;
     cursor: pointer;
   }
+  &__btn:active {
+    box-shadow: none;
+  }
   &__profile {
     width: 30px;
     background: $background-gradient;
@@ -45,6 +48,9 @@
   &__profile:hover {
     box-shadow: $box-shadow-hover;
     cursor: pointer;
+  }
+  &__profile:active {
+    box-shadow: none;
   }
 }
 .line {

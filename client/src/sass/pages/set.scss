@@ -39,6 +39,9 @@ html {
     box-shadow: $box-shadow-hover;
     cursor: pointer;
   }
+  &__tool:active {
+    box-shadow: none;
+  }
   &__list {
     margin-top: 25px;
   }
@@ -78,6 +81,10 @@ html {
   &__card-active:hover {
     box-shadow: $box-shadow-hover;
     cursor: pointer;
+  }
+  &__card:active, 
+  &__card-active:active {
+    box-shadow: none;
   }
   &__card-active {
     transform: rotateY(180deg);
@@ -146,6 +153,9 @@ html {
     .tool:hover {
       box-shadow: $box-shadow;
       cursor: pointer;
+    }
+    .tool:active {
+      box-shadow: none;
     }
   }
 }
