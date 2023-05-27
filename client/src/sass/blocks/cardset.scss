@@ -54,3 +54,8 @@
     text-transform: capitalize;
   }
 }
+
+.card-set:hover {
+  box-shadow: $box-shadow-hover;
+  cursor: pointer;
+}

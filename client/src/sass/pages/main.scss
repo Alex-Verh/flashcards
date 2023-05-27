@@ -111,6 +111,11 @@ html {
     margin-bottom: 35px;
   }
 
+  &__question:hover{
+    box-shadow: $box-shadow-hover;
+    cursor: pointer;
+  }
+
   &__card {
     margin: 0 auto;
     width: 380px;

@@ -12,17 +12,26 @@
   outline: none;
 }
 
+.input:focus{
+  box-shadow: $box-shadow-hover;
+}
+
 .button {
   margin: 0 auto;
   text-align: center;
   box-shadow: $box-shadow;
   width: 174px;
-  background: #ffffff;
+  background: #fff;
   border-radius: 10px;
   padding: 7px 35px;
   font-family: $font-header;
   font-weight: 700;
   font-size: 18px;
+}
+
+.button:hover {
+  box-shadow: $box-shadow-hover;
+  cursor: pointer;
 }
 
 .rnd-button {

@@ -11,6 +11,7 @@
         text-decoration: none;
     }
 
+
     &__field {
       // Mobile phone
       @media (max-width: 414px) {
@@ -48,4 +49,9 @@
         color: #000;
         text-decoration: none;
     }
+    &__forget-pass:hover, a:hover {
+      color: #EB996E;
+      text-decoration: underline;
+      cursor: pointer;
+  }
   }

@@ -21,20 +21,30 @@
   &__link {
     font-size: 16px;
   }
+  &__link:hover {
+    color: #EB996E;
+  }
   &__auth {
     text-align: right;
     font-weight: 600;
   }
   &__btn {
     background: #EB996E;
-    box-shadow: $box-shadow;
     border-radius: 10px;
     padding: 8px 30px;
     margin-left: 20px;
   }
+  &__btn:hover{
+    box-shadow: $box-shadow-hover;
+    cursor: pointer;
+  }
   &__profile {
     width: 30px;
     background: $background-gradient;
+  }
+  &__profile:hover {
+    box-shadow: $box-shadow-hover;
+    cursor: pointer;
   }
 }
 .line {
