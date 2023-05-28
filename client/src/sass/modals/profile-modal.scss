@@ -1,0 +1,23 @@
+.profile-modal {
+    position: absolute;
+    width: 128px;
+    height: 148px;
+    top: 73px;
+    background: #FFFFFF;
+    box-shadow: $box-shadow;
+    border-radius: 20px;
+    font-weight: 400;
+    font-size: 12px;
+    font-family: $font-text;
+    padding: 20px 10px;
+    &__element {
+        margin-bottom:7px ;
+        span {
+            margin-left: 5px;
+        }
+    }
+    &__line {
+        border-bottom: 1px solid #A7A7A7;
+        margin: 8px 0;
+    }
+}
