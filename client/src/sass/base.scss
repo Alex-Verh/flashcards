@@ -1,0 +1,30 @@
+@import "../../css/bootstrap-reboot.min.css";
+@import "../../css/bootstrap-grid.min.css";
+
+@import "../../fonts/fonts.css";
+@import "./variables.scss";
+
+@import "./blocks/ui.scss";
+@import "./blocks/nav.scss";
+@import "./blocks/footer.scss";
+
+body {
+  background: $background-color;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+html {
+  scroll-behavior: smooth;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+body::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+body {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}

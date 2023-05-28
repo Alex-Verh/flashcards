@@ -1,24 +1,4 @@
-@import "../../css/bootstrap-grid.min.css";
-@import "../../css/bootstrap-reboot.min.css";
-
-@import "../../fonts/fonts.css";
-@import "../variables.scss";
-
-@import "../blocks/ui.scss";
-@import "../blocks/nav.scss";
-@import "../blocks/footer.scss";
-
-body {
-  // background: url(../../img/main-bg.png) no-repeat center center/cover;
-  background: $background-color;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-html {
-  scroll-behavior: smooth;
-}
+@import "../base.scss";
 
 .flashcards {
   font-weight: 700;
@@ -77,12 +57,12 @@ html {
       transform: rotateY(180deg);
     }
   }
-  &__card:hover, 
+  &__card:hover,
   &__card-active:hover {
     box-shadow: $box-shadow-hover;
     cursor: pointer;
   }
-  &__card:active, 
+  &__card:active,
   &__card-active:active {
     box-shadow: none;
   }
@@ -163,15 +143,4 @@ html {
 .flashcard-side:hover {
   box-shadow: $box-shadow-hover;
   cursor: pointer;
-}
-
-/* Hide scrollbar for Chrome, Safari and Opera */
-body::-webkit-scrollbar {
-  display: none;
-}
-
-/* Hide scrollbar for IE, Edge and Firefox */
-body {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
 }
