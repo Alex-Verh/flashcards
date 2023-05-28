@@ -49,13 +49,13 @@ html {
   }
 
   @media screen and (max-height: 700px) {
-    margin-top: 35px;
     &__title {
       line-height: 90px;
       font-size: 80px;
+      margin-top: 30px;
     }
     &__description {
-      font-size: 15px;
+      font-size: 14px;
     }
   }
 }
@@ -147,6 +147,22 @@ html {
     font-size: 20px;
     font-family: $font-text;
     margin-top: 60px;
+  }
+  @media screen and (max-height: 700px) {
+    &__question {
+      margin-bottom: 15px;
+      font-size: 16px;
+    }
+    &__card {
+      width: 300px;
+      height: 180px;
+    }
+    #question-card {
+      font-size: 24px;
+    }
+    #answer-card {
+      font-size: 16px;
+    }
   }
 }
 
