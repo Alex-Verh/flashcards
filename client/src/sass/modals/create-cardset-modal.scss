@@ -1,0 +1,29 @@
+.create-cardset {
+    width: 866px;
+    height: 569px;
+    background: #FFFFFF;
+    border-radius: 20px;
+    text-align: center;
+    position: relative;
+    &__close {
+        position: absolute;
+        right: 30px;
+        top: 30px;
+    }
+    &__title {
+        font-weight: 700;
+        font-size: 40px;
+        font-family: $font-header;
+        margin-top: 115px;
+    }
+    input[type=text] {
+        border: none;
+        width: 326px;
+        display: block;
+        margin: 30px auto;
+    }
+    input[type=submit] {
+        border: none;
+        margin-top: 30px;
+    }
+}
