@@ -39,6 +39,13 @@
         align-items: center;
         padding: 5px 7px;
         margin: 35px 17px;
+        cursor: pointer;
+    }
+    &__cardset:hover {
+        box-shadow: $box-shadow-hover;
+    }
+    &__cardset:active {
+        box-shadow: $box-shadow-delete;
     }
     &__add-cardset {
         width: 179px;

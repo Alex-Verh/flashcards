@@ -1,0 +1,16 @@
+.learning {
+    background: #FFF;
+    border-radius: 20px;
+    width: 1149px;
+    height: 703px;
+    position: absolute;
+    &__close {
+        position: absolute;
+        right: 30px;
+        top: 30px;
+    }
+    &__line {
+        border-top: 1px solid $main-color;
+        margin-top: 80px;
+    }
+}
