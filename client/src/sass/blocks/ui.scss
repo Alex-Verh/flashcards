@@ -63,3 +63,43 @@
   opacity: 1; /* Firefox */
   font-size: 14px;
 }
+
+.choice {
+  font-family: $font-header;
+  font-weight: 400;
+  font-size: 16px;
+  width: 365px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  border: 2px solid $main-color;
+  box-shadow: $box-shadow;
+  border-radius: 20px;
+  margin: 25px auto;
+
+  &__option {
+      width: 189px;
+      height: 45px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+  }
+  &__option-1 {
+      border-radius: 20px 0px 0px 20px;
+  }
+  &__option-2 {
+      border-radius: 0px 20px 20px 0px;
+  }
+  #option-1:checked:checked ~ &__option-1,
+  #option-2:checked:checked ~ &__option-2{
+      background: $main-color;
+      color: #fff;
+  }
+
+  input[type=radio]{
+  display: none;
+  }
+}
