@@ -53,7 +53,7 @@
     </div> -->
 
     <!-- Create cardset modal -->
-    <!-- <div class="create-cardset">
+    <div class="create-cardset">
       <div class="create-cardset__close">
         <img src="../img/close-ico.svg" alt="Close">
       </div>
@@ -61,10 +61,17 @@
       <form action="">
         <input class="input" type="text" placeholder="Card set name">
         <input class="input" type="text" placeholder="Category">
-        <input class="input" type="text" placeholder="Private/Public">
+
+        <div class="choice">
+          <input type="radio" name="is_public" value = "1" id="option-1">
+          <input type="radio" name="is_public" value = "0" id="option-2" checked>
+          <label for="option-1" class="choice__option choice__option-1"><span>Public</span></label>
+          <label for="option-2" class="choice__option choice__option-2"><span>Private</span></label>
+        </div>
+
         <input type="submit" name="create" class="button">
       </form>
-    </div> -->
+    </div>
 
     <main class="register">
       <div class="container">

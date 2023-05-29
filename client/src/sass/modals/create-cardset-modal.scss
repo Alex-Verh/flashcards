@@ -17,7 +17,6 @@
         margin-top: 115px;
     }
     input[type=text] {
-        border: none;
         width: 326px;
         display: block;
         margin: 30px auto;
@@ -25,5 +24,45 @@
     input[type=submit] {
         border: none;
         margin-top: 30px;
+    }
+}
+
+.choice {
+    font-family: $font-header;
+    font-weight: 400;
+    font-size: 16px;
+    width: 365px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    border: 2px solid #BBC8D4;
+    box-shadow: $box-shadow;
+    border-radius: 20px;
+    margin: 25px auto;
+
+    &__option {
+        width: 189px;
+        height: 45px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+    &__option-1 {
+        border-radius: 20px 0px 0px 20px;
+    }
+    &__option-2 {
+        border-radius: 0px 20px 20px 0px;
+    }
+    #option-1:checked:checked ~ &__option-1,
+    #option-2:checked:checked ~ &__option-2{
+        background: #BBC8D4;
+        color: #fff;
+    }
+
+    input[type=radio]{
+    display: none;
     }
 }
