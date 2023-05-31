@@ -1,21 +1,7 @@
 .mode-choice {
-    position: absolute;
     width: 1149px;
     height: 703px;
-    background: #FFFFFF;
-    border-radius: 20px;
-    text-align: center;
-    text-transform: capitalize; 
-    font-family: $font-header;
-    &__close {
-        position: absolute;
-        right: 30px;
-        top: 30px;
-    }
-    &__line {
-        border-top: 1px solid $main-color;
-        margin-top: 80px;
-    }
+
     &__title {
         font-weight: 600;
         font-size: 32px;

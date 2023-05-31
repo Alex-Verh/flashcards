@@ -1,16 +1,46 @@
 .learning {
-    background: #FFF;
-    border-radius: 20px;
     width: 1149px;
     height: 703px;
-    position: absolute;
-    &__close {
-        position: absolute;
-        right: 30px;
-        top: 30px;
+    &__title {
+        font-weight: 700;
+        font-size: 32px;
+        margin: 40px 0;
     }
-    &__line {
-        border-top: 1px solid $main-color;
-        margin-top: 80px;
+    &__flashcard {
+        border-radius: 20px;
+        width: 654px;
+        height: 347px;
+        box-shadow: $box-shadow-hover;
+        position: relative;
+        margin: 0 auto;
+    }
+    &__counter {
+        position: absolute;
+        font-weight: 300;
+        font-family: $font-text;
+        font-size: 18px;
+        right: 10px;
+        top: 10px;
+    }
+    &__tools {
+        margin-top: 35px;
+    }
+    &__tool {
+        background: #F5F5F5;
+        width: 57px;
+        height: 57px;
+        border-radius: 50%;
+        display:inline-flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 11px;
+        cursor: pointer;
+        img {
+            width: 32px;
+            height: 32px;
+        }
+    }
+    &__tool:hover {
+        box-shadow: $box-shadow-hover;
     }
 }

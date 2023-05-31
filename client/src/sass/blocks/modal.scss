@@ -1,0 +1,18 @@
+.modal {
+    position: absolute;
+    background: #FFF;
+    border-radius: 20px;
+    text-align: center;
+    text-transform: capitalize; 
+    font-family: $font-header;
+    z-index: 9999;
+    &__close {
+        position: absolute;
+        right: 30px;
+        top: 30px;
+    }
+    &__line {
+        border-top: 1px solid $main-color;
+        margin-top: 80px;
+    }
+}

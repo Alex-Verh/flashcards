@@ -1,20 +1,16 @@
 .create-cardset {
     width: 866px;
     height: 569px;
-    background: #FFFFFF;
-    border-radius: 20px;
-    text-align: center;
-    position: absolute;
-    &__close {
-        position: absolute;
-        right: 30px;
-        top: 30px;
-    }
     &__title {
         font-weight: 700;
         font-size: 40px;
-        font-family: $font-header;
         margin-top: 115px;
+    }
+    input {
+        box-shadow: $box-shadow-hover;
+    }
+    input:focus {
+        box-shadow: $box-shadow;
     }
     input[type=text] {
         width: 326px;
