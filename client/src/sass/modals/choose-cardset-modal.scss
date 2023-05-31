@@ -1,0 +1,70 @@
+.choose-modal {
+    position: absolute;
+    width: 334px;
+    height: 463px;
+    background: #FFF;
+    border-radius: 20px;
+    border: 2px solid #D9D9D9;
+    &__close {
+        position: absolute;
+        right: 12px;
+        top: 9px;
+        width: 23px;
+         height: 23px;
+        img {
+            width: 100%;
+        }
+    }
+    &__title {
+        font-weight: 600;
+        font-size: 24px;
+        font-family: $font-header;
+        text-align: center;
+        margin-top: 32px;
+    }
+    .input {
+        display: block;
+        width: 271px;
+        height: 40px;
+        margin: 15px auto;
+    }
+    &__cardsets {
+        overflow: scroll;
+        height: 235px;
+    }
+    &__cardset {
+        width: 270px;
+        height: 36px;
+        font-size: 12px;
+        font-family: $font-text;
+        border-radius: 10px;
+        border: 2px solid #D9D9D9;
+        margin: 10px auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+    &__cardset:hover {
+        box-shadow: $box-shadow-hover;
+    }
+    &__add {
+        background: #F5F5F5;
+        width: 41px;
+        height: 41px;
+        border-radius: 50%;
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        margin: 15px auto;
+        cursor: pointer;
+        img {
+            transform: rotate(-45deg);
+            width: 20px;
+            height: 20px;
+        }
+    }
+    &__add:hover {
+        box-shadow: $box-shadow-hover;
+    }
+}
