@@ -1,0 +1,45 @@
+.menu {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: rgba(0, 0, 0, 0.97);
+    width: 100vw;
+    height:100%;
+    font-family: $font-header;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-size: 24px;
+    color: #FFF;
+    text-align: center;
+    &__close {
+        position: absolute;
+        width: 15px;
+        height: 15px;
+        right: 30px;
+        top: 15px;
+        cursor: pointer;
+    }
+    &__options {
+        margin-top: 85px;
+    }
+    &__option {
+        margin: 0 auto 25px auto;
+        cursor: pointer;
+        width: 120px;
+    }
+    &__option-exit {
+        color: #FF9292;
+        cursor: pointer;
+    }
+    &__option-exit:hover {
+        color:#8c0000;
+    }
+    &__option:hover {
+        color: $main-color;
+    }
+    &__separator {
+        margin: 50px auto;
+        width: 200px;
+        border-bottom: 1px solid #fff;
+    }
+}
