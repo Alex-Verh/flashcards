@@ -19,4 +19,15 @@
   a:hover {
     color: $main-color;
   }
+  @media screen and (max-width: 768px) {
+    &__logo {
+      display: none;
+    }
+    text-align: center;
+  }
+  @media screen and (max-width: 450px) {
+    a {
+      display: block; 
+    }
+  }
 }
