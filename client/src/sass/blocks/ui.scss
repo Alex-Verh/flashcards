@@ -123,6 +123,10 @@
     margin-bottom: 5px;
     outline: none;
     background-color: #fff;
+    &_choosed {
+      font-size: 16px;
+      color: #000;
+    }
   }
   &__arrow {
     height: 25px;
