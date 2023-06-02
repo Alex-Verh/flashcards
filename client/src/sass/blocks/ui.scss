@@ -12,7 +12,7 @@
   outline: none;
 }
 
-.input:focus{
+.input:focus {
   box-shadow: $box-shadow-hover;
 }
 
@@ -80,27 +80,84 @@
   margin: 25px auto;
 
   &__option {
-      width: 189px;
-      height: 45px;
-      transition: all 0.3s ease;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: space-evenly;
+    width: 189px;
+    height: 45px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
   }
   &__option-1 {
-      border-radius: 20px 0px 0px 20px;
+    border-radius: 20px 0px 0px 20px;
   }
   &__option-2 {
-      border-radius: 0px 20px 20px 0px;
+    border-radius: 0px 20px 20px 0px;
   }
   #option-1:checked:checked ~ &__option-1,
-  #option-2:checked:checked ~ &__option-2{
-      background: $main-color;
-      color: #fff;
+  #option-2:checked:checked ~ &__option-2 {
+    background: $main-color;
+    color: #fff;
   }
 
-  input[type=radio]{
-  display: none;
+  input[type="radio"] {
+    display: none;
+  }
+}
+
+.dropdown {
+  position: relative;
+  &__btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+    border-radius: 10px;
+    box-shadow: $box-shadow;
+    line-height: 28px;
+    color: #dddddd;
+    font-size: 14px;
+    font-family: $font-text;
+    height: 40px;
+    padding: 15px;
+    width: 100%;
+    margin-bottom: 5px;
+    outline: none;
+    background-color: #fff;
+  }
+  &__arrow {
+    height: 25px;
+    width: 25px;
+    transition: all 0.3s;
+  }
+  &__content {
+    position: absolute;
+    top: 110%;
+    z-index: 1;
+    display: none;
+    width: 100%;
+    padding: 5px 0;
+    list-style: none;
+    background-color: #fff;
+    box-shadow: $box-shadow;
+    border-radius: 10px;
+  }
+  &__item {
+    line-height: 40px;
+    font-weight: 400;
+    padding-inline: 10px;
+    cursor: pointer;
+    &:hover {
+      background-color: $background-color;
+    }
+  }
+  &:focus &__content {
+    display: block;
+  }
+  &:focus &__btn {
+    box-shadow: $box-shadow-hover;
+  }
+  &:focus &__arrow {
+    transform: rotate(-180deg);
   }
 }
