@@ -99,13 +99,13 @@
     box-shadow: $box-shadow;
     padding: 15px 35px;
     margin-bottom: 35px;
-  }
-  &__question:hover {
-    box-shadow: $box-shadow-hover;
-    cursor: pointer;
-  }
-  &__question:active {
-    box-shadow: none;
+    &:hover {
+      box-shadow: $box-shadow-hover;
+      cursor: pointer;
+    }
+    &:active {
+      box-shadow: none;
+    }
   }
 
   &__card {

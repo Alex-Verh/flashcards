@@ -9,10 +9,9 @@
   padding: 15px;
   width: 100%;
   margin-bottom: 5px;
-}
-
-.input:focus {
-  box-shadow: $box-shadow-hover;
+  &:focus {
+    box-shadow: $box-shadow-hover;
+  }
 }
 
 .button {
@@ -26,15 +25,13 @@
   font-family: $font-header;
   font-weight: 700;
   font-size: 18px;
-}
-
-.button:hover {
-  box-shadow: $box-shadow-hover;
-  cursor: pointer;
-}
-
-.button:active {
-  box-shadow: none;
+  &:hover {
+    box-shadow: $box-shadow-hover;
+    cursor: pointer;
+  }
+  &:active {
+    box-shadow: none;
+  }
 }
 
 .rnd-button {

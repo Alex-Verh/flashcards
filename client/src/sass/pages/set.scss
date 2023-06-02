@@ -14,13 +14,13 @@
     width: 40px;
     background: $main-color;
     margin-left: 15px;
-  }
-  &__tool:hover {
-    box-shadow: $box-shadow-hover;
-    cursor: pointer;
-  }
-  &__tool:active {
-    box-shadow: none;
+    &:hover {
+      box-shadow: $box-shadow-hover;
+      cursor: pointer;
+    }
+    &:active {
+      box-shadow: none;
+    }
   }
   &__list {
     margin-top: 25px;
@@ -35,6 +35,7 @@
     margin: 15px auto;
     transition: transform 1s;
     transform-style: preserve-3d;
+    cursor: pointer;
     .card-front,
     .card-back {
       width: 100%;
@@ -62,16 +63,14 @@
     .card-back {
       transform: rotateY(180deg);
     }
+    &:hover {
+      box-shadow: $box-shadow-hover;
+    }
+    &:active {
+      box-shadow: none;
+    }
   }
-  &__card:hover,
-  &__card-active:hover {
-    box-shadow: $box-shadow-hover;
-    cursor: pointer;
-  }
-  &__card:active,
-  &__card-active:active {
-    box-shadow: none;
-  }
+
   &__card-active {
     transform: rotateY(180deg);
   }
@@ -99,6 +98,7 @@
   margin: 10px auto;
   position: relative;
   box-shadow: $box-shadow;
+  cursor: pointer;
   &__workspace {
     display: flex;
     max-width: 565px;
@@ -136,13 +136,13 @@
     .tool {
       width: 30px;
       background-color: #bcbcbc;
-    }
-    .tool:hover {
-      box-shadow: $box-shadow;
       cursor: pointer;
-    }
-    .tool:active {
-      box-shadow: none;
+      &:hover {
+        box-shadow: $box-shadow;
+      }
+      &:active {
+        box-shadow: none;
+      }
     }
   }
   @media screen and (max-width: 575px) {
@@ -153,9 +153,8 @@
       margin-bottom: 25px;
     }
   }
+  &:hover {
+    box-shadow: $box-shadow-hover;
+  }
 }
 
-.flashcard-side:hover {
-  box-shadow: $box-shadow-hover;
-  cursor: pointer;
-}

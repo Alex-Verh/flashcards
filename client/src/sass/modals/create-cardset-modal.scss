@@ -8,9 +8,9 @@
     }
     input {
         box-shadow: $box-shadow-hover;
-    }
-    input:focus {
-        box-shadow: $box-shadow;
+        &:focus {
+            box-shadow: $box-shadow;
+        }
     }
     input[type=text] {
         width: 326px;

@@ -15,9 +15,9 @@
     text-decoration: none;
     font-family: $font-header;
     margin-right: 30px;
-  }
-  a:hover {
-    color: $main-color;
+    &:hover {
+      color: $main-color;
+    }
   }
   @media screen and (max-width: 768px) {
     &__logo {
