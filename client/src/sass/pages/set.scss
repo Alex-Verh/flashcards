@@ -53,6 +53,12 @@
     @media screen and (max-width: 576px) {
       width: 50%;
     }
+    @media screen and (max-width: 450px) {
+      width: 70%;
+    }
+    @media screen and (max-width: 350px) {
+      width: 85%;
+    }
     .card-back {
       transform: rotateY(180deg);
     }
@@ -105,6 +111,7 @@
   }
   &__text {
     text-align: center;
+    font-family: $font-text;
   }
   &__images {
     display: flex;
@@ -136,6 +143,14 @@
     }
     .tool:active {
       box-shadow: none;
+    }
+  }
+  @media screen and (max-width: 575px) {
+    max-width: 450px;
+    height: 250px;
+    &__text {
+      font-size: 12px;
+      margin-bottom: 25px;
     }
   }
 }

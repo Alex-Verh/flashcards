@@ -13,17 +13,17 @@
 
 
     &__field {
-      // Mobile phone
-      @media (max-width: 414px) {
-        width: 80%;
-      }
-      // Tablet/ipad   
-      @media (max-width: 768px) {
-        width: 55%;
-      }
       // Laptop
       @media (max-width: 1200px) {
         width: 40%;
+      }
+      // Tablet/ipad   
+      @media (max-width: 768px) {
+        width: 70%;
+      }
+      // Mobile phone
+      @media (max-width: 414px) {
+        width: 80%;
       }
   
       width: 25%; 
