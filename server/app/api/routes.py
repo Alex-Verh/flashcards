@@ -1,42 +1,48 @@
-from flask import url_for, jsonify, request, current_app
-from flask_login import  login_required, current_user
-import secrets
 import os
+import secrets
 
-from . import bp
+from flask import current_app, jsonify, request, url_for
+from flask_login import current_user, login_required
+
 from ..extensions import db
-from ..models import CardSet, CardSetCategory, user_cardset_assn, FlashCard
-from ..funcs import save_image, save_audio, delete_cardset_files
+from ..funcs import delete_cardset_files, save_audio, save_image
+from ..models import CardSet, CardSetCategory, FlashCard, user_cardset_assn
+from . import bp
 
 
-@bp.route('/delete-cardset/<int:id>')
+@bp.route("/delete-cardset/<int:id>")
 @login_required
 def delete_cardset(id):
     cardset = CardSet.query.get(id)
     if not cardset:
-        return jsonify({'error': 'Card set does not exist.'}), 400
-    
+        return jsonify({"error": "Card set does not exist."}), 400
+
     if cardset.user_id == current_user.id:
-        uploads_dir_path = os.path.join(current_app.root_path, current_app.config['UPLOAD_FOLDER']) 
+        uploads_dir_path = os.path.join(
+            current_app.root_path, current_app.config["UPLOAD_FOLDER"]
+        )
         delete_cardset_files(current_user.id, cardset.id, uploads_dir_path)
-        
+
         db.session.delete(cardset)
         db.session.commit()
     else:
-        return jsonify({'error': 'You do not have permission to delete this card set'}), 400
+        return (
+            jsonify({"error": "You do not have permission to delete this card set"}),
+            400,
+        )
 
-    return jsonify({'message': 'Card set has been deleted'})
+    return jsonify({"message": "Card set has been deleted"})
 
 
-@bp.route('/save-cardset/<int:id>')
+@bp.route("/save-cardset/<int:id>")
 @login_required
 def save_cardset(id):
     cardset = CardSet.query.get(id)
     if not cardset:
-        return jsonify({'error': 'Card set does not exist.'}), 400
+        return jsonify({"error": "Card set does not exist."}), 400
     if cardset in current_user.own_cardsets.all():
-        return jsonify({'error': 'You can not save your own card set'}), 400
-    
+        return jsonify({"error": "You can not save your own card set"}), 400
+
     saved = current_user in cardset.followers.all()
     if saved:
         cardset.followers.remove(current_user)
@@ -50,35 +56,55 @@ def save_cardset(id):
     return jsonify({"saves": cardset.followers.count(), "saved": saved})
 
 
-@bp.route('/cardsets', methods=['POST'])
+@bp.route("/cardsets")
 def cardsets():
-    dict_sort_by = {'saves': 'total_saves', 'date': 'card_sets.created_at', 'title': 'card_sets.title'}
+    dict_sort_by = {
+        "saves": "total_saves",
+        "date": "card_sets.created_at",
+        "title": "card_sets.title",
+    }
     try:
-        page = int(request.json.get('page'))
-        cardsets_quantity = int(request.json.get('cardSetsOnPage'))
-        search_query = request.json.get('searchQuery')
-        sort_by = request.json.get('sortBy') or 'saves'
-        sort_order = request.json.get('sortOrder') or 'desc'
-        category = int(request.json.get('categoryId'))
-        
-        if page <= 0 or cardsets_quantity <= 0 or sort_by not in dict_sort_by or sort_order not in ['asc', 'desc']:
+        offset = int(request.args.get("offset"))
+        limit = int(request.args.get("limit"))
+        search_query = request.args.get("searchQuery")
+        sort_by = request.args.get("sortBy") or "saves"
+        sort_order = request.args.get("sortOrder") or "desc"
+        category = int(request.args.get("categoryId"))
+
+        if (
+            offset < 0
+            or limit < 0
+            or sort_by not in dict_sort_by
+            or sort_order not in ["asc", "desc"]
+        ):
             raise ValueError
-        
+
     except (ValueError, TypeError):
-        return jsonify({'error': 'Invalid request parameters'}), 400
-        
-    
-    query = db.session.query(CardSet, db.text('count(user_cardset_assn.cardset_id) AS total_saves'))\
-        .join(user_cardset_assn, isouter = True).filter(CardSet.is_public)
-        
+        return jsonify({"error": "Invalid request parameters"}), 400
+
+    query = (
+        db.session.query(
+            CardSet,
+            db.text("count(user_cardset_assn.cardset_id) AS total_saves"),
+            db.text("count(flash_cards.cardset_id) AS total_flashcards"),
+        )
+        .join(user_cardset_assn, isouter=True)
+        .join(FlashCard)
+        .filter(CardSet.is_public)
+    )
+
     if search_query:
-        query = query.filter(CardSet.title.like('%' + search_query + '%'))
-    
+        query = query.filter(CardSet.title.like("%" + search_query + "%"))
+
     if category:
         query = query.filter(CardSet.category_id == category)
-        
-    query = query.group_by(CardSet.id).order_by(db.text(f"{dict_sort_by[sort_by]} {sort_order}"))\
-        .limit(cardsets_quantity).offset((page-1)*cardsets_quantity)
+
+    query = (
+        query.group_by(CardSet.id)
+        .order_by(db.text(f"{dict_sort_by[sort_by]} {sort_order}"))
+        .limit(limit)
+        .offset(offset)
+    )
     result = []
     for row in query:
         try:
@@ -87,98 +113,110 @@ def cardsets():
         except AttributeError:
             saved = False
             own = False
-        save_img_fn = 'images/save1.png' if saved else 'images/save2.png'
-        save_img_url = url_for('static', filename=save_img_fn)
-        url = url_for('cards.cardset', id=row[0].id)
-        cardset = {'id': row[0].id, 'title': row[0].title, 'saves': row[1], 'saved': saved, 'own': own, 'save_img_url': save_img_url, 'url': url }
+        save_img_fn = "images/save1.png" if saved else "images/save2.png"
+        save_img_url = url_for("static", filename=save_img_fn)
+        url = url_for("cards.cardset", id=row[0].id)
+        cardset = {
+            "id": row[0].id,
+            "title": row[0].title,
+            "category": row[0].category.title,
+            "author": row[0].author.username,
+            "saves": row[1],
+            "flashcards_qty": row[2],
+            "saved": saved,
+            "own": own,
+            "save_img_url": save_img_url,
+            "url": url,
+        }
         result.append(cardset)
-        
+
     return jsonify(result), 200
 
 
-@bp.route('/cardset-categories')
+@bp.route("/cardset-categories")
 def cardset_categories():
-    categories = [{'id': cat.id, 'title': cat.title} for cat in CardSetCategory.query]
+    categories = [{"id": cat.id, "title": cat.title} for cat in CardSetCategory.query]
     return jsonify(categories)
 
 
-@bp.route('/create-flashcard', methods=['POST'])
+@bp.route("/create-flashcard", methods=["POST"])
 @login_required
 def create_flashcard():
-    cardset_id = request.form.get('cardset_id')
+    cardset_id = request.form.get("cardset_id")
     cardset = CardSet.query.get(cardset_id)
-    
+
     if cardset not in current_user.own_cardsets.all():
-        return jsonify({'error': 'This card set is not yours'}), 400
-        
-    front_images = request.files.getlist('front_images')
-    back_images = request.files.getlist('back_images')
-    
-    front_audio = request.files.get('front_audio')
-    back_audio = request.files.get('back_audio')
-    
+        return jsonify({"error": "This card set is not yours"}), 400
+
+    front_images = request.files.getlist("front_images")
+    back_images = request.files.getlist("back_images")
+
+    front_audio = request.files.get("front_audio")
+    back_audio = request.files.get("back_audio")
+
     base_filename = f"{current_user.id}_{cardset_id}_"
-    uploads_dir_path = os.path.join(current_app.root_path, current_app.config['UPLOAD_FOLDER']) 
-    
+    uploads_dir_path = os.path.join(
+        current_app.root_path, current_app.config["UPLOAD_FOLDER"]
+    )
+
     flashcard_attachments = {
-        'frontside': {
-            'images': []
-        },
-        'backside': {
-            'images': []
-        },
+        "frontside": {"images": []},
+        "backside": {"images": []},
     }
-    
+
     for image in front_images:
-        image_filename = save_image(image,
-                                    base_filename + secrets.token_hex(6), 
-                                    uploads_dir_path)
-        flashcard_attachments['frontside']['images'].append(image_filename)
+        image_filename = save_image(
+            image, base_filename + secrets.token_hex(6), uploads_dir_path
+        )
+        flashcard_attachments["frontside"]["images"].append(image_filename)
     for image in back_images:
-        image_filename = save_image(image, 
-                                    base_filename + secrets.token_hex(6), 
-                                    uploads_dir_path)
-        flashcard_attachments['backside']['images'].append(image_filename)
-        
+        image_filename = save_image(
+            image, base_filename + secrets.token_hex(6), uploads_dir_path
+        )
+        flashcard_attachments["backside"]["images"].append(image_filename)
+
     if front_audio:
-        flashcard_attachments['frontside']['audio'] = save_audio(front_audio,
-                                                                 base_filename + secrets.token_hex(6),
-                                                                 uploads_dir_path)
-        
+        flashcard_attachments["frontside"]["audio"] = save_audio(
+            front_audio, base_filename + secrets.token_hex(6), uploads_dir_path
+        )
+
     if back_audio:
-        flashcard_attachments['backside']['audio'] = save_audio(back_audio,
-                                                                base_filename + secrets.token_hex(6),
-                                                                uploads_dir_path)
+        flashcard_attachments["backside"]["audio"] = save_audio(
+            back_audio, base_filename + secrets.token_hex(6), uploads_dir_path
+        )
 
     flashcard = FlashCard(
-        title = request.form.get('title'),
-        content = request.form.get('content'),
-        attachments = flashcard_attachments,
-        cardset_id = cardset_id
+        title=request.form.get("title"),
+        content=request.form.get("content"),
+        attachments=flashcard_attachments,
+        cardset_id=cardset_id,
     )
     db.session.add(flashcard)
     db.session.commit()
-    
-    return jsonify({'message': 'Files uploaded and resized successfully'}), 200
 
-@bp.route('/flashcards', methods=['POST'])
+    return jsonify({"message": "Files uploaded and resized successfully"}), 200
+
+
+@bp.route("/flashcards", methods=["POST"])
 def flashcards():
-    cardset_id = request.form.get('cardset_id', type=int)
+    cardset_id = request.form.get("cardset_id", type=int)
     cardset = CardSet.query.get(cardset_id)
     if not cardset:
-        return jsonify({'error': 'Card set does not exist.'}), 400
-    
+        return jsonify({"error": "Card set does not exist."}), 400
+
     if (not cardset.is_public) and cardset.author != current_user:
-        return jsonify({'error': 'You can not access this card set'}), 403
-    
+        return jsonify({"error": "You can not access this card set"}), 403
+
     response = []
-    
+
     for flash_card in cardset.flash_cards:
-        response.append({
-            'id': flash_card.id,
-            'title': flash_card.title,
-            'content': flash_card.content,
-            'attachments': flash_card.attachments
-        })
-    
+        response.append(
+            {
+                "id": flash_card.id,
+                "title": flash_card.title,
+                "content": flash_card.content,
+                "attachments": flash_card.attachments,
+            }
+        )
+
     return jsonify(response)

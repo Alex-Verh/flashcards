@@ -1,10 +1,8 @@
-from faker import Faker
 import random
 
+from app.models import CardSet, CardSetCategory, FlashCard, User
+from faker import Faker
 from werkzeug.security import generate_password_hash
-
-from app.models import User, CardSet, FlashCard, CardSetCategory
-
 
 fake = Faker()
 
