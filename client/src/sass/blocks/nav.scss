@@ -35,7 +35,7 @@
     border-radius: 10px;
     padding: 8px 30px;
     margin-left: 20px;
-    &:hover{
+    &:hover {
       box-shadow: $box-shadow-hover;
       cursor: pointer;
     }
@@ -50,12 +50,18 @@
     &:active {
       background: $main-color;
     }
+    &:focus + .profile-modal {
+      display: block;
+    }
   }
   &__menu {
     display: none;
   }
   @media screen and (max-width: 768px) {
-    &__links, &__link, &__btn, &__profile {
+    &__links,
+    &__link,
+    &__btn,
+    &__profile {
       display: none;
     }
     &__auth {
