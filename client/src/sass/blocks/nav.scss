@@ -47,11 +47,8 @@
     width: 30px;
     background: $main-gradient;
     cursor: pointer;
-    &:hover {
-      box-shadow: $box-shadow-hover;
-    }
     &:active {
-      box-shadow: none;
+      background: $main-color;
     }
   }
   &__menu {

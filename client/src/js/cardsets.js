@@ -9,6 +9,11 @@ document.addEventListener("DOMContentLoaded", () => {
   if (profileButton) {
     profileButton.addEventListener("click", () => {
       profileModal.classList.toggle("none");
-    })
+    });
+    document.addEventListener("click", (event) => {
+      if (!profileModal.contains(event.target) && !profileButton.contains(event.target)) {
+        profileModal.classList.add("none");
+      }
+    });
   }
 });
