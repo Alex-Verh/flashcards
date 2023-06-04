@@ -1,4 +1,5 @@
 from os import environ
+
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -9,7 +10,7 @@ class Config:
     SECRET_KEY = environ.get("SECRET_KEY")
 
     # SQLALCHEMY_DATABASE_URI = os.environ.get("DB_URL")
-    SQLALCHEMY_DATABASE_URI = environ.get("TEST_DB_URL")
+    SQLALCHEMY_DATABASE_URI = environ.get("DB_URL")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = False
 

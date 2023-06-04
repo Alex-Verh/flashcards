@@ -1,11 +1,74 @@
 import "../sass/pages/main.scss";
+import { getCardsets, getCategories } from "./api/queries";
+import { generateCardsetsHTML } from "./modules/cardsets";
 import { questionAnswer } from "./constants";
-import { loadCardsets } from "./modules/cardsets";
+import { initDropdown } from "./modules/dropdown";
 
 document.addEventListener("DOMContentLoaded", () => {
-  import("./modules/dropdown");
+  /// Categories loading ///
+  getCategories().then((categories) => {
+    const categoriesContainer = document.querySelector("#categoriesDropdown");
+    const categoriesHTML = categories.reduce(
+      (prev, category) =>
+        prev +
+        `<li class="dropdown__item" data-category-id="${category.id}">${category.title}</li>`,
+      ""
+    );
+    categoriesContainer.insertAdjacentHTML("beforeend", categoriesHTML);
+  });
 
-  loadCardsets();
+  /// Card Sets section ///
+  const cardsetsParams = {
+    offset: 0,
+    limit: 16,
+    searchQ: "",
+    categoryId: 0,
+    sortBy: "",
+  };
+  const cardsetsContainer = document.querySelector(".main__card-sets .row");
+
+  const loadCardsets = async () => {
+    const cardsets = await getCardsets(cardsetsParams);
+    if (cardsets.length < cardsetsParams.limit) {
+      document.querySelector("#loadMoreBtn").classList.add("none");
+      return;
+    }
+    document.querySelector("#loadMoreBtn").classList.remove("none");
+    cardsetsContainer.insertAdjacentHTML(
+      "beforeend",
+      generateCardsetsHTML(cardsets)
+    );
+  };
+
+  loadCardsets(cardsetsParams, cardsetsContainer);
+
+  document.querySelector("#loadMoreBtn").addEventListener("click", () => {
+    cardsetsParams.offset += cardsetsParams.limit;
+    loadCardsets();
+  });
+
+  document.querySelector("#search").addEventListener("change", (e) => {
+    cardsetsParams.searchQ = e.target.value;
+    cardsetsParams.offset = 0;
+    cardsetsContainer.innerHTML = "";
+    loadCardsets();
+  });
+
+  initDropdown("#category", (clickedItem) => {
+    cardsetsParams.categoryId = clickedItem.dataset.categoryId;
+    cardsetsParams.offset = 0;
+    cardsetsContainer.innerHTML = "";
+    loadCardsets();
+  });
+
+  initDropdown("#sortBy", (clickedItem) => {
+    cardsetsParams.sortBy = clickedItem.dataset.sortId;
+    cardsetsParams.offset = 0;
+    cardsetsContainer.innerHTML = "";
+    loadCardsets();
+  });
+
+  /// END Card Sets section ///
 
   ///  FAQ section ///
   const questionCard = document.querySelector("#question-card");

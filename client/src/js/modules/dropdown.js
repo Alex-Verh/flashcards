@@ -1,14 +1,18 @@
-const dropdowns = document.querySelectorAll(".dropdown__btn");
-dropdowns.forEach((btn) => {
-  btn.addEventListener("click", () => {
-    btn.parentElement.focus();
+export const initDropdown = (selector, onChange) => {
+  const dropdown = document.querySelector(selector);
+  const dropdownBtn = dropdown.firstElementChild;
+
+  dropdownBtn.addEventListener("click", (e) => {
+    dropdownBtn.parentElement.focus();
   });
-  btn.nextElementSibling.addEventListener("click", (e) => {
-    const target = e.target.closest(".dropdown__item");
+
+  dropdown.lastElementChild.addEventListener("click", (e) => {
+    const target = e.target.closest("li");
     if (target) {
-      btn.classList.add("dropdown__btn_choosed");
-      btn.textContent = target.textContent;
-      btn.parentElement.blur();
+      dropdownBtn.classList.add("dropdown__btn_choosed");
+      dropdownBtn.textContent = target.textContent;
+      dropdownBtn.parentElement.blur();
+      onChange(target);
     }
   });
-});
+};
