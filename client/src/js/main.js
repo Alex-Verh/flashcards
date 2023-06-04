@@ -29,15 +29,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const loadCardsets = async () => {
     const cardsets = await getCardsets(cardsetsParams);
-    if (cardsets.length < cardsetsParams.limit) {
-      document.querySelector("#loadMoreBtn").classList.add("none");
-      return;
-    }
-    document.querySelector("#loadMoreBtn").classList.remove("none");
     cardsetsContainer.insertAdjacentHTML(
       "beforeend",
       generateCardsetsHTML(cardsets)
     );
+    if (cardsets.length < cardsetsParams.limit) {
+      document.querySelector("#loadMoreBtn").classList.add("none");
+    } else {
+      document.querySelector("#loadMoreBtn").classList.remove("none");
+    }
   };
 
   loadCardsets(cardsetsParams, cardsetsContainer);
