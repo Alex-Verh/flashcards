@@ -2,8 +2,8 @@
     position: absolute;
     width: 128px;
     height: 148px;
-    top: 65px;
-    right: 100px;
+    top: 50px;
+    right: 0;
     background: #FFFFFF;
     box-shadow: $box-shadow;
     border-radius: 20px;
@@ -12,10 +12,15 @@
     font-family: $font-text;
     padding: 20px 10px;
     z-index: 9999;
+    text-align: left;
     &__element {
         margin-bottom:7px ;
         span {
             margin-left: 5px;
+        }
+        img {
+            height: 12px;
+            width: 15px;
         }
     }
     &__line {
