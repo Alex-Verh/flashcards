@@ -2,7 +2,8 @@
     position: absolute;
     width: 128px;
     height: 148px;
-    top: 73px;
+    top: 65px;
+    right: 100px;
     background: #FFFFFF;
     box-shadow: $box-shadow;
     border-radius: 20px;
@@ -10,6 +11,7 @@
     font-size: 12px;
     font-family: $font-text;
     padding: 20px 10px;
+    z-index: 9999;
     &__element {
         margin-bottom:7px ;
         span {
