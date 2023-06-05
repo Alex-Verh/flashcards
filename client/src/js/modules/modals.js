@@ -6,6 +6,7 @@ openModalLinks.forEach((link) => {
     const modal = document.querySelector(`.${modalClass}`);
 
     link.addEventListener("click", () => {
+      modal.classList.remove("none");
       modal.parentElement.classList.remove("none");
       link.parentElement?.parentElement?.blur();
       document.body.style.overflow = "hidden";
@@ -14,7 +15,12 @@ openModalLinks.forEach((link) => {
 
 closeModalBtns.forEach((closeBtn) => {
   closeBtn.addEventListener("click", () => {
-    closeBtn.parentElement.parentElement.classList.add("none");
+    const overlay = closeBtn.parentElement.parentElement;
+    if (overlay.matches(".overlay")) {
+      overlay.classList.add("none");
+    } else {
+      closeBtn.parentElement.classList.add("none");
+    }
     document.body.style.overflow = "auto";
   })
 })

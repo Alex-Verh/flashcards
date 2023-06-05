@@ -6,13 +6,17 @@
     border-radius: 20px;
     box-shadow: $box-shadow;
     z-index: 9999;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    top: 50%;
+    transform: translateY(-50%);
+    
     &__close {
-        position: absolute;
-        right: 12px;
-        top: 9px;
+        right: 12px !important;
+        top: 9px !important;
         width: 15px;
         height: 15px;
-        cursor: pointer;
         img {
             width: 100%;
         }
