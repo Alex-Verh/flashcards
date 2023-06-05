@@ -7,7 +7,7 @@ openModalLinks.forEach((link) => {
 
     link.addEventListener("click", () => {
       modal.parentElement.classList.remove("none");
-      link.parentElement.parentElement.blur();
+      link.parentElement?.parentElement?.blur();
       document.body.style.overflow = "hidden";
     })
 })

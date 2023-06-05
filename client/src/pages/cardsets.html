@@ -15,8 +15,8 @@
           </div>
           <div class="col">
             <div class="nav__links">
-              <a href="#" class="nav__link">Home</a>
               <a href="#cards" class="nav__link">Cards</a>
+              <span href="" class="nav__link" data-modal-class="mode-choice">Learn</span>
               <a href="#help" class="nav__link">Help</a>
             </div>
           </div>
@@ -56,54 +56,32 @@
       </div>
     </nav>
 
-    <div class="choose-modal">
-      <div class="choose-modal__close">
-        <img src="../img/close-ico.svg" alt="Close" />
-      </div>
-      <div class="choose-modal__title">Choose card set</div>
-      <input class="input" placeholder="Search" />
-      <div class="choose-modal__cardsets">
-        <div class="choose-modal__cardset">
-          Super Puper Pumba Lumba Tumba Oguretz
-          Super Puper Pumba Lumba Tumba Oguretz
-          Super Puper Pumba Lumba Tumba Oguretz
-          Super Puper Pumba Lumba Tumba Oguretz
-
+    <!-- END TODO DELETE -->
+    <div class="overlay none">
+      <div class="mode-choice modal">
+        <div class="modal__close">
+          <img src="../img/close-ico.svg" alt="Close">
         </div>
-        <div class="choose-modal__cardset">
-          Super Puper Pumba Lumba Tumba Oguretz
+        <div class="modal__line"></div>
+        <div class="mode-choice__title">Card Sets:</div>
+        <div class="cardsets">
+          <div class="cardsets__cardset">Card Set Super New Name</div>
+          <div class="cardsets__add-cardset">
+            <img src="../img/add-cardset.svg" alt="Add cardset">
+          </div>
         </div>
-        <div class="choose-modal__cardset">
-          Super Puper Pumba Lumba Tumba Oguretz
+        <div class="mode-choice__title">Mode:</div>
+        <div class="choice">
+          <input type="radio" name="is_public" value = "1" id="option-1" checked>
+          <input type="radio" name="is_public" value = "0" id="option-2">
+          <label for="option-1" class="choice__option choice__option-1"><span>Guess content</span></label>
+          <label for="option-2" class="choice__option choice__option-2"><span>Guess title</span></label>
         </div>
-        <div class="choose-modal__cardset">
-          Super Puper Pumba Lumba Tumba Oguretz
-        </div>
-        <div class="choose-modal__cardset">
-          Super Puper Pumba Lumba Tumba Oguretz
-        </div>
-        <div class="choose-modal__cardset">
-          Super Puper Pumba Lumba Tumba Oguretz
-        </div>
-        <div class="choose-modal__cardset">
-          Super Puper Pumba Lumba Tumba Oguretz
-        </div>
-        <div class="choose-modal__cardset">
-          Super Puper Pumba Lumba Tumba Oguretz
-        </div>
-        <div class="choose-modal__cardset">
-          Super Puper Pumba Lumba Tumba Oguretz
-        </div>
-        <div class="choose-modal__cardset">
-          Super Puper Pumba Lumba Tumba Oguretz
-        </div>
-      </div>
-      <div class="rnd-button choose-modal__add">
-        <img src="../img/remove-ico.svg" alt="Add" />
+        <div class="button">Start</div>
       </div>
     </div>
-    
-    
+    <!-- END TODO DELETE -->
+
     <main class="main">
       <div class="container">
         <div class="main__search">
