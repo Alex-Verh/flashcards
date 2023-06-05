@@ -15,8 +15,12 @@
     text-align: left;
     &__element {
         margin-bottom:7px ;
+        cursor: pointer;
         span {
             margin-left: 5px;
+            &:hover {
+                color: $main-color;
+            }
         }
         img {
             height: 12px;
