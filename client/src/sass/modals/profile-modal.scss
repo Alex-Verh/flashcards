@@ -1,10 +1,12 @@
 .profile-modal {
     position: absolute;
+    display: none;
+
     width: 128px;
     height: 148px;
     top: 50px;
     right: 0;
-    background: #FFFFFF;
+    background: #FFF;
     box-shadow: $box-shadow;
     border-radius: 20px;
     font-weight: 400;
