@@ -4,13 +4,15 @@
     height: 463px;
     background: #FFF;
     border-radius: 20px;
-    border: 2px solid #D9D9D9;
+    box-shadow: $box-shadow;
+    z-index: 9999;
     &__close {
         position: absolute;
         right: 12px;
         top: 9px;
-        width: 23px;
-         height: 23px;
+        width: 15px;
+        height: 15px;
+        cursor: pointer;
         img {
             width: 100%;
         }
@@ -34,15 +36,16 @@
     }
     &__cardset {
         width: 270px;
-        height: 36px;
+        padding: 8.5px 0;
         font-size: 12px;
         font-family: $font-text;
         border-radius: 10px;
-        border: 2px solid #D9D9D9;
+        box-shadow:  1.5px 1.5px 7px rgba(189, 189, 189, 0.54);
         margin: 10px auto;
         display: flex;
         align-items: center;
         justify-content: center;
+        text-align: center;
         cursor: pointer;
     }
     &__cardset:hover {

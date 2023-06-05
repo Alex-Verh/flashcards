@@ -21,30 +21,32 @@
             </div>
           </div>
           <div class="col">
-            <div class="nav__auth">
-              <div class="nav__profile rnd-button" tabindex="0">
+            <div class="nav__auth" tabindex="0">
+              <div class="nav__profile rnd-button">
                 <img src="../img/person_profile.svg" alt="P" />
               </div>
               <!-- TODO DELETE -->
               <div class="profile-modal">
                 <div class="profile-modal__element">
-                  <img src="../img/cardsets-ico.svg" alt="" />
-                  <span>Card Sets</span>
+                  <a href="../cardsets.html">
+                    <img src="../img/cardsets-ico.svg" alt="">
+                    <span>Card Sets</span>
+                  </a>
                 </div>
-                <div class="profile-modal__element">
-                  <img src="../img/create-ico.svg" alt="" />
+                <div class="profile-modal__element" data-modal-class="create-cardset">
+                  <img src="../img/create-ico.svg" alt="">
                   <span>Create</span>
                 </div>
                 <div class="profile-modal__line"></div>
-                <div class="profile-modal__element">
-                  <img src="../img/settings-ico.svg" alt="" />
+                <div class="profile-modal__element" data-modal-class="edit-profile">
+                  <img src="../img/settings-ico.svg" alt="">
                   <span>Settings</span>
                 </div>
                 <div class="profile-modal__element">
-                  <img src="../img/exit-ico.svg" alt="" />
+                  <img src="../img/exit-ico.svg" alt="">
                   <span>Log out</span>
                 </div>
-              </div>
+              </div>              
               <!-- END TODO DELETE -->
               <img class="nav__menu" src="../img/menu-ico.svg" alt="Menu" />
             </div>
@@ -54,6 +56,54 @@
       </div>
     </nav>
 
+    <div class="choose-modal">
+      <div class="choose-modal__close">
+        <img src="../img/close-ico.svg" alt="Close" />
+      </div>
+      <div class="choose-modal__title">Choose card set</div>
+      <input class="input" placeholder="Search" />
+      <div class="choose-modal__cardsets">
+        <div class="choose-modal__cardset">
+          Super Puper Pumba Lumba Tumba Oguretz
+          Super Puper Pumba Lumba Tumba Oguretz
+          Super Puper Pumba Lumba Tumba Oguretz
+          Super Puper Pumba Lumba Tumba Oguretz
+
+        </div>
+        <div class="choose-modal__cardset">
+          Super Puper Pumba Lumba Tumba Oguretz
+        </div>
+        <div class="choose-modal__cardset">
+          Super Puper Pumba Lumba Tumba Oguretz
+        </div>
+        <div class="choose-modal__cardset">
+          Super Puper Pumba Lumba Tumba Oguretz
+        </div>
+        <div class="choose-modal__cardset">
+          Super Puper Pumba Lumba Tumba Oguretz
+        </div>
+        <div class="choose-modal__cardset">
+          Super Puper Pumba Lumba Tumba Oguretz
+        </div>
+        <div class="choose-modal__cardset">
+          Super Puper Pumba Lumba Tumba Oguretz
+        </div>
+        <div class="choose-modal__cardset">
+          Super Puper Pumba Lumba Tumba Oguretz
+        </div>
+        <div class="choose-modal__cardset">
+          Super Puper Pumba Lumba Tumba Oguretz
+        </div>
+        <div class="choose-modal__cardset">
+          Super Puper Pumba Lumba Tumba Oguretz
+        </div>
+      </div>
+      <div class="rnd-button choose-modal__add">
+        <img src="../img/remove-ico.svg" alt="Add" />
+      </div>
+    </div>
+    
+    
     <main class="main">
       <div class="container">
         <div class="main__search">

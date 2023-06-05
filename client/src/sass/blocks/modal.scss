@@ -6,13 +6,28 @@
     text-transform: capitalize; 
     font-family: $font-header;
     z-index: 9999;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    top: 50%;
+    transform: translateY(-50%);
+    
     &__close {
         position: absolute;
         right: 30px;
         top: 30px;
+        cursor: pointer;
     }
     &__line {
         border-top: 1px solid $main-color;
         margin-top: 80px;
     }
+}
+
+.overlay {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background: #00000076;
+    z-index: 9999;
 }

@@ -1,19 +1,30 @@
-const profileModal = document.querySelector(".profile-modal")
-const openCreateCardset = document.querySelector("#open-create-cardset");
-const openModalLink = document.querySelectorAll("[data-modal-class]");
+const openModalLinks = document.querySelectorAll("[data-modal-class]");
+const closeModalBtns = document.querySelectorAll(".modal__close");
 
-openModalLink.forEach(link => {
+openModalLinks.forEach((link) => {
+    const modalClass = link.dataset.modalClass;
+    const modal = document.querySelector(`.${modalClass}`);
+
     link.addEventListener("click", () => {
-        const modalClass = link.dataset.modalClass;
-        const modal = document.querySelector(`.${modalClass}`);
-        modal.classList.toggle("none");
+      modal.parentElement.classList.remove("none");
+      link.parentElement.parentElement.blur();
+      document.body.style.overflow = "hidden";
     })
 })
 
+closeModalBtns.forEach((closeBtn) => {
+  closeBtn.addEventListener("click", () => {
+    closeBtn.parentElement.parentElement.classList.add("none");
+    document.body.style.overflow = "auto";
+  })
+})
+
+
+const profileModal = document.querySelector(".profile-modal")
 const profileButton = document.querySelector(".nav__profile");
 
 if (profileButton) {
   profileButton.addEventListener("click", () => {
-    profileButton.focus();
+    profileButton.parentElement.focus();
   });
 }
