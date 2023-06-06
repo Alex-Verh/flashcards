@@ -1,4 +1,6 @@
+import { getCardsets } from "../api/queries";
 import { categoryColor } from "../constants";
+import { initDropdown } from "./dropdown";
 
 export const generateCardsetsHTML = (cardsets) => {
   const cardsetsHTML = cardsets.reduce(
@@ -26,4 +28,60 @@ export const generateCardsetsHTML = (cardsets) => {
     ""
   );
   return cardsetsHTML;
+};
+
+export const initCardsetsSection = (
+  queryParams,
+  cardsetsContainerSelector,
+  loadMoreBtnSelector,
+  searchSelector,
+  categorySelector,
+  sortBySelector
+) => {
+  const cardsetsContainer = document.querySelector(cardsetsContainerSelector);
+  const loadMoreBtn = document.querySelector(loadMoreBtnSelector);
+
+  const loadCardsets = async () => {
+    const cardsets = await getCardsets(queryParams);
+    cardsetsContainer.insertAdjacentHTML(
+      "beforeend",
+      generateCardsetsHTML(cardsets)
+    );
+    if (loadMoreBtn) {
+      if (cardsets.length < queryParams.limit) {
+        loadMoreBtn.classList.add("none");
+      } else {
+        loadMoreBtn.classList.remove("none");
+      }
+    }
+  };
+
+  loadCardsets(queryParams, cardsetsContainer);
+
+  loadMoreBtn &&
+    loadMoreBtn.addEventListener("click", () => {
+      queryParams.offset += queryParams.limit;
+      loadCardsets();
+    });
+
+  document.querySelector(searchSelector).addEventListener("change", (e) => {
+    queryParams.searchQ = e.target.value;
+    queryParams.offset = 0;
+    cardsetsContainer.innerHTML = "";
+    loadCardsets();
+  });
+
+  initDropdown(categorySelector, (clickedItem) => {
+    queryParams.categoryId = clickedItem.dataset.categoryId;
+    queryParams.offset = 0;
+    cardsetsContainer.innerHTML = "";
+    loadCardsets();
+  });
+
+  initDropdown(sortBySelector, (clickedItem) => {
+    queryParams.sortBy = clickedItem.dataset.sortId;
+    queryParams.offset = 0;
+    cardsetsContainer.innerHTML = "";
+    loadCardsets();
+  });
 };
