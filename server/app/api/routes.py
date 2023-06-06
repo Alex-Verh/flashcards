@@ -70,6 +70,8 @@ def cardsets():
         sort_by = request.args.get("sortBy") or "saves"
         sort_order = request.args.get("sortOrder") or "desc"
         category = int(request.args.get("categoryId"))
+        only_own = request.args.get("onlyOwn")
+        only_saved = request.args.get("onlySaved")
 
         if (
             offset < 0
@@ -92,6 +94,16 @@ def cardsets():
         .join(FlashCard)
         .filter(CardSet.is_public)
     )
+
+    if only_own:
+        if not current_user.is_authenticated:
+            return jsonify({"error": "Not authorized"}), 401
+        query = query.filter(CardSet.author.id == current_user.id)
+
+    if only_saved:
+        if not current_user.is_authenticated:
+            return jsonify({"error": "Not authorized"}), 401
+        query = query.filter(current_user in CardSet.followers)
 
     if search_query:
         query = query.filter(CardSet.title.like("%" + search_query + "%"))
