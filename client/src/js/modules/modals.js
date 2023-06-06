@@ -1,5 +1,5 @@
 const openModalLinks = document.querySelectorAll("[data-modal-class]");
-const closeModalBtns = document.querySelectorAll(".modal__close");
+const closeModalBtns = document.querySelectorAll(".modal__close, .menu__close");
 
 openModalLinks.forEach((link) => {
     const modalClass = link.dataset.modalClass;
