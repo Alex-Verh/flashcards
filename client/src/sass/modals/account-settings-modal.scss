@@ -1,0 +1,60 @@
+.account-settings {
+    width: 866px;
+    height: 569px;
+    &__title {
+        margin-top: 20px;
+        font-family: $font-header;
+        font-weight: 700;
+        font-size: 36px;
+    }
+    &__field {
+        width: 35%;
+        margin: 15px auto;
+    }
+    &__field  > .label{
+        width: 100%;
+        text-align: left;
+    }
+    &__accept {
+        width: 35px;
+        height: 35px;
+        background: #fcd3bf;
+        border: none;
+        cursor: pointer;
+        border-radius: 50%;
+        margin: 10px auto 60px auto;
+        display: block;
+        img {
+            width: 20px;
+            height: 20px;
+        }
+      }
+      &__accept:hover {
+        box-shadow: $box-shadow-delete;
+      }
+      &__line {
+        border-bottom: 1px solid #CB0000;
+        width: 30%;
+        margin: 20px auto
+      }
+      &__buttons {
+        display: flex;
+        justify-content: center;
+      }
+      &__button {
+        width: 105px;
+        height: 23px;
+        border: 1px solid #DE6060;
+        border-radius: 20px;
+        display: flex;
+        font-size: 12px;
+        font-family: $font-text;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        margin-inline: 5px;
+      }
+      &__button:hover {
+        box-shadow: $box-shadow-delete;
+      }
+}
