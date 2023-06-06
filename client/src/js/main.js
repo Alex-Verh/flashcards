@@ -4,10 +4,8 @@ import { questionAnswer } from "./constants";
 import { loadCategories } from "./modules/categories";
 
 document.addEventListener("DOMContentLoaded", () => {
-  /// Categories loading ///
+  import("./modules/modals");
   loadCategories();
-
-  /// Card Sets section ///
   initCardsetsSection(
     {
       offset: 0,
@@ -22,9 +20,6 @@ document.addEventListener("DOMContentLoaded", () => {
     "#category",
     "#sortBy"
   );
-
-  /// END Card Sets section ///
-
   ///  FAQ section ///
   const questionCard = document.querySelector("#question-card");
   const answerCard = document.querySelector("#answer-card");

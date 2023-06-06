@@ -36,7 +36,8 @@ export const initCardsetsSection = (
   loadMoreBtnSelector,
   searchSelector,
   categorySelector,
-  sortBySelector
+  sortBySelector,
+  typeSelector
 ) => {
   const cardsetsContainer = document.querySelector(cardsetsContainerSelector);
   const loadMoreBtn = document.querySelector(loadMoreBtnSelector);
@@ -61,6 +62,14 @@ export const initCardsetsSection = (
   loadMoreBtn &&
     loadMoreBtn.addEventListener("click", () => {
       queryParams.offset += queryParams.limit;
+      loadCardsets();
+    });
+
+  typeSelector &&
+    initDropdown(typeSelector, (clickedItem) => {
+      queryParams.filter = clickedItem.dataset.filter;
+      queryParams.offset = 0;
+      cardsetsContainer.innerHTML = "";
       loadCardsets();
     });
 

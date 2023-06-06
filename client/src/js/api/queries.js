@@ -6,10 +6,13 @@ export const getCardsets = async ({
   searchQ = "",
   categoryId = 0,
   sortBy = "",
+  filter,
 }) => {
-  const res = await fetch(
-    `${CARDSETS_URL}?limit=${limit}&offset=${offset}&categoryId=${categoryId}&searchQuery=${searchQ}&sortBy=${sortBy}`
-  );
+  const url = `${CARDSETS_URL}?limit=${limit}&offset=${offset}&categoryId=${categoryId}&searchQuery=${searchQ}&sortBy=${sortBy}${
+    filter ? "&" + filter + "=true" : ""
+  }`;
+
+  const res = await fetch(url);
   const cardsets = await res.json();
   return cardsets;
 };

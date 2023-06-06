@@ -2,7 +2,6 @@ import { getCategories } from "../api/queries";
 
 export const loadCategories = async () => {
   const categories = await getCategories();
-  console.log(categories);
   const categoriesContainer = document.querySelector("#categoriesDropdown");
   const categoriesHTML = categories.reduce(
     (prev, category) =>

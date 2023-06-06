@@ -16,7 +16,9 @@
           <div class="col">
             <div class="nav__links">
               <a href="#cards" class="nav__link">Cards</a>
-              <span href="" class="nav__link" data-modal-class="mode-choice">Learn</span>
+              <span href="" class="nav__link" data-modal-class="mode-choice"
+                >Learn</span
+              >
               <a href="#help" class="nav__link">Help</a>
             </div>
           </div>
@@ -39,19 +41,18 @@
           <div class="container">
             <div class="row">
               <div class="col-md-12 col-lg-3">
-                <div class="dropdown" tabindex="0">
-                  <button
-                    id="type"
-                    class="dropdown__btn"
-                    name="q"
-                    type="button"
-                  >
+                <div class="dropdown" id="cardsetsType" tabindex="0">
+                  <button class="dropdown__btn" type="button">
                     Choose type
                   </button>
 
                   <ul class="dropdown__content">
-                    <li class="dropdown__item">Saved Card Sets</li>
-                    <li class="dropdown__item">Own Card Sets</li>
+                    <li class="dropdown__item" data-category-filter="onlyOwn">
+                      Own Card Sets
+                    </li>
+                    <li class="dropdown__item" data-category-filter="onlySaved">
+                      Saved Card Sets
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -60,40 +61,26 @@
                   id="search"
                   class="input"
                   type="text"
-                  name="q"
+                  name="search"
                   placeholder="Search"
                   autocomplete="off"
                 />
               </div>
               <div class="col-md-4 col-lg-2">
-                <div class="dropdown" tabindex="0">
-                  <button
-                    id="type"
-                    class="dropdown__btn"
-                    name="q"
-                    type="button"
-                  >
-                    Category
-                  </button>
-                  <ul class="dropdown__content">
-                    <li class="dropdown__item">All</li>
-                    <li class="dropdown__item">Literature</li>
+                <div class="dropdown" id="category" tabindex="0">
+                  <button class="dropdown__btn" type="button">Category</button>
+                  <ul class="dropdown__content" id="categoriesDropdown">
+                    <li class="dropdown__item" data-category-id="0">All</li>
                   </ul>
                 </div>
               </div>
               <div class="col-md-4 col-lg-2">
-                <div class="dropdown" tabindex="0">
-                  <button
-                    id="type"
-                    class="dropdown__btn"
-                    name="q"
-                    type="button"
-                  >
-                    Sort By
-                  </button>
+                <div class="dropdown" id="sortBy" tabindex="0">
+                  <button class="dropdown__btn" type="button">Sort By</button>
                   <ul class="dropdown__content">
-                    <li class="dropdown__item">Name</li>
-                    <li class="dropdown__item">Saves</li>
+                    <li class="dropdown__item" data-sort-id="title">Title</li>
+                    <li class="dropdown__item" data-sort-id="saves">Saves</li>
+                    <li class="dropdown__item" data-sort-id="date">Date</li>
                   </ul>
                 </div>
               </div>
@@ -103,250 +90,7 @@
 
         <div class="main__card-sets">
           <div class="container">
-            <div class="row">
-              <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="card-set">
-                  <div class="card-set__counter">
-                    <img src="../img/flashcard_counter.svg" alt="Nr" />
-                    <span>6</span>
-                  </div>
-                  <div class="card-set__category">ART</div>
-                  <div class="card-set__name">Card Set Super New Name</div>
-                  <div class="card-set__author">Denis</div>
-                  <div class="card-set__saved">
-                    <img src="../img/saved_counter.svg" alt="Nr" />
-                    <span>32</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="card-set">
-                  <div class="card-set__counter">
-                    <img src="../img/flashcard_counter.svg" alt="Nr" />
-                    <span>6</span>
-                  </div>
-                  <div class="card-set__category">ART</div>
-                  <div class="card-set__name">Card Set Super New Name</div>
-                  <div class="card-set__author">Denis</div>
-                  <div class="card-set__saved">
-                    <img src="../img/saved_counter.svg" alt="Nr" />
-                    <span>32</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="card-set">
-                  <div class="card-set__counter">
-                    <img src="../img/flashcard_counter.svg" alt="Nr" />
-                    <span>6</span>
-                  </div>
-                  <div class="card-set__category">ART</div>
-                  <div class="card-set__name">Card Set Super New Name</div>
-                  <div class="card-set__author">Denis</div>
-                  <div class="card-set__saved">
-                    <img src="../img/saved_counter.svg" alt="Nr" />
-                    <span>32</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="card-set">
-                  <div class="card-set__counter">
-                    <img src="../img/flashcard_counter.svg" alt="Nr" />
-                    <span>6</span>
-                  </div>
-                  <div class="card-set__category">ART</div>
-                  <div class="card-set__name">Card Set Super New Name</div>
-                  <div class="card-set__author">Denis</div>
-                  <div class="card-set__saved">
-                    <img src="../img/saved_counter.svg" alt="Nr" />
-                    <span>32</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="card-set">
-                  <div class="card-set__counter">
-                    <img src="../img/flashcard_counter.svg" alt="Nr" />
-                    <span>6</span>
-                  </div>
-                  <div class="card-set__category">ART</div>
-                  <div class="card-set__name">Card Set Super New Name</div>
-                  <div class="card-set__author">Denis</div>
-                  <div class="card-set__saved">
-                    <img src="../img/saved_counter.svg" alt="Nr" />
-                    <span>32</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="card-set">
-                  <div class="card-set__counter">
-                    <img src="../img/flashcard_counter.svg" alt="Nr" />
-                    <span>6</span>
-                  </div>
-                  <div class="card-set__category">ART</div>
-                  <div class="card-set__name">Card Set Super New Name</div>
-                  <div class="card-set__author">Denis</div>
-                  <div class="card-set__saved">
-                    <img src="../img/saved_counter.svg" alt="Nr" />
-                    <span>32</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="card-set">
-                  <div class="card-set__counter">
-                    <img src="../img/flashcard_counter.svg" alt="Nr" />
-                    <span>6</span>
-                  </div>
-                  <div class="card-set__category">ART</div>
-                  <div class="card-set__name">Card Set Super New Name</div>
-                  <div class="card-set__author">Denis</div>
-                  <div class="card-set__saved">
-                    <img src="../img/saved_counter.svg" alt="Nr" />
-                    <span>32</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="card-set">
-                  <div class="card-set__counter">
-                    <img src="../img/flashcard_counter.svg" alt="Nr" />
-                    <span>6</span>
-                  </div>
-                  <div class="card-set__category">ART</div>
-                  <div class="card-set__name">Card Set Super New Name</div>
-                  <div class="card-set__author">Denis</div>
-                  <div class="card-set__saved">
-                    <img src="../img/saved_counter.svg" alt="Nr" />
-                    <span>32</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="card-set">
-                  <div class="card-set__counter">
-                    <img src="../img/flashcard_counter.svg" alt="Nr" />
-                    <span>6</span>
-                  </div>
-                  <div class="card-set__category">ART</div>
-                  <div class="card-set__name">Card Set Super New Name</div>
-                  <div class="card-set__author">Denis</div>
-                  <div class="card-set__saved">
-                    <img src="../img/saved_counter.svg" alt="Nr" />
-                    <span>32</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="card-set">
-                  <div class="card-set__counter">
-                    <img src="../img/flashcard_counter.svg" alt="Nr" />
-                    <span>6</span>
-                  </div>
-                  <div class="card-set__category">ART</div>
-                  <div class="card-set__name">Card Set Super New Name</div>
-                  <div class="card-set__author">Denis</div>
-                  <div class="card-set__saved">
-                    <img src="../img/saved_counter.svg" alt="Nr" />
-                    <span>32</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="card-set">
-                  <div class="card-set__counter">
-                    <img src="../img/flashcard_counter.svg" alt="Nr" />
-                    <span>6</span>
-                  </div>
-                  <div class="card-set__category">ART</div>
-                  <div class="card-set__name">Card Set Super New Name</div>
-                  <div class="card-set__author">Denis</div>
-                  <div class="card-set__saved">
-                    <img src="../img/saved_counter.svg" alt="Nr" />
-                    <span>32</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="card-set">
-                  <div class="card-set__counter">
-                    <img src="../img/flashcard_counter.svg" alt="Nr" />
-                    <span>6</span>
-                  </div>
-                  <div class="card-set__category">ART</div>
-                  <div class="card-set__name">Card Set Super New Name</div>
-                  <div class="card-set__author">Denis</div>
-                  <div class="card-set__saved">
-                    <img src="../img/saved_counter.svg" alt="Nr" />
-                    <span>32</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="card-set">
-                  <div class="card-set__counter">
-                    <img src="../img/flashcard_counter.svg" alt="Nr" />
-                    <span>6</span>
-                  </div>
-                  <div class="card-set__category">ART</div>
-                  <div class="card-set__name">Card Set Super New Name</div>
-                  <div class="card-set__author">Denis</div>
-                  <div class="card-set__saved">
-                    <img src="../img/saved_counter.svg" alt="Nr" />
-                    <span>32</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="card-set">
-                  <div class="card-set__counter">
-                    <img src="../img/flashcard_counter.svg" alt="Nr" />
-                    <span>6</span>
-                  </div>
-                  <div class="card-set__category">ART</div>
-                  <div class="card-set__name">Card Set Super New Name</div>
-                  <div class="card-set__author">Denis</div>
-                  <div class="card-set__saved">
-                    <img src="../img/saved_counter.svg" alt="Nr" />
-                    <span>32</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="card-set">
-                  <div class="card-set__counter">
-                    <img src="../img/flashcard_counter.svg" alt="Nr" />
-                    <span>6</span>
-                  </div>
-                  <div class="card-set__category">ART</div>
-                  <div class="card-set__name">Card Set Super New Name</div>
-                  <div class="card-set__author">Denis</div>
-                  <div class="card-set__saved">
-                    <img src="../img/saved_counter.svg" alt="Nr" />
-                    <span>32</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="card-set">
-                  <div class="card-set__counter">
-                    <img src="../img/flashcard_counter.svg" alt="Nr" />
-                    <span>6</span>
-                  </div>
-                  <div class="card-set__category">ART</div>
-                  <div class="card-set__name">Card Set Super New Name</div>
-                  <div class="card-set__author">Denis</div>
-                  <div class="card-set__saved">
-                    <img src="../img/saved_counter.svg" alt="Nr" />
-                    <span>32</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <div class="row"></div>
           </div>
         </div>
       </div>
