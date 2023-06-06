@@ -13,6 +13,7 @@
   padding: 15px;
   width: 100%;
   margin-bottom: 5px;
+  outline: none;
   &:focus {
     box-shadow: $box-shadow-hover;
   }
@@ -179,5 +180,6 @@
 @import "../modals/mode-choice-modal.scss";
 @import "../modals/choose-cardset-modal.scss";
 @import "../modals/learning-modal.scss";
+@import "../modals/account-settings-modal.scss";
 @import "../blocks/modal.scss";
 @import "../modals/menu.scss";
