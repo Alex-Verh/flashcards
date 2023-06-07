@@ -142,16 +142,16 @@ const uploadSound = (event, flashcardData, flashcardDataKey) => {
   const readerSound = new FileReader();
   readerSound.onload = (event) => {
     const audio = new Audio(readerSound.result);
-    playSound.innerHTML = `<img src = "../static/images/play.png" alt="Sound">`;
+    playSound.innerHTML = `<img src="./img/play-ico.svg" alt="Play">`;
     flashcardData[flashcardDataKey] = file;
 
     playSound.onclick = function () {
       if (audio.paused) {
         audio.play();
-        playSound.innerHTML = `<img src = "../static/images/pause.png" alt="Sound">`;
+        playSound.innerHTML = `<img src="./img/pause-ico.svg" alt="Pause">`;
       } else {
         audio.pause();
-        playSound.innerHTML = `<img src = "../static/images/play.png" alt="Sound">`;
+        playSound.innerHTML = `<img src="./img/play-ico.svg" alt="Play">`;
       }
       };
   };

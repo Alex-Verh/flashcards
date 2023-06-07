@@ -67,6 +67,13 @@ const rules = () => [
     ],
   },
   {
+    test: /-ico\.(svg)/i,
+    type: "asset/resource",
+    generator: {
+      filename: "img/icons/" + filename(),
+    },
+  },
+  {
     test: /\.(png|svg|jpg|jpeg|gif)$/i,
     type: "asset/resource",
     generator: {

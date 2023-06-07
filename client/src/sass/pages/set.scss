@@ -125,6 +125,11 @@
       height: 40%;
     }
   }
+  &__sound {
+    position: absolute;
+    bottom: 13px;
+    right: 20px;
+  }
   &__images {
     display: flex;
     justify-content: center;
