@@ -72,7 +72,7 @@ const uploadFile = (event, flashcardData) => {
   if (dataKey.includes("Images")) {
     uploadImage(event, flashcardData, dataKey);
   } else if (dataKey.includes("Audio")) {
-    uploadSound();
+    uploadSound(event, flashcardData, dataKey);
   }
 };
 const uploadImage = (event, flashcardData, flashcardDataKey) => {
@@ -115,7 +115,7 @@ const uploadImage = (event, flashcardData, flashcardDataKey) => {
   readerImage.readAsDataURL(file);
 };
 
-const uploadSound = (event, flashCardAttachments) => {
+const uploadSound = (event, flashcardData, flashcardDataKey) => {
   const file = event.target.files[0];
   if (!["audio/mpeg", "audio/wav", "audio/ogg"].includes(file.type)) {
     alert("Choose another format. (MP3, WAV, OGG)");
@@ -127,29 +127,30 @@ const uploadSound = (event, flashCardAttachments) => {
     audioInput.value = "";
     return;
   }
+  const soundContainer = event.target.parentElement.parentElement.previousElementSibling;
+  const playSound = soundContainer.querySelector(".flashcard-side__sound");
+  // Check if no more than 1 audio
+  if (playSound.children.length >= 1 ) {
+    alert("Audio limit has been reached!");
+    event.target.value = "";
+    return;
+  }
+
   const readerSound = new FileReader();
   readerSound.onload = (event) => {
-    const selectedSide = document.querySelector(".selected");
-    // Check for flashcard side selected
-    if (selectedSide) {
-      const sideType = selectedSide.dataset.type + "Side";
-      flashCardAttachments[sideType].audio = file;
+    const audio = new Audio(readerSound.result);
+    playSound.innerHTML = `<img src = "../static/images/play.png" alt="Sound">`;
+    // flashcardData[flashcardDataKey].audio = file;
 
-      const audio = new Audio(readerSound.result);
-      const playSound = selectedSide.querySelector(".sound");
-      playSound.innerHTML = `<img src = "../static/images/play.png" alt="Sound">`;
-      playSound.onclick = function () {
-        if (audio.paused) {
-          audio.play();
-          playSound.innerHTML = `<img src = "../static/images/pause.png" alt="Sound">`;
-        } else {
-          audio.pause();
-          playSound.innerHTML = `<img src = "../static/images/play.png" alt="Sound">`;
-        }
+    playSound.onclick = function () {
+      if (audio.paused) {
+        audio.play();
+        playSound.innerHTML = `<img src = "../static/images/pause.png" alt="Sound">`;
+      } else {
+        audio.pause();
+        playSound.innerHTML = `<img src = "../static/images/play.png" alt="Sound">`;
+      }
       };
-    } else {
-      alert("Select a part to upload your image on.");
-    }
   };
   readerSound.onerror = function (e) {
     alert("Error");

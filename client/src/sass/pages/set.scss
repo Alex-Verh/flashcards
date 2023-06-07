@@ -115,14 +115,14 @@
     resize: none;
     border: none;
     width: 90%;
-    height: 50%;
     overflow: hidden;
     &[data-key="title"] {
-      font-size: 17px;
+      font-size: 18px;
       height: 30%;
     }
     &[data-key="content"] {
-      font-size: 14px;
+      font-size: 16px;
+      height: 40%;
     }
   }
   &__images {
