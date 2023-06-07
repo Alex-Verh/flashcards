@@ -149,6 +149,11 @@
       width: 30px;
       background-color: #bcbcbc;
       cursor: pointer;
+      border: none;
+      img {
+        width: 80%;
+        height: 80%;
+      }
       &:hover {
         box-shadow: $box-shadow;
       }

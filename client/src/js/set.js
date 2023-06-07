@@ -89,6 +89,12 @@ const uploadImage = (event, flashcardData, flashcardDataKey) => {
     event.target.parentElement.parentElement.previousElementSibling
       .firstElementChild;
 
+  // Check if no more than 3 images
+  if (imagesContainer.children.length >= 3 ) {
+    alert("Image limit has been reached!");
+    event.target.value = "";
+    return;
+  }
   const readerImage = new FileReader();
   readerImage.onload = (event) => {
     imagesContainer.insertAdjacentHTML(
