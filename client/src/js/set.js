@@ -117,6 +117,9 @@ const uploadImage = (event, flashcardData, flashcardDataKey) => {
 
 const uploadSound = (event, flashcardData, flashcardDataKey) => {
   const file = event.target.files[0];
+  if (!file) {
+    return;
+  }
   if (!["audio/mpeg", "audio/wav", "audio/ogg"].includes(file.type)) {
     alert("Choose another format. (MP3, WAV, OGG)");
     event.target.value = "";
@@ -127,8 +130,8 @@ const uploadSound = (event, flashcardData, flashcardDataKey) => {
     audioInput.value = "";
     return;
   }
-  const soundContainer = event.target.parentElement.parentElement.previousElementSibling;
-  const playSound = soundContainer.querySelector(".flashcard-side__sound");
+  const sideWorkspace = event.target.parentElement.parentElement.previousElementSibling;
+  const playSound = sideWorkspace.querySelector(".flashcard-side__sound");
   // Check if no more than 1 audio
   if (playSound.children.length >= 1 ) {
     alert("Audio limit has been reached!");
@@ -140,7 +143,7 @@ const uploadSound = (event, flashcardData, flashcardDataKey) => {
   readerSound.onload = (event) => {
     const audio = new Audio(readerSound.result);
     playSound.innerHTML = `<img src = "../static/images/play.png" alt="Sound">`;
-    // flashcardData[flashcardDataKey].audio = file;
+    flashcardData[flashcardDataKey] = file;
 
     playSound.onclick = function () {
       if (audio.paused) {
