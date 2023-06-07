@@ -27,7 +27,12 @@
                   <img src="../img/person_profile.svg" alt="P" />
                 </div>
               </a>
-              <img class="nav__menu" src="../img/menu-ico.svg" alt="Menu" data-modal-class="menu"/>
+              <img
+                class="nav__menu"
+                src="../img/menu-ico.svg"
+                alt="Menu"
+                data-modal-class="menu"
+              />
             </div>
           </div>
         </div>
@@ -106,10 +111,6 @@
                 <div class="flashcard-side">
                   <div class="flashcard-side__workspace">
                     <div class="flashcard-side__images">
-                      <img
-                        class="flashcard-side__image"
-                        src="../img/main-bg.png"
-                      />
                       <!-- <img
                         class="flashcard-side__image"
                         src="../img/main-bg.png"
@@ -117,47 +118,101 @@
                       <img
                         class="flashcard-side__image"
                         src="../img/main-bg.png"
-                      /> -->
-                      <!-- <img
+                      />
+                      <img
+                        class="flashcard-side__image"
+                        src="../img/main-bg.png"
+                      />
+                      <img
                         class="flashcard-side__image"
                         src="../img/main-bg.png"
                       /> -->
                     </div>
-                    <div class="flashcard-side__text">
-                      Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                      Placeat earum fugiat architecto autem eaque ea hic
-                      exercitationem ad accusamus odit nobis, quia nam, maxime
-                      repudiandae
-                    </div>
+                    <textarea
+                      class="flashcard-side__text none"
+                      data-key="title"
+                    ></textarea>
                   </div>
 
                   <div class="flashcard-side__tools">
-                    <div class="tool rnd-button">
+                    <button class="tool rnd-button" type="button" data-text-btn>
                       <img src="../img/text-ico.svg" alt="#" />
-                    </div>
-                    <div class="tool rnd-button">
+                    </button>
+                    <button
+                      class="tool rnd-button"
+                      type="button"
+                      id="uploadImage"
+                      data-upload-btn
+                    >
                       <img src="../img/image-ico.svg" alt="#" />
-                    </div>
-                    <div class="tool rnd-button">
+                      <input
+                        class="none"
+                        type="file"
+                        accept=".jpg, .jpeg, .png, .svg"
+                        name="fileImages"
+                        data-key="frontImages"
+                      />
+                    </button>
+                    <button
+                      class="tool rnd-button"
+                      id="uploadAudio"
+                      type="button"
+                      data-upload-btn
+                    >
                       <img src="../img/audio-ico.svg" alt="#" />
-                    </div>
+                      <input
+                        class="none"
+                        type="file"
+                        accept=".mp3, .ogg, .wav"
+                        name="fileSound"
+                        data-key="frontAudio"
+                      />
+                    </button>
                   </div>
                 </div>
               </div>
               <div class="col-lg-6 col-md-12">
                 <div class="flashcard-side">
-                  <div class="flashcard-side__workspace"></div>
+                  <div class="flashcard-side__workspace">
+                    <div class="flashcard-side__images"></div>
+                    <textarea
+                      class="flashcard-side__text none"
+                      data-key="content"
+                    ></textarea>
+                  </div>
 
                   <div class="flashcard-side__tools">
-                    <div class="tool rnd-button">
+                    <button class="tool rnd-button" data-text-btn>
                       <img src="../img/text-ico.svg" alt="#" />
-                    </div>
-                    <div class="tool rnd-button">
+                    </button>
+                    <button
+                      class="tool rnd-button"
+                      id="uploadImage"
+                      data-upload-btn
+                    >
                       <img src="../img/image-ico.svg" alt="#" />
-                    </div>
-                    <div class="tool rnd-button">
+                      <input
+                        class="none"
+                        type="file"
+                        accept=".jpg, .jpeg, .png, .svg"
+                        name="fileImages"
+                        data-key="backImages"
+                      />
+                    </button>
+                    <button
+                      class="tool rnd-button"
+                      id="uploadAudio"
+                      data-upload-btn
+                    >
                       <img src="../img/audio-ico.svg" alt="#" />
-                    </div>
+                      <input
+                        class="none"
+                        type="file"
+                        accept=".mp3, .ogg, .wav"
+                        name="fileSound"
+                        data-key="backAudio"
+                      />
+                    </button>
                   </div>
                 </div>
               </div>
@@ -171,7 +226,9 @@
     <footer class="footer">
       <div class="container">
         <div class="row">
-          <div class="col-sm-0 col-md-4"><div class="footer__logo">FLASHY</div></div>
+          <div class="col-sm-0 col-md-4">
+            <div class="footer__logo">FLASHY</div>
+          </div>
           <div class="col-sm-12 col-md-8">
             <a href="#">Privacy Policy</a>
             <a href="#">Terms of Use</a>

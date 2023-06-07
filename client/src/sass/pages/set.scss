@@ -112,6 +112,18 @@
   &__text {
     text-align: center;
     font-family: $font-text;
+    resize: none;
+    border: none;
+    width: 90%;
+    height: 50%;
+    overflow: hidden;
+    &[data-key="title"] {
+      font-size: 17px;
+      height: 30%;
+    }
+    &[data-key="content"] {
+      font-size: 14px;
+    }
   }
   &__images {
     display: flex;
@@ -149,7 +161,6 @@
     max-width: 450px;
     height: 250px;
     &__text {
-      font-size: 12px;
       margin-bottom: 25px;
     }
   }
@@ -157,4 +168,3 @@
     box-shadow: $box-shadow-hover;
   }
 }
-
