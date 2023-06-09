@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "build": "webpack --env MODE=production",
-    "build-dev": "webpack --env MODE=development",
+    "build:dev": "webpack --env MODE=development",
+    "build:for-flask": "webpack --env MODE=production FOR_FLASK=true",
     "start": "webpack --env MODE=development && webpack serve --env MODE=development"
   },
   "author": "",

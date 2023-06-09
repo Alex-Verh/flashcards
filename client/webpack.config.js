@@ -10,6 +10,12 @@ pages = ["main", "cardsets", "register", "login", "set"];
 const filename = (ext = "[ext]") =>
   mode === "production" ? `[name].[hash]${ext}` : `[name]${ext}`;
 
+const baseBuildDir = () => (forFlask ? "../server/app" : "build");
+const staticBuildDir = () => (forFlask ? "static/" : "");
+const templatesBuildDir = () => (forFlask ? "templates/" : "");
+
+const cleanBuildDir = () => mode !== "production";
+
 const entry = () =>
   pages.reduce(
     (config, page) => ({
@@ -20,9 +26,9 @@ const entry = () =>
   );
 
 const output = () => ({
-  filename: filename(".js"),
-  path: path.resolve(__dirname, "dist"),
-  clean: true,
+  filename: staticBuildDir() + "js/" + filename(".js"),
+  path: path.resolve(__dirname, baseBuildDir()),
+  clean: cleanBuildDir(),
 });
 
 const optimization = () => {
@@ -39,7 +45,7 @@ const optimization = () => {
 };
 
 const devServer = () => ({
-  static: path.resolve(__dirname, "dist"),
+  static: path.resolve(__dirname, "build"),
   open: true,
 });
 
@@ -67,24 +73,24 @@ const rules = () => [
     ],
   },
   {
-    test: /-ico\.(svg)/i,
+    test: /-ico\.svg/i,
     type: "asset/resource",
     generator: {
-      filename: "img/icons/" + filename(),
+      filename: staticBuildDir() + "img/icons/" + filename(),
     },
   },
   {
     test: /\.(png|svg|jpg|jpeg|gif)$/i,
     type: "asset/resource",
     generator: {
-      filename: "img/" + filename(),
+      filename: staticBuildDir() + "img/" + filename(),
     },
   },
   {
     test: /\.(woff|woff2|eot|ttf|otf)$/i,
     type: "asset/resource",
     generator: {
-      filename: "fonts/" + filename(),
+      filename: staticBuildDir() + "fonts/" + filename(),
     },
   },
   {
@@ -99,7 +105,7 @@ const htmlPlugins = () =>
       new HtmlWebpackPlugin({
         inject: true,
         template: `./pages/${page}.html`,
-        filename: `${page}.html`,
+        filename: templatesBuildDir() + `${page}.html`,
         chunks: [page],
       })
   );
@@ -107,12 +113,14 @@ const htmlPlugins = () =>
 const plugins = () => [
   ...htmlPlugins(),
   new MiniCssExtractPlugin({
-    filename: "css/" + filename(".css"),
+    filename: staticBuildDir() + "css/" + filename(".css"),
   }),
 ];
 
 module.exports = (env) => {
   global.mode = env.MODE;
+  global.forFlask = env.FOR_FLASK;
+  console.log(forFlask);
   return {
     context: path.resolve(__dirname, "src"),
     mode: mode,
