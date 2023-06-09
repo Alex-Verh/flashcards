@@ -73,7 +73,7 @@ const rules = () => [
     ],
   },
   {
-    test: /-ico\.svg/i,
+    test: /-ico\.svg$/i,
     type: "asset/resource",
     generator: {
       filename: staticBuildDir() + "img/icons/" + filename(),
