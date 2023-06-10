@@ -17,6 +17,9 @@
   &:focus {
     box-shadow: $box-shadow-hover;
   }
+  &_error {
+    box-shadow: $box-shadow-delete;
+  }
 }
 
 .button {
