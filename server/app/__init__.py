@@ -39,10 +39,6 @@ def create_app(config_class=Config):
 
     app.register_blueprint(cards_bp)
 
-    from .common import bp as common_bp
-
-    app.register_blueprint(common_bp)
-
     from .api import bp as api_bp
 
     app.register_blueprint(api_bp)
