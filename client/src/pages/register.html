@@ -24,7 +24,12 @@
             <div class="nav__auth">
               <a href="#" class="nav__link">Register</a>
               <a href="#" class="nav__btn">Login</a>
-              <img class="nav__menu" src="../img/icons/menu-ico.svg" alt="Menu" data-modal-class="menu"/>
+              <img
+                class="nav__menu"
+                src="../img/icons/menu-ico.svg"
+                alt="Menu"
+                data-modal-class="menu"
+              />
             </div>
           </div>
         </div>
@@ -34,7 +39,19 @@
 
     <main class="register">
       <div class="container">
-        <form action="#" method="POST">
+        <form action="" method="POST">
+          {{ form.hidden_tag() }} {% for field in form if field.name not in
+          ['csrf_token', 'submit'] %}
+          <div class="register__field">
+            {{ field.label(class='label') -}} {% if field.errors %} {{
+            field(class='input input_error', autocomplete='off') -}}
+            <div class="register__error">{{ field.errors[0] }}</div>
+            {% else %} {{ field(class='input', autocomplete='off') -}} {% endif
+            %}
+          </div>
+          {% endfor %} {{ form.submit(class='button') }}
+        </form>
+        <!-- <form action="#" method="POST">
           <div class="register__field">
             <label class="label" for="username">Username</label>
             <input
@@ -83,7 +100,7 @@
             name="submit"
             value="Submit"
           />
-        </form>
+        </form> -->
         <p>Already have an account? <a href="#">Login</a></p>
       </div>
     </main>
@@ -91,7 +108,9 @@
     <footer class="footer">
       <div class="container">
         <div class="row">
-          <div class="col-sm-0 col-md-4"><div class="footer__logo">FLASHY</div></div>
+          <div class="col-sm-0 col-md-4">
+            <div class="footer__logo">FLASHY</div>
+          </div>
           <div class="col-sm-12 col-md-8">
             <a href="#">Privacy Policy</a>
             <a href="#">Terms of Use</a>

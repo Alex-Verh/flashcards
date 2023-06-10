@@ -1,73 +1,69 @@
 .register {
-    margin-top: 40px;
-    margin-bottom: 40px;
-    text-align: center;
-    @media (min-height: 800px) {
-      margin-top: 80px;
-      margin-bottom: 110px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  text-align: center;
+  @media (min-height: 800px) {
+    margin-top: 80px;
+    margin-bottom: 110px;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  &__field {
+    // Laptop
+    @media (max-width: 1200px) {
+      width: 40%;
     }
-  
-    a {
-        text-decoration: none;
+    // Tablet/ipad
+    @media (max-width: 768px) {
+      width: 70%;
     }
-    
-    &__field {
-      // Laptop
-      @media (max-width: 1200px) {
-        width: 40%;
-      }
-      // Tablet/ipad   
-      @media (max-width: 768px) {
-        width: 70%;
-      }
-      // Mobile phone
-      @media (max-width: 414px) {
-        width: 80%;
-      }
-      position: relative;
-      width: 25%; 
-      text-align: left;
-      margin: 3px auto 20px auto;
-      
-      .label{
-        margin-left: 15px;
-      }
+    // Mobile phone
+    @media (max-width: 414px) {
+      width: 80%;
     }
-  
-    .button{
-      display: block;
-      margin:40px auto 18px auto;
-      border: none;
+    width: 25%;
+    text-align: left;
+    margin: 3px auto 20px auto;
+
+    .label {
+      margin-left: 15px;
     }
-  
-    &__forget-pass {
-        font-weight: 300;
-        font-size: 12px;
-        float: right;
-        font-family: $font-text;
-        color: #000;
-        text-decoration: none;
-    }
-    &__forget-pass:hover, a:hover {
-      color: $main-color;
-      text-decoration: underline;
-      cursor: pointer;
+  }
+
+  .button {
+    display: block;
+    margin: 40px auto 18px auto;
+    border: none;
+  }
+
+  &__forget-pass {
+    font-weight: 300;
+    font-size: 12px;
+    float: right;
+    font-family: $font-text;
+    color: #000;
+    text-decoration: none;
+  }
+  &__forget-pass:hover,
+  a:hover {
+    color: $main-color;
+    text-decoration: underline;
+    cursor: pointer;
   }
   &__error {
     border-radius: 0px 0px 10px 10px;
-    position: absolute;
     display: flex;
     align-items: center;
     text-align: center;
     justify-content: center;
-    font-size: 13px;
-    color: #6C0505;
+    transform: translateY(-4px);
+    font-size: 15px;
+    color: #6c0505;
     background: rgba(222, 96, 96, 0.6);
     width: 90%;
-    height: 20px;
-    left: 0;
-    right: 0;
-    top: 93%;
     margin: 0 auto;
   }
 }

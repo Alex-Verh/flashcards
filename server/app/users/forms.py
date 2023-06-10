@@ -24,7 +24,7 @@ class LoginForm(FlaskForm):
 
 class RegisterForm(FlaskForm):
     username = StringField(
-        "Username:",
+        "Username",
         validators=[
             DataRequired("Please enter your username"),
             Regexp("^\w+$", message="Username must contain only letters or numbers"),
@@ -32,7 +32,7 @@ class RegisterForm(FlaskForm):
         ],
     )
     email = StringField(
-        "Email Address:",
+        "Email",
         validators=[
             DataRequired("Please enter your email address"),
             Email("Enter valid email"),
@@ -40,7 +40,7 @@ class RegisterForm(FlaskForm):
         ],
     )
     password = PasswordField(
-        "Password:",
+        "Password",
         validators=[
             DataRequired("Please enter your password"),
             Regexp(
@@ -51,7 +51,7 @@ class RegisterForm(FlaskForm):
         ],
     )
     password1 = PasswordField(
-        "Repeat password:",
+        "Repeat password",
         validators=[
             DataRequired("Please repeat your password"),
             EqualTo("password", "Passwords must match"),

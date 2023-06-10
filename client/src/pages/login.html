@@ -39,20 +39,28 @@
 
     <main class="register">
       <div class="container">
-        <!-- <form action="" method="POST">
+        <form action="" method="POST">
           {{ form.hidden_tag() }}
           <div class="register__field">
-            {{ form.username.label(class='label') -}} {{
-            form.username(class='input', autocomplete='off') -}}
+            {{ form.username.label(class='label') -}} {% if form.username.errors
+            %} {{ form.username(class='input input_error', autocomplete='off')
+            -}}
+            <div class="register__error">{{ form.username.errors[0] }}</div>
+            {% else %} {{ form.username(class='input', autocomplete='off') -}}
+            {% endif %}
           </div>
           <div class="register__field">
-            {{ form.password.label(class='label') -}} {{
-            form.password(class='input', autocomplete='off') -}}
+            {{ form.password.label(class='label') -}} {% if form.password.errors
+            %} {{ form.password(class='input input_error', autocomplete='off')
+            -}}
+            <div class="register__error">{{ form.password.errors[0] }}</div>
+            {% else %} {{ form.password(class='input', autocomplete='off') -}}
+            {% endif %}
             <a class="register__forget-pass">Forgot your password?</a>
           </div>
           {{ form.submit(class='button') }}
-        </form> -->
-        <form action="" method="POST">
+        </form>
+        <!-- <form action="" method="POST">
           <div class="register__field">
             <label class="label" for="username">Username or email</label>
             <input
@@ -63,7 +71,6 @@
               autocomplete="off"
             />
             <div class="register__error">Denchik is already existing</div>
-
           </div>
           <div class="register__field">
             <label class="label" for="password">Password</label>
@@ -74,6 +81,7 @@
               name="password"
               autocomplete="off"
             />
+            <div class="register__error">Denchik is already existing</div>
             <a class="register__forget-pass">Forgot your password?</a>
           </div>
           <input
@@ -83,7 +91,7 @@
             name="submit"
             value="Submit"
           />
-        </form>
+        </form> -->
         <p>Do not have an account? <a href="#">Register</a></p>
       </div>
     </main>
