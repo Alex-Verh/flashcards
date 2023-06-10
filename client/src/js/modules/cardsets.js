@@ -3,7 +3,9 @@ import { categoryColor } from "../constants";
 import { initDropdown } from "./dropdown";
 
 import flashcardsIco from "../../img/icons/counter-ico.svg";
-import saveIco from "../../img/icons/saved-ico.svg";
+import saveIco from "../../img/icons/save-ico.svg";
+import savedIco from "../../img/icons/saved-ico.svg";
+import deleteIco from "../../img/icons/delete-ico.svg";
 
 export const generateCardsetsHTML = (cardsets) => {
   const cardsetsHTML = cardsets.reduce(
@@ -22,7 +24,7 @@ export const generateCardsetsHTML = (cardsets) => {
         <div class="card-set__name">${cardset.title}</div>
         <div class="card-set__author">${cardset.author}</div>
         <div class="card-set__saved">
-          <img src=${saveIco} alt="Nr" />
+          <img src=${cardset.is_saved ? savedIco : saveIco} alt="Nr"/>
           <span>${cardset.saves}</span>
         </div>
       </div>

@@ -29,6 +29,7 @@
   width: 174px;
   background: #fff;
   border-radius: 10px;
+  border: none;
   padding: 7px 35px;
   font-family: $font-header;
   font-weight: 700;
@@ -175,7 +176,6 @@
     }
   }
 }
-
 
 //TO DELETE
 @import "../modals/profile-modal.scss";

@@ -20,6 +20,16 @@ document.addEventListener("DOMContentLoaded", () => {
     "#category",
     "#sortBy"
   );
+  document
+    .querySelector(".main__card-sets .row")
+    .addEventListener("click", (e) => {
+      const saveBtn = e.target.closest(".card-set__saved");
+      if (saveBtn) {
+        const unauthorizedModal = document.querySelector(".unauthorized-modal");
+        unauthorizedModal.parentElement.classList.remove("none");
+        document.body.style.overflow = "hidden";
+      }
+    });
   ///  FAQ section ///
   const questionCard = document.querySelector("#question-card");
   const answerCard = document.querySelector("#answer-card");

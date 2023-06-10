@@ -39,7 +39,7 @@
 
     <main class="register">
       <div class="container">
-        <form action="" method="POST">
+        <!-- <form action="" method="POST">
           {{ form.hidden_tag() }} {% for field in form if field.name not in
           ['csrf_token', 'submit'] %}
           <div class="register__field">
@@ -50,8 +50,8 @@
             %}
           </div>
           {% endfor %} {{ form.submit(class='button') }}
-        </form>
-        <!-- <form action="#" method="POST">
+        </form> -->
+        <form action="" method="POST" id="registerForm" name="registerForm">
           <div class="register__field">
             <label class="label" for="username">Username</label>
             <input
@@ -83,24 +83,18 @@
             />
           </div>
           <div class="register__field">
-            <label class="label" for="repeat-password">Repeat password</label>
+            <label class="label" for="repeatPassword">Repeat password</label>
             <input
-              id="repeat-password"
+              id="repeatPassword"
               class="input"
               type="password"
-              name="repeat-password"
+              name="repeatPassword"
               autocomplete="off"
             />
           </div>
 
-          <input
-            id="submit"
-            class="button"
-            type="submit"
-            name="submit"
-            value="Submit"
-          />
-        </form> -->
+          <input class="button" type="submit" value="Submit" />
+        </form>
         <p>Already have an account? <a href="#">Login</a></p>
       </div>
     </main>
