@@ -73,17 +73,17 @@ const rules = () => [
     ],
   },
   {
-    test: /-ico\.svg$/i,
-    type: "asset/resource",
-    generator: {
-      filename: staticBuildDir() + "img/icons/" + filename(),
-    },
-  },
-  {
     test: /\.(png|svg|jpg|jpeg|gif)$/i,
     type: "asset/resource",
     generator: {
       filename: staticBuildDir() + "img/" + filename(),
+    },
+  },
+  {
+    test: /-ico\.svg$/i,
+    type: "asset/resource",
+    generator: {
+      filename: staticBuildDir() + "img/icons/" + filename(),
     },
   },
   {
@@ -96,6 +96,9 @@ const rules = () => [
   {
     test: /\.html$/i,
     loader: "html-loader",
+    options: {
+      sources: true,
+    },
   },
 ];
 
@@ -120,7 +123,6 @@ const plugins = () => [
 module.exports = (env) => {
   global.mode = env.MODE;
   global.forFlask = env.FOR_FLASK;
-  console.log(forFlask);
   return {
     context: path.resolve(__dirname, "src"),
     mode: mode,

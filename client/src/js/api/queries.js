@@ -1,14 +1,16 @@
 import { CARDSETS_URL, CATEGORIES_URL } from "./endpoints";
 
-export const getCardsets = async ({
-  offset = 0,
-  limit = 16,
-  searchQ = "",
-  categoryId = 0,
-  sortBy = "",
-  filter,
-}) => {
-  const url = `${CARDSETS_URL}?limit=${limit}&offset=${offset}&categoryId=${categoryId}&searchQuery=${searchQ}&sortBy=${sortBy}${
+const stringifyQueryParams = (paramsObj) =>
+  Object.entries(paramsObj)
+    .reduce(
+      (prev, param) => (param[1] ? [...prev, `${param[0]}=${param[1]}`] : prev),
+      []
+    )
+    .join("&");
+
+export const getCardsets = async (params) => {
+  const { filter, ...otherParams } = params;
+  const url = `${CARDSETS_URL}?${stringifyQueryParams(otherParams)}${
     filter ? "&" + filter + "=true" : ""
   }`;
 

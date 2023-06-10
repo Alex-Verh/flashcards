@@ -47,12 +47,12 @@ def create_app(config_class=Config):
 
     app.register_blueprint(api_bp)
 
-    @app.errorhandler(404)
-    def page_not_found(error):
-        return render_template("common/error.html", error="Page Not Found!")
+    # @app.errorhandler(404)
+    # def page_not_found(error):
+    #     return render_template("common/error.html", error="Page Not Found!")
 
     @app.errorhandler(403)
-    def page_not_found(error):
+    def access_denied(error):
         return render_template(
             "common/error.html",
             error="This is a private card set >:( Create your own one.",
