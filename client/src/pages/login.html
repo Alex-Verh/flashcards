@@ -39,6 +39,19 @@
 
     <main class="register">
       <div class="container">
+        <!-- <form action="" method="POST">
+          {{ form.hidden_tag() }}
+          <div class="register__field">
+            {{ form.username.label(class='label') -}} {{
+            form.username(class='input', autocomplete='off') -}}
+          </div>
+          <div class="register__field">
+            {{ form.password.label(class='label') -}} {{
+            form.password(class='input', autocomplete='off') -}}
+            <a class="register__forget-pass">Forgot your password?</a>
+          </div>
+          {{ form.submit(class='button') }}
+        </form> -->
         <form action="" method="POST">
           <div class="register__field">
             <label class="label" for="username">Username or email</label>
@@ -50,7 +63,6 @@
               autocomplete="off"
             />
           </div>
-
           <div class="register__field">
             <label class="label" for="password">Password</label>
             <input
@@ -62,7 +74,6 @@
             />
             <a class="register__forget-pass">Forgot your password?</a>
           </div>
-
           <input
             id="submit"
             class="button"

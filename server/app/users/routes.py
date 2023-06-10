@@ -17,23 +17,23 @@ def login():
     if current_user.is_authenticated:
         return redirect(url_for("main.main"))
 
-    # form = LoginForm()
-    # if form.validate_on_submit():
-    if request.method == "POST":
-        username = request.form.get("username")
-        password = request.form.get("password")
-        print(username, password)
-        user = User.query.filter_by(username=username).first()
+    form = LoginForm()
+    if form.validate_on_submit():
+        # if request.method == "POST":
+        #     username = request.form.get("username")
+        #     password = request.form.get("password")
+        #     print(username, password)
+        user = User.query.filter_by(username=form.username.data).first()
         if user:
-            if check_password_hash(user.password, password):
+            if check_password_hash(user.password, form.password.data):
                 login_user(user, remember=True)
                 return redirect(request.args.get("next") or url_for("main.main"))
-        #     else:
-        #         form.password.errors.append("Wrong password")
-        # else:
-        #     form.username.errors.append("Such user does not exist")
+            else:
+                form.password.errors.append("Wrong password")
+        else:
+            form.username.errors.append("Such user does not exist")
 
-    return render_template("login.html")
+    return render_template("login.html", form=form)
 
 
 @bp.route("/logout", methods=["POST", "GET"])
