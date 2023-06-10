@@ -2,6 +2,9 @@ import { getCardsets } from "../api/queries";
 import { categoryColor } from "../constants";
 import { initDropdown } from "./dropdown";
 
+import flashcardsIco from "../../img/icons/counter-ico.svg";
+import saveIco from "../../img/icons/saved-ico.svg";
+
 export const generateCardsetsHTML = (cardsets) => {
   const cardsetsHTML = cardsets.reduce(
     (prev, cardset) =>
@@ -10,7 +13,7 @@ export const generateCardsetsHTML = (cardsets) => {
     <div class="col-sm-6 col-md-4 col-lg-3">
       <div class="card-set">
         <div class="card-set__counter">
-          <img src="../img/flashcard_counter.svg" alt="Nr" />
+          <img src=${flashcardsIco} alt="Nr" />
           <span>${cardset.flashcards_qty}</span>
         </div>
         <div class="card-set__category" style="background-color: ${
@@ -19,7 +22,7 @@ export const generateCardsetsHTML = (cardsets) => {
         <div class="card-set__name">${cardset.title}</div>
         <div class="card-set__author">${cardset.author}</div>
         <div class="card-set__saved">
-          <img src="../img/saved_counter.svg" alt="Nr" />
+          <img src=${saveIco} alt="Nr" />
           <span>${cardset.saves}</span>
         </div>
       </div>

@@ -1,33 +1,48 @@
+from flask import Response
 from flask_login import login_required
 
 from . import bp
-
 from .service import ApiService
 
 
-@bp.route("/delete-cardset/<int:id>")
-@login_required
-def delete_cardset(id):
-    return ApiService.delete_cardset(id)
-
-@bp.route("/save-cardset/<int:id>")
-@login_required
-def save_cardset(id):
-    return ApiService.save_cardset(id)
-
-@bp.route("/cardsets")
-def cardsets():
+@bp.route("/cardsets", methods=["GET"])
+def get_cardsets() -> Response:
     return ApiService.get_cardsets()
 
-@bp.route("/cardset-categories")
-def cardset_categories():
+
+@bp.route("/cardsets/categories", methods=["GET"])
+def get_cardset_categories() -> Response:
     return ApiService.get_categories()
 
-@bp.route("/create-flashcard", methods=["POST"])
+
+@bp.route("/cardset/<int:id>", methods=["GET"])
+def get_cardset(id: int) -> Response:
+    return ApiService.get_cardset(id)
+
+
+@bp.route("/cardset", methods=["POST"])
+def create_cardset() -> Response:
+    return ApiService.create_cardset()
+
+
+@bp.route("/cardset/<int:id>", methods=["DELETE"])
 @login_required
-def create_flashcard():
-    return ApiService.create_flashcard()
+def delete_cardset(id: int) -> Response:
+    return ApiService.delete_cardset(id)
+
+
+@bp.route("/cardset/save/<int:id>", methods=["PATCH"])
+@login_required
+def save_cardset(id: int) -> Response:
+    return ApiService.save_cardset(id)
+
+
+@bp.route("/flashcards", methods=["GET"])
+def get_flashcards() -> Response:
+    return ApiService.get_flashcards()
+
 
 @bp.route("/flashcards", methods=["POST"])
-def flashcards():
-    return ApiService.get_flashcards()
+@login_required
+def create_flashcard() -> Response:
+    return ApiService.create_flashcard()
