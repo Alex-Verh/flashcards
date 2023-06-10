@@ -16,6 +16,7 @@ python-dotenv = "*"
 email-validator = "*"
 pydub = "*"
 flask-cors = "*"
+colorama = "*"
 
 [dev-packages]
 faker = "*"
