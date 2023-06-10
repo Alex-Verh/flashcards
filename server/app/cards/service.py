@@ -5,7 +5,7 @@ from ..extensions import db
 from ..models import CardSet
 
 
-class ApiCards:
+class CardsService:
     @classmethod
     def get_cardset(cls, id):
         cardset = CardSet.query.get_or_404(id)
