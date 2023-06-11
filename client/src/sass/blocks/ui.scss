@@ -177,6 +177,34 @@
   }
 }
 
+.loading-spinner {
+  $first: rgba(235, 153, 110, 1);
+  $second: rgba(235, 153, 110, 0.75);
+  $third: rgba(235, 153, 110, 0.5);
+  $fourth: rgba(235, 153, 110, 0.25);
+  border: 24px solid;
+  border-color: $first $second $third $fourth;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: animloader 1s linear infinite;
+
+  @keyframes animloader {
+    0% {
+      border-color: $first $second $third $fourth;
+    }
+    33% {
+      border-color: $fourth $first $second $third;
+    }
+    66% {
+      border-color: $third $fourth $first $second;
+    }
+    100% {
+      border-color: $second $third $fourth $first;
+    }
+  }
+}
+
 //TO DELETE
 @import "../modals/profile-modal.scss";
 @import "../modals/create-cardset-modal.scss";

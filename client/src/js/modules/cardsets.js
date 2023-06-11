@@ -1,6 +1,7 @@
-import { getCardsets } from "../api/queries";
+import { getCardsets, saveCardset } from "../api/queries";
 import { categoryColor } from "../constants";
 import { initDropdown } from "./dropdown";
+import { openModal } from "./modals";
 
 import flashcardsIco from "../../img/icons/counter-ico.svg";
 import saveIco from "../../img/icons/save-ico.svg";
@@ -35,6 +36,27 @@ export const generateCardsetsHTML = (cardsets) => {
   return cardsetsHTML;
 };
 
+export const handleCardsetSave = async (saveBtn) => {
+  const cardsetId = saveBtn.dataset.cardsetId;
+  const prevContent = saveBtn.innerHTML;
+  try {
+    saveBtn.innerHTML = `
+        <div style="border: 10px solid; transform: translateX(-8px) translateY(5px);" class="loading-spinner"></div>
+        `;
+    const res = await saveCardset(cardsetId);
+
+    saveBtn.innerHTML = `
+          <img src=${res.saved ? savedIco : saveIco} alt="Nr"/>
+          <span>${res.saves}</span>
+          `;
+  } catch (e) {
+    if (+e.message === 401) {
+      openModal(document.querySelector(".unauthorized-modal"));
+      saveBtn.innerHTML = prevContent;
+    }
+  }
+};
+
 export const initCardsetsSection = (
   queryParams,
   cardsetsContainerSelector,
@@ -48,11 +70,21 @@ export const initCardsetsSection = (
   const loadMoreBtn = document.querySelector(loadMoreBtnSelector);
 
   const loadCardsets = async () => {
+    cardsetsContainer.insertAdjacentHTML(
+      "afterend",
+      `
+      <div style="display: flex; justify-content: center; margin-top: 30px">
+        <div class="loading-spinner"></div>
+      </div>
+    `
+    );
     const cardsets = await getCardsets(queryParams);
     cardsetsContainer.insertAdjacentHTML(
       "beforeend",
       generateCardsetsHTML(cardsets)
     );
+    cardsetsContainer.nextElementSibling &&
+      cardsetsContainer.nextElementSibling.remove();
     if (loadMoreBtn) {
       if (cardsets.length < queryParams.limit) {
         loadMoreBtn.classList.add("none");

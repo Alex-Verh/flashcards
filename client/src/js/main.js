@@ -1,5 +1,5 @@
 import "../sass/pages/main.scss";
-import { initCardsetsSection } from "./modules/cardsets";
+import { handleCardsetSave, initCardsetsSection } from "./modules/cardsets";
 import { initModals, openModal } from "./modules/modals";
 import { questionAnswer } from "./constants";
 import { loadCategories } from "./modules/categories";
@@ -25,11 +25,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document
     .querySelector(".main__card-sets .row")
-    .addEventListener("click", (e) => {
+    .addEventListener("click", async (e) => {
       const saveBtn = e.target.closest(".card-set__saved");
       if (saveBtn) {
-        const cardsetId = saveBtn.dataset.cardsetId;
-        saveCardset(cardsetId);
+        handleCardsetSave(saveBtn);
       }
     });
   ///  FAQ section ///

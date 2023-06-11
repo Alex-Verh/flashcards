@@ -1,4 +1,3 @@
-import { openModal } from "../modules/modals";
 import { CARDSETS_URL, CATEGORIES_URL, SAVE_CARDSET_URL } from "./endpoints";
 
 const stringifyQueryParams = (paramsObj) =>
@@ -35,12 +34,11 @@ export const getCategories = async () => {
 
 export const saveCardset = async (id) => {
   try {
-    await customFetch(`${SAVE_CARDSET_URL}/${id}`, {
+    const res = await customFetch(`${SAVE_CARDSET_URL}/${id}`, {
       method: "PATCH",
     });
+    return res.json();
   } catch (e) {
-    if (+e.message === 401) {
-      openModal(document.querySelector(".unauthorized-modal"));
-    }
+    throw e;
   }
 };
