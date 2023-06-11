@@ -1,9 +1,10 @@
 import "../sass/pages/cardsets.scss";
 import { initCardsetsSection } from "./modules/cardsets";
+import { initModals } from "./modules/modals";
 import { loadCategories } from "./modules/categories";
 
 document.addEventListener("DOMContentLoaded", () => {
-  import("./modules/modals");
+  initModals();
 
   loadCategories();
 

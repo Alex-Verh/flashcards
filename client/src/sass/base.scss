@@ -8,6 +8,15 @@
 @import "./blocks/nav.scss";
 @import "./blocks/footer.scss";
 
+@import "./modals/account-settings-modal.scss";
+@import "./modals/choose-cardset-modal.scss";
+@import "./modals/create-cardset-modal.scss";
+@import "./modals/learning-modal.scss";
+@import "./modals/menu.scss";
+@import "./modals/mode-choice-modal.scss";
+@import "./modals/profile-modal.scss";
+@import "./modals/unauthorized-modal.scss";
+
 body {
   background: $background-color;
   display: flex;

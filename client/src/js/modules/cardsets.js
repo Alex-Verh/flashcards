@@ -23,7 +23,7 @@ export const generateCardsetsHTML = (cardsets) => {
         }">${cardset.category}</div>
         <div class="card-set__name">${cardset.title}</div>
         <div class="card-set__author">${cardset.author}</div>
-        <div class="card-set__saved">
+        <div class="card-set__saved" data-cardset-id="${cardset.id}">
           <img src=${cardset.is_saved ? savedIco : saveIco} alt="Nr"/>
           <span>${cardset.saves}</span>
         </div>

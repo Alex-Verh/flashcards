@@ -1,4 +1,5 @@
-import { CARDSETS_URL, CATEGORIES_URL } from "./endpoints";
+import { openModal } from "../modules/modals";
+import { CARDSETS_URL, CATEGORIES_URL, SAVE_CARDSET_URL } from "./endpoints";
 
 const stringifyQueryParams = (paramsObj) =>
   Object.entries(paramsObj)
@@ -8,18 +9,38 @@ const stringifyQueryParams = (paramsObj) =>
     )
     .join("&");
 
+const customFetch = async (url, options = { method: "GET" }) => {
+  const res = await fetch(url, options);
+  if (!res.ok) {
+    throw new Error(res.status);
+  }
+  return res;
+};
+
 export const getCardsets = async (params) => {
   const { filter, ...otherParams } = params;
   const url = `${CARDSETS_URL}?${stringifyQueryParams(otherParams)}${
     filter ? "&" + filter + "=true" : ""
   }`;
 
-  const res = await fetch(url);
+  const res = await customFetch(url);
   const cardsets = await res.json();
   return cardsets;
 };
 
 export const getCategories = async () => {
-  const res = await fetch(CATEGORIES_URL);
+  const res = await customFetch(CATEGORIES_URL);
   return await res.json();
+};
+
+export const saveCardset = async (id) => {
+  try {
+    await customFetch(`${SAVE_CARDSET_URL}/${id}`, {
+      method: "PATCH",
+    });
+  } catch (e) {
+    if (+e.message === 401) {
+      openModal(document.querySelector(".unauthorized-modal"));
+    }
+  }
 };

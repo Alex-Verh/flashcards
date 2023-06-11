@@ -90,7 +90,7 @@ const uploadImage = (event, flashcardData, flashcardDataKey) => {
       .firstElementChild;
 
   // Check if no more than 3 images
-  if (imagesContainer.children.length >= 3 ) {
+  if (imagesContainer.children.length >= 3) {
     alert("Image limit has been reached!");
     event.target.value = "";
     return;
@@ -130,10 +130,11 @@ const uploadSound = (event, flashcardData, flashcardDataKey) => {
     audioInput.value = "";
     return;
   }
-  const sideWorkspace = event.target.parentElement.parentElement.previousElementSibling;
+  const sideWorkspace =
+    event.target.parentElement.parentElement.previousElementSibling;
   const playSound = sideWorkspace.querySelector(".flashcard-side__sound");
   // Check if no more than 1 audio
-  if (playSound.children.length >= 1 ) {
+  if (playSound.children.length >= 1) {
     alert("Audio limit has been reached!");
     event.target.value = "";
     return;
@@ -153,7 +154,7 @@ const uploadSound = (event, flashcardData, flashcardDataKey) => {
         audio.pause();
         playSound.innerHTML = `<img src="./img/play-ico.svg" alt="Play">`;
       }
-      };
+    };
   };
   readerSound.onerror = function (e) {
     alert("Error");

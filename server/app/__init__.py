@@ -14,9 +14,9 @@ def create_app(config_class=Config):
     cors.init_app(app)
 
     login_manager.init_app(app)
-    login_manager.login_view = "users.login"
-    login_manager.login_message = "Login to access all platform features"
-    login_manager.login_message_category = "success"
+    # login_manager.login_view = "users.login"
+    # login_manager.login_message = "Login to access all platform features"
+    # login_manager.login_message_category = "success"
 
     from .models import User
 

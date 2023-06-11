@@ -10,11 +10,8 @@ pages = ["main", "cardsets", "register", "login", "set"];
 const filename = (ext = "[ext]") =>
   mode === "production" ? `[name].[hash]${ext}` : `[name]${ext}`;
 
-const baseBuildDir = () => (forFlask ? "../server/app" : "build");
-const staticBuildDir = () => (forFlask ? "static/" : "");
-const templatesBuildDir = () => (forFlask ? "templates/" : "");
-
-const cleanBuildDir = () => mode !== "production";
+const buildDir = () => (flask ? "../server/app/static" : "build");
+const templatesDir = () => (flask ? "../templates/" : "");
 
 const entry = () =>
   pages.reduce(
@@ -26,9 +23,9 @@ const entry = () =>
   );
 
 const output = () => ({
-  filename: staticBuildDir() + "js/" + filename(".js"),
-  path: path.resolve(__dirname, baseBuildDir()),
-  clean: cleanBuildDir(),
+  filename: "js/" + filename(".js"),
+  path: path.resolve(__dirname, buildDir()),
+  clean: true,
 });
 
 const optimization = () => {
@@ -76,21 +73,21 @@ const rules = () => [
     test: /\.(png|svg|jpg|jpeg|gif)$/i,
     type: "asset/resource",
     generator: {
-      filename: staticBuildDir() + "img/" + filename(),
+      filename: "img/" + filename(),
     },
   },
   {
     test: /-ico\.svg$/i,
     type: "asset/resource",
     generator: {
-      filename: staticBuildDir() + "img/icons/" + filename(),
+      filename: "img/icons/" + filename(),
     },
   },
   {
     test: /\.(woff|woff2|eot|ttf|otf)$/i,
     type: "asset/resource",
     generator: {
-      filename: staticBuildDir() + "fonts/" + filename(),
+      filename: "fonts/" + filename(),
     },
   },
   {
@@ -108,7 +105,7 @@ const htmlPlugins = () =>
       new HtmlWebpackPlugin({
         inject: true,
         template: `./pages/${page}.html`,
-        filename: templatesBuildDir() + `${page}.html`,
+        filename: templatesDir() + `${page}.html`,
         chunks: [page],
       })
   );
@@ -116,13 +113,13 @@ const htmlPlugins = () =>
 const plugins = () => [
   ...htmlPlugins(),
   new MiniCssExtractPlugin({
-    filename: staticBuildDir() + "css/" + filename(".css"),
+    filename: "css/" + filename(".css"),
   }),
 ];
 
 module.exports = (env) => {
   global.mode = env.MODE;
-  global.forFlask = env.FOR_FLASK;
+  global.flask = env.FLASK;
   return {
     context: path.resolve(__dirname, "src"),
     mode: mode,

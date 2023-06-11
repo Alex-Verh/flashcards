@@ -87,87 +87,20 @@ class ApiService:
         cardset = CardSet.query.get(id)
         if not cardset:
             return jsonify({"error": "Card set does not exist."}), 400
-        if cardset in current_user.own_cardsets.all():
+        if cardset.author == current_user:
             return jsonify({"error": "You can not save your own card set"}), 400
 
-        saved = current_user in cardset.followers.all()
+        saved = bool(
+            current_user.saved_cardsets.filter(CardSet.id == cardset.id).first()
+        )
         if saved:
-            cardset.followers.remove(current_user)
-            db.session.commit()
-            saved = False
+            current_user.saved_cardsets.remove(cardset)
         else:
-            cardset.followers.append(current_user)
-            db.session.commit()
-            saved = True
+            current_user.saved_cardsets.append(cardset)
+        db.session.commit()
+        saved = not saved
 
         return jsonify({"saves": cardset.followers.count(), "saved": saved})
-
-    @classmethod
-    def create_flashcard(cls):
-        cardset_id = request.form.get("cardset_id")
-        cardset = CardSet.query.get(cardset_id)
-
-        if cardset not in current_user.own_cardsets.all():
-            return jsonify({"error": "This card set is not yours"}), 400
-
-        base_filename = f"{current_user.id}_{cardset_id}_"
-        uploads_dir_path = os.path.join(
-            current_app.root_path, current_app.config["UPLOAD_FOLDER"]
-        )
-
-        flashcard_attachments = {
-            "frontside": {"images": []},
-            "backside": {"images": []},
-        }
-
-        cls.save_flashcard_images(
-            flashcard_attachments, base_filename, uploads_dir_path
-        )
-
-        cls.save_flashcard_audio(flashcard_attachments, base_filename, uploads_dir_path)
-
-        flashcard = FlashCard(
-            title=request.form.get("title"),
-            content=request.form.get("content"),
-            attachments=flashcard_attachments,
-            cardset_id=cardset_id,
-        )
-        db.session.add(flashcard)
-        db.session.commit()
-
-        return jsonify({"message": "Files uploaded and resized successfully"}), 200
-
-    @classmethod
-    def save_flashcard_audio(
-        cls, flashcard_attachments, base_filename, uploads_dir_path
-    ):
-        front_audio = request.files.get("front_audio")
-        back_audio = request.files.get("back_audio")
-        if front_audio:
-            flashcard_attachments["frontside"]["audio"] = save_audio(
-                front_audio, base_filename + secrets.token_hex(6), uploads_dir_path
-            )
-        if back_audio:
-            flashcard_attachments["backside"]["audio"] = save_audio(
-                back_audio, base_filename + secrets.token_hex(6), uploads_dir_path
-            )
-
-    @classmethod
-    def save_flashcard_images(
-        cls, flashcard_attachments, base_filename, uploads_dir_path
-    ):
-        front_images = request.files.getlist("front_images")
-        back_images = request.files.getlist("back_images")
-        for image in front_images:
-            image_filename = save_image(
-                image, base_filename + secrets.token_hex(6), uploads_dir_path
-            )
-        flashcard_attachments["frontside"]["images"].append(image_filename)
-        for image in back_images:
-            image_filename = save_image(
-                image, base_filename + secrets.token_hex(6), uploads_dir_path
-            )
-            flashcard_attachments["backside"]["images"].append(image_filename)
 
     @classmethod
     def get_cardsets(cls):
@@ -177,11 +110,11 @@ class ApiService:
             "title": "card_sets.title",
         }
         try:
-            params = cls.get_cardset_params(sort_by)
+            params = cls._get_cardset_params(sort_by)
         except (ValueError, TypeError):
             return jsonify({"error": "Invalid request parameters"}), 400
 
-        query = cls.create_cardsets_query(params, sort_by)
+        query = cls._create_cardsets_query(params, sort_by)
 
         result = []
         for row in query:
@@ -209,7 +142,7 @@ class ApiService:
         return jsonify(result), 200
 
     @classmethod
-    def get_cardset_params(cls, allowed_sort_by):
+    def _get_cardset_params(cls, allowed_sort_by):
         params = {
             "offset": int(request.args.get("offset", default=0)),
             "limit": int(request.args.get("limit", default=16)),
@@ -232,12 +165,12 @@ class ApiService:
         return params
 
     @classmethod
-    def create_cardsets_query(cls, params, sort_map):
+    def _create_cardsets_query(cls, params, sort_map):
         query = (
             db.session.query(
                 CardSet,
                 db.text("count(user_cardset_assn.cardset_id) AS total_saves"),
-                db.text("count(flash_cards.cardset_id) AS total_flashcards"),
+                db.text("count(flash_cards.id) AS total_flashcards"),
             )
             .join(user_cardset_assn, isouter=True)
             .join(FlashCard)
@@ -272,4 +205,78 @@ class ApiService:
             .limit(params["limit"])
             .offset(params["offset"])
         )
+        print(query)
         return query
+
+    @classmethod
+    def create_flashcard(cls):
+        cardset_id = request.form.get("cardset_id")
+        cardset = CardSet.query.get(cardset_id)
+
+        if cardset not in current_user.own_cardsets.all():
+            return jsonify({"error": "This card set is not yours"}), 400
+
+        base_filename = f"{current_user.id}_{cardset_id}_"
+        uploads_dir_path = os.path.join(
+            current_app.root_path, current_app.config["UPLOAD_FOLDER"]
+        )
+
+        flashcard_attachments = {
+            "frontside": {"images": []},
+            "backside": {"images": []},
+        }
+
+        cls._save_flashcard_images(
+            flashcard_attachments, base_filename, uploads_dir_path
+        )
+
+        cls._save_flashcard_audio(
+            flashcard_attachments, base_filename, uploads_dir_path
+        )
+
+        flashcard = FlashCard(
+            title=request.form.get("title"),
+            content=request.form.get("content"),
+            attachments=flashcard_attachments,
+            cardset_id=cardset_id,
+        )
+        db.session.add(flashcard)
+        db.session.commit()
+
+        return jsonify({"message": "Files uploaded and resized successfully"}), 200
+
+    @classmethod
+    def _save_flashcard_audio(
+        cls, flashcard_attachments, base_filename, uploads_dir_path
+    ):
+        front_audio = request.files.get("front_audio")
+        back_audio = request.files.get("back_audio")
+        if front_audio:
+            flashcard_attachments["frontside"]["audio"] = save_audio(
+                front_audio, base_filename + secrets.token_hex(6), uploads_dir_path
+            )
+        if back_audio:
+            flashcard_attachments["backside"]["audio"] = save_audio(
+                back_audio, base_filename + secrets.token_hex(6), uploads_dir_path
+            )
+
+    @classmethod
+    def _save_flashcard_images(
+        cls, flashcard_attachments, base_filename, uploads_dir_path
+    ):
+        front_images = request.files.getlist("front_images")
+        back_images = request.files.getlist("back_images")
+        for image in front_images:
+            image_filename = save_image(
+                image, base_filename + secrets.token_hex(6), uploads_dir_path
+            )
+        flashcard_attachments["frontside"]["images"].append(image_filename)
+        for image in back_images:
+            image_filename = save_image(
+                image, base_filename + secrets.token_hex(6), uploads_dir_path
+            )
+            flashcard_attachments["backside"]["images"].append(image_filename)
+
+    @classmethod
+    def delete_flashcard(cls, id):
+        pass

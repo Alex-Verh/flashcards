@@ -1,10 +1,12 @@
 import "../sass/pages/main.scss";
 import { initCardsetsSection } from "./modules/cardsets";
+import { initModals, openModal } from "./modules/modals";
 import { questionAnswer } from "./constants";
 import { loadCategories } from "./modules/categories";
+import { saveCardset } from "./api/queries";
 
 document.addEventListener("DOMContentLoaded", () => {
-  import("./modules/modals");
+  initModals();
   loadCategories();
   initCardsetsSection(
     {
@@ -20,14 +22,14 @@ document.addEventListener("DOMContentLoaded", () => {
     "#category",
     "#sortBy"
   );
+
   document
     .querySelector(".main__card-sets .row")
     .addEventListener("click", (e) => {
       const saveBtn = e.target.closest(".card-set__saved");
       if (saveBtn) {
-        const unauthorizedModal = document.querySelector(".unauthorized-modal");
-        unauthorizedModal.parentElement.classList.remove("none");
-        document.body.style.overflow = "hidden";
+        const cardsetId = saveBtn.dataset.cardsetId;
+        saveCardset(cardsetId);
       }
     });
   ///  FAQ section ///
