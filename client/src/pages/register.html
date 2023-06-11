@@ -1,45 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <nav class="nav">
-      <div class="container">
-        <div class="row">
-          <div class="col">
-            <a href="#" class="nav__logo">FLASHY</a>
-          </div>
-          <div class="col">
-            <div class="nav__links">
-              <a href="#cards" class="nav__link">Cards</a>
-              <a href="" class="nav__link" data-modal-class="learning">Learn</a>
-              <a href="#help" class="nav__link">Help</a>
-            </div>
-          </div>
-          <div class="col">
-            <div class="nav__auth">
-              <a href="#" class="nav__link">Register</a>
-              <a href="#" class="nav__btn">Login</a>
-              <img
-                class="nav__menu"
-                src="../img/icons/menu-ico.svg"
-                alt="Menu"
-                data-modal-class="menu"
-              />
-            </div>
-          </div>
-        </div>
-        <div class="line"></div>
-      </div>
-    </nav>
+{% extends "base.html" %}
+
+{% block title %} Register - {% endblock %}
+
+{% block container %}
 
     <main class="register">
       <div class="container">
-        <!-- <form action="" method="POST">
+        <form action="" method="POST">
           {{ form.hidden_tag() }} {% for field in form if field.name not in
           ['csrf_token', 'submit'] %}
           <div class="register__field">
@@ -50,68 +17,10 @@
             %}
           </div>
           {% endfor %} {{ form.submit(class='button') }}
-        </form> -->
-        <form action="" method="POST" id="registerForm" name="registerForm">
-          <div class="register__field">
-            <label class="label" for="username">Username</label>
-            <input
-              id="username"
-              class="input"
-              type="text"
-              name="username"
-              autocomplete="off"
-            />
-          </div>
-          <div class="register__field">
-            <label class="label" for="email">Email</label>
-            <input
-              id="email"
-              class="input"
-              type="text"
-              name="email"
-              autocomplete="off"
-            />
-          </div>
-          <div class="register__field">
-            <label class="label" for="password">Password</label>
-            <input
-              id="password"
-              class="input"
-              type="password"
-              name="password"
-              autocomplete="off"
-            />
-          </div>
-          <div class="register__field">
-            <label class="label" for="repeatPassword">Repeat password</label>
-            <input
-              id="repeatPassword"
-              class="input"
-              type="password"
-              name="repeatPassword"
-              autocomplete="off"
-            />
-          </div>
-
-          <input class="button" type="submit" value="Submit" />
         </form>
+
         <p>Already have an account? <a href="#">Login</a></p>
       </div>
     </main>
 
-    <footer class="footer">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-0 col-md-4">
-            <div class="footer__logo">FLASHY</div>
-          </div>
-          <div class="col-sm-12 col-md-8">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Use</a>
-            <a href="#">flashy@site.edu</a>
-          </div>
-        </div>
-      </div>
-    </footer>
-  </body>
-</html>
+{% endblock %}

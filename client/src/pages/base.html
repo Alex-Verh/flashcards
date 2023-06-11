@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="author" content="Verhovetchi Alexandru">
+    <meta name="author" content="Bargan Denis">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}{% endblock %}FLASHY</title>
+    <!-- <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/icon.png') }}"> -->
+  </head>
+  <body>
+    <nav class="nav">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <a href="{{ url_for('main.main') }}" class="nav__logo">FLASHY</a>
+          </div>
+          <div class="col">
+            <div class="nav__links">
+              <a href="{{ url_for('main.main') }}#cards" class="nav__link">Cards</a>
+              <a href="" class="nav__link" data-modal-class="learning">Learn</a>
+              <a href="{{ url_for('main.main') }}#help" class="nav__link">Help</a>
+            </div>
+          </div>
+          <div class="col">
+            <div class="nav__auth">
+                {{ if current_user.is_authenticated }}
+                <div class="nav__profile rnd-button">
+                    <img src="../img/icons/profile-ico.svg" alt="P" />
+                </div>
+                {{ else }}
+                <a href="{{ url_for('users.register') }}" class="nav__link">Register</a>
+                <a href="{{ url_for('users.login') }}" class="nav__btn">Login</a>
+                {{ endif }}
+              <img
+                class="nav__menu"
+                src="../img/icons/menu-ico.svg"
+                alt="Menu"
+                data-modal-class="menu"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="line"></div>
+      </div>
+    </nav>
+
+    {% block container %} 
+    {% endblock %} 
+
+    <footer class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-0 col-md-4">
+            <div class="footer__logo">FLASHY</div>
+          </div>
+          <div class="col-sm-12 col-md-8">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Use</a>
+            <a href="#">flashy@site.edu</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
