@@ -41,7 +41,7 @@ export const handleCardsetSave = async (saveBtn) => {
   const prevContent = saveBtn.innerHTML;
   try {
     saveBtn.innerHTML = `
-        <div style="border: 10px solid; transform: translateX(-8px) translateY(5px);" class="loading-spinner"></div>
+        <div style="border: 10px solid; transform: translateX(-8px);" class="loading-spinner"></div>
         `;
     const res = await saveCardset(cardsetId);
 
@@ -83,8 +83,8 @@ export const initCardsetsSection = (
       "beforeend",
       generateCardsetsHTML(cardsets)
     );
-    cardsetsContainer.nextElementSibling &&
-      cardsetsContainer.nextElementSibling.remove();
+
+    cardsetsContainer.nextElementSibling.remove();
     if (loadMoreBtn) {
       if (cardsets.length < queryParams.limit) {
         loadMoreBtn.classList.add("none");

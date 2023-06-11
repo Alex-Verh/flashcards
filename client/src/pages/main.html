@@ -1,89 +1,87 @@
-{% extends "base.html" %}
-
-{% block container %}
-  <header class="header">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-12 col-md-12 col-lg-6">
-          <div class="header__title">Speed up your learning</div>
-          <div class="header__description">
-            Our interactive flashcards will engage your brain and help you
-            retain information better than ever before. Join our community of
-            learners and start mastering new topics today. Don't wait, sign up
-            now and take the first step towards achieving your learning goals!
-          </div>
+{% extends "base.html" %} {% block container %}
+<header class="header">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-6">
+        <div class="header__title">Speed up your learning</div>
+        <div class="header__description">
+          Our interactive flashcards will engage your brain and help you retain
+          information better than ever before. Join our community of learners
+          and start mastering new topics today. Don't wait, sign up now and take
+          the first step towards achieving your learning goals!
         </div>
-        <div class="col-sm-12 col-md-12 col-lg-6">
-          <div class="header__image">
-            <img src="../img/illustrations.svg" alt="Company Logo" />
-          </div>
+      </div>
+      <div class="col-sm-12 col-md-12 col-lg-6">
+        <div class="header__image">
+          <img src="/static/img/illustrations.svg" alt="Company Logo" />
         </div>
       </div>
     </div>
-  </header>
+  </div>
+</header>
 
-  <main class="main" id="cards">
-    <div class="container">
-      <div class="main__search">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-6 col-lg">
-              <span>Start learning now</span>
+<main class="main" id="cards">
+  <div class="container">
+    <div class="main__search">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 col-lg">
+            <span>Start learning now</span>
+          </div>
+          <div class="col-md-6 col-lg">
+            <!-- TODO change id naming -->
+            <input
+              id="search"
+              class="input"
+              type="text"
+              name="search"
+              placeholder="Search"
+              autocomplete="off"
+            />
+          </div>
+          <div class="col-md-6 col-lg">
+            <div class="dropdown" id="category" tabindex="0">
+              <button class="dropdown__btn" type="button">Category</button>
+              <ul class="dropdown__content" id="categoriesDropdown">
+                <li class="dropdown__item" data-category-id="0">All</li>
+              </ul>
             </div>
-            <div class="col-md-6 col-lg">
-              <!-- TODO change id naming -->
-              <input
-                id="search"
-                class="input"
-                type="text"
-                name="search"
-                placeholder="Search"
-                autocomplete="off"
-              />
-            </div>
-            <div class="col-md-6 col-lg">
-              <div class="dropdown" id="category" tabindex="0">
-                <button class="dropdown__btn" type="button">Category</button>
-                <ul class="dropdown__content" id="categoriesDropdown">
-                  <li class="dropdown__item" data-category-id="0">All</li>
-                </ul>
-              </div>
-            </div>
-            <div class="col-md-6 col-lg">
-              <div class="dropdown" id="sortBy" tabindex="0">
-                <button class="dropdown__btn" type="button">Sort By</button>
-                <ul class="dropdown__content">
-                  <li class="dropdown__item" data-sort-id="title">Title</li>
-                  <li class="dropdown__item" data-sort-id="saves">Saves</li>
-                  <li class="dropdown__item" data-sort-id="date">Date</li>
-                </ul>
-              </div>
+          </div>
+          <div class="col-md-6 col-lg">
+            <div class="dropdown" id="sortBy" tabindex="0">
+              <button class="dropdown__btn" type="button">Sort By</button>
+              <ul class="dropdown__content">
+                <li class="dropdown__item" data-sort-id="title">Title</li>
+                <li class="dropdown__item" data-sort-id="saves">Saves</li>
+                <li class="dropdown__item" data-sort-id="date">Date</li>
+              </ul>
             </div>
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="main__card-sets">
-        <div class="container">
-          <div class="row"></div>
-        </div>
-      </div>
-      <div class="button" id="loadMoreBtn">Load More</div>
-    </div>
-  </main>
-  <section class="help" id="help">
-    <div class="container">
-      <div class="line"></div>
-      <div class="row">
-        <div class="col-sm-12 col-md-6">
-          <div class="help__title">Frequently Asked Questions</div>
-          <div class="help__questions"></div>
-        </div>
-        <div class="col-sm-12 col-md-6">
-          <div id="question-card" class="help__card"></div>
-          <div id="answer-card" class="help__card"></div>
-        </div>
+    <div class="main__card-sets">
+      <div class="container">
+        <div class="row"></div>
       </div>
     </div>
-  </section>
+    <div class="button" id="loadMoreBtn">Load More</div>
+  </div>
+</main>
+<section class="help" id="help">
+  <div class="container">
+    <div class="line"></div>
+    <div class="row">
+      <div class="col-sm-12 col-md-6">
+        <div class="help__title">Frequently Asked Questions</div>
+        <div class="help__questions"></div>
+      </div>
+      <div class="col-sm-12 col-md-6">
+        <div id="question-card" class="help__card"></div>
+        <div id="answer-card" class="help__card"></div>
+      </div>
+    </div>
+  </div>
+</section>
 {% endblock %}

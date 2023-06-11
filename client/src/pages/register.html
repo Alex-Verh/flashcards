@@ -1,26 +1,22 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block title %} Register - {% endblock %} {% block
+container %}
 
-{% block title %} Register - {% endblock %}
-
-{% block container %}
-
-    <main class="register">
-      <div class="container">
-        <form action="" method="POST">
-          {{ form.hidden_tag() }} {% for field in form if field.name not in
-          ['csrf_token', 'submit'] %}
-          <div class="register__field">
-            {{ field.label(class='label') -}} {% if field.errors %} {{
-            field(class='input input_error', autocomplete='off') -}}
-            <div class="register__error">{{ field.errors[0] }}</div>
-            {% else %} {{ field(class='input', autocomplete='off') -}} {% endif
-            %}
-          </div>
-          {% endfor %} {{ form.submit(class='button') }}
-        </form>
-
-        <p>Already have an account? <a href="#">Login</a></p>
+<main class="register">
+  <div class="container">
+    <form action="" method="POST">
+      {{ form.hidden_tag() }} {% for field in form if field.name not in
+      ['csrf_token', 'submit'] %}
+      <div class="register__field">
+        {{ field.label(class='label') -}} {% if field.errors %} {{
+        field(class='input input_error', autocomplete='off') -}}
+        <div class="register__error">{{ field.errors[0] }}</div>
+        {% else %} {{ field(class='input', autocomplete='off') -}} {% endif %}
       </div>
-    </main>
+      {% endfor %} {{ form.submit(class='button') }}
+    </form>
+
+    <p>Already have an account? <a href="#">Login</a></p>
+  </div>
+</main>
 
 {% endblock %}

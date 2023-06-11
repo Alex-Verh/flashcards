@@ -3,14 +3,22 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 // Pages list
-pages = ["main", "cardsets", "register", "login", "set"];
+const pages = ["main", "cardsets", "register", "login", "set"];
+
+const paths = {
+  src: path.resolve(__dirname, "./src"),
+  dist: path.resolve(__dirname, "./dist"),
+  assets: "static/",
+};
 
 const filename = (ext = "[ext]") =>
   mode === "production" ? `[name].[hash]${ext}` : `[name]${ext}`;
 
-const buildDir = () => (flask ? "../server/app/static" : "build");
+const distPath = () =>
+  flask ? path.resolve(__dirname, "../server/app/static") : paths.dist;
 const templatesDir = () => (flask ? "../templates/" : "");
 
 const entry = () =>
@@ -21,10 +29,10 @@ const entry = () =>
     }),
     {}
   );
-
 const output = () => ({
-  filename: "js/" + filename(".js"),
-  path: path.resolve(__dirname, buildDir()),
+  filename: `${paths.assets}js/${filename(".js")}`,
+  path: distPath(),
+  publicPath: "",
   clean: true,
 });
 
@@ -42,7 +50,7 @@ const optimization = () => {
 };
 
 const devServer = () => ({
-  static: path.resolve(__dirname, "build"),
+  static: paths.dist,
   open: true,
 });
 
@@ -58,14 +66,14 @@ const rules = () => [
     use: [
       MiniCssExtractPlugin.loader,
       "css-loader",
-      // {
-      //   loader: "postcss-loader",
-      //   options: {
-      //     postcssOptions: {
-      //       plugins: [["autoprefixer"]],
-      //     },
-      //   },
-      // },
+      {
+        loader: "postcss-loader",
+        options: {
+          postcssOptions: {
+            plugins: [["autoprefixer"]],
+          },
+        },
+      },
       "sass-loader",
     ],
   },
@@ -73,32 +81,31 @@ const rules = () => [
     test: /\.(png|svg|jpg|jpeg|gif)$/i,
     type: "asset/resource",
     generator: {
-      filename: "img/" + filename(),
+      filename: `${paths.assets}img/[name].[ext]`,
     },
   },
   {
     test: /-ico\.svg$/i,
     type: "asset/resource",
     generator: {
-      filename: "img/icons/" + filename(),
+      filename: `${paths.assets}img/icons/[name].[ext]`,
     },
   },
   {
     test: /\.(woff|woff2|eot|ttf|otf)$/i,
     type: "asset/resource",
     generator: {
-      filename: "fonts/" + filename(),
+      filename: `${paths.assets}fonts/[name].[ext]`,
     },
   },
-  {
-    test: /\.html$/i,
-    loader: "html-loader",
-    options: {
-      sources: true,
-    },
-  },
+  // {
+  //   test: /\.html$/i,
+  //   loader: "html-loader",
+  //   options: {
+  //     sources: true,
+  //   },
+  // },
 ];
-
 const htmlPlugins = () =>
   pages.map(
     (page) =>
@@ -113,7 +120,15 @@ const htmlPlugins = () =>
 const plugins = () => [
   ...htmlPlugins(),
   new MiniCssExtractPlugin({
-    filename: "css/" + filename(".css"),
+    filename: `${paths.assets}css/${filename(".css")}`,
+  }),
+  new CopyWebpackPlugin({
+    patterns: [
+      {
+        from: `img`,
+        to: `${paths.assets}img`,
+      },
+    ],
   }),
 ];
 
@@ -121,7 +136,7 @@ module.exports = (env) => {
   global.mode = env.MODE;
   global.flask = env.FLASK;
   return {
-    context: path.resolve(__dirname, "src"),
+    context: paths.src,
     mode: mode,
     entry: entry(),
     output: output(),

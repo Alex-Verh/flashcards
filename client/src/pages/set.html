@@ -1,179 +1,172 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block title %} Set - {% endblock %} {% block
+container %}
 
-{% block title %} Set - {% endblock %}
-
-{% block container %}
-
-  <main class="main">
-    <div class="container">
-      <section class="flashcards">
+<main class="main">
+  <div class="container">
+    <section class="flashcards">
+      <div class="row">
+        <div class="flashcards__heading-tools">
+          Card Set Name
+          <div>
+            <div class="flashcards__tool rnd-button">
+              <img src="/static/img/icons/edit-ico.svg" alt="Edit" />
+            </div>
+            <div class="flashcards__tool rnd-button">
+              <img src="/static/img/icons/delete-ico.svg" alt="Delete" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flashcards__list">
         <div class="row">
-          <div class="flashcards__heading-tools">
-            Card Set Name
-            <div>
-              <div class="flashcards__tool rnd-button">
-                <img src="../img/icons/edit-ico.svg" alt="Edit" />
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="flashcards__card">
+              <div class="card-front">Some title of a flash-card</div>
+              <div class="card-back">
+                Some content of the same flash-card with styles and etc.
               </div>
-              <div class="flashcards__tool rnd-button">
-                <img src="../img/icons/delete-ico.svg" alt="Delete" />
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="flashcards__card"></div>
+          </div>
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="flashcards__card"></div>
+          </div>
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="flashcards__card"></div>
+          </div>
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="flashcards__card"></div>
+          </div>
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="flashcards__card"></div>
+          </div>
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="flashcards__card"></div>
+          </div>
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="flashcards__card"></div>
+          </div>
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="flashcards__card"></div>
+          </div>
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="flashcards__card"></div>
+          </div>
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="flashcards__card"></div>
+          </div>
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="flashcards__card"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="constructor">
+      <div class="constructor__title">Add New Flashcard</div>
+      <div class="constructor__parts">
+        <div class="row">
+          <div class="col-lg-6 col-md-12">
+            <div class="flashcard-side">
+              <div class="flashcard-side__workspace">
+                <div class="flashcard-side__images"></div>
+                <div class="flashcard-side__sound"></div>
+                <textarea
+                  class="flashcard-side__text none"
+                  data-key="title"
+                ></textarea>
+              </div>
+
+              <div class="flashcard-side__tools">
+                <button class="tool rnd-button" type="button" data-text-btn>
+                  <img src="/static/img/icons/text-ico.svg" alt="#" />
+                </button>
+                <button
+                  class="tool rnd-button"
+                  type="button"
+                  id="uploadImage"
+                  data-upload-btn
+                >
+                  <img src="/static/img/icons/image-ico.svg" alt="#" />
+                  <input
+                    class="none"
+                    type="file"
+                    accept=".jpg, .jpeg, .png, .svg"
+                    name="fileImages"
+                    data-key="frontImages"
+                  />
+                </button>
+                <button
+                  class="tool rnd-button"
+                  id="uploadAudio"
+                  type="button"
+                  data-upload-btn
+                >
+                  <img src="/static/img/icons/audio-ico.svg" alt="#" />
+                  <input
+                    class="none"
+                    type="file"
+                    accept=".mp3, .ogg, .wav"
+                    name="fileSound"
+                    data-key="frontAudio"
+                  />
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-12">
+            <div class="flashcard-side">
+              <div class="flashcard-side__workspace">
+                <div class="flashcard-side__images"></div>
+                <div class="flashcard-side__sound"></div>
+                <textarea
+                  class="flashcard-side__text none"
+                  data-key="title"
+                ></textarea>
+              </div>
+
+              <div class="flashcard-side__tools">
+                <button class="tool rnd-button" data-text-btn>
+                  <img src="/static/img/icons/text-ico.svg" alt="#" />
+                </button>
+                <button
+                  class="tool rnd-button"
+                  id="uploadImage"
+                  data-upload-btn
+                >
+                  <img src="/static/img/icons/image-ico.svg" alt="#" />
+                  <input
+                    class="none"
+                    type="file"
+                    accept=".jpg, .jpeg, .png, .svg"
+                    name="fileImages"
+                    data-key="backImages"
+                  />
+                </button>
+                <button
+                  class="tool rnd-button"
+                  id="uploadAudio"
+                  data-upload-btn
+                >
+                  <img src="/static/img/icons/audio-ico.svg" alt="#" />
+                  <input
+                    class="none"
+                    type="file"
+                    accept=".mp3, .ogg, .wav"
+                    name="fileSound"
+                    data-key="backAudio"
+                  />
+                </button>
               </div>
             </div>
           </div>
         </div>
-        <div class="flashcards__list">
-          <div class="row">
-            <div class="col-sm-6 col-md-4 col-lg-3">
-              <div class="flashcards__card">
-                <div class="card-front">Some title of a flash-card</div>
-                <div class="card-back">
-                  Some content of the same flash-card with styles and etc.
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-              <div class="flashcards__card"></div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-              <div class="flashcards__card"></div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-              <div class="flashcards__card"></div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-              <div class="flashcards__card"></div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-              <div class="flashcards__card"></div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-              <div class="flashcards__card"></div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-              <div class="flashcards__card"></div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-              <div class="flashcards__card"></div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-              <div class="flashcards__card"></div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-              <div class="flashcards__card"></div>
-            </div>
-            <div class="col-sm-6 col-md-4 col-lg-3">
-              <div class="flashcards__card"></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="constructor">
-        <div class="constructor__title">Add New Flashcard</div>
-        <div class="constructor__parts">
-          <div class="row">
-            <div class="col-lg-6 col-md-12">
-              <div class="flashcard-side">
-                <div class="flashcard-side__workspace">
-                  <div class="flashcard-side__images">
-                  </div>
-                  <div class="flashcard-side__sound">
-                  </div>
-                  <textarea
-                    class="flashcard-side__text none"
-                    data-key="title"
-                  ></textarea>
-                </div>
-
-                <div class="flashcard-side__tools">
-                  <button class="tool rnd-button" type="button" data-text-btn>
-                    <img src="../img/icons/text-ico.svg" alt="#" />
-                  </button>
-                  <button
-                    class="tool rnd-button"
-                    type="button"
-                    id="uploadImage"
-                    data-upload-btn
-                  >
-                    <img src="../img/icons/image-ico.svg" alt="#" />
-                    <input
-                      class="none"
-                      type="file"
-                      accept=".jpg, .jpeg, .png, .svg"
-                      name="fileImages"
-                      data-key="frontImages"
-                    />
-                  </button>
-                  <button
-                    class="tool rnd-button"
-                    id="uploadAudio"
-                    type="button"
-                    data-upload-btn
-                  >
-                    <img src="../img/icons/audio-ico.svg" alt="#" />
-                    <input
-                      class="none"
-                      type="file"
-                      accept=".mp3, .ogg, .wav"
-                      name="fileSound"
-                      data-key="frontAudio"
-                    />
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-6 col-md-12">
-              <div class="flashcard-side">
-                <div class="flashcard-side__workspace">
-                  <div class="flashcard-side__images">
-                  </div>
-                  <div class="flashcard-side__sound">
-                  </div>
-                  <textarea
-                    class="flashcard-side__text none"
-                    data-key="title"
-                  ></textarea>
-                </div>
-
-                <div class="flashcard-side__tools">
-                  <button class="tool rnd-button" data-text-btn>
-                    <img src="../img/icons/text-ico.svg" alt="#" />
-                  </button>
-                  <button
-                    class="tool rnd-button"
-                    id="uploadImage"
-                    data-upload-btn
-                  >
-                    <img src="../img/icons/image-ico.svg" alt="#" />
-                    <input
-                      class="none"
-                      type="file"
-                      accept=".jpg, .jpeg, .png, .svg"
-                      name="fileImages"
-                      data-key="backImages"
-                    />
-                  </button>
-                  <button
-                    class="tool rnd-button"
-                    id="uploadAudio"
-                    data-upload-btn
-                  >
-                    <img src="../img/icons/audio-ico.svg" alt="#" />
-                    <input
-                      class="none"
-                      type="file"
-                      accept=".mp3, .ogg, .wav"
-                      name="fileSound"
-                      data-key="backAudio"
-                    />
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="button">Create</div>
-      </section>
-    </div>
-  </main>
+      </div>
+      <div class="button">Create</div>
+    </section>
+  </div>
+</main>
 
 {% endblock %}
