@@ -105,9 +105,9 @@ class ApiService:
     @classmethod
     def get_cardsets(cls):
         sort_by = {
-            "saves": "total_saves",
-            "date": "card_sets.created_at",
-            "title": "card_sets.title",
+            "saves": db.func.count(db.func.distinct(user_cardset_assn.c.user_id)),
+            "title": CardSet.title,
+            "date": CardSet.created_at,
         }
         try:
             params = cls._get_cardset_params(sort_by)
@@ -169,11 +169,11 @@ class ApiService:
         query = (
             db.session.query(
                 CardSet,
-                db.text("count(user_cardset_assn.cardset_id) AS total_saves"),
-                db.text("count(flash_cards.id) AS total_flashcards"),
+                db.func.count(db.func.distinct(user_cardset_assn.c.user_id)),
+                db.func.count(db.func.distinct(FlashCard.id)),
             )
-            .join(user_cardset_assn, isouter=True)
-            .join(FlashCard)
+            .outerjoin(user_cardset_assn)
+            .outerjoin(FlashCard)
             .filter(CardSet.is_public)
         )
 
@@ -185,7 +185,6 @@ class ApiService:
         if params["only_saved"]:
             if not current_user.is_authenticated:
                 return jsonify({"error": "Not authorized"}), 401
-            print(current_user.saved_cardsets.all())
             query = query.filter(
                 db.and_(
                     user_cardset_assn.c.cardset_id == CardSet.id,
@@ -200,12 +199,11 @@ class ApiService:
             query = query.filter(CardSet.category_id == params["category_id"])
 
         query = (
-            query.group_by(CardSet.id)
-            .order_by(db.text(f"{sort_map[params['sort_by']]} {params['sort_order']}"))
+            query.group_by(CardSet)
+            .order_by(getattr(sort_map[params["sort_by"]], params["sort_order"])())
             .limit(params["limit"])
             .offset(params["offset"])
         )
-        print(query)
         return query
 
     @classmethod
