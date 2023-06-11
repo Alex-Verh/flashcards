@@ -39,7 +39,6 @@ export const initModals = () => {
   if (profileButton) {
     profileButton.addEventListener("click", () => {
       profileButton.parentElement.focus();
-      console.log(profileButton.parentElement)
     });
   }
 };

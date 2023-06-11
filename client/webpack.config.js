@@ -19,7 +19,9 @@ const filename = (ext = "[ext]") =>
 
 const distPath = () =>
   flask ? path.resolve(__dirname, "../server/app/static") : paths.dist;
-const templatesDir = () => (flask ? "../templates/" : "");
+const templatesPath = () => (flask ? "../templates/" : "");
+const assetsPath = () => (flask ? "" : paths.assets);
+const publicPath = () => (flask ? paths.assets : "");
 
 const entry = () =>
   pages.reduce(
@@ -30,9 +32,9 @@ const entry = () =>
     {}
   );
 const output = () => ({
-  filename: `${paths.assets}js/${filename(".js")}`,
+  filename: `${assetsPath()}js/${filename(".js")}`,
   path: distPath(),
-  publicPath: "",
+  publicPath: publicPath(),
   clean: true,
 });
 
@@ -81,21 +83,21 @@ const rules = () => [
     test: /\.(png|svg|jpg|jpeg|gif)$/i,
     type: "asset/resource",
     generator: {
-      filename: `${paths.assets}img/[name].[ext]`,
+      filename: `${assetsPath()}img/[name][ext]`,
     },
   },
   {
     test: /-ico\.svg$/i,
     type: "asset/resource",
     generator: {
-      filename: `${paths.assets}img/icons/[name].[ext]`,
+      filename: `${assetsPath()}img/icons/[name][ext]`,
     },
   },
   {
     test: /\.(woff|woff2|eot|ttf|otf)$/i,
     type: "asset/resource",
     generator: {
-      filename: `${paths.assets}fonts/[name].[ext]`,
+      filename: `${assetsPath()}fonts/[name][ext]`,
     },
   },
   // {
@@ -112,7 +114,7 @@ const htmlPlugins = () =>
       new HtmlWebpackPlugin({
         inject: true,
         template: `./pages/${page}.html`,
-        filename: templatesDir() + `${page}.html`,
+        filename: templatesPath() + `${page}.html`,
         chunks: [page],
       })
   );
@@ -120,13 +122,18 @@ const htmlPlugins = () =>
 const plugins = () => [
   ...htmlPlugins(),
   new MiniCssExtractPlugin({
-    filename: `${paths.assets}css/${filename(".css")}`,
+    filename: `${assetsPath()}css/${filename(".css")}`,
   }),
   new CopyWebpackPlugin({
     patterns: [
       {
         from: `img`,
-        to: `${paths.assets}img`,
+        to: `${assetsPath()}img`,
+      },
+      { from: "pages/modal", to: `${templatesPath()}modal` },
+      {
+        from: "pages/base.html",
+        to: `${templatesPath()}base.html`,
       },
     ],
   }),

@@ -28,23 +28,17 @@
             </div>
           </div>
           <div class="col">
-            <div class="nav__auth">
-              {{ if current_user.is_authenticated }}
+            <div class="nav__auth" tabindex="0">
+              {% if current_user.is_authenticated %}
               <div class="nav__profile rnd-button">
-                <img src="/static/img/icons/profile-ico.svg" alt="P" />
+                <img src="static/img/icons/profile-ico.svg" alt="P" />
               </div>
-              {{ else }}
+              {% include "modal/profile-dropdown.html" %} {% else %}
               <a href="{{ url_for('users.register') }}" class="nav__link"
                 >Register</a
               >
               <a href="{{ url_for('users.login') }}" class="nav__btn">Login</a>
-              {{ endif }}
-              <img
-                class="nav__menu"
-                src="/static/img/icons/menu-ico.svg"
-                alt="Menu"
-                data-modal-class="menu"
-              />
+              {% endif %}
             </div>
           </div>
         </div>
@@ -52,7 +46,9 @@
       </div>
     </nav>
 
-    {% block container %} {% endblock %}
+    {% block modals %} {% include "modal/mobile-menu.html" %} {% if not
+    current_user.is_authenticated %} {% include "modal/unauthorized.html" %} {%
+    endif %} {% endblock %} {% block container %} {% endblock %}
 
     <footer class="footer">
       <div class="container">
