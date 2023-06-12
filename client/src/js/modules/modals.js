@@ -24,16 +24,24 @@ export const initModals = () => {
     const modal = document.querySelector(`.${modalClass}`);
 
     const closeModalWhenClickOutside = (e) => {
-       if (!e.target.closest(`.${modalClass}`) && !e.target.closest("[data-modal-class]")) {
+      console.log(modalClass);
+      if (!e.target.closest(`.${modalClass}`)) {
+        console.log("click");
         closeModal(modal);
         document.body.removeEventListener("click", closeModalWhenClickOutside);
       }
-    }
+    };
 
-    link.addEventListener("click", () => {
-      openModal(modal);
-      if (!modal.classList.contains('none') && !modal.parentElement.classList.contains('none')) {
+    link.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (
+        modal.classList.contains("none") ||
+        modal.parentElement.classList.contains("none")
+      ) {
+        openModal(modal);
         document.body.addEventListener("click", closeModalWhenClickOutside);
+      } else {
+        closeModal(modal);
       }
     });
   });
