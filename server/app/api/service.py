@@ -6,7 +6,7 @@ from flask_login import current_user
 
 from ..extensions import db
 from ..funcs import delete_cardset_files, save_audio, save_image
-from ..models import CardSet, CardSetCategory, FlashCard, user_cardset_assn
+from ..models import CardSet, CardSetCategory, FlashCard, User, user_cardset_assn
 
 
 class ApiService:
@@ -150,8 +150,8 @@ class ApiService:
             "search_query": request.args.get("searchQ"),
             "sort_by": request.args.get("sortBy", default="saves"),
             "sort_order": request.args.get("sortOrder", default="desc"),
-            "only_own": request.args.get("onlyOwn", default=False),
-            "only_saved": request.args.get("onlySaved", default=False),
+            "only_own": cls._parse_bool(request.args.get("onlyOwn", default=False)),
+            "only_saved": cls._parse_bool(request.args.get("onlySaved", default=False)),
         }
         if (
             params["offset"] < 0
@@ -174,23 +174,18 @@ class ApiService:
             )
             .outerjoin(user_cardset_assn)
             .outerjoin(FlashCard)
-            .filter(CardSet.is_public)
         )
+        # if params["only_saved"]:
+        #     if not current_user.is_authenticated:
+        #         return jsonify({"error": "Not authorized"}), 401
+        #     query = query.filter(CardSet.id.in_([1, 2, 3]))
 
         if params["only_own"]:
             if not current_user.is_authenticated:
                 return jsonify({"error": "Not authorized"}), 401
             query = query.filter(CardSet.author == current_user)
-
-        if params["only_saved"]:
-            if not current_user.is_authenticated:
-                return jsonify({"error": "Not authorized"}), 401
-            query = query.filter(
-                db.and_(
-                    user_cardset_assn.c.cardset_id == CardSet.id,
-                    user_cardset_assn.c.user_id == current_user.id,
-                )
-            )
+        else:
+            query = query.filter(CardSet.is_public)
 
         if params["search_query"]:
             query = query.filter(CardSet.title.like("%" + params["search_query"] + "%"))
@@ -205,6 +200,10 @@ class ApiService:
             .offset(params["offset"])
         )
         return query
+
+    @classmethod
+    def _parse_bool(cls, value):
+        return str(value).lower() in ["yes", "true", "1"]
 
     @classmethod
     def create_flashcard(cls):

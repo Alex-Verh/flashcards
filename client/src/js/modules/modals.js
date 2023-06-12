@@ -1,7 +1,14 @@
 export const openModal = (modal) => {
+  const closeModalWhenClickOutside = (e) => {
+    if (!e.target.closest(`.${modal.classList[0]}`)) {
+      closeModal(modal);
+      document.body.removeEventListener("click", closeModalWhenClickOutside);
+    }
+  };
   modal.classList.remove("none");
   modal.parentElement.classList.remove("none");
   document.body.style.overflow = "hidden";
+  document.body.addEventListener("click", closeModalWhenClickOutside);
 };
 
 export const closeModal = (modal) => {
@@ -22,16 +29,6 @@ export const initModals = () => {
   openModalLinks.forEach((link) => {
     const modalClass = link.dataset.modalClass;
     const modal = document.querySelector(`.${modalClass}`);
-
-    const closeModalWhenClickOutside = (e) => {
-      console.log(modalClass);
-      if (!e.target.closest(`.${modalClass}`)) {
-        console.log("click");
-        closeModal(modal);
-        document.body.removeEventListener("click", closeModalWhenClickOutside);
-      }
-    };
-
     link.addEventListener("click", (e) => {
       e.stopPropagation();
       if (
@@ -39,7 +36,6 @@ export const initModals = () => {
         modal.parentElement.classList.contains("none")
       ) {
         openModal(modal);
-        document.body.addEventListener("click", closeModalWhenClickOutside);
       } else {
         closeModal(modal);
       }

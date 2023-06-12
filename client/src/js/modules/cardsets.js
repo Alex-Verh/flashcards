@@ -9,14 +9,27 @@ import savedIco from "../../img/icons/saved-ico.svg";
 import deleteIco from "../../img/icons/delete-ico.svg";
 
 export const generateCardsetsHTML = (cardsets) => {
-  const cardsetsHTML = cardsets.reduce(
-    (prev, cardset) =>
+  const cardsetsHTML = cardsets.reduce((prev, cardset) => {
+    const saveOrDeleteHTML = cardset.is_own
+      ? `
+     <div class="card-set__delete" data-cardset-id="${cardset.id}">
+        <img src=${deleteIco} alt="delete"/>
+      </div>
+     `
+      : `
+      <div class="card-set__save" data-cardset-id="${cardset.id}">
+        <img src=${cardset.is_saved ? savedIco : saveIco} alt="save"/>
+        <span>${cardset.saves}</span>
+      </div>
+     `;
+
+    return (
       prev +
       `
     <div class="col-sm-6 col-md-4 col-lg-3">
       <div class="card-set">
         <div class="card-set__counter">
-          <img src=${flashcardsIco} alt="Nr" />
+          <img src=${flashcardsIco} alt="flashcards" />
           <span>${cardset.flashcards_qty}</span>
         </div>
         <div class="card-set__category" style="background-color: ${
@@ -24,15 +37,12 @@ export const generateCardsetsHTML = (cardsets) => {
         }">${cardset.category}</div>
         <div class="card-set__name">${cardset.title}</div>
         <div class="card-set__author">${cardset.author}</div>
-        <div class="card-set__saved" data-cardset-id="${cardset.id}">
-          <img src=${cardset.is_saved ? savedIco : saveIco} alt="Nr"/>
-          <span>${cardset.saves}</span>
-        </div>
+       ${saveOrDeleteHTML}
       </div>
     </div>
-    `,
-    ""
-  );
+    `
+    );
+  }, "");
   return cardsetsHTML;
 };
 
@@ -68,8 +78,9 @@ export const initCardsetsSection = (
 ) => {
   const cardsetsContainer = document.querySelector(cardsetsContainerSelector);
   const loadMoreBtn = document.querySelector(loadMoreBtnSelector);
-
   const loadCardsets = async () => {
+    cardsetsContainer.nextElementSibling &&
+      cardsetsContainer.nextElementSibling.remove();
     cardsetsContainer.insertAdjacentHTML(
       "afterend",
       `
@@ -83,8 +94,19 @@ export const initCardsetsSection = (
       "beforeend",
       generateCardsetsHTML(cardsets)
     );
+    cardsetsContainer.nextElementSibling &&
+      cardsetsContainer.nextElementSibling.remove();
 
-    cardsetsContainer.nextElementSibling.remove();
+    if (!cardsetsContainer.childElementCount) {
+      cardsetsContainer.insertAdjacentHTML(
+        "afterend",
+        `
+        <div style="text-align: center; font-size: 20px; margin-top: 50px; color: #6b6b6b">
+          There is no cardsets now
+        </div>
+      `
+      );
+    }
     if (loadMoreBtn) {
       if (cardsets.length < queryParams.limit) {
         loadMoreBtn.classList.add("none");
@@ -93,7 +115,6 @@ export const initCardsetsSection = (
       }
     }
   };
-
   loadCardsets(queryParams, cardsetsContainer);
 
   loadMoreBtn &&
@@ -103,12 +124,16 @@ export const initCardsetsSection = (
     });
 
   typeSelector &&
-    initDropdown(typeSelector, (clickedItem) => {
-      queryParams.filter = clickedItem.dataset.filter;
-      queryParams.offset = 0;
-      cardsetsContainer.innerHTML = "";
-      loadCardsets();
-    });
+    initDropdown(
+      typeSelector,
+      (clickedItem) => {
+        queryParams.filter = clickedItem.dataset.filter;
+        queryParams.offset = 0;
+        cardsetsContainer.innerHTML = "";
+        loadCardsets();
+      },
+      document.querySelector(`[data-filter=${queryParams.filter}]`).textContent
+    );
 
   document.querySelector(searchSelector).addEventListener("change", (e) => {
     queryParams.searchQ = e.target.value;

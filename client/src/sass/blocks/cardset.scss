@@ -28,10 +28,19 @@
     left: 5%;
     padding-top: 1px;
   }
-  &__saved {
+  &__save {
     position: absolute;
     right: 5%;
     bottom: 6%;
+  }
+  &__delete {
+    position: absolute;
+    right: 4%;
+    bottom: 6%;
+    img {
+      width: 17px;
+      height: 17px;
+    }
   }
   &__category {
     position: absolute;

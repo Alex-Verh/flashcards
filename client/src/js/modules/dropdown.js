@@ -1,9 +1,21 @@
-export const initDropdown = (selector, onChange) => {
+export const initDropdown = (selector, onChange, initialValue) => {
   const dropdown = document.querySelector(selector);
   const dropdownBtn = dropdown.firstElementChild;
+  let isOpen = false;
+
+  if (initialValue) {
+    dropdownBtn.classList.add("dropdown__btn_choosed");
+    dropdownBtn.textContent = initialValue;
+  }
 
   dropdownBtn.addEventListener("click", (e) => {
-    dropdownBtn.parentElement.focus();
+    if (isOpen) {
+      dropdownBtn.parentElement.blur();
+      isOpen = false;
+    } else {
+      dropdownBtn.parentElement.focus();
+      isOpen = true;
+    }
   });
 
   dropdown.lastElementChild.addEventListener("click", (e) => {
@@ -12,6 +24,7 @@ export const initDropdown = (selector, onChange) => {
       dropdownBtn.classList.add("dropdown__btn_choosed");
       dropdownBtn.textContent = target.textContent;
       dropdownBtn.parentElement.blur();
+      isOpen = false;
       onChange(target);
     }
   });
