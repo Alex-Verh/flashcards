@@ -23,9 +23,18 @@ export const initModals = () => {
     const modalClass = link.dataset.modalClass;
     const modal = document.querySelector(`.${modalClass}`);
 
+    const closeModalWhenClickOutside = (e) => {
+       if (!e.target.closest(`.${modalClass}`) && !e.target.closest("[data-modal-class]")) {
+        closeModal(modal);
+        document.body.removeEventListener("click", closeModalWhenClickOutside);
+      }
+    }
+
     link.addEventListener("click", () => {
       openModal(modal);
-      link.parentElement?.parentElement?.blur();
+      if (!modal.classList.contains('none') && !modal.parentElement.classList.contains('none')) {
+        document.body.addEventListener("click", closeModalWhenClickOutside);
+      }
     });
   });
 
@@ -34,11 +43,4 @@ export const initModals = () => {
       closeModal(closeBtn.parentElement);
     });
   });
-
-  const profileButton = document.querySelector(".nav__profile");
-  if (profileButton) {
-    profileButton.addEventListener("click", () => {
-      profileButton.parentElement.focus();
-    });
-  }
 };

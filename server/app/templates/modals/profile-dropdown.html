@@ -1,6 +1,6 @@
-<div class="profile-modal">
+<div class="profile-modal none">
   <div class="profile-modal__element">
-    <a href="../cardsets.html">
+    <a href="{{url_for('main.cardsets')}}">
       <img src="static/img/icons/cardsets-ico.svg" alt="" />
       <span>Card Sets</span>
     </a>
@@ -15,7 +15,9 @@
     <span>Settings</span>
   </div>
   <div class="profile-modal__element">
-    <img src="static/img/icons/exit-ico.svg" alt="" />
-    <span>Log out</span>
+    <a href="{{url_for('users.logout')}}">
+      <img src="static/img/icons/exit-ico.svg" alt="" />
+      <span>Log out</span>
+    </a>
   </div>
 </div>

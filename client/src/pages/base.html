@@ -21,7 +21,7 @@
               <a href="{{ url_for('main.main') }}#cards" class="nav__link"
                 >Cards</a
               >
-              <a href="" class="nav__link" data-modal-class="learning">Learn</a>
+              <span href="" class="nav__link" data-modal-class="learning">Learn</span>
               <a href="{{ url_for('main.main') }}#help" class="nav__link"
                 >Help</a
               >
@@ -30,15 +30,15 @@
           <div class="col">
             <div class="nav__auth" tabindex="0">
               {% if current_user.is_authenticated %}
-              <div class="nav__profile rnd-button">
+              <div class="nav__profile rnd-button" data-modal-class="profile-modal">
                 <img src="static/img/icons/profile-ico.svg" alt="P" />
               </div>
-              {% include "modal/profile-dropdown.html" %} {% else %}
-              <a href="{{ url_for('users.register') }}" class="nav__link"
-                >Register</a
-              >
+              {% include "modals/profile-dropdown.html" %} {% else %}
+              <a href="{{ url_for('users.register') }}" class="nav__link">Register</a>
               <a href="{{ url_for('users.login') }}" class="nav__btn">Login</a>
               {% endif %}
+              <img class="nav__menu" src="static/img/icons/menu-ico.svg" alt="Menu" data-modal-class="menu"/>
+
             </div>
           </div>
         </div>
@@ -46,9 +46,21 @@
       </div>
     </nav>
 
-    {% block modals %} {% include "modal/mobile-menu.html" %} {% if not
-    current_user.is_authenticated %} {% include "modal/unauthorized.html" %} {%
-    endif %} {% endblock %} {% block container %} {% endblock %}
+    {% block modals %} 
+      {% include "modals/mobile-menu.html" %} 
+      {% include "modals/choose-learning.html" %} 
+      {% include "modals/choose-cardset.html" %} 
+      {% include "modals/learning-modal.html" %} 
+
+      {% if not current_user.is_authenticated %} 
+        {% include "modals/unauthorized.html" %} 
+      {% else %}
+        {% include "modals/create-cardset.html" %}
+        {% include "modals/account-settings.html" %}
+      {% endif %} 
+    {% endblock %} 
+    
+    {% block container %} {% endblock %}
 
     <footer class="footer">
       <div class="container">

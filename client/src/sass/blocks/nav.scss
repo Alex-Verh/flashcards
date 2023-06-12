@@ -30,9 +30,6 @@
     text-align: right;
     font-weight: 600;
     position: relative;
-    &:focus .profile-modal {
-      display: block;
-    }
   }
   &__btn {
     background: $main-color;

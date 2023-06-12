@@ -1,6 +1,9 @@
 import "../sass/pages/set.scss";
+import { initModals} from "./modules/modals";
 
 document.addEventListener("DOMContentLoaded", () => {
+  initModals();
+
   const flashcards = document.querySelector(".flashcards");
 
   flashcards.addEventListener("click", (event) => {

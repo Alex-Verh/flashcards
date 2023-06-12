@@ -21,7 +21,7 @@ const distPath = () =>
   flask ? path.resolve(__dirname, "../server/app/static") : paths.dist;
 const templatesPath = () => (flask ? "../templates/" : "");
 const assetsPath = () => (flask ? "" : paths.assets);
-const publicPath = () => (flask ? paths.assets : "");
+const publicPath = () => (flask ? '/' + paths.assets : "");
 
 const entry = () =>
   pages.reduce(
@@ -130,7 +130,7 @@ const plugins = () => [
         from: `img`,
         to: `${assetsPath()}img`,
       },
-      { from: "pages/modal", to: `${templatesPath()}modal` },
+      { from: "pages/modals", to: `${templatesPath()}modals` },
       {
         from: "pages/base.html",
         to: `${templatesPath()}base.html`,
