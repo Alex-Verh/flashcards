@@ -1,32 +1,28 @@
-{% extends "base.html" %}
-
-{% block title %} Login - {% endblock %}
-
-{% block container %}
-  <main class="register">
-    <div class="container">
-      <form action="" method="POST">
-        {{ form.hidden_tag() }}
-        <div class="register__field">
-          {{ form.username.label(class='label') -}} {% if form.username.errors
-          %} {{ form.username(class='input input_error', autocomplete='off')
-          -}}
-          <div class="register__error">{{ form.username.errors[0] }}</div>
-          {% else %} {{ form.username(class='input', autocomplete='off') -}}
-          {% endif %}
-        </div>
-        <div class="register__field">
-          {{ form.password.label(class='label') -}} {% if form.password.errors
-          %} {{ form.password(class='input input_error', autocomplete='off')
-          -}}
-          <div class="register__error">{{ form.password.errors[0] }}</div>
-          {% else %} {{ form.password(class='input', autocomplete='off') -}}
-          {% endif %}
-          <a class="register__forget-pass">Forgot your password?</a>
-        </div>
-        {{ form.submit(class='button') }}
-      </form>
-      <p>Do not have an account? <a href="#">Register</a></p>
-    </div>
-  </main>
+{% extends "base.html" %} {% block title %} Login - {% endblock %} {% block head
+%}<%=htmlWebpackPlugin.tags.headTags %> <%= htmlWebpackPlugin.tags.bodyTags %>{%
+endblock %} {% block container %}
+<main class="register">
+  <div class="container">
+    <form action="" method="POST">
+      {{ form.hidden_tag() }}
+      <div class="register__field">
+        {{ form.username.label(class='label') -}} {% if form.username.errors %}
+        {{ form.username(class='input input_error', autocomplete='off') -}}
+        <div class="register__error">{{ form.username.errors[0] }}</div>
+        {% else %} {{ form.username(class='input', autocomplete='off') -}} {%
+        endif %}
+      </div>
+      <div class="register__field">
+        {{ form.password.label(class='label') -}} {% if form.password.errors %}
+        {{ form.password(class='input input_error', autocomplete='off') -}}
+        <div class="register__error">{{ form.password.errors[0] }}</div>
+        {% else %} {{ form.password(class='input', autocomplete='off') -}} {%
+        endif %}
+        <a class="register__forget-pass">Forgot your password?</a>
+      </div>
+      {{ form.submit(class='button') }}
+    </form>
+    <p>Do not have an account? <a href="#">Register</a></p>
+  </div>
+</main>
 {% endblock %}
