@@ -112,7 +112,7 @@ const htmlPlugins = () =>
   pages.map(
     (page) =>
       new HtmlWebpackPlugin({
-        inject: true,
+        inject: false,
         template: `./pages/${page}.html`,
         filename: templatesPath() + `${page}.html`,
         chunks: [page],
