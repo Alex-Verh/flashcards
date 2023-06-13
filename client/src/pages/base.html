@@ -37,7 +37,7 @@
                 class="nav__profile rnd-button"
                 data-modal-class="profile-modal"
               >
-                <img src="static/img/icons/profile-ico.svg" alt="P" />
+                <img src="/static/img/icons/profile-ico.svg" alt="P" />
               </div>
               {% include "modals/profile-dropdown.html" %} {% else %}
               <a href="{{ url_for('users.register') }}" class="nav__link"
@@ -47,7 +47,7 @@
               {% endif %}
               <img
                 class="nav__menu"
-                src="static/img/icons/menu-ico.svg"
+                src="/static/img/icons/menu-ico.svg"
                 alt="Menu"
                 data-modal-class="menu"
               />

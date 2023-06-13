@@ -4,7 +4,11 @@ import { initModals } from "./modules/modals";
 
 document.addEventListener("DOMContentLoaded", () => {
   initModals();
-  initCardsetCreation();
+  try {
+    initCardsetCreation();
+  } catch (e) {
+    console.log(e);
+  }
 
   const flashcards = document.querySelector(".flashcards");
 

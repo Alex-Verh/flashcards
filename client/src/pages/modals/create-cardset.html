@@ -1,16 +1,20 @@
 <div class="overlay none">
   <div class="create-cardset modal">
     <div class="modal__close">
-      <img src="static/img/icons/close-ico.svg" alt="Close" />
+      <img src="/static/img/icons/close-ico.svg" alt="Close" />
     </div>
     <div class="create-cardset__title">Create Card Set</div>
-    <form action="">
-      <input class="input" type="text" placeholder="Card set name" />
+    <form action="/api/cardset" method="POST">
+      <input
+        class="input"
+        type="text"
+        name="title"
+        placeholder="Card set name"
+      />
+      <input style="display: none" type="text" name="category" />
       <div class="dropdown" id="categoryForNewSet" tabindex="0">
         <button class="dropdown__btn" type="button">Category</button>
-        <ul class="dropdown__content" data-categories-dropdown>
-          <li class="dropdown__item" data-category-id="0">All</li>
-        </ul>
+        <ul class="dropdown__content" data-categories-dropdown></ul>
       </div>
 
       <div class="choice">

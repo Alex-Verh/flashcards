@@ -10,7 +10,11 @@ import { loadCategories } from "./modules/categories";
 
 document.addEventListener("DOMContentLoaded", () => {
   initModals();
-  initCardsetCreation();
+  try {
+    initCardsetCreation();
+  } catch (e) {
+    console.log(e);
+  }
   loadCategories();
   initCardsetsSection(
     {
@@ -30,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
   );
   document
     .querySelector(".main__card-sets .row")
-    .addEventListener("click", async (e) => {
+    .addEventListener("click", (e) => {
       const saveBtn = e.target.closest(".card-set__save");
       const deleteBtn = e.target.closest(".card-set__delete");
       if (saveBtn) {

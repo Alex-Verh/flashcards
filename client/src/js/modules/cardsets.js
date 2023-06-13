@@ -177,5 +177,8 @@ export const initCardsetsSection = (
 };
 
 export const initCardsetCreation = () => {
-  initDropdown("#categoryForNewSet", () => {});
+  initDropdown("#categoryForNewSet", (clickedItem) => {
+    clickedItem.parentElement.parentElement.prevElementSibling.value =
+      clickedItem.dataset.categoryId;
+  });
 };

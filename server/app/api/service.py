@@ -55,7 +55,7 @@ class ApiService:
     def create_cardset(cls):
         cardset = CardSet(
             title=request.form.get("title"),
-            is_public=request.form.get("is_public", default=0, type=int),
+            is_public=cls._parse_bool(request.form.get("is_public", default=False)),
             category_id=request.form.get("category", default=21, type=int),
             user_id=current_user.id,
         )
@@ -173,7 +173,9 @@ class ApiService:
                 cardsets_view,
                 db.exists()
                 .where(user_cardset_assn.c.user_id == current_user.id)
-                .where(cardsets_view.c.id == user_cardset_assn.c.cardset_id),
+                .where(cardsets_view.c.id == user_cardset_assn.c.cardset_id)
+                if current_user.is_authenticated
+                else False,
             ).filter(cardsets_view.c.is_public)
 
         if params["search_query"]:
@@ -202,7 +204,9 @@ class ApiService:
                 "saves": cardset[6],
                 "flashcards_qty": cardset[7],
                 "is_saved": cardset[-1],
-                "is_own": cardset[4] == current_user.id,
+                "is_own": cardset[4] == current_user.id
+                if current_user.is_authenticated
+                else False,
             }
             for cardset in results
         ]
