@@ -13,14 +13,25 @@
     </div>
     <div class="mode-choice__title">Mode:</div>
     <div class="choice">
-      <input type="radio" name="is_public" value="1" id="option-1" checked />
-      <input type="radio" name="is_public" value="0" id="option-2" />
-      <label for="option-1" class="choice__option choice__option-1"
-        ><span>Guess content</span></label
+      <input
+        type="radio"
+        class="choice__option choice__option-1"
+        name="learning-mode"
+        value="1"
+        id="content-mode"
+        checked
+      />
+      <label for="content-mode" class="choice__option-label"
+        >Guess content</label
       >
-      <label for="option-2" class="choice__option choice__option-2"
-        ><span>Guess title</span></label
-      >
+      <input
+        type="radio"
+        class="choice__option choice__option-1"
+        name="learning-mode"
+        value="0"
+        id="title-mode"
+      />
+      <label for="title-mode" class="choice__option-label">Guess title</label>
     </div>
     <div class="button">Start</div>
   </div>

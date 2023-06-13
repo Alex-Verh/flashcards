@@ -1,8 +1,10 @@
 import "../sass/pages/set.scss";
-import { initModals} from "./modules/modals";
+import { initCardsetCreation } from "./modules/cardsets";
+import { initModals } from "./modules/modals";
 
 document.addEventListener("DOMContentLoaded", () => {
   initModals();
+  initCardsetCreation();
 
   const flashcards = document.querySelector(".flashcards");
 

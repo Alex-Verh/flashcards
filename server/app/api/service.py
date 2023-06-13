@@ -150,23 +150,31 @@ class ApiService:
 
     @classmethod
     def _create_cardsets_query(cls, params, sort_map):
-        query = db.session.query(
-            cardsets_view,
-            db.exists()
-            .where(user_cardset_assn.c.user_id == current_user.id)
-            .where(cardsets_view.c.id == user_cardset_assn.c.cardset_id),
-        )
         if params["only_saved"]:
             if not current_user.is_authenticated:
                 return jsonify({"error": "Not authorized"}), 401
-            # query = current_user.saved_cardsets
+            query = (
+                db.session.query(cardsets_view, True)
+                .filter(user_cardset_assn.c.user_id == current_user.id)
+                .filter(cardsets_view.c.id == user_cardset_assn.c.cardset_id)
+                .filter(cardsets_view.c.is_public)
+            )
 
-        if params["only_own"]:
+        elif params["only_own"]:
             if not current_user.is_authenticated:
                 return jsonify({"error": "Not authorized"}), 401
-            # query = query.filter(CardSet.author == current_user)
+            query = db.session.query(
+                cardsets_view,
+                False,
+            ).filter(cardsets_view.c.author_id == current_user.id)
+
         else:
-            query = query.filter(cardsets_view.c.is_public)
+            query = db.session.query(
+                cardsets_view,
+                db.exists()
+                .where(user_cardset_assn.c.user_id == current_user.id)
+                .where(cardsets_view.c.id == user_cardset_assn.c.cardset_id),
+            ).filter(cardsets_view.c.is_public)
 
         if params["search_query"]:
             query = query.filter(

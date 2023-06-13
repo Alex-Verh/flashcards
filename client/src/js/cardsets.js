@@ -1,13 +1,17 @@
 import "../sass/pages/cardsets.scss";
-import { initCardsetsSection } from "./modules/cardsets";
+import {
+  initCardsetsSection,
+  initCardsetCreation,
+  handleCardsetSave,
+  handleCardsetDelete,
+} from "./modules/cardsets";
 import { initModals } from "./modules/modals";
 import { loadCategories } from "./modules/categories";
 
 document.addEventListener("DOMContentLoaded", () => {
   initModals();
-
+  initCardsetCreation();
   loadCategories();
-
   initCardsetsSection(
     {
       offset: 0,
@@ -24,4 +28,19 @@ document.addEventListener("DOMContentLoaded", () => {
     "#sortBy",
     "#cardsetsType"
   );
+  document
+    .querySelector(".main__card-sets .row")
+    .addEventListener("click", async (e) => {
+      const saveBtn = e.target.closest(".card-set__save");
+      const deleteBtn = e.target.closest(".card-set__delete");
+      if (saveBtn) {
+        handleCardsetSave(saveBtn, (response) => {
+          if (!response.saved) {
+            saveBtn.parentElement.parentElement.remove();
+          }
+        });
+      } else if (deleteBtn) {
+        handleCardsetDelete(deleteBtn);
+      }
+    });
 });

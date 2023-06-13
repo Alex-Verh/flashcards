@@ -1,4 +1,9 @@
-import { CARDSETS_URL, CATEGORIES_URL, SAVE_CARDSET_URL } from "./endpoints";
+import {
+  CARDSETS_URL,
+  CARDSET_URL,
+  CATEGORIES_URL,
+  SAVE_CARDSET_URL,
+} from "./endpoints";
 
 const stringifyQueryParams = (paramsObj) =>
   Object.entries(paramsObj)
@@ -36,6 +41,17 @@ export const saveCardset = async (id) => {
   try {
     const res = await customFetch(`${SAVE_CARDSET_URL}/${id}`, {
       method: "PATCH",
+    });
+    return res.json();
+  } catch (e) {
+    throw e;
+  }
+};
+
+export const deleteCardset = async (id) => {
+  try {
+    const res = await customFetch(`${CARDSET_URL}/${id}`, {
+      method: "DELETE",
     });
     return res.json();
   } catch (e) {

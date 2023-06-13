@@ -1,25 +1,19 @@
 .create-cardset {
-    width: 866px;
-    height: 569px;
-    &__title {
-        font-weight: 700;
-        font-size: 40px;
-        margin-top: 115px;
-    }
-    input {
-        box-shadow: $box-shadow-hover;
-        &:focus {
-            box-shadow: $box-shadow;
-        }
-    }
-    input[type=text] {
-        width: 326px;
-        display: block;
-        margin: 30px auto;
-    }
-    input[type=submit] {
-        border: none;
-        margin-top: 30px;
-    }
+  width: 866px;
+  height: 569px;
+  &__title {
+    font-weight: 700;
+    font-size: 40px;
+    margin-top: 115px;
+  }
+  input[type="text"],
+  .dropdown {
+    width: 326px;
+    display: block;
+    margin: 30px auto;
+  }
+  input[type="submit"] {
+    border: none;
+    margin-top: 30px;
+  }
 }
-

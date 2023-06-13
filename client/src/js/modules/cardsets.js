@@ -1,7 +1,7 @@
-import { getCardsets, saveCardset } from "../api/queries";
+import { deleteCardset, getCardsets, saveCardset } from "../api/queries";
 import { categoryColor } from "../constants";
 import { initDropdown } from "./dropdown";
-import { openModal } from "./modals";
+import { openModal, useConfirmModal } from "./modals";
 
 import flashcardsIco from "../../img/icons/counter-ico.svg";
 import saveIco from "../../img/icons/save-ico.svg";
@@ -46,25 +46,44 @@ export const generateCardsetsHTML = (cardsets) => {
   return cardsetsHTML;
 };
 
-export const handleCardsetSave = async (saveBtn) => {
+export const handleCardsetSave = async (saveBtn, onSuccess) => {
   const cardsetId = saveBtn.dataset.cardsetId;
   const prevContent = saveBtn.innerHTML;
+  if (!(onSuccess instanceof Function)) {
+    onSuccess = (response) => {
+      saveBtn.innerHTML = `
+          <img src=${response.saved ? savedIco : saveIco} alt="Nr"/>
+          <span>${response.saves}</span>
+          `;
+    };
+  }
   try {
     saveBtn.innerHTML = `
         <div style="border: 10px solid; transform: translateX(-8px);" class="loading-spinner"></div>
         `;
     const res = await saveCardset(cardsetId);
-
-    saveBtn.innerHTML = `
-          <img src=${res.saved ? savedIco : saveIco} alt="Nr"/>
-          <span>${res.saves}</span>
-          `;
+    onSuccess(res);
   } catch (e) {
     if (+e.message === 401) {
       openModal(document.querySelector(".unauthorized-modal"));
       saveBtn.innerHTML = prevContent;
     }
   }
+};
+
+export const handleCardsetDelete = (deleteBtn) => {
+  useConfirmModal("Do you want do delete this cardset?", () => {
+    const cardsetId = deleteBtn.dataset.cardsetId;
+    deleteBtn.innerHTML = `
+            <div style="border: 10px solid; transform: translateX(-8px);" class="loading-spinner"></div>
+            `;
+    deleteCardset(cardsetId)
+      .then(() => deleteBtn.parentElement.parentElement.remove())
+      .catch((e) => {
+        console.log(e);
+        deleteBtn.innerHTML = prevContent;
+      });
+  });
 };
 
 export const initCardsetsSection = (
@@ -155,4 +174,8 @@ export const initCardsetsSection = (
     cardsetsContainer.innerHTML = "";
     loadCardsets();
   });
+};
+
+export const initCardsetCreation = () => {
+  initDropdown("#categoryForNewSet", () => {});
 };

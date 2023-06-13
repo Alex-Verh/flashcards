@@ -21,6 +21,49 @@ export const closeModal = (modal) => {
   document.body.style.overflow = "auto";
 };
 
+export const useConfirmModal = (message, onConfirm) => {
+  const modalOverlay = document.createElement("div");
+  modalOverlay.classList.add("overlay");
+
+  const modal = document.createElement("div");
+  modal.classList.add("modal");
+  modal.insertAdjacentHTML(
+    "afterbegin",
+    `
+      <div class="modal__line"></div>
+      ${message}
+    `
+  );
+  modal.style.width = "400px";
+  const closeModal = () => {
+    modalOverlay.remove();
+    document.body.style.overflow = "auto";
+  };
+  const closeBtn = document.createElement("div");
+  closeBtn.classList.add("modal__close");
+  closeBtn.innerHTML =
+    '<img src="static/img/icons/close-ico.svg" alt="Close" />';
+  closeBtn.addEventListener("click", closeModal);
+  modal.prepend(closeBtn);
+
+  const confirmBtn = document.createElement("button");
+  confirmBtn.innerHTML = "Yes";
+  confirmBtn.addEventListener("click", () => {
+    onConfirm();
+    closeModal();
+  });
+  modal.append(confirmBtn);
+
+  const rejectBtn = document.createElement("button");
+  rejectBtn.innerHTML = "No";
+  rejectBtn.addEventListener("click", closeModal);
+  modal.append(rejectBtn);
+
+  modalOverlay.append(modal);
+  document.body.append(modalOverlay);
+  document.body.style.overflow = "hidden";
+};
+
 export const initModals = () => {
   const openModalLinks = document.querySelectorAll("[data-modal-class]");
   const closeModalBtns = document.querySelectorAll(

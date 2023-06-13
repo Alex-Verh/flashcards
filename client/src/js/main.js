@@ -1,12 +1,16 @@
 import "../sass/pages/main.scss";
-import { handleCardsetSave, initCardsetsSection } from "./modules/cardsets";
-import { initModals, openModal } from "./modules/modals";
+import {
+  handleCardsetSave,
+  initCardsetCreation,
+  initCardsetsSection,
+} from "./modules/cardsets";
+import { initModals } from "./modules/modals";
 import { questionAnswer } from "./constants";
 import { loadCategories } from "./modules/categories";
-import { saveCardset } from "./api/queries";
 
 document.addEventListener("DOMContentLoaded", () => {
   initModals();
+  initCardsetCreation();
   loadCategories();
   initCardsetsSection(
     {
