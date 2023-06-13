@@ -6,7 +6,13 @@ from flask_login import current_user
 
 from ..extensions import db
 from ..funcs import delete_cardset_files, save_audio, save_image
-from ..models import CardSet, CardSetCategory, FlashCard, User, user_cardset_assn
+from ..models import (
+    CardSet,
+    CardSetCategory,
+    FlashCard,
+    cardsets_view,
+    user_cardset_assn,
+)
 
 
 class ApiService:
@@ -105,41 +111,19 @@ class ApiService:
     @classmethod
     def get_cardsets(cls):
         sort_by = {
-            "saves": db.func.count(db.func.distinct(user_cardset_assn.c.user_id)),
-            "title": CardSet.title,
-            "date": CardSet.created_at,
+            "saves": cardsets_view.c.total_saves,
+            "title": cardsets_view.c.title,
+            "date": cardsets_view.c.created_at,
         }
         try:
             params = cls._get_cardset_params(sort_by)
         except (ValueError, TypeError):
             return jsonify({"error": "Invalid request parameters"}), 400
 
-        query = cls._create_cardsets_query(params, sort_by)
+        cardsets_query_results = cls._create_cardsets_query(params, sort_by).all()
+        cardsets = cls._transform_cardsets_query_results(cardsets_query_results)
 
-        result = []
-        for row in query:
-            try:
-                saved = params["only_saved"] or bool(
-                    current_user.saved_cardsets.filter(CardSet.id == row[0].id).first()
-                )
-                own = params["only_own"] or row[0].author == current_user
-            except AttributeError:
-                saved = False
-                own = False
-
-            cardset = {
-                "id": row[0].id,
-                "title": row[0].title,
-                "category": row[0].category.title,
-                "author": row[0].author.username,
-                "saves": row[1],
-                "flashcards_qty": row[2],
-                "is_saved": saved,
-                "is_own": own,
-            }
-            result.append(cardset)
-
-        return jsonify(result), 200
+        return jsonify(cardsets), 200
 
     @classmethod
     def _get_cardset_params(cls, allowed_sort_by):
@@ -166,40 +150,54 @@ class ApiService:
 
     @classmethod
     def _create_cardsets_query(cls, params, sort_map):
-        query = (
-            db.session.query(
-                CardSet,
-                db.func.count(db.func.distinct(user_cardset_assn.c.user_id)),
-                db.func.count(db.func.distinct(FlashCard.id)),
-            )
-            .outerjoin(user_cardset_assn)
-            .outerjoin(FlashCard)
+        query = db.session.query(
+            cardsets_view,
+            db.exists()
+            .where(user_cardset_assn.c.user_id == current_user.id)
+            .where(cardsets_view.c.id == user_cardset_assn.c.cardset_id),
         )
-        # if params["only_saved"]:
-        #     if not current_user.is_authenticated:
-        #         return jsonify({"error": "Not authorized"}), 401
-        #     query = query.filter(CardSet.id.in_([1, 2, 3]))
+        if params["only_saved"]:
+            if not current_user.is_authenticated:
+                return jsonify({"error": "Not authorized"}), 401
+            # query = current_user.saved_cardsets
 
         if params["only_own"]:
             if not current_user.is_authenticated:
                 return jsonify({"error": "Not authorized"}), 401
-            query = query.filter(CardSet.author == current_user)
+            # query = query.filter(CardSet.author == current_user)
         else:
-            query = query.filter(CardSet.is_public)
+            query = query.filter(cardsets_view.c.is_public)
 
         if params["search_query"]:
-            query = query.filter(CardSet.title.like("%" + params["search_query"] + "%"))
+            query = query.filter(
+                cardsets_view.c.title.like("%" + params["search_query"] + "%")
+            )
 
         if params["category_id"]:
-            query = query.filter(CardSet.category_id == params["category_id"])
+            query = query.filter(cardsets_view.c.category_id == params["category_id"])
 
         query = (
-            query.group_by(CardSet)
-            .order_by(getattr(sort_map[params["sort_by"]], params["sort_order"])())
+            query.order_by(getattr(sort_map[params["sort_by"]], params["sort_order"])())
             .limit(params["limit"])
             .offset(params["offset"])
         )
         return query
+
+    @classmethod
+    def _transform_cardsets_query_results(cls, results):
+        return [
+            {
+                "id": cardset[0],
+                "title": cardset[1],
+                "category": {"id": cardset[2], "title": cardset[3]},
+                "author": {"id": cardset[4], "username": cardset[5]},
+                "saves": cardset[6],
+                "flashcards_qty": cardset[7],
+                "is_saved": cardset[-1],
+                "is_own": cardset[4] == current_user.id,
+            }
+            for cardset in results
+        ]
 
     @classmethod
     def _parse_bool(cls, value):

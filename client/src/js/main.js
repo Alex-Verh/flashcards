@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document
     .querySelector(".main__card-sets .row")
     .addEventListener("click", async (e) => {
-      const saveBtn = e.target.closest(".card-set__saved");
+      const saveBtn = e.target.closest(".card-set__save");
       if (saveBtn) {
         handleCardsetSave(saveBtn);
       }

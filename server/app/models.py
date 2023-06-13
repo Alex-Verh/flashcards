@@ -1,6 +1,7 @@
 from flask_login import UserMixin
-from sqlalchemy.sql import func
+from sqlalchemy import func
 
+from .database import view
 from .extensions import db
 
 user_cardset_assn = db.Table(
@@ -90,3 +91,29 @@ class CardSetCategory(db.Model):
 
     def __repr__(self):
         return f"CardSetCategory({self.id}, '{self.title}')>"
+
+
+cardsets_view = view(
+    "card_sets_view",
+    db.metadata,
+    db.select(
+        CardSet.id.label("id"),
+        CardSet.title.label("title"),
+        CardSet.category_id.label("category_id"),
+        CardSetCategory.title.label("category_title"),
+        CardSet.user_id.label("author_id"),
+        User.username.label("author_username"),
+        db.func.count(db.func.distinct(user_cardset_assn.c.user_id)).label(
+            "total_saves"
+        ),
+        db.func.count(db.func.distinct(FlashCard.id)).label("flashcards_qty"),
+        CardSet.created_at.label("created_at"),
+        CardSet.is_public.label("is_public"),
+    )
+    .select_from(CardSet)
+    .outerjoin(user_cardset_assn)
+    .outerjoin(FlashCard)
+    .join(CardSetCategory, CardSet.category_id == CardSetCategory.id)
+    .join(User, CardSet.user_id == User.id)
+    .group_by(CardSet.id, CardSetCategory.title, User.username),
+)

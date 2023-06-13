@@ -33,10 +33,10 @@ export const generateCardsetsHTML = (cardsets) => {
           <span>${cardset.flashcards_qty}</span>
         </div>
         <div class="card-set__category" style="background-color: ${
-          categoryColor[cardset.category]
-        }">${cardset.category}</div>
+          categoryColor[cardset.category.title]
+        }">${cardset.category.title}</div>
         <div class="card-set__name">${cardset.title}</div>
-        <div class="card-set__author">${cardset.author}</div>
+        <div class="card-set__author">${cardset.author.username}</div>
        ${saveOrDeleteHTML}
       </div>
     </div>

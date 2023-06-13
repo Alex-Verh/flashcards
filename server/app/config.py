@@ -12,7 +12,7 @@ class Config:
     # SQLALCHEMY_DATABASE_URI = os.environ.get("DB_URL")
     SQLALCHEMY_DATABASE_URI = environ.get("DB_URL")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_ECHO = False
+    SQLALCHEMY_ECHO = True
 
     MAIL_SERVER = environ.get("MAIL_SERVER")
     MAIL_PORT = int(environ.get("MAIL_PORT"))
