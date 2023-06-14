@@ -51,6 +51,9 @@
     justify-content: center;
     text-align: center;
     cursor: pointer;
+    &_active {
+      background-color: $main-color;
+    }
   }
   &__cardset:hover {
     box-shadow: $box-shadow-hover;

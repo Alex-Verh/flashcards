@@ -7,7 +7,7 @@
     <div class="mode-choice__title">Card Sets:</div>
     <div class="cardsets">
       <div class="cardsets__cardset">Card Set Super New Name</div>
-      <div class="cardsets__add-cardset">
+      <div class="cardsets__add-cardset" data-modal-class="choose-modal">
         <img src="/static/img/add-cardset.svg" alt="Add cardset" />
       </div>
     </div>
@@ -34,5 +34,6 @@
       <label for="title-mode" class="choice__option-label">Guess title</label>
     </div>
     <div class="button">Start</div>
+    {% include "modals/choose-cardset.html" %}
   </div>
 </div>

@@ -59,12 +59,11 @@
     </nav>
 
     {% block modals %} {% include "modals/mobile-menu.html" %} {% include
-    "modals/choose-learning.html" %} {% include "modals/choose-cardset.html" %}
-    {% include "modals/learning-modal.html" %} {% if not
-    current_user.is_authenticated %} {% include "modals/unauthorized.html" %} {%
-    else %} {% include "modals/create-cardset.html" %} {% include
-    "modals/account-settings.html" %} {% endif %} {% endblock %} {% block
-    container %} {% endblock %}
+    "modals/choose-learning.html" %} {% include "modals/learning-modal.html" %}
+    {% if not current_user.is_authenticated %} {% include
+    "modals/unauthorized.html" %} {% else %} {% include
+    "modals/create-cardset.html" %} {% include "modals/account-settings.html" %}
+    {% endif %} {% endblock %} {% block container %} {% endblock %}
 
     <footer class="footer">
       <div class="container">

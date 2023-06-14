@@ -8,6 +8,7 @@ import {
 import { initModals } from "./modules/modals";
 import { questionAnswer } from "./constants";
 import { loadCategories } from "./modules/categories";
+import { initLearn } from "./modules/learn";
 
 document.addEventListener("DOMContentLoaded", () => {
   initModals();
@@ -16,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
   } catch (e) {
     console.log(e);
   }
+  initLearn();
   loadCategories();
   initCardsetsSection(
     {
