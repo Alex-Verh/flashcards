@@ -93,7 +93,7 @@ class ApiService:
         cardset = CardSet.query.get(id)
         if not cardset:
             return jsonify({"error": "Card set does not exist."}), 400
-        if cardset.author == current_user:
+        if cardset.user_id == current_user.id:
             return jsonify({"error": "You can not save your own card set"}), 400
 
         saved = bool(
@@ -171,9 +171,11 @@ class ApiService:
         else:
             query = db.session.query(
                 cardsets_view,
-                db.exists()
-                .where(user_cardset_assn.c.user_id == current_user.id)
-                .where(cardsets_view.c.id == user_cardset_assn.c.cardset_id)
+                cardsets_view.c.id.in_(
+                    db.select(CardSet.id)
+                    .filter(user_cardset_assn.c.user_id == current_user.id)
+                    .filter(CardSet.id == user_cardset_assn.c.cardset_id)
+                )
                 if current_user.is_authenticated
                 else False,
             ).filter(cardsets_view.c.is_public)

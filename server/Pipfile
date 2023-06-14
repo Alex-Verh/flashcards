@@ -23,6 +23,7 @@ faker = "*"
 
 [scripts]
 server = "flask --debug --app app run --host localhost --port 5000"
+shell = "flask --app app shell"
 
 [requires]
 python_version = "3.10"
