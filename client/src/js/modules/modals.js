@@ -31,7 +31,7 @@ export const useConfirmModal = (message, onConfirm) => {
     "afterbegin",
     `
       <div class="modal__line"></div>
-      ${message}
+      <p style="margin: 10px">${message}</p>
     `
   );
   modal.style.width = "400px";
@@ -48,6 +48,8 @@ export const useConfirmModal = (message, onConfirm) => {
 
   const confirmBtn = document.createElement("button");
   confirmBtn.innerHTML = "Yes";
+  confirmBtn.classList.add("button");
+  confirmBtn.style.margin = "5px";
   confirmBtn.addEventListener("click", () => {
     onConfirm();
     closeModal();
@@ -56,6 +58,8 @@ export const useConfirmModal = (message, onConfirm) => {
 
   const rejectBtn = document.createElement("button");
   rejectBtn.innerHTML = "No";
+  rejectBtn.classList.add("button");
+  rejectBtn.style.margin = "5px";
   rejectBtn.addEventListener("click", closeModal);
   modal.append(rejectBtn);
 
