@@ -1,33 +1,44 @@
 .modal {
+  position: absolute;
+  background: #fff;
+  border-radius: 20px;
+  text-align: center;
+  text-transform: capitalize;
+  font-family: $font-header;
+  z-index: 9999;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  top: 50%;
+  transform: translateY(-50%);
+  &__small {
+    .modal__close {
+      right: 18px;
+      top: 18px;
+      img {
+        width: 18px;
+      }
+    }
+    .modal__line {
+      margin-top: 56px;
+    }
+  }
+  &__close {
     position: absolute;
-    background: #FFF;
-    border-radius: 20px;
-    text-align: center;
-    text-transform: capitalize; 
-    font-family: $font-header;
-    z-index: 9999;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-    top: 50%;
-    transform: translateY(-50%);
-    
-    &__close {
-        position: absolute;
-        right: 30px;
-        top: 30px;
-        cursor: pointer;
-    }
-    &__line {
-        border-top: 1px solid $main-color;
-        margin-top: 80px;
-    }
+    right: 30px;
+    top: 30px;
+    cursor: pointer;
+  }
+  &__line {
+    border-top: 1px solid $main-color;
+    margin-top: 80px;
+  }
 }
 
 .overlay {
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    background: #00000076;
-    z-index: 9999;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background: #00000076;
+  z-index: 9999;
 }

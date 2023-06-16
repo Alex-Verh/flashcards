@@ -1,23 +1,26 @@
-import { getCardsets } from "../api/queries";
-import { openModal } from "./modals";
+import { getCardsets, getFlashcards } from "../api/queries";
+import { closeModal, openModal } from "./modals";
 
-export const initLearn = async () => {
+const getCardsetsHtml = (cardsets, initialHtml = "") => {
+  return cardsets.reduce(
+    (prev, cardset) =>
+      prev +
+      `
+      <div class="choose-modal__cardset" data-cardset-id="${cardset.id}">
+        ${cardset.title}
+      </div>
+      `,
+    initialHtml
+  );
+};
+
+const initCardsetsChoice = async (onSubmit) => {
   const chooseCardsetModal = document.querySelector(".choose-modal");
   const cardsetsContainer = chooseCardsetModal.querySelector(
     ".choose-modal__cardsets"
   );
-  const getCardsetsHtml = (cardsets, initialHtml = "") => {
-    return cardsets.reduce(
-      (prev, cardset) =>
-        prev +
-        `
-  <div class="choose-modal__cardset">
-    ${cardset.title}
-  </div>
-  `,
-      initialHtml
-    );
-  };
+  const activeCardsets = new Map();
+
   const loadCardsets = async () => {
     const ownCardsets = await getCardsets({
       limit: 50,
@@ -45,7 +48,29 @@ export const initLearn = async () => {
     );
     return [...ownCardsets, ...savedCardsets];
   };
-  const cardsets = await loadCardsets();
+  const allCardsets = await loadCardsets();
+
+  cardsetsContainer.addEventListener("click", (e) => {
+    const cardset = e.target.closest(".choose-modal__cardset");
+    if (cardset) {
+      const cardsetId = +cardset.dataset.cardsetId;
+      if (activeCardsets.has(cardsetId)) {
+        activeCardsets.delete(cardsetId);
+        cardset.classList.remove("choose-modal__cardset_active");
+      } else {
+        activeCardsets.set(cardsetId, {
+          id: cardsetId,
+          title: cardset.textContent.trim(),
+        });
+        cardset.classList.add("choose-modal__cardset_active");
+      }
+    }
+  });
+  cardsetsContainer.nextElementSibling.addEventListener("click", () => {
+    onSubmit(Array.from(activeCardsets.values()));
+    closeModal(chooseCardsetModal);
+  });
+
   const initialCardsetsHtml = cardsetsContainer.innerHTML;
   chooseCardsetModal
     .querySelector("#searchLearningCardsets")
@@ -55,7 +80,7 @@ export const initLearn = async () => {
         cardsetsContainer.innerHTML = initialCardsetsHtml;
         return;
       }
-      const filteredCardsets = cardsets.filter((cardset) =>
+      const filteredCardsets = allCardsets.filter((cardset) =>
         cardset.title.toLowerCase().includes(searchValue.toLowerCase())
       );
       if (filteredCardsets.length) {
@@ -63,7 +88,6 @@ export const initLearn = async () => {
       } else {
         cardsetsContainer.innerHTML = "<p>No such saved or own card sets</p>";
         const btn = document.createElement("button");
-        // btn.classList.add("button");
         btn.innerHTML = "Find globally";
         btn.addEventListener("click", () => {
           cardsetsContainer.insertAdjacentHTML(
@@ -83,11 +107,49 @@ export const initLearn = async () => {
         cardsetsContainer.append(btn);
       }
     });
+};
 
-  cardsetsContainer.addEventListener("click", (e) => {
-    const cardset = e.target.closest(".choose-modal__cardset");
-    if (cardset) {
-      cardset.classList.toggle("choose-modal__cardset_active");
-    }
+const initLearnChoice = (initialCardset, onStart) => {
+  const cardsets = [];
+  initialCardset && cardsets.push(initialCardset);
+  const modalEl = document.querySelector(".mode-choice");
+  const cardsetsContainer = modalEl.querySelector(".cardsets");
+
+  const showCardsets = (cardsets) => {
+    const cardsetsHTML = cardsets.reduce(
+      (prev, cardset) =>
+        prev + `<div class="cardsets__cardset">${cardset.title}</div>`,
+      " "
+    );
+    cardsetsContainer.lastElementChild.insertAdjacentHTML(
+      "beforebegin",
+      cardsetsHTML
+    );
+  };
+
+  showCardsets(cardsets);
+
+  initCardsetsChoice((selectedCardsets) => {
+    cardsets.push(...selectedCardsets);
+    showCardsets(selectedCardsets);
+  });
+  modalEl.querySelector("#startLearn").addEventListener("click", (e) => {
+    e.stopPropagation();
+    onStart({
+      cardsets,
+      mode: modalEl.querySelector('input[name="learningMode"]:checked').value,
+    });
+    closeModal(modalEl);
+  });
+};
+
+export const initLearn = (initialCardset) => {
+  const learningModal = document.querySelector(".learning.modal");
+  initLearnChoice(initialCardset, async ({ cardsets, mode }) => {
+    const flashcards = await getFlashcards(
+      cardsets.map((cardset) => cardset.id)
+    );
+    console.log(flashcards);
+    openModal(learningModal);
   });
 };

@@ -29,7 +29,7 @@ class ApiService:
         if not cardset:
             return jsonify({"error": "Card set does not exist."}), 400
 
-        if (not cardset.is_public) and cardset.author != current_user:
+        if (not cardset.is_public) and cardset.user_id != current_user.id:
             return jsonify({"error": "You can not access this card set"}), 403
 
         response = {
@@ -214,8 +214,52 @@ class ApiService:
         ]
 
     @classmethod
-    def _parse_bool(cls, value):
-        return str(value).lower() in ["yes", "true", "1"]
+    def get_flashcards(cls):
+        try:
+            cardsets_ids: set = set(
+                map(
+                    int,
+                    request.args.get("cardsetsIds", default="").split(","),
+                )
+            )
+            if not cardsets_ids:
+                raise ValueError
+        except (TypeError, ValueError):
+            return jsonify({"error": "Invalid request parameters"}), 400
+
+        cardsets = CardSet.query.filter(CardSet.id.in_(cardsets_ids)).all()
+        not_found_cardsets_ids = list(cardsets_ids)
+        for cardset in cardsets:
+            if not cardset.is_public and cardset.user_id != getattr(
+                current_user, "id", 0
+            ):
+                return (
+                    jsonify(
+                        {"error": f"You can not access card set with id {cardset.id}"}
+                    ),
+                    403,
+                )
+            not_found_cardsets_ids.remove(cardset.id)
+        if not_found_cardsets_ids:
+            response_msg = (
+                f"Card sets with ids {', '.join(map(str, not_found_cardsets_ids))} do not exist"
+                if len(not_found_cardsets_ids) > 1
+                else f"Card set with id {not_found_cardsets_ids[0]} does not exist"
+            )
+            return jsonify({"error": response_msg}), 400
+        flashcards = FlashCard.query.filter(FlashCard.cardset_id.in_(cardsets_ids))
+        return jsonify(
+            [
+                {
+                    "id": flashcard.id,
+                    "title": flashcard.title,
+                    "content": flashcard.content,
+                    "attachments": flashcard.attachments,
+                    "cardset_id": flashcard.cardset_id,
+                }
+                for flashcard in flashcards
+            ]
+        )
 
     @classmethod
     def create_flashcard(cls):
@@ -289,3 +333,7 @@ class ApiService:
     @classmethod
     def delete_flashcard(cls, id):
         pass
+
+    @classmethod
+    def _parse_bool(cls, value):
+        return str(value).lower() in ["yes", "true", "1"]

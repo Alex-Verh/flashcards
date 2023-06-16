@@ -2,6 +2,7 @@ import {
   CARDSETS_URL,
   CARDSET_URL,
   CATEGORIES_URL,
+  FLASHCARDS_URL,
   SAVE_CARDSET_URL,
 } from "./endpoints";
 
@@ -53,6 +54,17 @@ export const deleteCardset = async (id) => {
     const res = await customFetch(`${CARDSET_URL}/${id}`, {
       method: "DELETE",
     });
+    return res.json();
+  } catch (e) {
+    throw e;
+  }
+};
+
+export const getFlashcards = async (cardsetsIds) => {
+  try {
+    const res = await customFetch(
+      `${FLASHCARDS_URL}?cardsetsIds=${cardsetsIds.join(",")}`
+    );
     return res.json();
   } catch (e) {
     throw e;

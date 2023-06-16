@@ -37,6 +37,11 @@ def save_cardset(id: int) -> Response:
     return ApiService.save_cardset(id)
 
 
+@bp.route("/flashcards", methods=["GET"])
+def get_flashcards() -> Response:
+    return ApiService.get_flashcards()
+
+
 @bp.route("/flashcard", methods=["POST"])
 @login_required
 def create_flashcard() -> Response:

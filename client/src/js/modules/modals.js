@@ -26,15 +26,16 @@ export const useConfirmModal = (message, onConfirm) => {
   modalOverlay.classList.add("overlay");
 
   const modal = document.createElement("div");
-  modal.classList.add("modal");
+  modal.classList.add("modal", "modal__small");
   modal.insertAdjacentHTML(
     "afterbegin",
     `
       <div class="modal__line"></div>
-      <p style="margin: 10px">${message}</p>
+      <p style="margin: 10px; font-size: 18px">${message}</p>
     `
   );
   modal.style.width = "400px";
+  modal.style.paddingBottom = "20px";
   const closeModal = () => {
     modalOverlay.remove();
     document.body.style.overflow = "auto";

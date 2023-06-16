@@ -6,7 +6,6 @@
     <div class="modal__line"></div>
     <div class="mode-choice__title">Card Sets:</div>
     <div class="cardsets">
-      <div class="cardsets__cardset">Card Set Super New Name</div>
       <div class="cardsets__add-cardset" data-modal-class="choose-modal">
         <img src="/static/img/add-cardset.svg" alt="Add cardset" />
       </div>
@@ -16,8 +15,8 @@
       <input
         type="radio"
         class="choice__option choice__option-1"
-        name="learning-mode"
-        value="1"
+        name="learningMode"
+        value="guessContent"
         id="content-mode"
         checked
       />
@@ -27,13 +26,13 @@
       <input
         type="radio"
         class="choice__option choice__option-1"
-        name="learning-mode"
-        value="0"
+        name="learningMode"
+        value="guessTitle"
         id="title-mode"
       />
       <label for="title-mode" class="choice__option-label">Guess title</label>
     </div>
-    <div class="button">Start</div>
+    <div class="button" id="startLearn">Start</div>
     {% include "modals/choose-cardset.html" %}
   </div>
 </div>
