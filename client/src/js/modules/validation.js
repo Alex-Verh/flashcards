@@ -12,10 +12,10 @@ export const validateName = (name, options = {}) => {
   return { isValid: true };
 };
 
-export const validateEmail = (email, opions = {}) => {
+export const validateEmail = (email, options = {}) => {
   const {
     regEx = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i,
-  } = opions;
+  } = options;
   if (!email) {
     return { isValid: false, detail: "This field is required" };
   }
