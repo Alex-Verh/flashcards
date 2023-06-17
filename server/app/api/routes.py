@@ -52,3 +52,9 @@ def create_flashcard() -> Response:
 @login_required
 def delete_flashcard(id) -> Response:
     return ApiService.delete_flashcard(id)
+
+
+@bp.route("/user", methods=["PATCH"])
+@login_required
+def update_user():
+    return ApiService.update_user()

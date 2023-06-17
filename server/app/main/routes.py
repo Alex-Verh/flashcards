@@ -11,8 +11,3 @@ def main():
 @bp.route("/cardsets")
 def cardsets():
     return render_template("cardsets.html")
-
-
-@bp.route("/set")
-def cardset():
-    return render_template("set.html")

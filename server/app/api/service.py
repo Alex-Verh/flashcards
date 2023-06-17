@@ -4,12 +4,18 @@ import secrets
 from flask import current_app, jsonify, redirect, request, url_for
 from flask_login import current_user
 
-from ..extensions import db
-from ..funcs import delete_cardset_files, save_audio, save_image
+from ..extensions import db, serializer
+from ..funcs import (
+    delete_cardset_files,
+    save_audio,
+    save_image,
+    send_verification_email,
+)
 from ..models import (
     CardSet,
     CardSetCategory,
     FlashCard,
+    User,
     cardsets_view,
     user_cardset_assn,
 )
@@ -333,6 +339,45 @@ class ApiService:
     @classmethod
     def delete_flashcard(cls, id):
         pass
+
+    @classmethod
+    def update_user(cls):
+        username = request.form.get("username")
+        email = request.form.get("email")
+        if username:
+            username_is_taken = User.query.filter_by(username=username).first()
+            if username_is_taken:
+                return (
+                    jsonify(
+                        {
+                            "error": {
+                                "field": "username",
+                                "message": "Username is taken",
+                            }
+                        }
+                    ),
+                    400,
+                )
+            current_user.username = username
+            db.session.commit()
+        if email:
+            email_is_taken = User.query.filter_by(email=email).first()
+            if email_is_taken:
+                return (
+                    jsonify(
+                        {
+                            "error": {
+                                "field": "email",
+                                "message": "Email is taken",
+                            }
+                        }
+                    ),
+                    400,
+                )
+            token = serializer.dumps({"new_email": email}, salt="update-email").encode(
+                "utf-8"
+            )
+            varification_url = url_for("main.main")
 
     @classmethod
     def _parse_bool(cls, value):

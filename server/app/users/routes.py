@@ -2,7 +2,7 @@ import os
 
 from flask import current_app, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required, login_user, logout_user
-from itsdangerous import SignatureExpired
+from itsdangerous import BadData, SignatureExpired
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from ..extensions import db, serializer
@@ -72,7 +72,8 @@ def confirm_email(token):
         user_data = serializer.loads(token, salt="email-confirm", max_age=3600)
     except SignatureExpired:
         return render_template("common/error.html", error="Verification token expired!")
-
+    except BadData:
+        return render_template("common/error.html", error="Invalid verification token")
     try:
         new_user = User(
             username=user_data["username"],
@@ -89,15 +90,6 @@ def confirm_email(token):
 
     flash("You have registered successfully", "success")
     return redirect(url_for("users.login"))
-
-
-@bp.route("/profile", methods=["POST", "GET"])
-@login_required
-def profile():
-    if request.method == "POST":
-        username = request.form.get("username")
-        email = request.form.get("email")
-    return render_template("users/profile.html")
 
 
 @bp.route("/delete-profile")
