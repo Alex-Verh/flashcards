@@ -150,14 +150,15 @@
   &__image {
     object-fit: contain;
     position: relative;
+    margin-inline: 5px;
     img {
-      width: 130px;
-      height: 130px;
+      max-width: 150px;
+      max-height: 130px;
     }
     &_big {
       img {
-        width: 300px;
-        height: 300px;
+        max-width: 300px;
+        max-height: 270px;
       }
     }
   }

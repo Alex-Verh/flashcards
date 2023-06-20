@@ -59,6 +59,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const textEl =
           btn.parentElement.previousElementSibling.lastElementChild;
         textEl.classList.toggle("none");
+        if (textEl.parentElement.firstElementChild.childElementCount === 1) {
+          textEl.parentElement.firstElementChild.firstElementChild.classList.toggle("flashcard-side__image_big");
+        }
         textEl.focus();
       });
     });
@@ -72,6 +75,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const key = removeImageBtn.parentElement.parentElement.dataset.key;
         const index = Array.from(removeImageBtn.parentElement.parentElement.children).indexOf(removeImageBtn.parentElement);
         flashcardData[key].splice(index, 1);
+        if (removeImageBtn.parentElement.parentElement.childElementCount === 2) {
+          removeImageBtn.parentElement.parentElement.firstElementChild.classList.add("flashcard-side__image_big");
+        }
         removeImageBtn.parentElement.remove();
       }
     });
@@ -117,12 +123,16 @@ const uploadImage = (event, flashcardData, flashcardDataKey) => {
     event.target.value = "";
     return;
   }
+  const imageClass = `flashcard-side__image${imagesContainer.childElementCount === 0 ? " flashcard-side__image_big" : ""}`;
+  if (imagesContainer.childElementCount === 1) {
+    imagesContainer.firstElementChild.classList.remove("flashcard-side__image_big");
+  }
   const readerImage = new FileReader();
   readerImage.onload = (event) => {
     imagesContainer.insertAdjacentHTML(
       "beforeend",
       `
-      <div class="flashcard-side__image">
+      <div class="${imageClass}">
         <button class="flashcard-side__remove-image">&#x2715;</button>
         <img src="${event.target.result}" />
       </div>
