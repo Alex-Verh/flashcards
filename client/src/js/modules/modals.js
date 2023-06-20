@@ -3,6 +3,8 @@ import { validateEmail, validateName, validateTitle } from "./validation";
 import { showInputError, initInput } from "./input";
 import { updateUser } from "../api/queries";
 
+import closeIco from "../../img/icons/close-ico.svg";
+
 export const openModal = (modal) => {
   const closeModalWhenClickOutside = (e) => {
     if (!e.target.closest(`.${modal.classList[0]}`)) {
@@ -47,8 +49,7 @@ export const useConfirmModal = (message, onConfirm) => {
   };
   const closeBtn = document.createElement("div");
   closeBtn.classList.add("modal__close");
-  closeBtn.innerHTML =
-    '<img src="static/img/icons/close-ico.svg" alt="Close" />';
+  closeBtn.innerHTML = `<img src="${closeIco}" alt="Close" />`;
   closeBtn.addEventListener("click", closeModal);
   modal.prepend(closeBtn);
 
@@ -68,6 +69,43 @@ export const useConfirmModal = (message, onConfirm) => {
   rejectBtn.style.margin = "5px";
   rejectBtn.addEventListener("click", closeModal);
   modal.append(rejectBtn);
+
+  modalOverlay.append(modal);
+  document.body.append(modalOverlay);
+  document.body.style.overflow = "hidden";
+};
+
+export const useMessageModal = (message) => {
+  const modalOverlay = document.createElement("div");
+  modalOverlay.classList.add("overlay");
+
+  const modal = document.createElement("div");
+  modal.classList.add("modal", "modal__small");
+  modal.insertAdjacentHTML(
+    "afterbegin",
+    `
+      <div class="modal__line"></div>
+      <p style="margin: 10px; font-size: 18px">${message}</p>
+    `
+  );
+  modal.style.width = "400px";
+  modal.style.paddingBottom = "20px";
+  const closeModal = () => {
+    modalOverlay.remove();
+    document.body.style.overflow = "auto";
+  };
+  const closeBtn = document.createElement("div");
+  closeBtn.classList.add("modal__close");
+  closeBtn.innerHTML = `<img src="${closeIco}" alt="Close" />`;
+  closeBtn.addEventListener("click", closeModal);
+  modal.prepend(closeBtn);
+
+  const confirmBtn = document.createElement("button");
+  confirmBtn.innerHTML = "Ok";
+  confirmBtn.classList.add("button");
+  confirmBtn.style.margin = "5px";
+  confirmBtn.addEventListener("click", closeModal);
+  modal.append(confirmBtn);
 
   modalOverlay.append(modal);
   document.body.append(modalOverlay);
@@ -109,6 +147,12 @@ const initAccountSettings = () => {
   initInput(settingsForm.email, validateEmail);
   settingsForm.addEventListener("submit", async (e) => {
     e.preventDefault();
+    if (
+      formData.get("username") === username &&
+      formData.get("email") === email
+    ) {
+      return;
+    }
     if (
       validateName(settingsForm.username.value).isValid &&
       validateEmail(settingsForm.email.value).isValid

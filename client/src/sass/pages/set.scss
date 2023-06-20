@@ -140,11 +140,16 @@
   }
   &__image {
     object-fit: contain;
-    width: 130px;
-    max-height: 130px;
-  }
-  &__image_big {
-    max-height: 300px;
+    img {
+      width: 130px;
+      height: 130px;
+    }
+    &_big {
+      img {
+        width: 300px;
+        height: 300px;
+      }
+    }
   }
   &__tools {
     position: absolute;

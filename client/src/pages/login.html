@@ -8,14 +8,14 @@ endblock %} {% block container %}
       <div class="register__field">
         {{ form.username.label(class='label') -}} {% if form.username.errors %}
         {{ form.username(class='input input_error', autocomplete='off') -}}
-        <div class="register__error">{{ form.username.errors[0] }}</div>
+        <div class="input__error-msg">{{ form.username.errors[0] }}</div>
         {% else %} {{ form.username(class='input', autocomplete='off') -}} {%
         endif %}
       </div>
       <div class="register__field">
         {{ form.password.label(class='label') -}} {% if form.password.errors %}
         {{ form.password(class='input input_error', autocomplete='off') -}}
-        <div class="register__error">{{ form.password.errors[0] }}</div>
+        <div class="input__error-msg">{{ form.password.errors[0] }}</div>
         {% else %} {{ form.password(class='input', autocomplete='off') -}} {%
         endif %}
         <a class="register__forget-pass">Forgot your password?</a>

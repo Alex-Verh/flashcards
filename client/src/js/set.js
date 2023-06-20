@@ -1,5 +1,5 @@
 import "../sass/pages/set.scss";
-import { initModals } from "./modules/modals";
+import { initModals, useMessageModal } from "./modules/modals";
 import { loadCategories } from "./modules/categories";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -85,17 +85,19 @@ const uploadImage = (event, flashcardData, flashcardDataKey) => {
     return;
   }
   if (!["image/jpeg", "image/png", "image/svg+xml"].includes(file.type)) {
-    alert("Choose another format. (JPEG, PNG, SVG)");
+    useMessageModal("Choose another format. (JPEG, PNG, SVG)");
     event.target.value = "";
     return;
   }
   const imagesContainer =
     event.target.parentElement.parentElement.previousElementSibling
       .firstElementChild;
-
   // Check if no more than 3 images
-  if (imagesContainer.children.length >= 3) {
-    alert("Image limit has been reached!");
+  if (
+    imagesContainer.childElementCount >= 3 ||
+    flashcardData[flashcardDataKey].length >= 3
+  ) {
+    useMessageModal("Image limit has been reached!");
     event.target.value = "";
     return;
   }
@@ -104,17 +106,17 @@ const uploadImage = (event, flashcardData, flashcardDataKey) => {
     imagesContainer.insertAdjacentHTML(
       "beforeend",
       `
-    <img
-      class="flashcard-side__image"
-      src="${event.target.result}"
-    />
-    `
+      <div class="flashcard-side__image">
+        <button class="flashcard-side__remove-image"></button>
+        <img src="${event.target.result}" />
+      </div>
+      
+      `
     );
     flashcardData[flashcardDataKey].push(file);
   };
   readerImage.onerror = function (e) {
     alert("Error");
-    console.log(e);
   };
   readerImage.readAsDataURL(file);
 };
@@ -125,12 +127,12 @@ const uploadSound = (event, flashcardData, flashcardDataKey) => {
     return;
   }
   if (!["audio/mpeg", "audio/wav", "audio/ogg"].includes(file.type)) {
-    alert("Choose another format. (MP3, WAV, OGG)");
+    useMessageModal("Choose another format. (MP3, WAV, OGG)");
     event.target.value = "";
     return;
   }
   if (file.size > 1024 * 1024 * 10) {
-    alert("File size must be less than 10 MB");
+    useMessageModal("File size must be less than 10 MB");
     audioInput.value = "";
     return;
   }
