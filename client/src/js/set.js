@@ -1,6 +1,8 @@
 import "../sass/pages/set.scss";
 import { initModals, useMessageModal } from "./modules/modals";
 import { loadCategories } from "./modules/categories";
+import playIco from "../img/icons/play-ico.svg";
+import pauseIco from "../img/icons/pause-ico.svg";
 
 document.addEventListener("DOMContentLoaded", () => {
   initModals();
@@ -62,6 +64,20 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
   flashcardContructor
+  .querySelectorAll(".flashcard-side")
+  .forEach((side) => {
+    side.addEventListener("click", (e) => {
+      const removeImageBtn = e.target.closest(".flashcard-side__remove-image");
+      if (removeImageBtn) {
+        const key = removeImageBtn.parentElement.parentElement.dataset.key;
+        const index = Array.from(removeImageBtn.parentElement.parentElement.children).indexOf(removeImageBtn.parentElement);
+        flashcardData[key].splice(index, 1);
+        removeImageBtn.parentElement.remove();
+      }
+    });
+  });
+
+  flashcardContructor
     .querySelectorAll("button[data-upload-btn]")
     .forEach((btn) => {
       btn.addEventListener("click", () => {
@@ -107,7 +123,7 @@ const uploadImage = (event, flashcardData, flashcardDataKey) => {
       "beforeend",
       `
       <div class="flashcard-side__image">
-        <button class="flashcard-side__remove-image"></button>
+        <button class="flashcard-side__remove-image">&#x2715;</button>
         <img src="${event.target.result}" />
       </div>
       
@@ -149,16 +165,16 @@ const uploadSound = (event, flashcardData, flashcardDataKey) => {
   const readerSound = new FileReader();
   readerSound.onload = (event) => {
     const audio = new Audio(readerSound.result);
-    playSound.innerHTML = `<img src="./img/play-ico.svg" alt="Play">`;
+    playSound.innerHTML = `<img src="${playIco}" alt="Play">`;
     flashcardData[flashcardDataKey] = file;
 
     playSound.onclick = function () {
       if (audio.paused) {
         audio.play();
-        playSound.innerHTML = `<img src="./img/pause-ico.svg" alt="Pause">`;
+        playSound.innerHTML = `<img src="${pauseIco}" alt="Pause">`;
       } else {
         audio.pause();
-        playSound.innerHTML = `<img src="./img/play-ico.svg" alt="Play">`;
+        playSound.innerHTML = `<img src="${playIco}" alt="Play">`;
       }
     };
   };

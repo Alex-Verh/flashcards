@@ -99,6 +99,15 @@
   position: relative;
   box-shadow: $box-shadow;
   cursor: pointer;
+  &__remove-image {
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    color: red;
+    border: none;
+    background: none;
+    font-size: 16px;
+  }
   &__workspace {
     display: flex;
     max-width: 565px;
@@ -140,6 +149,7 @@
   }
   &__image {
     object-fit: contain;
+    position: relative;
     img {
       width: 130px;
       height: 130px;
