@@ -344,7 +344,8 @@ class ApiService:
     def update_user(cls):
         username = request.form.get("username")
         email = request.form.get("email")
-        if username:
+        updated_fields = []
+        if username and current_user.username != username:
             username_is_taken = User.query.filter_by(username=username).first()
             if username_is_taken:
                 return (
@@ -360,7 +361,8 @@ class ApiService:
                 )
             current_user.username = username
             db.session.commit()
-        if email:
+            updated_fields.append("username")
+        if email and current_user.email != email:
             email_is_taken = User.query.filter_by(email=email).first()
             if email_is_taken:
                 return (
@@ -377,7 +379,14 @@ class ApiService:
             token = serializer.dumps({"new_email": email}, salt="update-email").encode(
                 "utf-8"
             )
-            varification_url = url_for("main.main")
+            varification_url = url_for(
+                "users.update_email", token=token, _external=True
+            )
+            send_verification_email(varification_url, email)
+            updated_fields.append("email")
+        return jsonify(
+            {"message": "Updated successfuly", "updated_fields": updated_fields}
+        )
 
     @classmethod
     def _parse_bool(cls, value):

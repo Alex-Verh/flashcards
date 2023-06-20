@@ -35,7 +35,9 @@ export const generateCardsetsHTML = (cardsets) => {
         <div class="card-set__category" style="background-color: ${
           categoryColor[cardset.category.title]
         }">${cardset.category.title}</div>
-        <div class="card-set__name">${cardset.title}</div>
+        <a href="/cardset/${cardset.id}" class="card-set__name">${
+        cardset.title
+      }</a>
         <div class="card-set__author">${cardset.author.username}</div>
        ${saveOrDeleteHTML}
       </div>
@@ -173,12 +175,5 @@ export const initCardsetsSection = (
     queryParams.offset = 0;
     cardsetsContainer.innerHTML = "";
     loadCardsets();
-  });
-};
-
-export const initCardsetCreation = () => {
-  initDropdown("#categoryForNewSet", (clickedItem) => {
-    clickedItem.parentElement.parentElement.prevElementSibling.value =
-      clickedItem.dataset.categoryId;
   });
 };

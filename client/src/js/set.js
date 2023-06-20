@@ -1,17 +1,12 @@
 import "../sass/pages/set.scss";
-import { initCardsetCreation } from "./modules/cardsets";
 import { initModals } from "./modules/modals";
+import { loadCategories } from "./modules/categories";
 
 document.addEventListener("DOMContentLoaded", () => {
   initModals();
-  try {
-    initCardsetCreation();
-  } catch (e) {
-    console.log(e);
-  }
+  loadCategories();
 
   const flashcards = document.querySelector(".flashcards");
-
   flashcards.addEventListener("click", (event) => {
     const flashcard = event.target.closest(".flashcards__card");
     if (flashcard) {

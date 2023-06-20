@@ -1,3 +1,8 @@
+import { initDropdown } from "./dropdown";
+import { validateEmail, validateName, validateTitle } from "./validation";
+import { showInputError, initInput } from "./input";
+import { updateUser } from "../api/queries";
+
 export const openModal = (modal) => {
   const closeModalWhenClickOutside = (e) => {
     if (!e.target.closest(`.${modal.classList[0]}`)) {
@@ -69,6 +74,83 @@ export const useConfirmModal = (message, onConfirm) => {
   document.body.style.overflow = "hidden";
 };
 
+const initCardsetCreation = () => {
+  initDropdown("#categoryForNewSet", (clickedItem) => {
+    clickedItem.parentElement.parentElement.nextElementSibling.value =
+      clickedItem.dataset.categoryId;
+  });
+  const cardsetForm = document.querySelector("#cardsetCreationForm");
+  const title = initInput(cardsetForm.title, validateTitle);
+
+  cardsetForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    let errors = 0;
+    if (!cardsetForm.category.value) {
+      document
+        .querySelector("#categoryForNewSet .dropdown__btn")
+        .classList.add("input_error");
+      errors++;
+    } else {
+      document
+        .querySelector("#categoryForNewSet .dropdown__btn")
+        .classList.remove("input_error");
+    }
+    if (!title.validate(cardsetForm.title.value)) {
+      errors++;
+    }
+    !errors && cardsetForm.submit();
+  });
+};
+const initAccountSettings = () => {
+  const settingsForm = document.querySelector("#accountSettings");
+  const username = settingsForm.username.value;
+  const email = settingsForm.email.value;
+  initInput(settingsForm.username, validateName);
+  initInput(settingsForm.email, validateEmail);
+  settingsForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (
+      validateName(settingsForm.username.value).isValid &&
+      validateEmail(settingsForm.email.value).isValid
+    ) {
+      const formData = new FormData(settingsForm);
+      formData.get("username") === username && formData.delete("username");
+      formData.get("email") === email && formData.delete("email");
+      settingsForm.lastElementChild.disabled = true;
+      settingsForm.insertAdjacentHTML(
+        "beforeend",
+        `
+        <div
+          style="position: relative; top: -200px; right: 0; left: 0; border-width: 20px;"
+          class="loading-spinner"
+        ></div>
+      `
+      );
+      try {
+        const res = await updateUser(formData);
+        if (res.updated_fields.includes("email")) {
+          settingsForm.insertAdjacentHTML(
+            "afterend",
+            `
+            <p>Verification link has been send to your new email</p>
+            `
+          );
+        }
+      } catch (e) {
+        const errData = JSON.parse(e.message);
+        if (+errData.status === 400) {
+          showInputError(
+            settingsForm[errData.error.field],
+            errData.error.message
+          );
+        }
+      }
+      settingsForm.lastElementChild.remove();
+      settingsForm.lastElementChild.disabled = false;
+    }
+  });
+};
+
 export const initModals = () => {
   const openModalLinks = document.querySelectorAll("[data-modal-class]");
   const closeModalBtns = document.querySelectorAll(
@@ -95,4 +177,11 @@ export const initModals = () => {
       closeModal(closeBtn.parentElement);
     });
   });
+
+  try {
+    initCardsetCreation();
+    initAccountSettings();
+  } catch (error) {
+    console.log(error);
+  }
 };

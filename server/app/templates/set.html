@@ -7,7 +7,7 @@ endblock %} {% block container %}
     <section class="flashcards">
       <div class="row">
         <div class="flashcards__heading-tools">
-          Card Set Name
+          {{ cardset.title }}
           <div>
             <div class="flashcards__tool rnd-button">
               <img src="/static/img/icons/edit-ico.svg" alt="Edit" />
@@ -31,40 +31,10 @@ endblock %} {% block container %}
           <div class="col-sm-6 col-md-4 col-lg-3">
             <div class="flashcards__card"></div>
           </div>
-          <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="flashcards__card"></div>
-          </div>
-          <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="flashcards__card"></div>
-          </div>
-          <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="flashcards__card"></div>
-          </div>
-          <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="flashcards__card"></div>
-          </div>
-          <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="flashcards__card"></div>
-          </div>
-          <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="flashcards__card"></div>
-          </div>
-          <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="flashcards__card"></div>
-          </div>
-          <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="flashcards__card"></div>
-          </div>
-          <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="flashcards__card"></div>
-          </div>
-          <div class="col-sm-6 col-md-4 col-lg-3">
-            <div class="flashcards__card"></div>
-          </div>
         </div>
       </div>
     </section>
-
+    {% if cardset.user_id == current_user.id %}
     <section class="constructor">
       <div class="constructor__title">Add New Flashcard</div>
       <div class="constructor__parts">
@@ -167,6 +137,7 @@ endblock %} {% block container %}
       </div>
       <div class="button">Create</div>
     </section>
+    {% endif %}
   </div>
 </main>
 

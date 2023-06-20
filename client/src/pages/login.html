@@ -22,7 +22,10 @@ endblock %} {% block container %}
       </div>
       {{ form.submit(class='button') }}
     </form>
-    <p>Do not have an account? <a href="#">Register</a></p>
+    <p>
+      Do not have an account?
+      <a href="{{ url_for('users.register') }}">Register</a>
+    </p>
   </div>
 </main>
 {% endblock %}

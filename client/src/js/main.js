@@ -2,7 +2,6 @@ import "../sass/pages/main.scss";
 import {
   handleCardsetSave,
   handleCardsetDelete,
-  initCardsetCreation,
   initCardsetsSection,
 } from "./modules/cardsets";
 import { initModals } from "./modules/modals";
@@ -12,11 +11,6 @@ import { initLearn } from "./modules/learn";
 
 document.addEventListener("DOMContentLoaded", () => {
   initModals();
-  try {
-    initCardsetCreation();
-  } catch (e) {
-    console.log(e);
-  }
   initLearn();
   loadCategories();
   initCardsetsSection(

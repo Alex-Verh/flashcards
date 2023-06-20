@@ -4,6 +4,7 @@ import {
   CATEGORIES_URL,
   FLASHCARDS_URL,
   SAVE_CARDSET_URL,
+  USER_URL,
 } from "./endpoints";
 
 const stringifyQueryParams = (paramsObj) =>
@@ -66,6 +67,25 @@ export const getFlashcards = async (cardsetsIds) => {
       `${FLASHCARDS_URL}?cardsetsIds=${cardsetsIds.join(",")}`
     );
     return res.json();
+  } catch (e) {
+    throw e;
+  }
+};
+
+export const updateUser = async (formData) => {
+  try {
+    const res = await fetch(USER_URL, {
+      method: "PATCH",
+      body: formData,
+    });
+    const json = await res.json();
+    if (!res.ok) {
+      if (+res.status === 400 && json) {
+        throw new Error(JSON.stringify({ ...json, status: 400 }));
+      }
+      throw new Error(JSON.stringify({ status: +e.message }));
+    }
+    return json;
   } catch (e) {
     throw e;
   }

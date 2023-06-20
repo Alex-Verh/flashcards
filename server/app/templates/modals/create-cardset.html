@@ -4,19 +4,22 @@
       <img src="/static/img/icons/close-ico.svg" alt="Close" />
     </div>
     <div class="create-cardset__title">Create Card Set</div>
-    <form action="/api/cardset" method="POST">
-      <input
-        class="input"
-        type="text"
-        name="title"
-        placeholder="Card set name"
-      />
-      <input style="display: none" type="text" name="category" />
-      <div class="dropdown" id="categoryForNewSet" tabindex="0">
-        <button class="dropdown__btn" type="button">Category</button>
-        <ul class="dropdown__content" data-categories-dropdown></ul>
+    <form action="/api/cardset" method="POST" id="cardsetCreationForm">
+      <div class="create-cardset__field">
+        <input
+          class="input"
+          type="text"
+          name="title"
+          placeholder="Card set name"
+        />
       </div>
-
+      <div class="create-cardset__field">
+        <div class="dropdown" id="categoryForNewSet" tabindex="0">
+          <button class="dropdown__btn" type="button">Category</button>
+          <ul class="dropdown__content" data-categories-dropdown></ul>
+        </div>
+        <input style="display: none" type="text" name="category" />
+      </div>
       <div class="choice">
         <input
           type="radio"

@@ -53,17 +53,4 @@
     text-decoration: underline;
     cursor: pointer;
   }
-  &__error {
-    border-radius: 0px 0px 10px 10px;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-    transform: translateY(-4px);
-    font-size: 15px;
-    color: #6c0505;
-    background: rgba(222, 96, 96, 0.6);
-    width: 90%;
-    margin: 0 auto;
-  }
 }

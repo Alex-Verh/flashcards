@@ -65,6 +65,8 @@
     font-size: 12px;
   }
   &__name {
+    color: #000;
+    text-decoration: none;
     font-family: $font-header;
     font-weight: 400;
     font-size: 15px;

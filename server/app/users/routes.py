@@ -92,6 +92,20 @@ def confirm_email(token):
     return redirect(url_for("users.login"))
 
 
+@bp.route("/update-email/<token>")
+@login_required
+def update_email(token):
+    try:
+        new_email = serializer.loads(token, salt="update-email", max_age=3600)
+    except SignatureExpired:
+        return render_template("common/error.html", error="Verification token expired!")
+    except BadData:
+        return render_template("common/error.html", error="Invalid verification token")
+    current_user.email = new_email["new_email"]
+    db.session.commit()
+    return redirect(url_for("main.main"))
+
+
 @bp.route("/delete-profile")
 @login_required
 def delete_profile():

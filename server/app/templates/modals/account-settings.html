@@ -5,35 +5,43 @@
     </div>
     <div class="modal__line"></div>
     <div class="account-settings__title">Account Settings</div>
-    <div class="account-settings__field">
-      <label class="label" for="username">Username</label>
-      <input
-        id="username"
-        class="input"
-        type="text"
-        name="username"
-        autocomplete="off"
-      />
-    </div>
-    <div class="account-settings__field">
-      <label class="label" for="email">Email</label>
-      <input
-        id="email"
-        class="input"
-        type="email"
-        name="email"
-        autocomplete="off"
-      />
-    </div>
-    <button type="submit" class="account-settings__accept" value="">
-      <img src="/static/img/icons/accept-ico.svg" alt="Y" />
-    </button>
+    <form action="#" id="accountSettings">
+      <div class="account-settings__field">
+        <label class="label" for="username">Username</label>
+        <input
+          id="username"
+          class="input"
+          type="text"
+          name="username"
+          value="{{ current_user.username }}"
+          autocomplete="off"
+        />
+      </div>
+      <div class="account-settings__field">
+        <label class="label" for="email">Email</label>
+        <input
+          id="email"
+          class="input"
+          type="email"
+          name="email"
+          value="{{ current_user.email }}"
+          autocomplete="off"
+        />
+      </div>
+      <button type="submit" class="account-settings__accept" value="">
+        <img src="/static/img/icons/accept-ico.svg" alt="Y" />
+      </button>
+    </form>
 
     <div class="account-settings__footer">
       <div class="account-settings__line"></div>
       <div class="account-settings__buttons">
-        <div class="account-settings__button">Delete account</div>
-        <div class="account-settings__button">Reset password</div>
+        <a
+          class="account-settings__button"
+          href="{{ url_for('users.delete_profile') }}"
+          >Delete account</a
+        >
+        <button class="account-settings__button">Reset password</button>
       </div>
     </div>
   </div>

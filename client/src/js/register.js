@@ -4,51 +4,14 @@ import {
   validateEmail,
   validatePassword,
 } from "./modules/validation";
-
-const showInputError = (input, error) => {
-  input.classList.add("input_error");
-  input.nextElementSibling && input.nextElementSibling.remove();
-  input.insertAdjacentHTML(
-    "afterend",
-    `
-  <div class="register__error">${error}</div>
-  `
-  );
-};
-const hideInputError = (input) => {
-  input.classList.remove("input_error");
-  input.nextElementSibling && input.nextElementSibling.remove();
-};
+import { showInputError, hideInputError, initInput } from "./modules/input";
 
 document.addEventListener("DOMContentLoaded", () => {
   const registerForm = document.querySelector("#registerForm");
-  registerForm.username.addEventListener("change", (e) => {
-    const target = e.target;
-    const validation = validateName(target.value);
-    if (!validation.isValid) {
-      showInputError(target, validation.detail);
-    } else {
-      hideInputError(target);
-    }
-  });
-  registerForm.email.addEventListener("change", (e) => {
-    const target = e.target;
-    const validation = validateEmail(target.value);
-    if (!validation.isValid) {
-      showInputError(target, validation.detail);
-    } else {
-      hideInputError(target);
-    }
-  });
-  registerForm.password.addEventListener("change", (e) => {
-    const target = e.target;
-    const validation = validatePassword(target.value);
-    if (!validation.isValid) {
-      showInputError(target, validation.detail);
-    } else {
-      hideInputError(target);
-    }
-  });
+  initInput(registerForm.username, validateName);
+  initInput(registerForm.email, validateEmail);
+  initInput(registerForm.password, validatePassword);
+
   registerForm.repeatPassword.addEventListener("change", (e) => {
     const target = e.target;
     const isValid = target.value === registerForm.password.value;
