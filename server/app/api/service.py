@@ -329,7 +329,7 @@ class ApiService:
             image_filename = save_image(
                 image, base_filename + secrets.token_hex(6), uploads_dir_path
             )
-        flashcard_attachments["frontside"]["images"].append(image_filename)
+            flashcard_attachments["frontside"]["images"].append(image_filename)
         for image in back_images:
             image_filename = save_image(
                 image, base_filename + secrets.token_hex(6), uploads_dir_path

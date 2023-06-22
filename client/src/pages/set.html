@@ -41,15 +41,17 @@ endblock %} {% block container %}
         <div class="row">
           <div class="col-lg-6 col-md-12">
             <div class="flashcard-side">
-              <div class="flashcard-side__workspace">
-                <div class="flashcard-side__images" data-key="frontImages"></div>
+              <!-- <div class="flashcard-side__workspace">
+                <div
+                  class="flashcard-side__images"
+                  data-key="frontImages"
+                ></div>
                 <div class="flashcard-side__sound"></div>
                 <textarea
                   class="flashcard-side__text none"
                   data-key="title"
                 ></textarea>
               </div>
-
               <div class="flashcard-side__tools">
                 <button class="tool rnd-button" type="button" data-text-btn>
                   <img src="/static/img/icons/text-ico.svg" alt="#" />
@@ -84,12 +86,12 @@ endblock %} {% block container %}
                     data-key="frontAudio"
                   />
                 </button>
-              </div>
+              </div> -->
             </div>
           </div>
           <div class="col-lg-6 col-md-12">
             <div class="flashcard-side">
-              <div class="flashcard-side__workspace">
+              <!-- <div class="flashcard-side__workspace">
                 <div class="flashcard-side__images" data-key="backImages"></div>
                 <div class="flashcard-side__sound"></div>
                 <textarea
@@ -97,7 +99,6 @@ endblock %} {% block container %}
                   data-key="title"
                 ></textarea>
               </div>
-
               <div class="flashcard-side__tools">
                 <button class="tool rnd-button" data-text-btn>
                   <img src="/static/img/icons/text-ico.svg" alt="#" />
@@ -130,12 +131,12 @@ endblock %} {% block container %}
                     data-key="backAudio"
                   />
                 </button>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
       </div>
-      <div class="button">Create</div>
+      <button class="button" id="createFlashcard">Create</button>
     </section>
     {% endif %}
   </div>

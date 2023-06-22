@@ -3,6 +3,7 @@ import {
   CARDSET_URL,
   CATEGORIES_URL,
   FLASHCARDS_URL,
+  FLASHCARD_URL,
   SAVE_CARDSET_URL,
   USER_URL,
 } from "./endpoints";
@@ -86,6 +87,18 @@ export const updateUser = async (formData) => {
       throw new Error(JSON.stringify({ status: +e.message }));
     }
     return json;
+  } catch (e) {
+    throw e;
+  }
+};
+
+export const createFlashcard = async (formData) => {
+  try {
+    const res = await customFetch(`${FLASHCARD_URL}`, {
+      method: "POST",
+      body: formData,
+    });
+    return res.json();
   } catch (e) {
     throw e;
   }
