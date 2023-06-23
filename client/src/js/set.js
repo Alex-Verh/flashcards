@@ -4,8 +4,10 @@ import { loadCategories } from "./modules/categories";
 import playIco from "../img/icons/play-ico.svg";
 import pauseIco from "../img/icons/pause-ico.svg";
 import textIco from "../img/icons/text-ico.svg";
+import removeTextIco from "../img/icons/remove-text-ico.svg";
 import imageIco from "../img/icons/image-ico.svg";
 import audioIco from "../img/icons/audio-ico.svg";
+import removeAudioIco from "../img/icons/remove-audio-ico.svg";
 import { createFlashcard } from "./api/queries";
 
 class FlashCard {
@@ -92,6 +94,13 @@ class FlashCard {
       this.attachments[key] = { audio };
     }
   }
+  removeAudio(side) {
+    this.validateSide(side);
+    const key = side + "side";
+    if (this.attachments[key]?.audio) {
+      delete this.attachments[key].audio;
+    }
+  }
   getSideData(side) {
     return {
       text: this.getText(side),
@@ -121,11 +130,16 @@ class FlashCard {
 }
 
 const renderText = (text, textarea) => {
+  const textBtnIco =
+    textarea.parentElement.nextElementSibling.firstElementChild
+      .firstElementChild;
   if (!text) {
     textarea.classList.add("none");
+    textBtnIco.src = textIco;
   } else {
     textarea.classList.remove("none");
     textarea.value = text;
+    textBtnIco.src = removeTextIco;
   }
 };
 
@@ -136,17 +150,19 @@ const renderImages = (images, container, onImageRemove) => {
       : images.length
       ? "50%"
       : "0";
+
   const containerWidth = container.clientWidth,
     containerHeight = container.clientHeight,
     imageWidth =
-      images.length > 1 ? containerWidth / 2 - 10 : containerWidth + "px",
+      (images.length > 1 ? containerWidth / 2 - 10 : containerWidth) + "px",
     imageHeight =
-      images.length > 2 ? containerHeight / 2 - 10 : containerHeight + "px";
+      (images.length > 2 ? containerHeight / 2 - 10 : containerHeight) + "px";
 
   let newImages = images.reduce(
     (prev, image) => prev.set(image.name, image),
     new Map()
   );
+
   container.querySelectorAll(".flashcard-side__image").forEach((imageEl) => {
     const imageName = imageEl.dataset.imageName;
     if (newImages.has(imageName)) {
@@ -178,33 +194,29 @@ const renderImages = (images, container, onImageRemove) => {
 };
 
 const renderAudio = (audioFile, audioBtn) => {
-  const audioName = audioBtn.dataset.audioName;
   if (!audioFile) {
     audioBtn.innerHTML = "";
     audioBtn.onclick = () => {};
     return;
   }
-  if (audioName !== audioFile.name) {
-    const soundReader = new FileReader();
-    soundReader.onload = (e) => {
-      audioBtn.dataset.audioName = audioFile.name;
-      const audio = new Audio(e.target.result);
-      audioBtn.innerHTML = `<img src="${playIco}" alt="Play">`;
-      audioBtn.onclick = () => {
-        if (audio.paused) {
-          audio.play();
-          audioBtn.innerHTML = `<img src="${pauseIco}" alt="Pause">`;
-        } else {
-          audio.pause();
-          audioBtn.innerHTML = `<img src="${playIco}" alt="Play">`;
-        }
-      };
+  const soundReader = new FileReader();
+  soundReader.onload = (e) => {
+    const audio = new Audio(e.target.result);
+    audioBtn.innerHTML = `<img src="${playIco}" alt="Play">`;
+    audioBtn.onclick = () => {
+      if (audio.paused) {
+        audio.play();
+        audioBtn.innerHTML = `<img src="${pauseIco}" alt="Pause">`;
+      } else {
+        audio.pause();
+        audioBtn.innerHTML = `<img src="${playIco}" alt="Play">`;
+      }
     };
-    soundReader.onerror = function (e) {
-      console.log(e);
-    };
-    soundReader.readAsDataURL(audioFile);
-  }
+  };
+  soundReader.onerror = function (e) {
+    console.log(e);
+  };
+  soundReader.readAsDataURL(audioFile);
 };
 
 const initFlashcardCreation = () => {
@@ -216,11 +228,13 @@ const initFlashcardCreation = () => {
 
     const textarea = sideWorkspace.children[2];
     renderText(sideData.text, textarea);
+
     const imagesContainer = sideWorkspace.children[0];
     renderImages(sideData.images, imagesContainer, (imageName) => {
       flashcard.removeImage(imageName, sideName);
       renderFlashcardSide(sideName, sideWorkspace);
     });
+
     const audioBtn = sideWorkspace.children[1];
     renderAudio(sideData.audio, audioBtn);
   };
@@ -253,7 +267,7 @@ const initFlashcardCreation = () => {
     const tools = document.createElement("div");
     tools.classList.add("flashcard-side__tools");
     tools.innerHTML = `<button class="tool rnd-button" type="button"><img src="${textIco}" alt="#" /></button><label class="tool rnd-button"><img src="${imageIco}" alt="#" /><input class="none" type="file" accept=".jpg, .jpeg, .png, .svg" name="fileImages" /></label><label class="tool rnd-button"><img src="${audioIco}" alt="#" /><input class="none" type="file" accept=".mp3, .ogg, .wav" name="fileSound" /></label>`;
-    tools.children[0].addEventListener("click", () => {
+    tools.children[0].addEventListener("click", (e) => {
       const textarea = sideEl.firstElementChild.lastElementChild;
       if (textarea.classList.contains("none")) {
         try {
@@ -279,14 +293,24 @@ const initFlashcardCreation = () => {
       }
       e.target.value = "";
     });
+    tools.children[2].addEventListener("click", (e) => {
+      if (e.currentTarget.lastElementChild.disabled) {
+        e.preventDefault();
+        flashcard.removeAudio(sideName);
+        renderFlashcardSide(sideName, sideEl.firstElementChild);
+        e.currentTarget.lastElementChild.disabled = false;
+        e.currentTarget.firstElementChild.src = audioIco;
+      }
+    });
     tools.children[2].lastElementChild.addEventListener("change", (e) => {
       const file = e.target.files[0];
       if (file) {
         try {
           flashcard.setAudio(file, sideName);
           renderFlashcardSide(sideName, sideEl.firstElementChild);
+          e.target.disabled = true;
+          e.target.previousElementSibling.src = removeAudioIco;
         } catch (e) {
-          console.log(e);
           useMessageModal(e.message);
         }
       }
@@ -307,9 +331,20 @@ const initFlashcardCreation = () => {
 
   document.querySelector("#createFlashcard").addEventListener("click", () => {
     const formData = flashcard.toFormData();
+    if (
+      (!formData.get("title") &&
+        !formData.getAll("front_images").length &&
+        !formData.get("front_audio")) ||
+      (!formData.get("content") &&
+        !formData.getAll("back_images").length &&
+        !formData.get("back_audio"))
+    ) {
+      useMessageModal("Flashcard side cannot be empty!");
+      return;
+    }
     const cardsetId = window.location.href.split("/").pop();
     formData.append("cardset_id", cardsetId);
-    createFlashcard(formData).then((res) => {
+    createFlashcard(formData).then(() => {
       flashcard.reset();
       renderFlashcardSide(
         "front",
@@ -333,67 +368,6 @@ document.addEventListener("DOMContentLoaded", () => {
       flashcard.classList.toggle("flashcards__card-active");
     }
   });
+
   initFlashcardCreation();
 });
-
-/*
-const submitFlashCard = (event, flashcardSides, flashCardAttachments) => {
-  event.preventDefault();
-  const formData = new FormData();
-
-  const cardSetTitleEl = document.querySelector("h1");
-
-  const cardsetId = +cardSetTitleEl.dataset.id;
-  formData.append("cardset_id", cardsetId);
-
-  let errors = 0;
-
-  flashcardSides.forEach((side) => {
-    const sideName = side.dataset.type + "Side";
-    const textarea = side.querySelector(".textarea");
-    const sideText = textarea.textContent.trim();
-
-    if (
-      !sideText &&
-      !flashCardAttachments[sideName].images.length &&
-      !flashCardAttachments[sideName].audio
-    ) {
-      alert("Flash card side can not be empty!");
-      errors += 1;
-      return;
-    }
-
-    formData.append(textarea.id.replace("textarea-", ""), sideText);
-    textarea.innerHTML = "";
-    side.querySelector(".image-preview").innerHTML = "";
-  });
-
-  if (errors) {
-    return;
-  }
-
-  flashCardAttachments.frontSide.images.forEach((image) => {
-    formData.append("front_images", image);
-  });
-  flashCardAttachments.backSide.images.forEach((image) => {
-    formData.append("back_images", image);
-  });
-  flashCardAttachments.frontSide.audio &&
-    formData.append("front_audio", flashCardAttachments.frontSide.audio);
-  flashCardAttachments.backSide.audio &&
-    formData.append("back_audio", flashCardAttachments.backSide.audio);
-
-  fetch("/api/create-flashcard", { method: "POST", body: formData }).then(
-    (response) => loadFlashCards(cardsetId)
-  );
-
-  event.target.reset();
-  for (const side in flashCardAttachments) {
-    flashCardAttachments[side] = {
-      images: [],
-      audio: null,
-    };
-  }
-  event.target.parentElement.classList.remove("transit");
-};
-*/

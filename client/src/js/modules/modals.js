@@ -54,7 +54,7 @@ export const useConfirmModal = (message, onConfirm) => {
   modal.prepend(closeBtn);
 
   const confirmBtn = document.createElement("button");
-  confirmBtn.innerHTML = "Yes";
+  confirmBtn.innerHTML = "YES";
   confirmBtn.classList.add("button");
   confirmBtn.style.margin = "5px";
   confirmBtn.addEventListener("click", () => {
@@ -64,9 +64,9 @@ export const useConfirmModal = (message, onConfirm) => {
   modal.append(confirmBtn);
 
   const rejectBtn = document.createElement("button");
-  rejectBtn.innerHTML = "No";
+  rejectBtn.innerHTML = "NO";
   rejectBtn.classList.add("button");
-  rejectBtn.style.margin = "5px";
+  rejectBtn.style.marginTop = "5px";
   rejectBtn.addEventListener("click", closeModal);
   modal.append(rejectBtn);
 
@@ -101,9 +101,9 @@ export const useMessageModal = (message) => {
   modal.prepend(closeBtn);
 
   const confirmBtn = document.createElement("button");
-  confirmBtn.innerHTML = "Ok";
+  confirmBtn.innerHTML = "OK";
   confirmBtn.classList.add("button");
-  confirmBtn.style.margin = "5px";
+  confirmBtn.style.marginTop = "5px";
   confirmBtn.addEventListener("click", closeModal);
   modal.append(confirmBtn);
 
