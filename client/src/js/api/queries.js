@@ -40,6 +40,15 @@ export const getCategories = async () => {
   return await res.json();
 };
 
+export const getCardset = async (id) => {
+  try {
+    const res = await customFetch(`${CARDSET_URL}/${id}`);
+    return res.json();
+  } catch (e) {
+    throw e;
+  }
+};
+
 export const saveCardset = async (id) => {
   try {
     const res = await customFetch(`${SAVE_CARDSET_URL}/${id}`, {

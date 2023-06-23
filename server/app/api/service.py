@@ -302,7 +302,17 @@ class ApiService:
         db.session.add(flashcard)
         db.session.commit()
 
-        return jsonify({"message": "Files uploaded and resized successfully"}), 200
+        return (
+            jsonify(
+                {
+                    "id": flashcard.id,
+                    "title": flashcard.title,
+                    "content": flashcard.content,
+                    "attachments": flashcard.attachments,
+                }
+            ),
+            200,
+        )
 
     @classmethod
     def _save_flashcard_audio(

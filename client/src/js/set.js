@@ -8,7 +8,8 @@ import removeTextIco from "../img/icons/remove-text-ico.svg";
 import imageIco from "../img/icons/image-ico.svg";
 import audioIco from "../img/icons/audio-ico.svg";
 import removeAudioIco from "../img/icons/remove-audio-ico.svg";
-import { createFlashcard } from "./api/queries";
+import { createFlashcard, getCardset } from "./api/queries";
+import { generateFlashcardHTML } from "./modules/flashcards";
 
 class FlashCard {
   constructor(title = "", content = "", attachments = {}) {
@@ -219,7 +220,7 @@ const renderAudio = (audioFile, audioBtn) => {
   soundReader.readAsDataURL(audioFile);
 };
 
-const initFlashcardCreation = () => {
+const initFlashcardCreation = (onCreation) => {
   const container = document.querySelector(".constructor__parts .row");
   const flashcard = new FlashCard();
 
@@ -344,7 +345,7 @@ const initFlashcardCreation = () => {
     }
     const cardsetId = window.location.href.split("/").pop();
     formData.append("cardset_id", cardsetId);
-    createFlashcard(formData).then(() => {
+    createFlashcard(formData).then((res) => {
       flashcard.reset();
       renderFlashcardSide(
         "front",
@@ -354,6 +355,7 @@ const initFlashcardCreation = () => {
         "back",
         container.lastElementChild.firstElementChild.firstElementChild
       );
+      onCreation(res);
     });
   });
 };
@@ -361,13 +363,27 @@ const initFlashcardCreation = () => {
 document.addEventListener("DOMContentLoaded", () => {
   initModals();
   loadCategories();
-  const flashcards = document.querySelector(".flashcards");
-  flashcards.addEventListener("click", (event) => {
+  const flashcardsList = document.querySelector(".flashcards__list .row");
+  getCardset(+window.location.href.split("/").pop()).then((cardset) => {
+    const flashcardsHTML = cardset.flashcards.reduce(
+      (prev, flashcard) => prev + generateFlashcardHTML(flashcard),
+      ""
+    );
+    flashcardsList.innerHTML = flashcardsHTML;
+  });
+
+  flashcardsList.addEventListener("click", (event) => {
     const flashcard = event.target.closest(".flashcards__card");
     if (flashcard) {
       flashcard.classList.toggle("flashcards__card-active");
     }
   });
 
-  initFlashcardCreation();
+  document.querySelector(".constructor") &&
+    initFlashcardCreation((flashcard) => {
+      flashcardsList.insertAdjacentHTML(
+        "beforeend",
+        generateFlashcardHTML(flashcard)
+      );
+    });
 });

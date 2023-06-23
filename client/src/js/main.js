@@ -10,6 +10,7 @@ import { loadCategories } from "./modules/categories";
 import { initLearn } from "./modules/learn";
 
 document.addEventListener("DOMContentLoaded", () => {
+  console.log(window.current_user);
   initModals();
   initLearn();
   loadCategories();
