@@ -15,25 +15,36 @@ class FlashcardsLearn {
   }
 }
 
-const getCardsetsHtml = (cardsets, initialHtml = "") => {
-  return cardsets.reduce(
-    (prev, cardset) =>
-      prev +
-      `
-      <button class="choose-modal__cardset" data-cardset-id="${cardset.id}">
-        ${cardset.title}
-      </button>
-      `,
-    initialHtml
-  );
-};
-
-const initCardsetsChoice = async (onSubmit, disabledCardsets) => {
+const initCardsetsChoice = async (onSubmit, initialActiveCardsets = []) => {
   const chooseCardsetModal = document.querySelector(".choose-modal");
   const cardsetsContainer = chooseCardsetModal.querySelector(
     ".choose-modal__cardsets"
   );
-  const activeCardsets = new Map();
+  const searchInput = chooseCardsetModal.querySelector(
+    "#searchLearningCardsets"
+  );
+  const activeCardsets = new Map(
+    initialActiveCardsets.map((cardset) => [
+      cardset.id,
+      { id: cardset.id, title: cardset.title },
+    ])
+  );
+
+  const getCardsetsHtml = (cardsets, initialHtml = "") => {
+    return cardsets.reduce((prev, cardset) => {
+      const isActive = activeCardsets.has(cardset.id);
+      return (
+        prev +
+        `
+      <button class="choose-modal__cardset${
+        isActive ? "  choose-modal__cardset_active" : ""
+      }" data-cardset-id="${cardset.id}">
+        ${cardset.title}
+      </button>
+      `
+      );
+    }, initialHtml);
+  };
 
   const loadCardsets = async () => {
     const ownCardsets = await getCardsets({
@@ -41,28 +52,29 @@ const initCardsetsChoice = async (onSubmit, disabledCardsets) => {
       categoryId: 0,
       filter: "onlyOwn",
     });
-    cardsetsContainer.insertAdjacentHTML(
-      "beforeend",
-      getCardsetsHtml(
-        ownCardsets,
-        '<div class="choose-modal__divider">Own card sets</div>'
-      )
-    );
     const savedCardsets = await getCardsets({
       limit: 50,
       categoryId: 0,
       filter: "onlySaved",
     });
-    cardsetsContainer.insertAdjacentHTML(
-      "beforeend",
-      getCardsetsHtml(
-        savedCardsets,
-        '<div class="choose-modal__divider">Saved card sets</div>'
-      )
-    );
-    return [...ownCardsets, ...savedCardsets];
+
+    return { own: ownCardsets, saved: savedCardsets };
   };
-  const allCardsets = await loadCardsets();
+  const separatedCardsets = await loadCardsets();
+
+  const showSeparatedCardsets = () => {
+    cardsetsContainer.innerHTML =
+      getCardsetsHtml(
+        separatedCardsets.own,
+        '<div class="choose-modal__divider">Own card sets</div>'
+      ) +
+      getCardsetsHtml(
+        separatedCardsets.saved,
+        '<div class="choose-modal__divider">Saved card sets</div>'
+      );
+  };
+  showSeparatedCardsets();
+  const allCardsets = [...separatedCardsets.own, ...separatedCardsets.saved];
 
   cardsetsContainer.addEventListener("click", (e) => {
     const cardset = e.target.closest(".choose-modal__cardset");
@@ -83,51 +95,49 @@ const initCardsetsChoice = async (onSubmit, disabledCardsets) => {
   cardsetsContainer.nextElementSibling.addEventListener("click", () => {
     onSubmit(Array.from(activeCardsets.values()));
     closeModal(chooseCardsetModal);
+    showSeparatedCardsets();
+    searchInput.value = "";
   });
-
-  const initialCardsetsHtml = cardsetsContainer.innerHTML;
-  chooseCardsetModal
-    .querySelector("#searchLearningCardsets")
-    .addEventListener("input", (e) => {
-      const searchValue = e.target.value;
-      if (!searchValue) {
-        cardsetsContainer.innerHTML = initialCardsetsHtml;
-        return;
-      }
-      const filteredCardsets = allCardsets.filter((cardset) =>
-        cardset.title.toLowerCase().includes(searchValue.toLowerCase())
-      );
-      if (filteredCardsets.length) {
-        cardsetsContainer.innerHTML = getCardsetsHtml(filteredCardsets);
-      } else {
-        cardsetsContainer.innerHTML =
-          '<p style="margin-top: 45px">No such saved or own<br />card sets</p>';
-        const btn = document.createElement("button");
-        btn.classList.add("button", "button_small");
-        btn.innerHTML = "Find globally";
-        btn.style.marginTop = "10px";
-        btn.addEventListener("click", () => {
-          cardsetsContainer.insertAdjacentHTML(
-            "beforeend",
-            `
+  searchInput.addEventListener("input", (e) => {
+    const searchValue = e.target.value;
+    if (!searchValue) {
+      showSeparatedCardsets();
+      return;
+    }
+    const filteredCardsets = allCardsets.filter((cardset) =>
+      cardset.title.toLowerCase().includes(searchValue.toLowerCase())
+    );
+    if (filteredCardsets.length) {
+      cardsetsContainer.innerHTML = getCardsetsHtml(filteredCardsets);
+    } else {
+      cardsetsContainer.innerHTML =
+        '<p style="margin-top: 45px">No such saved or own<br />card sets</p>';
+      const btn = document.createElement("button");
+      btn.classList.add("button", "button_small");
+      btn.innerHTML = "Find globally";
+      btn.style.marginTop = "10px";
+      btn.addEventListener("click", () => {
+        cardsetsContainer.insertAdjacentHTML(
+          "beforeend",
+          `
           <div style="display: flex; justify-content: center; margin-top: 20px">
             <div class="loading-spinner"></div>
           </div>
           `
-          );
-          getCardsets({ limit: 50, categoryId: 0, searchQ: searchValue }).then(
-            (cardsets) => {
-              cardsetsContainer.innerHTML = getCardsetsHtml(cardsets);
-            }
-          );
-        });
-        cardsetsContainer.append(btn);
-      }
-    });
+        );
+        getCardsets({ limit: 50, categoryId: 0, searchQ: searchValue }).then(
+          (cardsets) => {
+            cardsetsContainer.innerHTML = getCardsetsHtml(cardsets);
+          }
+        );
+      });
+      cardsetsContainer.append(btn);
+    }
+  });
 };
 
 const initLearnChoice = (initialCardset, onStart) => {
-  const cardsets = [];
+  let cardsets = [];
   initialCardset && cardsets.push(initialCardset);
   const modalEl = document.querySelector(".mode-choice");
   const cardsetsContainer = modalEl.querySelector(".cardsets");
@@ -138,6 +148,9 @@ const initLearnChoice = (initialCardset, onStart) => {
         prev + `<div class="cardsets__cardset">${cardset.title}</div>`,
       " "
     );
+    cardsetsContainer
+      .querySelectorAll(".cardsets__cardset")
+      .forEach((set) => set.remove());
     cardsetsContainer.lastElementChild.insertAdjacentHTML(
       "beforebegin",
       cardsetsHTML
@@ -147,9 +160,10 @@ const initLearnChoice = (initialCardset, onStart) => {
   showCardsets(cardsets);
 
   initCardsetsChoice((selectedCardsets) => {
-    cardsets.push(...selectedCardsets);
-    showCardsets(selectedCardsets);
+    cardsets = selectedCardsets;
+    showCardsets(cardsets);
   }, cardsets);
+
   modalEl.querySelector("#startLearn").addEventListener("click", (e) => {
     e.stopPropagation();
     closeModal(modalEl);
