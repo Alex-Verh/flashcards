@@ -21,7 +21,7 @@ const distPath = () =>
   flask ? path.resolve(__dirname, "../server/app/static") : paths.dist;
 const templatesPath = () => (flask ? "../templates/" : "");
 const assetsPath = () => (flask ? "" : paths.assets);
-const publicPath = () => (flask ? '/' + paths.assets : "");
+const publicPath = () => (flask ? "/" + paths.assets : "");
 
 const entry = () =>
   pages.reduce(
@@ -113,7 +113,7 @@ const htmlPlugins = () =>
     (page) =>
       new HtmlWebpackPlugin({
         inject: false,
-        template: `./pages/${page}.html`,
+        template: `./templates/${page}.html`,
         filename: templatesPath() + `${page}.html`,
         chunks: [page],
       })
@@ -130,9 +130,9 @@ const plugins = () => [
         from: `img`,
         to: `${assetsPath()}img`,
       },
-      { from: "pages/modals", to: `${templatesPath()}modals` },
+      { from: "templates/modals", to: `${templatesPath()}modals` },
       {
-        from: "pages/base.html",
+        from: "templates/base.html",
         to: `${templatesPath()}base.html`,
       },
     ],
