@@ -1,8 +1,9 @@
+import os
+from glob import glob
+
 from flask_mail import Message
 from PIL import Image
 from pydub import AudioSegment
-from glob import glob
-import os
 
 from .extensions import mail
 

@@ -55,7 +55,7 @@ def create_app(config_class=Config):
         )
 
     @app.route("/uploads/<filename>")
-    def uploaded_file(filename):
+    def uploads(filename):
         return send_from_directory(app.config["UPLOAD_FOLDER"], filename)
 
     return app

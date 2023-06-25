@@ -1,6 +1,10 @@
 import "../sass/pages/set.scss";
 import { initModals, useMessageModal } from "./modules/modals";
 import { loadCategories } from "./modules/categories";
+import { createFlashcard, getCardset } from "./api/queries";
+import { generateFlashcardEl } from "./modules/flashcards";
+import { initLearn } from "./modules/learn";
+
 import playIco from "../img/icons/play-ico.svg";
 import pauseIco from "../img/icons/pause-ico.svg";
 import textIco from "../img/icons/text-ico.svg";
@@ -8,8 +12,6 @@ import removeTextIco from "../img/icons/remove-text-ico.svg";
 import imageIco from "../img/icons/image-ico.svg";
 import audioIco from "../img/icons/audio-ico.svg";
 import removeAudioIco from "../img/icons/remove-audio-ico.svg";
-import { createFlashcard, getCardset } from "./api/queries";
-import { generateFlashcardHTML } from "./modules/flashcards";
 
 class FlashCard {
   constructor(title = "", content = "", attachments = {}) {
@@ -365,11 +367,13 @@ document.addEventListener("DOMContentLoaded", () => {
   loadCategories();
   const flashcardsList = document.querySelector(".flashcards__list .row");
   getCardset(+window.location.href.split("/").pop()).then((cardset) => {
-    const flashcardsHTML = cardset.flashcards.reduce(
-      (prev, flashcard) => prev + generateFlashcardHTML(flashcard),
-      ""
+    initLearn({ id: cardset.id, title: cardset.title });
+    flashcardsList.innerHTML = "";
+    cardset.flashcards.forEach((flashcard) =>
+      flashcardsList.append(
+        generateFlashcardEl(flashcard, "col-sm-6 col-md-4 col-lg-3")
+      )
     );
-    flashcardsList.innerHTML = flashcardsHTML;
   });
 
   flashcardsList.addEventListener("click", (event) => {
@@ -381,9 +385,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.querySelector(".constructor") &&
     initFlashcardCreation((flashcard) => {
-      flashcardsList.insertAdjacentHTML(
-        "beforeend",
-        generateFlashcardHTML(flashcard)
+      flashcardsList.append(
+        generateFlashcardEl(flashcard, "col-sm-6 col-md-4 col-lg-3")
       );
     });
 });

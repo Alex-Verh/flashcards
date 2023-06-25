@@ -318,33 +318,30 @@ class ApiService:
     def _save_flashcard_audio(
         cls, flashcard_attachments, base_filename, uploads_dir_path
     ):
-        front_audio = request.files.get("front_audio")
-        back_audio = request.files.get("back_audio")
-        if front_audio:
-            flashcard_attachments["frontside"]["audio"] = save_audio(
-                front_audio, base_filename + secrets.token_hex(6), uploads_dir_path
-            )
-        if back_audio:
-            flashcard_attachments["backside"]["audio"] = save_audio(
-                back_audio, base_filename + secrets.token_hex(6), uploads_dir_path
-            )
+        for side in ("front", "back"):
+            audio = request.files.get(f"{side}_audio")
+            if audio:
+                audio_filename = save_audio(
+                    audio, base_filename + secrets.token_hex(6), uploads_dir_path
+                )
+                flashcard_attachments[f"{side}side"]["audio"] = url_for(
+                    "uploads", filename=audio_filename, _external=True
+                )
 
     @classmethod
     def _save_flashcard_images(
         cls, flashcard_attachments, base_filename, uploads_dir_path
     ):
-        front_images = request.files.getlist("front_images")
-        back_images = request.files.getlist("back_images")
-        for image in front_images:
-            image_filename = save_image(
-                image, base_filename + secrets.token_hex(6), uploads_dir_path
-            )
-            flashcard_attachments["frontside"]["images"].append(image_filename)
-        for image in back_images:
-            image_filename = save_image(
-                image, base_filename + secrets.token_hex(6), uploads_dir_path
-            )
-            flashcard_attachments["backside"]["images"].append(image_filename)
+        for side in ("front", "back"):
+            images = request.files.getlist(f"{side}_images")
+            for image in images:
+                image_filename = save_image(
+                    image, base_filename + secrets.token_hex(6), uploads_dir_path
+                )
+
+                flashcard_attachments[f"{side}side"]["images"].append(
+                    url_for("uploads", filename=image_filename, _external=True)
+                )
 
     @classmethod
     def delete_flashcard(cls, id):

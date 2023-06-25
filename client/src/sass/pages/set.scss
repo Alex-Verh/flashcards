@@ -73,7 +73,7 @@
   padding: 10px 15px;
   &_back {
     transform: rotateY(180deg);
-    font-size: 14px;
+    font-size: 13px;
   }
   &__images {
     margin: 0 auto;
@@ -91,6 +91,11 @@
   }
   &__text {
     text-align: center;
+  }
+  &__audio {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
   }
 }
 

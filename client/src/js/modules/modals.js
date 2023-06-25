@@ -57,6 +57,7 @@ export const useConfirmModal = (message, onConfirm) => {
   confirmBtn.innerHTML = "YES";
   confirmBtn.classList.add("button");
   confirmBtn.style.margin = "5px";
+  confirmBtn.style.display = "inline-block";
   confirmBtn.addEventListener("click", () => {
     onConfirm();
     closeModal();
@@ -66,7 +67,8 @@ export const useConfirmModal = (message, onConfirm) => {
   const rejectBtn = document.createElement("button");
   rejectBtn.innerHTML = "NO";
   rejectBtn.classList.add("button");
-  rejectBtn.style.marginTop = "5px";
+  rejectBtn.style.margin = "5px";
+  rejectBtn.style.display = "inline-block";
   rejectBtn.addEventListener("click", closeModal);
   modal.append(rejectBtn);
 

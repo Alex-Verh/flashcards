@@ -1,20 +1,34 @@
 import { getCardsets, getFlashcards } from "../api/queries";
-import { closeModal, openModal } from "./modals";
+import { generateFlashcardSideEl } from "./flashcards";
+import { closeModal, openModal, useMessageModal } from "./modals";
+
+class FlashcardsLearn {
+  constructor(initialCardset) {
+    this.cardsets = new Set();
+    this.flashcards = [];
+    initialCardset && this.cardsets.add(initialCardset);
+  }
+  addCardset(cardset) {
+    if (this.cardsets.has()) {
+      throw new Error();
+    }
+  }
+}
 
 const getCardsetsHtml = (cardsets, initialHtml = "") => {
   return cardsets.reduce(
     (prev, cardset) =>
       prev +
       `
-      <div class="choose-modal__cardset" data-cardset-id="${cardset.id}">
+      <button class="choose-modal__cardset" data-cardset-id="${cardset.id}">
         ${cardset.title}
-      </div>
+      </button>
       `,
     initialHtml
   );
 };
 
-const initCardsetsChoice = async (onSubmit) => {
+const initCardsetsChoice = async (onSubmit, disabledCardsets) => {
   const chooseCardsetModal = document.querySelector(".choose-modal");
   const cardsetsContainer = chooseCardsetModal.querySelector(
     ".choose-modal__cardsets"
@@ -86,14 +100,17 @@ const initCardsetsChoice = async (onSubmit) => {
       if (filteredCardsets.length) {
         cardsetsContainer.innerHTML = getCardsetsHtml(filteredCardsets);
       } else {
-        cardsetsContainer.innerHTML = "<p>No such saved or own card sets</p>";
+        cardsetsContainer.innerHTML =
+          '<p style="margin-top: 45px">No such saved or own<br />card sets</p>';
         const btn = document.createElement("button");
+        btn.classList.add("button", "button_small");
         btn.innerHTML = "Find globally";
+        btn.style.marginTop = "10px";
         btn.addEventListener("click", () => {
           cardsetsContainer.insertAdjacentHTML(
             "beforeend",
             `
-          <div style="display: flex; justify-content: center; margin-top: 30px">
+          <div style="display: flex; justify-content: center; margin-top: 20px">
             <div class="loading-spinner"></div>
           </div>
           `
@@ -132,7 +149,7 @@ const initLearnChoice = (initialCardset, onStart) => {
   initCardsetsChoice((selectedCardsets) => {
     cardsets.push(...selectedCardsets);
     showCardsets(selectedCardsets);
-  });
+  }, cardsets);
   modalEl.querySelector("#startLearn").addEventListener("click", (e) => {
     e.stopPropagation();
     onStart({
@@ -145,11 +162,78 @@ const initLearnChoice = (initialCardset, onStart) => {
 
 export const initLearn = (initialCardset) => {
   const learningModal = document.querySelector(".learning.modal");
+  const cardWrapper = learningModal.querySelector(
+    ".learning__flashcard-wrapper"
+  );
+  const toolsContainer = learningModal.querySelector(".learning__tools");
+
+  const showFlashcardSide = (flashcard, side) => {
+    const baseCardOptions = {
+      containerClass: "learning__flashcard",
+      imagesClass: "learning__flashcard-images",
+      imageClass: "learning__flashcard-image",
+      textClass: "learning__flashcard-text",
+      audioClass: "learning__flashcard-audio",
+    };
+    if (side === "front") {
+      cardWrapper.replaceChildren(
+        generateFlashcardSideEl({
+          ...baseCardOptions,
+          text: flashcard.title,
+          images: flashcard.attachments.frontside.images,
+          audio: flashcard.attachments.frontside.audio,
+        })
+      );
+      toolsContainer.children[1].onclick = () => {
+        showFlashcardSide(flashcard, "back");
+      };
+    } else if (side === "back") {
+      cardWrapper.replaceChildren(
+        generateFlashcardSideEl({
+          ...baseCardOptions,
+          text: flashcard.content,
+          images: flashcard.attachments.backside.images,
+          audio: flashcard.attachments.backside.audio,
+        })
+      );
+      toolsContainer.children[1].onclick = () => {
+        showFlashcardSide(flashcard, "front");
+      };
+    }
+  };
+  const showFlashcard = (flashcards, side) => {
+    const currentFlashcard = flashcards[0];
+    if (!currentFlashcard) {
+      useMessageModal("Final!!!");
+      return;
+    }
+    if (side === "front") {
+      showFlashcardSide(currentFlashcard, "front");
+    } else if (side === "back") {
+      showFlashcardSide(currentFlashcard, "back");
+    }
+    toolsContainer.children[0].onclick = () => {
+      flashcards.push(flashcards.shift());
+      showFlashcard(flashcards, side);
+    };
+    toolsContainer.children[2].onclick = () => {
+      flashcards.shift();
+      showFlashcard(flashcards, side);
+    };
+  };
+
   initLearnChoice(initialCardset, async ({ cardsets, mode }) => {
+    openModal(learningModal);
     const flashcards = await getFlashcards(
       cardsets.map((cardset) => cardset.id)
     );
-    console.log(flashcards);
-    openModal(learningModal);
+    for (let i = flashcards.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [flashcards[i], flashcards[j]] = [flashcards[j], flashcards[i]];
+    }
+    const side = mode === "quessContent" ? "front" : "back";
+    const header = mode === "quessContent" ? "Guess Content" : "Guess Title";
+    learningModal.querySelector(".learning__title").innerHTML = header;
+    showFlashcard(flashcards, side);
   });
 };

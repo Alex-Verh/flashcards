@@ -56,6 +56,11 @@
   &:active {
     box-shadow: none;
   }
+  &_small {
+    width: 140px;
+    padding: 7px 12px;
+    font-size: 16px;
+  }
 }
 
 .rnd-button {
