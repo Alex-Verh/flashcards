@@ -1,74 +1,78 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style type="text/css">
-        .mail {
+        /* Reset styles */
+        body {
+            margin: 0;
+            padding: 0;
             font-family: sans-serif;
-            background-color:#FFF1E9;
-            padding: 3vh 20vh;
-            color:#333;
-        }
-        .mail__title {
-            font-weight: 700;
-            font-size: 4vh;
-            text-align: center;
-        }
-        .mail__body {
-            margin: 2vh 1vh;
-            background-color: #fff;
-            font-size: 1.6vh;
-            padding: 10vh 35vh;
-        }
-        .mail__button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 3vh auto;
-            width: 50vh;
-            background: #EB996E;
-            border-radius: 10px;
-            border: none;
-            padding: 1.5vh 3.5vh;
-            font-weight: 700;
-            font-size: 2vh;
-            box-shadow: 3px 3px 14px rgba(157, 157, 157, 0.54);
-            font-weight: bold;
-            letter-spacing: normal;
-            line-height: 100%;
-            text-align: center;
-            text-decoration: none;
-        }
-        .mail__message {
-            margin-trim: 1vh;
-            color:#51545e;
-        }
-        .mail__button:hover {
-            box-shadow:3px 3px 14px #EB996E8f;
-            cursor: pointer;
-        }
-        .mail__button:active {
-            box-shadow: none;
+            font-size: 14px;
+            line-height: 1.4;
+            color: #333;
         }
 
+        table {
+            border-collapse: collapse;
+        }
+
+        /* Email styles */
+        .mail {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #FFF1E9;
+        }
+
+        .mail__title {
+            font-weight: 700;
+            font-size: 24px;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .mail__body {
+            background-color: #fff;
+            font-size: 14px;
+            padding: 20px;
+        }
+
+        .mail__button {
+            display: inline-block;
+            margin: 20px auto;
+            background: #EB996E;
+            border-radius: 4px;
+            border: none;
+            padding: 10px 20px;
+            font-weight: 700;
+            font-size: 16px;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .mail__message {
+            margin-bottom: 20px;
+            color: #51545e;
+        }
     </style>
 </head>
 <body>
     <div class="mail">
         <div class="mail__body">
             <div class="mail__title">FLASHY</div>
-            <br>
             <div class="mail__topic"><h2>Reset Password Instructions</h2></div>
             <div class="mail__message">Hello Pumba, <br>
                 Click the button to reset your password for your FLASHY account.
             </div>
-            <div class="mail__button">Reset Password</div>
+            <div style="text-align: center;">
+                <a href="#" class="mail__button" style="background: #EB996E; color: #fff;">Reset Password</a>
+            </div>
             <div class="mail__message">Thank you,<br>
-                The FLASHY Team            
+                The FLASHY Team
             </div>
         </div>
-
-    </div>    
+    </div>
 </body>
 </html>
