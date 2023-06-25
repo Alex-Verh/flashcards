@@ -131,6 +131,7 @@ const plugins = () => [
         to: `${assetsPath()}img`,
       },
       { from: "templates/modals", to: `${templatesPath()}modals` },
+      { from: "templates/mails", to: `${templatesPath()}mails` },
       {
         from: "templates/base.html",
         to: `${templatesPath()}base.html`,
