@@ -35,7 +35,6 @@ export const generateFlashcardSideEl = ({
 
   if (audio) {
     const audioObj = new Audio(audio);
-    console.log(audio);
     const audioBtn = document.createElement("img");
     audioBtn.className = audioClass;
     audioBtn.alt = "toggle audio";

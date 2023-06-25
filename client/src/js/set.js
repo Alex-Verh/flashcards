@@ -200,6 +200,8 @@ const renderAudio = (audioFile, audioBtn) => {
   const addAudioBtnIco =
     audioBtn.parentElement.nextElementSibling.lastElementChild;
   if (!audioFile) {
+    audioBtn.dataset.audioName = null;
+    audioBtn.lastElementChild && audioBtn.lastElementChild.pause();
     audioBtn.innerHTML = "";
     audioBtn.onclick = () => {};
     addAudioBtnIco.lastElementChild.disabled = false;
@@ -208,20 +210,19 @@ const renderAudio = (audioFile, audioBtn) => {
   }
   addAudioBtnIco.lastElementChild.disabled = true;
   addAudioBtnIco.firstElementChild.src = removeAudioIco;
-
   if (audioBtn.dataset.audioName !== audioFile.name) {
     audioBtn.dataset.audioName = audioFile.name;
     const soundReader = new FileReader();
     soundReader.onload = (e) => {
-      const audio = new Audio(e.target.result);
-      audioBtn.innerHTML = `<img src="${playIco}" alt="Play">`;
+      audioBtn.innerHTML = `<img src="${playIco}" alt="Play"><audio><source src="${e.target.result}" type="${audioFile.type}"></audio>`;
+      const audioEl = audioBtn.lastElementChild;
       audioBtn.onclick = () => {
-        if (audio.paused) {
-          audio.play();
-          audioBtn.innerHTML = `<img src="${pauseIco}" alt="Pause">`;
+        if (audioEl.paused) {
+          audioBtn.firstElementChild.src = pauseIco;
+          audioEl.play();
         } else {
-          audio.pause();
-          audioBtn.innerHTML = `<img src="${playIco}" alt="Play">`;
+          audioBtn.firstElementChild.src = playIco;
+          audioEl.pause();
         }
       };
     };
