@@ -152,11 +152,11 @@ const initLearnChoice = (initialCardset, onStart) => {
   }, cardsets);
   modalEl.querySelector("#startLearn").addEventListener("click", (e) => {
     e.stopPropagation();
+    closeModal(modalEl);
     onStart({
       cardsets,
       mode: modalEl.querySelector('input[name="learningMode"]:checked').value,
     });
-    closeModal(modalEl);
   });
 };
 

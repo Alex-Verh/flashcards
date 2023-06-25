@@ -197,29 +197,39 @@ const renderImages = (images, container, onImageRemove) => {
 };
 
 const renderAudio = (audioFile, audioBtn) => {
+  const addAudioBtnIco =
+    audioBtn.parentElement.nextElementSibling.lastElementChild;
   if (!audioFile) {
     audioBtn.innerHTML = "";
     audioBtn.onclick = () => {};
+    addAudioBtnIco.lastElementChild.disabled = false;
+    addAudioBtnIco.firstElementChild.src = audioIco;
     return;
   }
-  const soundReader = new FileReader();
-  soundReader.onload = (e) => {
-    const audio = new Audio(e.target.result);
-    audioBtn.innerHTML = `<img src="${playIco}" alt="Play">`;
-    audioBtn.onclick = () => {
-      if (audio.paused) {
-        audio.play();
-        audioBtn.innerHTML = `<img src="${pauseIco}" alt="Pause">`;
-      } else {
-        audio.pause();
-        audioBtn.innerHTML = `<img src="${playIco}" alt="Play">`;
-      }
+  addAudioBtnIco.lastElementChild.disabled = true;
+  addAudioBtnIco.firstElementChild.src = removeAudioIco;
+
+  if (audioBtn.dataset.audioName !== audioFile.name) {
+    audioBtn.dataset.audioName = audioFile.name;
+    const soundReader = new FileReader();
+    soundReader.onload = (e) => {
+      const audio = new Audio(e.target.result);
+      audioBtn.innerHTML = `<img src="${playIco}" alt="Play">`;
+      audioBtn.onclick = () => {
+        if (audio.paused) {
+          audio.play();
+          audioBtn.innerHTML = `<img src="${pauseIco}" alt="Pause">`;
+        } else {
+          audio.pause();
+          audioBtn.innerHTML = `<img src="${playIco}" alt="Play">`;
+        }
+      };
     };
-  };
-  soundReader.onerror = function (e) {
-    console.log(e);
-  };
-  soundReader.readAsDataURL(audioFile);
+    soundReader.onerror = function (e) {
+      console.log(e);
+    };
+    soundReader.readAsDataURL(audioFile);
+  }
 };
 
 const initFlashcardCreation = (onCreation) => {
@@ -301,8 +311,6 @@ const initFlashcardCreation = (onCreation) => {
         e.preventDefault();
         flashcard.removeAudio(sideName);
         renderFlashcardSide(sideName, sideEl.firstElementChild);
-        e.currentTarget.lastElementChild.disabled = false;
-        e.currentTarget.firstElementChild.src = audioIco;
       }
     });
     tools.children[2].lastElementChild.addEventListener("change", (e) => {
@@ -311,8 +319,6 @@ const initFlashcardCreation = (onCreation) => {
         try {
           flashcard.setAudio(file, sideName);
           renderFlashcardSide(sideName, sideEl.firstElementChild);
-          e.target.disabled = true;
-          e.target.previousElementSibling.src = removeAudioIco;
         } catch (e) {
           useMessageModal(e.message);
         }
