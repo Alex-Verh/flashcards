@@ -7,7 +7,7 @@ endblock %} {% block container %}
     <section class="flashcards">
       <div class="row">
         <div class="flashcards__heading-tools">
-          {{ cardset.title }}
+          {{ cardset.title }} {% if cardset.user_id == current_user.id %}
           <div>
             <div class="flashcards__tool rnd-button">
               <img src="/static/img/icons/edit-ico.svg" alt="Edit" />
@@ -16,6 +16,7 @@ endblock %} {% block container %}
               <img src="/static/img/icons/delete-ico.svg" alt="Delete" />
             </div>
           </div>
+          {% endif %}
         </div>
       </div>
       <div class="flashcards__list">

@@ -13,6 +13,18 @@ export const hideInputError = (input) => {
   input.nextElementSibling && input.nextElementSibling.remove();
 };
 
+export const centerTextInTextarea = (
+  textarea,
+  lineHeight,
+  height = textarea.clientHeight
+) => {
+  const verticalPadding = `${
+    (height - parseFloat(lineHeight) * textarea.value.split("\n").length) / 2
+  }px`;
+  textarea.style.paddingTop = verticalPadding;
+  textarea.style.paddingBottom = verticalPadding;
+};
+
 export const initInput = (input, validator) => {
   const validateInput = (value = input.value) => {
     const validation = validator(value);

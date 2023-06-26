@@ -4,6 +4,7 @@ import { loadCategories } from "./modules/categories";
 import { createFlashcard, getCardset } from "./api/queries";
 import { generateFlashcardEl } from "./modules/flashcards";
 import { initLearn } from "./modules/learn";
+import { centerTextInTextarea } from "./modules/input";
 
 import playIco from "../img/icons/play-ico.svg";
 import pauseIco from "../img/icons/pause-ico.svg";
@@ -141,17 +142,21 @@ const renderText = (text, textarea) => {
     textBtnIco.src = textIco;
   } else {
     textarea.classList.remove("none");
-    textarea.value = text;
+    textarea.value = text.trim();
     textBtnIco.src = removeTextIco;
+    const { lineHeight } = getComputedStyle(textarea);
+    centerTextInTextarea(textarea, lineHeight, textarea.scrollHeight);
   }
 };
 
-const renderImages = (images, container, onImageRemove) => {
+const renderImages = (images, container, sideName, onImageRemove) => {
   container.style.height =
     container.parentElement.lastElementChild.classList.contains("none")
       ? "80%"
       : images.length
-      ? "50%"
+      ? sideName === "front"
+        ? "50%"
+        : "40%"
       : "0";
 
   const containerWidth = container.clientWidth,
@@ -242,9 +247,10 @@ const initFlashcardCreation = (onCreation) => {
 
     const textarea = sideWorkspace.children[2];
     renderText(sideData.text, textarea);
+    sideData.text === " " && flashcard.setText("", sideName);
 
     const imagesContainer = sideWorkspace.children[0];
-    renderImages(sideData.images, imagesContainer, (imageName) => {
+    renderImages(sideData.images, imagesContainer, sideName, (imageName) => {
       flashcard.removeImage(imageName, sideName);
       renderFlashcardSide(sideName, sideWorkspace);
     });
@@ -258,15 +264,13 @@ const initFlashcardCreation = (onCreation) => {
     workspace.classList.add("flashcard-side__workspace");
     workspace.innerHTML = `<div class="flashcard-side__images"></div><div class="flashcard-side__sound"></div><textarea class="flashcard-side__text flashcard-side__text_${
       sideName === "front" ? "title" : "content"
-    } none"></textarea>`;
+    } none" placeholder="Enter your text here"></textarea>`;
+    let textareaLineHeight = sideName === "front" ? 27 : 24;
     workspace.lastElementChild.addEventListener("input", (e) => {
-      if (
-        e.target.value.endsWith("\n\n") ||
-        parseFloat(e.target.scrollHeight) -
-          parseFloat(getComputedStyle(e.target).height) >
-          5
-      ) {
-        e.target.value = e.target.value.slice(0, -1);
+      centerTextInTextarea(e.target, textareaLineHeight);
+      const prevValue = flashcard.getText(sideName);
+      if (e.target.scrollHeight - e.target.clientHeight > 5) {
+        e.target.value = prevValue;
         return;
       }
       try {
@@ -285,7 +289,7 @@ const initFlashcardCreation = (onCreation) => {
       const textarea = sideEl.firstElementChild.lastElementChild;
       if (textarea.classList.contains("none")) {
         try {
-          flashcard.setText("Enter your text here", sideName);
+          flashcard.setText(" ", sideName);
           textarea.focus();
         } catch (e) {
           useMessageModal(e.message);
@@ -294,6 +298,7 @@ const initFlashcardCreation = (onCreation) => {
         flashcard.setText("", sideName);
       }
       renderFlashcardSide(sideName, sideEl.firstElementChild);
+      textarea.focus();
     });
     tools.children[1].lastElementChild.addEventListener("change", (e) => {
       const file = e.target.files[0];
@@ -329,17 +334,21 @@ const initFlashcardCreation = (onCreation) => {
     sideEl.append(tools);
   };
   container.innerHTML = "";
+
   ["front", "back"].forEach((sideName) => {
     container.insertAdjacentHTML(
       "beforeend",
       '<div class="col-lg-6 col-md-12"><div class="flashcard-side"></div></div>'
     );
     const side = container.lastElementChild.lastElementChild;
+    new ResizeObserver((entries) => {
+      renderFlashcardSide(sideName, entries[0].target.firstElementChild);
+    }).observe(side);
     createWorkspace(sideName, side);
     createTools(sideName, side);
   });
-
-  document.querySelector("#createFlashcard").addEventListener("click", () => {
+  const submitBtn = document.querySelector("#createFlashcard");
+  submitBtn.addEventListener("click", () => {
     const formData = flashcard.toFormData();
     if (
       (!formData.get("title") &&
@@ -352,6 +361,7 @@ const initFlashcardCreation = (onCreation) => {
       useMessageModal("Flashcard side cannot be empty!");
       return;
     }
+    submitBtn.disabled = true;
     const cardsetId = window.location.href.split("/").pop();
     formData.append("cardset_id", cardsetId);
     createFlashcard(formData).then((res) => {
@@ -365,6 +375,7 @@ const initFlashcardCreation = (onCreation) => {
         container.lastElementChild.firstElementChild.firstElementChild
       );
       onCreation(res);
+      submitBtn.disabled = false;
     });
   });
 };
@@ -375,6 +386,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const flashcardsList = document.querySelector(".flashcards__list .row");
   getCardset(+window.location.href.split("/").pop()).then((cardset) => {
     initLearn({ id: cardset.id, title: cardset.title });
+    if (!cardset.flashcards || !cardset.flashcards.length) {
+      flashcardsList.innerHTML = `
+        <div style="font-size: 20px; text-align: center; margin-top: 100px; margin-bottom: 100px; color: #6b6b6b">
+          There is no flashcards now
+        </div>`;
+      return;
+    }
     flashcardsList.innerHTML = "";
     cardset.flashcards.forEach((flashcard) =>
       flashcardsList.append(
@@ -392,6 +410,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.querySelector(".constructor") &&
     initFlashcardCreation((flashcard) => {
+      if (!flashcardsList.querySelector(".flashcards__card")) {
+        flashcardsList.innerHTML = "";
+      }
       flashcardsList.append(
         generateFlashcardEl(flashcard, "col-sm-6 col-md-4 col-lg-3")
       );

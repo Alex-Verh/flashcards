@@ -2,19 +2,6 @@ import { getCardsets, getFlashcards } from "../api/queries";
 import { generateFlashcardSideEl } from "./flashcards";
 import { closeModal, openModal, useMessageModal } from "./modals";
 
-class FlashcardsLearn {
-  constructor(initialCardset) {
-    this.cardsets = new Set();
-    this.flashcards = [];
-    initialCardset && this.cardsets.add(initialCardset);
-  }
-  addCardset(cardset) {
-    if (this.cardsets.has()) {
-      throw new Error();
-    }
-  }
-}
-
 const initCardsetsChoice = async (onSubmit, initialActiveCardsets = []) => {
   const chooseCardsetModal = document.querySelector(".choose-modal");
   const cardsetsContainer = chooseCardsetModal.querySelector(
@@ -47,34 +34,44 @@ const initCardsetsChoice = async (onSubmit, initialActiveCardsets = []) => {
   };
 
   const loadCardsets = async () => {
-    const ownCardsets = await getCardsets({
-      limit: 50,
-      categoryId: 0,
-      filter: "onlyOwn",
-    });
-    const savedCardsets = await getCardsets({
-      limit: 50,
-      categoryId: 0,
-      filter: "onlySaved",
-    });
-
-    return { own: ownCardsets, saved: savedCardsets };
+    try {
+      const ownCardsets = await getCardsets({
+        limit: 50,
+        filter: "onlyOwn",
+      });
+      const savedCardsets = await getCardsets({
+        limit: 50,
+        filter: "onlySaved",
+      });
+      return { own: ownCardsets, saved: savedCardsets };
+    } catch (e) {
+      if (+e.message === 401) {
+        return await getCardsets({
+          limit: 20,
+        });
+      }
+    }
   };
   const separatedCardsets = await loadCardsets();
-
-  const showSeparatedCardsets = () => {
+  const showInitialCardsets = () => {
     cardsetsContainer.innerHTML =
-      getCardsetsHtml(
-        separatedCardsets.own,
-        '<div class="choose-modal__divider">Own card sets</div>'
-      ) +
-      getCardsetsHtml(
-        separatedCardsets.saved,
-        '<div class="choose-modal__divider">Saved card sets</div>'
-      );
+      separatedCardsets.own && separatedCardsets.saved
+        ? getCardsetsHtml(
+            separatedCardsets.own,
+            '<div class="choose-modal__divider">Own card sets</div>'
+          ) +
+          getCardsetsHtml(
+            separatedCardsets.saved,
+            '<div class="choose-modal__divider">Saved card sets</div>'
+          )
+        : getCardsetsHtml(separatedCardsets);
   };
-  showSeparatedCardsets();
-  const allCardsets = [...separatedCardsets.own, ...separatedCardsets.saved];
+
+  showInitialCardsets();
+  const allCardsets =
+    separatedCardsets.own && separatedCardsets.saved
+      ? [...separatedCardsets.own, ...separatedCardsets.saved]
+      : separatedCardsets;
 
   cardsetsContainer.addEventListener("click", (e) => {
     const cardset = e.target.closest(".choose-modal__cardset");
@@ -95,13 +92,13 @@ const initCardsetsChoice = async (onSubmit, initialActiveCardsets = []) => {
   cardsetsContainer.nextElementSibling.addEventListener("click", () => {
     onSubmit(Array.from(activeCardsets.values()));
     closeModal(chooseCardsetModal);
-    showSeparatedCardsets();
+    showInitialCardsets();
     searchInput.value = "";
   });
   searchInput.addEventListener("input", (e) => {
     const searchValue = e.target.value;
     if (!searchValue) {
-      showSeparatedCardsets();
+      showInitialCardsets();
       return;
     }
     const filteredCardsets = allCardsets.filter((cardset) =>
@@ -181,58 +178,68 @@ export const initLearn = (initialCardset) => {
   );
   const toolsContainer = learningModal.querySelector(".learning__tools");
 
-  const showFlashcardSide = (flashcard, side) => {
-    const baseCardOptions = {
-      containerClass: "learning__flashcard",
-      imagesClass: "learning__flashcard-images",
-      imageClass: "learning__flashcard-image",
-      textClass: "learning__flashcard-text",
-      audioClass: "learning__flashcard-audio",
-    };
-    if (side === "front") {
-      cardWrapper.replaceChildren(
-        generateFlashcardSideEl({
-          ...baseCardOptions,
-          text: flashcard.title,
-          images: flashcard.attachments.frontside.images,
-          audio: flashcard.attachments.frontside.audio,
-        })
-      );
-      toolsContainer.children[1].onclick = () => {
-        showFlashcardSide(flashcard, "back");
-      };
-    } else if (side === "back") {
-      cardWrapper.replaceChildren(
-        generateFlashcardSideEl({
-          ...baseCardOptions,
-          text: flashcard.content,
-          images: flashcard.attachments.backside.images,
-          audio: flashcard.attachments.backside.audio,
-        })
-      );
-      toolsContainer.children[1].onclick = () => {
-        showFlashcardSide(flashcard, "front");
-      };
-    }
-  };
-  const showFlashcard = (flashcards, side) => {
-    const currentFlashcard = flashcards[0];
-    if (!currentFlashcard) {
-      useMessageModal("Final!!!");
+  const showFlashcardSide = (flashcard, side, counterInnerHTML) => {
+    if (!["front", "back"].includes(side)) {
       return;
     }
-    if (side === "front") {
-      showFlashcardSide(currentFlashcard, "front");
-    } else if (side === "back") {
-      showFlashcardSide(currentFlashcard, "back");
-    }
-    toolsContainer.children[0].onclick = () => {
-      flashcards.push(flashcards.shift());
-      showFlashcard(flashcards, side);
+    cardWrapper.replaceChildren(
+      generateFlashcardSideEl({
+        containerClass: "learning__flashcard",
+        imagesClass: "learning__flashcard-images",
+        imageClass: "learning__flashcard-image",
+        textClass: "learning__flashcard-text",
+        audioClass: "learning__flashcard-audio",
+        text: side === "front" ? flashcard.title : flashcard.content,
+        images: flashcard.attachments[side + "side"].images,
+        audio: flashcard.attachments[side + "side"].audio,
+        extraHTML: `<div class="learning__counter">${counterInnerHTML}</div>`,
+      })
+    );
+    const flipBtn = toolsContainer.children[1];
+    flipBtn.onclick = () => {
+      showFlashcardSide(
+        flashcard,
+        side === "front" ? "back" : "front",
+        counterInnerHTML
+      );
+      flipBtn.previousElementSibling.classList.remove("none");
+      flipBtn.nextElementSibling.classList.remove("none");
     };
-    toolsContainer.children[2].onclick = () => {
+  };
+  const showFlashcard = (flashcards, side, statistics) => {
+    const currentFlashcard = flashcards[0];
+    if (!currentFlashcard) {
+      useMessageModal(`
+      Your learn statistics:<br>
+      Correct answers: ${statistics.correct}<br>
+      Incorrect answers: ${statistics.incorrect}<br>
+      Total attempts: ${statistics.totalAttempts}
+      `);
+      return;
+    }
+    showFlashcardSide(
+      currentFlashcard,
+      side,
+      `${statistics.totalCards - flashcards.length + 1}/${
+        statistics.totalCards
+      }`
+    );
+
+    const incorrectBtn = toolsContainer.children[0];
+    incorrectBtn.classList.add("none");
+    incorrectBtn.onclick = () => {
+      flashcards.push(flashcards.shift());
+      statistics.incorrect++;
+      statistics.totalAttempts++;
+      showFlashcard(flashcards, side, statistics);
+    };
+    const correctBtn = toolsContainer.children[2];
+    correctBtn.classList.add("none");
+    correctBtn.onclick = () => {
       flashcards.shift();
-      showFlashcard(flashcards, side);
+      statistics.correct++;
+      statistics.totalAttempts++;
+      showFlashcard(flashcards, side, statistics);
     };
   };
 
@@ -245,9 +252,15 @@ export const initLearn = (initialCardset) => {
       const j = Math.floor(Math.random() * (i + 1));
       [flashcards[i], flashcards[j]] = [flashcards[j], flashcards[i]];
     }
-    const side = mode === "quessContent" ? "front" : "back";
-    const header = mode === "quessContent" ? "Guess Content" : "Guess Title";
+    const statistics = {
+      totalCards: flashcards.length,
+      totalAttempts: 0,
+      correct: 0,
+      incorrect: 0,
+    };
+    const side = mode === "guessContent" ? "front" : "back";
+    const header = mode === "guessContent" ? "Guess Content" : "Guess Title";
     learningModal.querySelector(".learning__title").innerHTML = header;
-    showFlashcard(flashcards, side);
+    showFlashcard(flashcards, side, statistics);
   });
 };

@@ -2,14 +2,15 @@ import playIco from "../../img/icons/play-ico.svg";
 import pauseIco from "../../img/icons/pause-ico.svg";
 
 export const generateFlashcardSideEl = ({
-  text = "",
+  text,
   images = [],
-  audio = null,
+  audio,
   containerClass = "card-side",
   imagesClass = "card-side__images",
   imageClass = "card-side__image",
   textClass = "card-side__text",
   audioClass = "card-side__audio",
+  extraHTML,
 }) => {
   const side = document.createElement("div");
   side.className = containerClass;
@@ -50,6 +51,9 @@ export const generateFlashcardSideEl = ({
       }
     };
     side.insertAdjacentElement("beforeend", audioBtn);
+  }
+  if (extraHTML) {
+    side.insertAdjacentHTML("beforeend", extraHTML);
   }
   return side;
 };

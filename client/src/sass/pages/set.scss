@@ -137,17 +137,26 @@
     font-family: $font-text;
     resize: none;
     border: none;
+    outline: none;
     border-radius: 5px;
-    outline: 2px solid #a5a5a5;
     width: 90%;
     overflow: hidden;
+    &:focus {
+      outline: 2px solid #a5a5a5;
+    }
     &_title {
       font-size: 18px;
       height: 30%;
+      &::placeholder {
+        font-size: 18px;
+      }
     }
     &_content {
       font-size: 16px;
-      height: 40%;
+      height: 41%;
+      &::placeholder {
+        font-size: 16px;
+      }
     }
   }
   &__sound {

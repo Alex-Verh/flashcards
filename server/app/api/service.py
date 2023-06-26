@@ -125,8 +125,11 @@ class ApiService:
             params = cls._get_cardset_params(sort_by)
         except (ValueError, TypeError):
             return jsonify({"error": "Invalid request parameters"}), 400
+        try:
+            cardsets_query_results = cls._create_cardsets_query(params, sort_by).all()
+        except PermissionError:
+            return jsonify({"error": "Not authorized"}), 401
 
-        cardsets_query_results = cls._create_cardsets_query(params, sort_by).all()
         cardsets = cls._transform_cardsets_query_results(cardsets_query_results)
 
         return jsonify(cardsets), 200
@@ -158,7 +161,7 @@ class ApiService:
     def _create_cardsets_query(cls, params, sort_map):
         if params["only_saved"]:
             if not current_user.is_authenticated:
-                return jsonify({"error": "Not authorized"}), 401
+                raise PermissionError
             query = (
                 db.session.query(cardsets_view, True)
                 .filter(user_cardset_assn.c.user_id == current_user.id)
@@ -168,7 +171,7 @@ class ApiService:
 
         elif params["only_own"]:
             if not current_user.is_authenticated:
-                return jsonify({"error": "Not authorized"}), 401
+                raise PermissionError
             query = db.session.query(
                 cardsets_view,
                 False,

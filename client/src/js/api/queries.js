@@ -29,10 +29,12 @@ export const getCardsets = async (params) => {
   const url = `${CARDSETS_URL}?${stringifyQueryParams(otherParams)}${
     filter ? "&" + filter + "=true" : ""
   }`;
-
-  const res = await customFetch(url);
-  const cardsets = await res.json();
-  return cardsets;
+  try {
+    const res = await customFetch(url);
+    return await res.json();
+  } catch (e) {
+    throw e;
+  }
 };
 
 export const getCategories = async () => {

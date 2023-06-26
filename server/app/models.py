@@ -42,7 +42,7 @@ class User(db.Model, UserMixin):
 class CardSet(db.Model):
     __tablename__ = "card_sets"
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(50), nullable=False)
+    title = db.Column(db.String(100), nullable=False)
     is_public = db.Column(db.Boolean, nullable=False)
     category_id = db.Column(
         db.Integer,
@@ -72,8 +72,8 @@ class CardSet(db.Model):
 class FlashCard(db.Model):
     __tablename__ = "flash_cards"
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(50), nullable=False)
-    content = db.Column(db.String(300), nullable=False)
+    title = db.Column(db.String(160), nullable=False)
+    content = db.Column(db.String(320), nullable=False)
     attachments = db.Column(db.JSON, nullable=False)
     cardset_id = db.Column(
         db.Integer, db.ForeignKey("card_sets.id", ondelete="CASCADE"), nullable=False
