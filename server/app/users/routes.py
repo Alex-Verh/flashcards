@@ -109,10 +109,7 @@ def update_email(token):
 @bp.route("/delete-profile")
 @login_required
 def delete_profile():
-    uploads_dir_path = os.path.join(
-        current_app.root_path, current_app.config["UPLOAD_FOLDER"]
-    )
-    delete_user_files(current_user.id, uploads_dir_path)
+    delete_user_files(current_user.id)
     db.session.delete(current_user)
     db.session.commit()
     logout_user()

@@ -19,3 +19,8 @@ class Config:
     MAIL_USERNAME = environ.get("MAIL_USERNAME")
     MAIL_PASSWORD = environ.get("MAIL_PASSWORD")
     MAIL_USE_TLS = True
+
+    AWS_REGION_NAME = environ.get("AWS_REGION_NAME")
+    AWS_ACCESS_KEY_ID = environ.get("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = environ.get("AWS_SECRET_ACCESS_KEY")
+    AWS_BUCKET_NAME = environ.get("AWS_BUCKET_NAME")

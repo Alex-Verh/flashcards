@@ -77,10 +77,7 @@ class ApiService:
             return jsonify({"error": "Card set does not exist."}), 400
 
         if cardset.user_id == current_user.id:
-            uploads_dir_path = os.path.join(
-                current_app.root_path, current_app.config["UPLOAD_FOLDER"]
-            )
-            delete_cardset_files(current_user.id, cardset.id, uploads_dir_path)
+            delete_cardset_files(cardset.id)
 
             db.session.delete(cardset)
             db.session.commit()
@@ -279,22 +276,15 @@ class ApiService:
             return jsonify({"error": "This card set is not yours"}), 400
 
         base_filename = f"{current_user.id}_{cardset_id}_"
-        uploads_dir_path = os.path.join(
-            current_app.root_path, current_app.config["UPLOAD_FOLDER"]
-        )
 
         flashcard_attachments = {
             "frontside": {"images": []},
             "backside": {"images": []},
         }
 
-        cls._save_flashcard_images(
-            flashcard_attachments, base_filename, uploads_dir_path
-        )
+        cls._save_flashcard_images(flashcard_attachments, base_filename)
 
-        cls._save_flashcard_audio(
-            flashcard_attachments, base_filename, uploads_dir_path
-        )
+        cls._save_flashcard_audio(flashcard_attachments, base_filename)
 
         flashcard = FlashCard(
             title=request.form.get("title"),
@@ -318,33 +308,24 @@ class ApiService:
         )
 
     @classmethod
-    def _save_flashcard_audio(
-        cls, flashcard_attachments, base_filename, uploads_dir_path
-    ):
+    def _save_flashcard_audio(cls, flashcard_attachments, base_filename):
         for side in ("front", "back"):
             audio = request.files.get(f"{side}_audio")
             if audio:
-                audio_filename = save_audio(
-                    audio, base_filename + secrets.token_hex(6), uploads_dir_path
-                )
-                flashcard_attachments[f"{side}side"]["audio"] = url_for(
-                    "uploads", filename=audio_filename, _external=True
-                )
+                audio_url = save_audio(audio, base_filename + secrets.token_hex(6))
+                flashcard_attachments[f"{side}side"]["audio"] = audio_url
 
     @classmethod
-    def _save_flashcard_images(
-        cls, flashcard_attachments, base_filename, uploads_dir_path
-    ):
+    def _save_flashcard_images(cls, flashcard_attachments, base_filename):
         for side in ("front", "back"):
             images = request.files.getlist(f"{side}_images")
             for image in images:
-                image_filename = save_image(
-                    image, base_filename + secrets.token_hex(6), uploads_dir_path
+                image_url = save_image(
+                    image,
+                    base_filename + secrets.token_hex(6),
                 )
 
-                flashcard_attachments[f"{side}side"]["images"].append(
-                    url_for("uploads", filename=image_filename, _external=True)
-                )
+                flashcard_attachments[f"{side}side"]["images"].append(image_url)
 
     @classmethod
     def delete_flashcard(cls, id):

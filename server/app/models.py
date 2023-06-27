@@ -6,9 +6,17 @@ from .extensions import db
 
 user_cardset_assn = db.Table(
     "user_cardset_assn",
-    db.Column("user_id", db.Integer, db.ForeignKey("users.id"), primary_key=True),
     db.Column(
-        "cardset_id", db.Integer, db.ForeignKey("card_sets.id"), primary_key=True
+        "user_id",
+        db.Integer,
+        db.ForeignKey("users.id", ondelete="CASCADE"),
+        primary_key=True,
+    ),
+    db.Column(
+        "cardset_id",
+        db.Integer,
+        db.ForeignKey("card_sets.id", ondelete="CASCADE"),
+        primary_key=True,
     ),
 )
 

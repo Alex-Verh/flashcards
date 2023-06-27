@@ -1,12 +1,13 @@
 import os
-from glob import glob
+from tempfile import TemporaryFile
 
-from flask import render_template
 from flask_mail import Message
 from PIL import Image
 from pydub import AudioSegment
 
-from .extensions import mail
+from .config import Config
+from .extensions import db, mail, s3_bucket
+from .models import CardSet, FlashCard
 
 
 def send_feedback_email(
@@ -29,39 +30,87 @@ def send_verification_email(verification_url, recipient):
     mail.send(msg)
 
 
-def save_image(image, name, destination):
-    _, f_ext = os.path.splitext(image.filename)
-    picture_fn = name + f_ext
-    picture_path = os.path.join(destination, picture_fn)
+def save_image(image, name):
+    image_fn = name + os.path.splitext(image.filename)[-1]
 
-    output_size = (200, 200)
-    i = Image.open(image)
-    i.thumbnail(output_size)
-    i.save(picture_path)
+    img_file = TemporaryFile()
+    img = Image.open(image)
+    img.thumbnail((300, 300))
+    img.save(img_file, image.mimetype.split("/")[-1])
+    img_file.seek(0)
+    s3_bucket.upload_fileobj(
+        img_file, image_fn, ExtraArgs={"ContentType": image.content_type}
+    )
+    img_file.close()
+    return get_bucket_file_url(image_fn)
 
-    return picture_fn
 
-
-def save_audio(audio, name, destination):
+def save_audio(audio, name):
     try:
         _, f_ext = os.path.splitext(audio.filename)
         audio_fn = name + ".mp3"
-        audio_path = os.path.join(destination, audio_fn)
+
         audio_segment = AudioSegment.from_file(audio, format=f_ext.lstrip("."))
-        audio_segment.export(audio_path, format="mp3", bitrate="64k")
+        audio_file = audio_segment.export(format="mp3", bitrate="64k")
+
+        s3_bucket.upload_fileobj(
+            audio_file, audio_fn, ExtraArgs={"ContentType": "audio/mpeg"}
+        )
+        audio_file.close()
+        return get_bucket_file_url(audio_fn)
+
     except Exception as e:
         print(e)
 
     return audio_fn
 
 
-def delete_cardset_files(user_id, cardset_id, dir):
-    files = glob(f"{user_id}_{cardset_id}_*", root_dir=dir)
-    for file in files:
-        os.remove(os.path.join(dir, file))
+def get_bucket_file_url(filename):
+    return f"https://{Config.AWS_BUCKET_NAME}.s3.{Config.AWS_REGION_NAME}.amazonaws.com/{filename}"
 
 
-def delete_user_files(user_id, dir):
-    files = glob(f"{user_id}_*", root_dir=dir)
-    for file in files:
-        os.remove(os.path.join(dir, file))
+def get_bucket_file_name(file_url):
+    return file_url.split("/")[-1]
+
+
+def get_files_urls_from_attachments(attachments):
+    files_urls = []
+    for attachment in attachments:
+        for side in attachment[0].values():
+            for section in side.values():
+                if section:
+                    files_urls.extend(section) if type(
+                        section
+                    ) == list else files_urls.append(section)
+    return files_urls
+
+
+def delete_cardset_files(cardset_id):
+    cardset_attachments = (
+        db.session.query(FlashCard.attachments)
+        .filter(FlashCard.cardset_id == cardset_id)
+        .all()
+    )
+    files_urls = get_files_urls_from_attachments(cardset_attachments)
+    s3_bucket.delete_objects(
+        Delete={
+            "Objects": [{"Key": get_bucket_file_name(url)} for url in files_urls],
+            "Quiet": True,
+        }
+    )
+
+
+def delete_user_files(user_id):
+    user_attachments = (
+        db.session.query(FlashCard.attachments)
+        .join(CardSet)
+        .filter(CardSet.user_id == user_id)
+        .all()
+    )
+    files_urls = get_files_urls_from_attachments(user_attachments)
+    s3_bucket.delete_objects(
+        Delete={
+            "Objects": [{"Key": get_bucket_file_name(url)} for url in files_urls],
+            "Quiet": True,
+        }
+    )
