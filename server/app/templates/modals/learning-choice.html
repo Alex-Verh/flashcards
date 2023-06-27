@@ -1,0 +1,38 @@
+<div class="overlay none">
+  <div class="mode-choice modal">
+    <div class="modal__close">
+      <img src="/static/img/icons/close-ico.svg" alt="Close" />
+    </div>
+    <div class="modal__line"></div>
+    <div class="mode-choice__title">Card Sets:</div>
+    <div class="cardsets">
+      <div class="cardsets__add-cardset" data-modal-class="choose-modal">
+        <img src="/static/img/add-cardset.svg" alt="Add cardset" />
+      </div>
+    </div>
+    <div class="mode-choice__title">Mode:</div>
+    <div class="choice">
+      <input
+        type="radio"
+        class="choice__option choice__option-1"
+        name="learningMode"
+        value="guessContent"
+        id="content-mode"
+        checked
+      />
+      <label for="content-mode" class="choice__option-label"
+        >Guess content</label
+      >
+      <input
+        type="radio"
+        class="choice__option choice__option-1"
+        name="learningMode"
+        value="guessTitle"
+        id="title-mode"
+      />
+      <label for="title-mode" class="choice__option-label">Guess title</label>
+    </div>
+    <div class="button" id="startLearn">Start</div>
+    {% include "modals/cardset-choice.html" %}
+  </div>
+</div>

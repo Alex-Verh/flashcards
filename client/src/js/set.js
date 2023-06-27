@@ -1,5 +1,5 @@
 import "../sass/pages/set.scss";
-import { initModals, useMessageModal } from "./modules/modals";
+import { initModals, useMessageModal, useUploadModal } from "./modules/modals";
 import { loadCategories } from "./modules/categories";
 import { createFlashcard, getCardset } from "./api/queries";
 import { generateFlashcardEl } from "./modules/flashcards";
@@ -57,22 +57,24 @@ class FlashCard {
       this.attachments[key] = { images };
     }
   }
-  addImage(image, side) {
+  addImages(images, side) {
     const sideImages = this.getImages(side);
-
-    if (!["image/jpeg", "image/png", "image/svg+xml"].includes(image.type)) {
-      throw new Error("Choose another format. (JPEG, PNG, SVG)");
-    }
     if (
-      (this.getText(side) && sideImages.length >= 2) ||
-      sideImages.length >= 4
+      (this.getText(side) && sideImages.length + images.length > 2) ||
+      sideImages.length + images.length > 4
     ) {
       throw new Error("Image limit has been reached!");
     }
-    if (sideImages.some((img) => img.name === image.name)) {
-      throw new Error("You can not add the same image twice!");
+    for (let i = 0; i < images.length; i++) {
+      const image = images[i];
+      if (!["image/jpeg", "image/png", "image/svg+xml"].includes(image.type)) {
+        throw new Error("Choose another format. (JPEG, PNG, SVG)");
+      }
+      if (sideImages.some((img) => img.name === image.name)) {
+        throw new Error("You can not add the same image twice!");
+      }
     }
-    this.setImages([...sideImages, image], side);
+    this.setImages([...sideImages, ...images], side);
   }
   removeImage(imageName, side) {
     this.setImages(
@@ -203,19 +205,19 @@ const renderImages = (images, container, sideName, onImageRemove) => {
 };
 
 const renderAudio = (audioFile, audioBtn) => {
-  const addAudioBtnIco =
+  const addAudioBtn =
     audioBtn.parentElement.nextElementSibling.lastElementChild;
   if (!audioFile) {
     audioBtn.dataset.audioName = null;
     audioBtn.lastElementChild && audioBtn.lastElementChild.pause();
     audioBtn.innerHTML = "";
     audioBtn.onclick = () => {};
-    addAudioBtnIco.lastElementChild.disabled = false;
-    addAudioBtnIco.firstElementChild.src = audioIco;
+    addAudioBtn.dataset.remove = "";
+    addAudioBtn.firstElementChild.src = audioIco;
     return;
   }
-  addAudioBtnIco.lastElementChild.disabled = true;
-  addAudioBtnIco.firstElementChild.src = removeAudioIco;
+  addAudioBtn.dataset.remove = true;
+  addAudioBtn.firstElementChild.src = removeAudioIco;
   if (audioBtn.dataset.audioName !== audioFile.name) {
     audioBtn.dataset.audioName = audioFile.name;
     const soundReader = new FileReader();
@@ -285,7 +287,7 @@ const initFlashcardCreation = (onCreation) => {
   const createTools = (sideName, sideEl) => {
     const tools = document.createElement("div");
     tools.classList.add("flashcard-side__tools");
-    tools.innerHTML = `<button class="tool rnd-button" type="button"><img src="${textIco}" alt="#" /></button><label class="tool rnd-button"><img src="${imageIco}" alt="#" /><input class="none" type="file" accept=".jpg, .jpeg, .png, .svg" name="fileImages" /></label><label class="tool rnd-button"><img src="${audioIco}" alt="#" /><input class="none" type="file" accept=".mp3, .ogg, .wav" name="fileSound" /></label>`;
+    tools.innerHTML = `<button class="tool rnd-button" type="button"><img src="${textIco}" alt="#" /></button><button class="tool rnd-button"><img src="${imageIco}" alt="#" /></button><button class="tool rnd-button"><img src="${audioIco}" alt="#" /></button>`;
     tools.children[0].addEventListener("click", (e) => {
       const textarea = sideEl.firstElementChild.lastElementChild;
       if (textarea.classList.contains("none")) {
@@ -301,36 +303,38 @@ const initFlashcardCreation = (onCreation) => {
       renderFlashcardSide(sideName, sideEl.firstElementChild);
       textarea.focus();
     });
-    tools.children[1].lastElementChild.addEventListener("change", (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        try {
-          flashcard.addImage(file, sideName);
-          renderFlashcardSide(sideName, sideEl.firstElementChild);
-        } catch (e) {
-          useMessageModal(e.message);
+    tools.children[1].addEventListener("click", (e) => {
+      e.stopPropagation();
+      useUploadModal((files) => {
+        if (files && files.length) {
+          try {
+            flashcard.addImages(files, sideName);
+            renderFlashcardSide(sideName, sideEl.firstElementChild);
+            return true;
+          } catch (e) {
+            useMessageModal(e.message);
+          }
         }
-      }
-      e.target.value = "";
+      });
     });
     tools.children[2].addEventListener("click", (e) => {
-      if (e.currentTarget.lastElementChild.disabled) {
-        e.preventDefault();
+      e.stopPropagation();
+      if (e.currentTarget.dataset.remove) {
         flashcard.removeAudio(sideName);
         renderFlashcardSide(sideName, sideEl.firstElementChild);
+        return;
       }
-    });
-    tools.children[2].lastElementChild.addEventListener("change", (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        try {
-          flashcard.setAudio(file, sideName);
-          renderFlashcardSide(sideName, sideEl.firstElementChild);
-        } catch (e) {
-          useMessageModal(e.message);
+      useUploadModal((files) => {
+        if (files && files.length) {
+          try {
+            flashcard.setAudio(files[0], sideName);
+            renderFlashcardSide(sideName, sideEl.firstElementChild);
+            return true;
+          } catch (e) {
+            useMessageModal(e.message);
+          }
         }
-      }
-      e.target.value = "";
+      });
     });
     sideEl.append(tools);
   };

@@ -216,7 +216,7 @@
       cursor: pointer;
       border: none;
       img {
-        width: 60%;
+        width: auto;
       }
       &:hover {
         box-shadow: $box-shadow;
@@ -224,10 +224,10 @@
       &:active {
         box-shadow: none;
       }
-      &:first-child {
-        img {
-          width: auto;
-        }
+    }
+    .tool[data-remove="true"] {
+      img {
+        width: 100%;
       }
     }
   }

@@ -1,0 +1,27 @@
+.upload-modal {
+  height: 60vh;
+  width: 60vw;
+  &__drop-area {
+    margin: 50px;
+    height: 68%;
+    border: 3px dashed #3d3d3d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    row-gap: 15px;
+    transition: transform 0.4s;
+    box-shadow: $box-shadow;
+    &_active {
+      transform: scale(1.02);
+      box-shadow: $box-shadow-hover;
+    }
+  }
+  &__text {
+    font-size: 20px;
+    text-transform: none;
+  }
+  &__button {
+    padding-inline: 30px;
+  }
+}

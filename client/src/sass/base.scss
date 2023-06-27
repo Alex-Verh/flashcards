@@ -9,14 +9,15 @@
 @import "./blocks/footer.scss";
 @import "./blocks/modal.scss";
 
-@import "./modals/account-settings-modal.scss";
-@import "./modals/choose-cardset-modal.scss";
-@import "./modals/create-cardset-modal.scss";
+@import "./modals/account-settings.scss";
+@import "./modals/cardset-choice.scss";
+@import "./modals/learning-choice.scss";
 @import "./modals/learning-modal.scss";
-@import "./modals/menu.scss";
-@import "./modals/mode-choice-modal.scss";
-@import "./modals/profile-modal.scss";
-@import "./modals/unauthorized-modal.scss";
+@import "./modals/mobile-menu.scss";
+@import "./modals/create-cardset.scss";
+@import "./modals/profile-dropdown.scss";
+@import "./modals/unauthorized.scss";
+@import "./modals/upload-file.scss";
 
 body {
   background: $background-color;

@@ -114,6 +114,45 @@ export const useMessageModal = (message) => {
   document.body.style.overflow = "hidden";
 };
 
+export const useUploadModal = (onUpload) => {
+  const dropArea = document.querySelector(".upload-modal__drop-area");
+  const input = dropArea.querySelector(".upload-modal__button input");
+  const closeUploadModal = () => {
+    closeModal(dropArea.parentElement);
+    dropArea.removeEventListener("drop", onDrop);
+    dropArea.removeEventListener("paste", onFilePaste);
+    input.removeEventListener("change", onFileChoice);
+  };
+  const onDrop = (e) => {
+    e.preventDefault();
+    dropArea.classList.remove("upload-modal__drop-area_active");
+    onUpload(e.dataTransfer.files) && closeUploadModal();
+  };
+  const onFileChoice = (e) => {
+    if (onUpload(e.target.files)) {
+      e.target.value = "";
+      closeUploadModal();
+    }
+  };
+  const onFilePaste = (e) => {
+    const pastedItems = e.clipboardData.items;
+    const pastedFiles = [];
+    for (let i = 0; i < pastedItems.length; i++) {
+      const item = pastedItems[i];
+      if (item.kind === "file") {
+        pastedFiles.push(item.getAsFile());
+      }
+    }
+    if (pastedFiles.length) {
+      onUpload(pastedFiles) && closeUploadModal();
+    }
+  };
+  dropArea.addEventListener("drop", onDrop);
+  dropArea.addEventListener("paste", onFilePaste);
+  input.addEventListener("change", onFileChoice);
+  openModal(dropArea.parentElement);
+};
+
 const initCardsetCreation = () => {
   initDropdown("#categoryForNewSet", (clickedItem) => {
     clickedItem.parentElement.parentElement.nextElementSibling.value =
@@ -196,6 +235,21 @@ const initAccountSettings = () => {
     }
   });
 };
+const initUploadModal = () => {
+  const dropArea = document.querySelector(".upload-modal__drop-area");
+  dropArea.addEventListener("dragstart", (e) => {
+    e.preventDefault();
+    dropArea.classList.add("upload-modal__drop-area_active");
+  });
+  dropArea.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    dropArea.classList.add("upload-modal__drop-area_active");
+  });
+  dropArea.addEventListener("dragleave", (e) => {
+    e.preventDefault();
+    dropArea.classList.remove("upload-modal__drop-area_active");
+  });
+};
 
 export const initModals = () => {
   const openModalLinks = document.querySelectorAll("[data-modal-class]");
@@ -227,6 +281,7 @@ export const initModals = () => {
   try {
     initCardsetCreation();
     initAccountSettings();
+    initUploadModal();
   } catch (error) {
     console.log(error);
   }
