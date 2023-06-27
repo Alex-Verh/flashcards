@@ -58,13 +58,14 @@ export const generateFlashcardSideEl = ({
   return side;
 };
 
-export const generateFlashcardEl = (
+export const generateFlashcardEl = ({
   data,
   wrapperClass,
   containerClass = "flashcards__card",
   frontsideClass = "card-side card-side_front",
-  backsideClass = "card-side card-side_back"
-) => {
+  backsideClass = "card-side card-side_back",
+  ...extra
+}) => {
   const flashcard = document.createElement("div");
   flashcard.className = containerClass;
   flashcard.append(
@@ -73,6 +74,7 @@ export const generateFlashcardEl = (
       images: data.attachments.frontside.images,
       audio: data.attachments.frontside.audio,
       containerClass: frontsideClass,
+      ...extra,
     })
   );
   flashcard.append(
@@ -81,6 +83,7 @@ export const generateFlashcardEl = (
       images: data.attachments.backside.images,
       audio: data.attachments.backside.audio,
       containerClass: backsideClass,
+      ...extra,
     })
   );
   if (wrapperClass) {

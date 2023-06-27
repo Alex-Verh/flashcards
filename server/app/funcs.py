@@ -1,5 +1,6 @@
 import os
 from tempfile import TemporaryFile
+from uuid import uuid4
 
 from flask_mail import Message
 from PIL import Image
@@ -30,8 +31,8 @@ def send_verification_email(verification_url, recipient):
     mail.send(msg)
 
 
-def save_image(image, name):
-    image_fn = name + os.path.splitext(image.filename)[-1]
+def save_image(image):
+    image_fn = uuid4().hex + os.path.splitext(image.filename)[-1]
 
     img_file = TemporaryFile()
     img = Image.open(image)
@@ -45,12 +46,12 @@ def save_image(image, name):
     return get_bucket_file_url(image_fn)
 
 
-def save_audio(audio, name):
+def save_audio(audio):
     try:
-        _, f_ext = os.path.splitext(audio.filename)
-        audio_fn = name + ".mp3"
-
-        audio_segment = AudioSegment.from_file(audio, format=f_ext.lstrip("."))
+        audio_fn = uuid4().hex + ".mp3"
+        audio_segment = AudioSegment.from_file(
+            audio, format=os.path.splitext(audio.filename).lstrip(".")
+        )
         audio_file = audio_segment.export(format="mp3", bitrate="64k")
 
         s3_bucket.upload_fileobj(
@@ -69,35 +70,25 @@ def get_bucket_file_url(filename):
     return f"https://{Config.AWS_BUCKET_NAME}.s3.{Config.AWS_REGION_NAME}.amazonaws.com/{filename}"
 
 
-def get_bucket_file_name(file_url):
-    return file_url.split("/")[-1]
+def delete_files_from_bucket(filenames):
+    s3_bucket.delete_objects(
+        Delete={
+            "Objects": [{"Key": filename} for filename in filenames],
+            "Quiet": True,
+        }
+    )
 
 
-def get_files_urls_from_attachments(attachments):
-    files_urls = []
+def get_filenames_from_attachments(attachments):
+    filesnames = []
     for attachment in attachments:
         for side in attachment[0].values():
             for section in side.values():
                 if section:
-                    files_urls.extend(section) if type(
-                        section
-                    ) == list else files_urls.append(section)
-    return files_urls
-
-
-def delete_cardset_files(cardset_id):
-    cardset_attachments = (
-        db.session.query(FlashCard.attachments)
-        .filter(FlashCard.cardset_id == cardset_id)
-        .all()
-    )
-    files_urls = get_files_urls_from_attachments(cardset_attachments)
-    s3_bucket.delete_objects(
-        Delete={
-            "Objects": [{"Key": get_bucket_file_name(url)} for url in files_urls],
-            "Quiet": True,
-        }
-    )
+                    urls = section if type(section) == list else [section]
+                    names = [url.split("/")[-1] for url in urls]
+                    filesnames.extend(names)
+    return filesnames
 
 
 def delete_user_files(user_id):
@@ -107,10 +98,4 @@ def delete_user_files(user_id):
         .filter(CardSet.user_id == user_id)
         .all()
     )
-    files_urls = get_files_urls_from_attachments(user_attachments)
-    s3_bucket.delete_objects(
-        Delete={
-            "Objects": [{"Key": get_bucket_file_name(url)} for url in files_urls],
-            "Quiet": True,
-        }
-    )
+    delete_files_from_bucket(get_filenames_from_attachments(user_attachments))

@@ -13,6 +13,7 @@ import removeTextIco from "../img/icons/remove-text-ico.svg";
 import imageIco from "../img/icons/image-ico.svg";
 import audioIco from "../img/icons/audio-ico.svg";
 import removeAudioIco from "../img/icons/remove-audio-ico.svg";
+import deleteIco from "../img/icons/delete-ico.svg";
 
 class FlashCard {
   constructor(title = "", content = "", attachments = {}) {
@@ -394,11 +395,16 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
     flashcardsList.innerHTML = "";
-    cardset.flashcards.forEach((flashcard) =>
-      flashcardsList.append(
-        generateFlashcardEl(flashcard, "col-sm-6 col-md-4 col-lg-3")
-      )
-    );
+    cardset.flashcards.forEach((flashcard) => {
+      const flashcardConfig = {
+        data: flashcard,
+        wrapperClass: "col-sm-6 col-md-4 col-lg-3",
+      };
+      if (cardset.is_own) {
+        flashcardConfig.extraHTML = `<button class="flashcards__card-delete-btn"><img src="${deleteIco}" alt="delete flashcard" /></button>`;
+      }
+      flashcardsList.append(generateFlashcardEl(flashcardConfig));
+    });
   });
 
   flashcardsList.addEventListener("click", (event) => {
@@ -414,7 +420,10 @@ document.addEventListener("DOMContentLoaded", () => {
         flashcardsList.innerHTML = "";
       }
       flashcardsList.append(
-        generateFlashcardEl(flashcard, "col-sm-6 col-md-4 col-lg-3")
+        generateFlashcardEl({
+          data: flashcard,
+          wrapperClass: "col-sm-6 col-md-4 col-lg-3",
+        })
       );
     });
 });

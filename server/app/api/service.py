@@ -1,12 +1,10 @@
-import os
-import secrets
-
-from flask import current_app, jsonify, redirect, request, url_for
+from flask import jsonify, redirect, request, url_for
 from flask_login import current_user
 
 from ..extensions import db, serializer
 from ..funcs import (
-    delete_cardset_files,
+    delete_files_from_bucket,
+    get_filenames_from_attachments,
     save_audio,
     save_image,
     send_verification_email,
@@ -35,14 +33,18 @@ class ApiService:
         if not cardset:
             return jsonify({"error": "Card set does not exist."}), 400
 
-        if (not cardset.is_public) and cardset.user_id != current_user.id:
+        if (not cardset.is_public) and cardset.user_id != (
+            current_user.id if current_user.is_authenticated else 0
+        ):
             return jsonify({"error": "You can not access this card set"}), 403
-
         response = {
             "id": cardset.id,
             "title": cardset.title,
             "category": {"id": cardset.category.id, "title": cardset.category.title},
             "flashcards": [],
+            "is_own": cardset.user_id == current_user.id
+            if current_user.is_authenticated
+            else False,
         }
 
         for flash_card in cardset.flash_cards:
@@ -77,8 +79,14 @@ class ApiService:
             return jsonify({"error": "Card set does not exist."}), 400
 
         if cardset.user_id == current_user.id:
-            delete_cardset_files(cardset.id)
-
+            cardset_attachments = (
+                db.session.query(FlashCard.attachments)
+                .filter(FlashCard.cardset_id == cardset.id)
+                .all()
+            )
+            delete_files_from_bucket(
+                get_filenames_from_attachments(cardset_attachments)
+            )
             db.session.delete(cardset)
             db.session.commit()
         else:
@@ -275,16 +283,14 @@ class ApiService:
         if cardset not in current_user.own_cardsets.all():
             return jsonify({"error": "This card set is not yours"}), 400
 
-        base_filename = f"{current_user.id}_{cardset_id}_"
-
         flashcard_attachments = {
             "frontside": {"images": []},
             "backside": {"images": []},
         }
 
-        cls._save_flashcard_images(flashcard_attachments, base_filename)
+        cls._save_flashcard_images(flashcard_attachments)
 
-        cls._save_flashcard_audio(flashcard_attachments, base_filename)
+        cls._save_flashcard_audio(flashcard_attachments)
 
         flashcard = FlashCard(
             title=request.form.get("title"),
@@ -308,28 +314,48 @@ class ApiService:
         )
 
     @classmethod
-    def _save_flashcard_audio(cls, flashcard_attachments, base_filename):
+    def _save_flashcard_audio(cls, flashcard_attachments):
         for side in ("front", "back"):
             audio = request.files.get(f"{side}_audio")
             if audio:
-                audio_url = save_audio(audio, base_filename + secrets.token_hex(6))
+                audio_url = save_audio(audio)
                 flashcard_attachments[f"{side}side"]["audio"] = audio_url
 
     @classmethod
-    def _save_flashcard_images(cls, flashcard_attachments, base_filename):
+    def _save_flashcard_images(cls, flashcard_attachments):
         for side in ("front", "back"):
             images = request.files.getlist(f"{side}_images")
             for image in images:
-                image_url = save_image(
-                    image,
-                    base_filename + secrets.token_hex(6),
-                )
+                image_url = save_image(image)
 
                 flashcard_attachments[f"{side}side"]["images"].append(image_url)
 
     @classmethod
     def delete_flashcard(cls, id):
-        pass
+        result = (
+            db.session.query(FlashCard, CardSet)
+            .join(FlashCard.card_set)
+            .filter(FlashCard.id == id)
+            .first()
+        )
+        if not result:
+            return jsonify({"error": "Flashcard does not exist."}), 400
+
+        flashcard, cardset = result
+        if cardset.user_id != current_user.id:
+            return (
+                jsonify(
+                    {"error": "You do not have permission to delete this flashcard"}
+                ),
+                400,
+            )
+        delete_files_from_bucket(
+            get_filenames_from_attachments([(flashcard.attachments,)])
+        )
+        db.session.delete(flashcard)
+        db.session.commit()
+
+        return jsonify({"message": "Flashcard has been deleted"})
 
     @classmethod
     def update_user(cls):

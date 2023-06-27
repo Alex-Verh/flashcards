@@ -25,8 +25,7 @@
   &__list {
     margin-top: 25px;
   }
-  &__card,
-  &__card-active {
+  &__card {
     box-shadow: $box-shadow;
     background-color: #fff;
     border-radius: 20px;
@@ -52,9 +51,22 @@
     &:active {
       box-shadow: none;
     }
-  }
-  &__card-active {
-    transform: rotateY(180deg);
+    &-active {
+      transform: rotateY(180deg);
+    }
+    &-delete-btn {
+      border-radius: 50%;
+      background-color: white;
+      box-shadow: $box-shadow;
+      position: absolute;
+      top: 1px;
+      right: 1px;
+      color: red;
+      border: none;
+      img {
+        width: 20px;
+      }
+    }
   }
 }
 .card-side {
