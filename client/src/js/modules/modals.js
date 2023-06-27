@@ -5,10 +5,10 @@ import { updateUser } from "../api/queries";
 
 import closeIco from "../../img/icons/close-ico.svg";
 
-export const openModal = (modal) => {
+export const openModal = (modal, additionalOnCloseAction) => {
   const closeModalWhenClickOutside = (e) => {
     if (!e.target.closest(`.${modal.classList[0]}`)) {
-      closeModal(modal);
+      closeModal(modal, additionalOnCloseAction);
       document.body.removeEventListener("click", closeModalWhenClickOutside);
     }
   };
@@ -18,7 +18,7 @@ export const openModal = (modal) => {
   document.body.addEventListener("click", closeModalWhenClickOutside);
 };
 
-export const closeModal = (modal) => {
+export const closeModal = (modal, additionalAction) => {
   const overlay = modal.parentElement;
   if (overlay.matches(".overlay")) {
     overlay.classList.add("none");
@@ -26,6 +26,9 @@ export const closeModal = (modal) => {
     modal.classList.add("none");
   }
   document.body.style.overflow = "auto";
+  if (additionalAction instanceof Function) {
+    additionalAction();
+  }
 };
 
 export const useConfirmModal = (message, onConfirm) => {
@@ -117,21 +120,15 @@ export const useMessageModal = (message) => {
 export const useUploadModal = (onUpload) => {
   const dropArea = document.querySelector(".upload-modal__drop-area");
   const input = dropArea.querySelector(".upload-modal__button input");
-  const closeUploadModal = () => {
-    closeModal(dropArea.parentElement);
-    dropArea.removeEventListener("drop", onDrop);
-    dropArea.removeEventListener("paste", onFilePaste);
-    input.removeEventListener("change", onFileChoice);
-  };
   const onDrop = (e) => {
     e.preventDefault();
     dropArea.classList.remove("upload-modal__drop-area_active");
-    onUpload(e.dataTransfer.files) && closeUploadModal();
+    onUpload(e.dataTransfer.files) && closeModal(dropArea.parentElement);
   };
   const onFileChoice = (e) => {
     if (onUpload(e.target.files)) {
       e.target.value = "";
-      closeUploadModal();
+      closeModal(dropArea.parentElement);
     }
   };
   const onFilePaste = (e) => {
@@ -144,12 +141,12 @@ export const useUploadModal = (onUpload) => {
       }
     }
     if (pastedFiles.length) {
-      onUpload(pastedFiles) && closeUploadModal();
+      onUpload(pastedFiles) && closeModal(dropArea.parentElement);
     }
   };
-  dropArea.addEventListener("drop", onDrop);
-  dropArea.addEventListener("paste", onFilePaste);
-  input.addEventListener("change", onFileChoice);
+  dropArea.ondrop = onDrop;
+  dropArea.onpaste = onFilePaste;
+  input.onchange = onFileChoice;
   openModal(dropArea.parentElement);
 };
 

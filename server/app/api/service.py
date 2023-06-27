@@ -84,9 +84,8 @@ class ApiService:
                 .filter(FlashCard.cardset_id == cardset.id)
                 .all()
             )
-            delete_files_from_bucket(
-                get_filenames_from_attachments(cardset_attachments)
-            )
+            filenames = get_filenames_from_attachments(cardset_attachments)
+            filenames and delete_files_from_bucket(filenames)
             db.session.delete(cardset)
             db.session.commit()
         else:
@@ -349,9 +348,8 @@ class ApiService:
                 ),
                 400,
             )
-        delete_files_from_bucket(
-            get_filenames_from_attachments([(flashcard.attachments,)])
-        )
+        filenames = get_filenames_from_attachments([(flashcard.attachments,)])
+        filenames and delete_files_from_bucket(filenames)
         db.session.delete(flashcard)
         db.session.commit()
 

@@ -114,3 +114,14 @@ export const createFlashcard = async (formData) => {
     throw e;
   }
 };
+
+export const deleteFlashcard = async (id) => {
+  try {
+    const res = await customFetch(`${FLASHCARD_URL}/${id}`, {
+      method: "DELETE",
+    });
+    return res.json();
+  } catch (e) {
+    throw e;
+  }
+};

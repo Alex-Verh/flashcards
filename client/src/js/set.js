@@ -1,7 +1,9 @@
+"use strict";
+
 import "../sass/pages/set.scss";
 import { initModals, useMessageModal, useUploadModal } from "./modules/modals";
 import { loadCategories } from "./modules/categories";
-import { createFlashcard, getCardset } from "./api/queries";
+import { createFlashcard, deleteFlashcard, getCardset } from "./api/queries";
 import { generateFlashcardEl } from "./modules/flashcards";
 import { initLearn } from "./modules/learn";
 import { centerTextInTextarea } from "./modules/input";
@@ -389,8 +391,39 @@ document.addEventListener("DOMContentLoaded", () => {
   initModals();
   loadCategories();
   const flashcardsList = document.querySelector(".flashcards__list .row");
+  let isOwnCardset = false;
+
+  const showFlashcard = (data) => {
+    const flashcardEl = generateFlashcardEl({
+      data: data,
+      wrapperClass: "col-sm-6 col-md-4 col-lg-3 flashcards__card-wrapper",
+    });
+    if (isOwnCardset) {
+      const deleteBtn = document.createElement("button");
+      deleteBtn.classList.add("flashcards__card-delete-btn");
+      deleteBtn.innerHTML = `<img src="${deleteIco}" alt="delete flashcard" />`;
+      deleteBtn.addEventListener("click", () => {
+        const prevContent = deleteBtn.innerHTML;
+        deleteBtn.innerHTML = `
+                <div style="border: 10px solid; transform: translateX(-8px);" class="loading-spinner"></div>
+                `;
+        deleteFlashcard(data.id)
+          .then(() => {
+            flashcardEl.remove();
+          })
+          .catch((e) => {
+            console.log(e);
+            deleteBtn.innerHTML = prevContent;
+          });
+      });
+      flashcardEl.append(deleteBtn);
+    }
+    flashcardsList.append(flashcardEl);
+  };
+
   getCardset(+window.location.href.split("/").pop()).then((cardset) => {
     initLearn({ id: cardset.id, title: cardset.title });
+    isOwnCardset = cardset.is_own;
     if (!cardset.flashcards || !cardset.flashcards.length) {
       flashcardsList.innerHTML = `
         <div style="font-size: 20px; text-align: center; margin-top: 100px; margin-bottom: 100px; color: #6b6b6b">
@@ -400,14 +433,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     flashcardsList.innerHTML = "";
     cardset.flashcards.forEach((flashcard) => {
-      const flashcardConfig = {
-        data: flashcard,
-        wrapperClass: "col-sm-6 col-md-4 col-lg-3",
-      };
-      if (cardset.is_own) {
-        flashcardConfig.extraHTML = `<button class="flashcards__card-delete-btn"><img src="${deleteIco}" alt="delete flashcard" /></button>`;
-      }
-      flashcardsList.append(generateFlashcardEl(flashcardConfig));
+      showFlashcard(flashcard);
     });
   });
 
@@ -423,11 +449,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!flashcardsList.querySelector(".flashcards__card")) {
         flashcardsList.innerHTML = "";
       }
-      flashcardsList.append(
-        generateFlashcardEl({
-          data: flashcard,
-          wrapperClass: "col-sm-6 col-md-4 col-lg-3",
-        })
-      );
+      showFlashcard(flashcard);
     });
 });

@@ -76,6 +76,7 @@ export const handleCardsetSave = async (saveBtn, onSuccess) => {
 export const handleCardsetDelete = (deleteBtn) => {
   useConfirmModal("Delete cardset?", () => {
     const cardsetId = deleteBtn.dataset.cardsetId;
+    const prevContent = deleteBtn.innerHTML;
     deleteBtn.innerHTML = `
             <div style="border: 10px solid; transform: translateX(-8px);" class="loading-spinner"></div>
             `;

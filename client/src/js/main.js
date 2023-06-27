@@ -1,3 +1,5 @@
+"use strict";
+
 import "../sass/pages/main.scss";
 import {
   handleCardsetSave,
