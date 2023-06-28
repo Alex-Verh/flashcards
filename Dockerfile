@@ -19,7 +19,7 @@ ARG AWS_BUCKET_NAME
 
 ARG PORT
 
-ENV FLASK_APP=server.app
+ENV FLASK_APP=app
 ENV FLASK_ENV=production
 
 COPY server/requirements.txt .
@@ -30,9 +30,9 @@ COPY server/ server/
 
 WORKDIR /app/server
 
-RUN flask --app app db init
-RUN flask --app app db migrate
-RUN flask --app app db upgrade
+RUN flask --app ${FLASK_APP} db init
+RUN flask --app ${FLASK_APP} db migrate
+RUN flask --app ${FLASK_APP} db upgrade
 
 
 # Base image for Node.js dependencies
