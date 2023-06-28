@@ -405,7 +405,7 @@ document.addEventListener("DOMContentLoaded", () => {
       deleteBtn.addEventListener("click", () => {
         const prevContent = deleteBtn.innerHTML;
         deleteBtn.innerHTML = `
-                <div style="border: 10px solid; transform: translateX(-8px);" class="loading-spinner"></div>
+                <div style="display:block; border: 10px solid;" class="loading-spinner"></div>
                 `;
         deleteFlashcard(data.id)
           .then(() => {

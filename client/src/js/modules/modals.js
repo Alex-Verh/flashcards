@@ -1,21 +1,24 @@
 import { initDropdown } from "./dropdown";
 import { validateEmail, validateName, validateTitle } from "./validation";
 import { showInputError, initInput } from "./input";
-import { updateUser } from "../api/queries";
+import { deleteUser, updateUser } from "../api/queries";
 
 import closeIco from "../../img/icons/close-ico.svg";
 
 export const openModal = (modal, additionalOnCloseAction) => {
+  const overlay = modal.parentElement.matches(".overlay")
+    ? modal.parentElement
+    : document.body;
   const closeModalWhenClickOutside = (e) => {
     if (!e.target.closest(`.${modal.classList[0]}`)) {
       closeModal(modal, additionalOnCloseAction);
-      document.body.removeEventListener("click", closeModalWhenClickOutside);
+      overlay.removeEventListener("click", closeModalWhenClickOutside);
     }
   };
   modal.classList.remove("none");
   modal.parentElement.classList.remove("none");
   document.body.style.overflow = "hidden";
-  document.body.addEventListener("click", closeModalWhenClickOutside);
+  overlay.addEventListener("click", closeModalWhenClickOutside);
 };
 
 export const closeModal = (modal, additionalAction) => {
@@ -178,7 +181,8 @@ const initCardsetCreation = () => {
   });
 };
 const initAccountSettings = () => {
-  const settingsForm = document.querySelector("#accountSettings");
+  const settingsModal = document.querySelector(".account-settings");
+  const settingsForm = settingsModal.querySelector("#accountSettings");
   const username = settingsForm.username.value;
   const email = settingsForm.email.value;
   initInput(settingsForm.username, validateName);
@@ -186,8 +190,8 @@ const initAccountSettings = () => {
   settingsForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     if (
-      formData.get("username") === username &&
-      formData.get("email") === email
+      settingsForm.username.value === username &&
+      settingsForm.email.value === email
     ) {
       return;
     }
@@ -230,6 +234,20 @@ const initAccountSettings = () => {
       settingsForm.lastElementChild.remove();
       settingsForm.lastElementChild.disabled = false;
     }
+  });
+
+  const accountDeleteBtn = settingsModal.querySelector("#deleteAccountBtn");
+  accountDeleteBtn.addEventListener("click", (e) => {
+    useConfirmModal("Are you sure you want to delete your account?", () => {
+      accountDeleteBtn.disabled = true;
+      deleteUser().then((res) => {
+        accountDeleteBtn.insertAdjacentHTML(
+          "afterend",
+          `<p>${res.message}</p>`
+        );
+        accountDeleteBtn.disabled = false;
+      });
+    });
   });
 };
 const initUploadModal = () => {

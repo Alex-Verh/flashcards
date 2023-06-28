@@ -103,6 +103,17 @@ export const updateUser = async (formData) => {
   }
 };
 
+export const deleteUser = async () => {
+  try {
+    const res = await fetch(USER_URL, {
+      method: "DELETE",
+    });
+    return res.json();
+  } catch (e) {
+    throw e;
+  }
+};
+
 export const createFlashcard = async (formData) => {
   try {
     const res = await customFetch(`${FLASHCARD_URL}`, {

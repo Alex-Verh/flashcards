@@ -36,12 +36,9 @@
     <div class="account-settings__footer">
       <div class="account-settings__line"></div>
       <div class="account-settings__buttons">
-        <a
-          class="account-settings__button"
-          href="{{ url_for('users.delete_profile') }}"
-          >Delete account</a
-        >
-        <button class="account-settings__button">Reset password</button>
+        <button class="account-settings__button" id="deleteAccountBtn">
+          Delete account
+        </button>
       </div>
     </div>
   </div>

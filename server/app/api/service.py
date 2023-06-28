@@ -394,13 +394,34 @@ class ApiService:
             token = serializer.dumps({"new_email": email}, salt="update-email").encode(
                 "utf-8"
             )
-            varification_url = url_for(
+            verification_url = url_for(
                 "users.update_email", token=token, _external=True
             )
-            send_verification_email(varification_url, email)
+            send_verification_email(
+                email,
+                "mails/verification.html",
+                "Confirm your new email",
+                url=verification_url,
+            )
             updated_fields.append("email")
         return jsonify(
             {"message": "Updated successfuly", "updated_fields": updated_fields}
+        )
+
+    @classmethod
+    def delete_user(cls):
+        token = serializer.dumps({"id": current_user.id}, salt="delete-account").encode(
+            "utf-8"
+        )
+        url = url_for("users.delete_account", token=token, _external=True)
+        send_verification_email(
+            current_user.email,
+            "mails/confirm-deletion.html",
+            "Confirm account deletion",
+            url=url,
+        )
+        return jsonify(
+            {"message": "Confirmation email has been sent to your email address"}
         )
 
     @classmethod

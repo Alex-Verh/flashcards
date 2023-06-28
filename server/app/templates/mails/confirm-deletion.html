@@ -62,17 +62,18 @@
     <div class="mail">
       <div class="mail__body">
         <div class="mail__title">FLASHY</div>
-        <div class="mail__topic"><h2>Reset Password Instructions</h2></div>
+        <div class="mail__topic"><h2>Account Deletion</h2></div>
         <div class="mail__message">
           Hello {{ current_user.username }}, <br />
-          Click the button to reset your password for your FLASHY account.
+          Somebody is trying to delete yout account,<br />
+          if it is you please click the button below to complete deletion.
         </div>
         <div style="text-align: center">
           <a
             href="{{ url }}"
             class="mail__button"
             style="background: #eb996e; color: #fff"
-            >Reset Password</a
+            >Confirm deletion</a
           >
         </div>
         <div class="mail__message">

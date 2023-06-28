@@ -1,4 +1,4 @@
-from flask import Flask, render_template, send_from_directory
+from flask import Flask, render_template
 
 from .config import Config
 
@@ -14,9 +14,6 @@ def create_app(config_class=Config):
     cors.init_app(app)
 
     login_manager.init_app(app)
-    # login_manager.login_view = "users.login"
-    # login_manager.login_message = "Login to access all platform features"
-    # login_manager.login_message_category = "success"
 
     from .models import User
 
@@ -53,9 +50,5 @@ def create_app(config_class=Config):
             "common/error.html",
             error="This is a private card set >:( Create your own one.",
         )
-
-    @app.route("/uploads/<filename>")
-    def uploads(filename):
-        return send_from_directory(app.config["UPLOAD_FOLDER"], filename)
 
     return app

@@ -2,13 +2,13 @@ import os
 from tempfile import TemporaryFile
 from uuid import uuid4
 
+from flask import render_template
 from flask_mail import Message
 from PIL import Image
 from pydub import AudioSegment
 
 from .config import Config
-from .extensions import db, mail, s3_bucket
-from .models import CardSet, FlashCard
+from .extensions import mail, s3_bucket
 
 
 def send_feedback_email(
@@ -21,13 +21,13 @@ def send_feedback_email(
     mail.send(msg)
 
 
-def send_verification_email(verification_url, recipient):
+def send_verification_email(recipient, mail_template, title, **kwargs):
     msg = Message(
-        "Verify your email",
+        title,
         sender=("FlashCards", "noreply@demo.com"),
         recipients=[recipient],
     )
-    msg.body = f"Please, verify your email: {verification_url}"
+    msg.html = render_template(mail_template, **kwargs)
     mail.send(msg)
 
 
@@ -89,13 +89,3 @@ def get_filenames_from_attachments(attachments):
                     names = [url.split("/")[-1] for url in urls]
                     filesnames.extend(names)
     return filesnames
-
-
-def delete_user_files(user_id):
-    user_attachments = (
-        db.session.query(FlashCard.attachments)
-        .join(CardSet)
-        .filter(CardSet.user_id == user_id)
-        .all()
-    )
-    delete_files_from_bucket(get_filenames_from_attachments(user_attachments))

@@ -6,7 +6,6 @@ load_dotenv()
 
 
 class Config:
-    UPLOAD_FOLDER = "uploads"
     SECRET_KEY = environ.get("SECRET_KEY")
 
     # SQLALCHEMY_DATABASE_URI = os.environ.get("DB_URL")
