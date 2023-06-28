@@ -167,6 +167,8 @@ const initLearnChoice = (initialCardset, onStart) => {
     onStart({
       cardsets,
       mode: modalEl.querySelector('input[name="learningMode"]:checked').value,
+      shuffleMode: modalEl.querySelector('input[name="shuffleMode"]:checked')
+        .value,
     });
   });
 };
@@ -209,11 +211,13 @@ export const initLearn = (initialCardset) => {
   const showFlashcard = (flashcards, side, statistics) => {
     const currentFlashcard = flashcards[0];
     if (!currentFlashcard) {
+      closeModal(learningModal);
       useMessageModal(`
-      Your learn statistics:<br>
+      <h1 style="font-size: 26px;font-weight: 600;margin: 20px;">Your learn statistics:</h1>
+      <div style="margin-bottom: 20px;font-size: 18px;font-weight: 600;">
       Correct answers: ${statistics.correct}<br>
       Incorrect answers: ${statistics.incorrect}<br>
-      Total attempts: ${statistics.totalAttempts}
+      Total attempts: ${statistics.totalAttempts}</div>
       `);
       return;
     }
@@ -243,14 +247,16 @@ export const initLearn = (initialCardset) => {
     };
   };
 
-  initLearnChoice(initialCardset, async ({ cardsets, mode }) => {
+  initLearnChoice(initialCardset, async ({ cardsets, mode, shuffleMode }) => {
     openModal(learningModal);
     const flashcards = await getFlashcards(
       cardsets.map((cardset) => cardset.id)
     );
-    for (let i = flashcards.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [flashcards[i], flashcards[j]] = [flashcards[j], flashcards[i]];
+    if (shuffleMode === "shuffle") {
+      for (let i = flashcards.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [flashcards[i], flashcards[j]] = [flashcards[j], flashcards[i]];
+      }
     }
     const statistics = {
       totalCards: flashcards.length,

@@ -73,6 +73,18 @@ export const deleteCardset = async (id) => {
   }
 };
 
+export const updateCardset = async (id, formData) => {
+  try {
+    const res = await customFetch(`${CARDSET_URL}/${id}`, {
+      method: "PATCH",
+      body: formData,
+    });
+    return res.json();
+  } catch (e) {
+    throw e;
+  }
+};
+
 export const getFlashcards = async (cardsetsIds) => {
   try {
     const res = await customFetch(

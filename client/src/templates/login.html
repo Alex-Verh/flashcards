@@ -18,7 +18,7 @@ endblock %} {% block container %}
         <div class="input__error-msg">{{ form.password.errors[0] }}</div>
         {% else %} {{ form.password(class='input', autocomplete='off') -}} {%
         endif %}
-        <a class="register__forget-pass">Forgot your password?</a>
+        <span class="register__forget-pass">Forgot your password?</span>
       </div>
       {{ form.submit(class='button') }}
     </form>

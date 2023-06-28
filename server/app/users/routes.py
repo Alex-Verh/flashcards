@@ -63,7 +63,7 @@ def register():
         verification_url = url_for(".confirm_email", token=token, _external=True)
 
         send_verification_email(
-            email, "mails/verification.html", "Verify your email", url=verification_url
+            email, "mails/verification.html", "Confirm your email", url=verification_url
         )
         return render_template(
             "common/error.html",

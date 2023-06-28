@@ -6,12 +6,13 @@ endblock %} {% block container %}
     <section class="flashcards">
       <div class="row">
         <div class="flashcards__heading-tools">
-          {{ cardset.title }} {% if cardset.user_id == current_user.id %}
+          <h1 id="cardsetTitle">{{ cardset.title }}</h1>
+          {% if cardset.user_id == current_user.id %}
           <div>
-            <div class="flashcards__tool rnd-button">
+            <div class="flashcards__tool rnd-button" id="editCardsetBtn">
               <img src="/static/img/icons/edit-ico.svg" alt="Edit" />
             </div>
-            <div class="flashcards__tool rnd-button">
+            <div class="flashcards__tool rnd-button" id="deleteCardsetBtn">
               <img src="/static/img/icons/delete-ico.svg" alt="Delete" />
             </div>
           </div>

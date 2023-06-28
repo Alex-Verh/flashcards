@@ -40,15 +40,18 @@ const output = () => ({
 
 const optimization = () => {
   const optimizationConfig = {
-    splitChunks: {
-      chunks: "all",
-    },
+    // splitChunks: {
+    //   chunks: "all",
+    // },
   };
-  if (mode === "production")
+  if (mode === "production") {
+    optimizationConfig.minimize = true;
     optimizationConfig.minimizer = [
       new TerserPlugin(),
       new CssMinimizerPlugin(),
     ];
+  }
+  return optimizationConfig;
 };
 
 const devServer = () => ({

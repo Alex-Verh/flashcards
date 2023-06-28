@@ -60,6 +60,7 @@ export const handleCardsetSave = async (saveBtn, onSuccess) => {
     };
   }
   try {
+    saveBtn.disabled = true;
     saveBtn.innerHTML = `
         <div style="border: 10px solid; transform: translateX(-8px);" class="loading-spinner"></div>
         `;
@@ -69,14 +70,16 @@ export const handleCardsetSave = async (saveBtn, onSuccess) => {
     if (+e.message === 401) {
       openModal(document.querySelector(".unauthorized-modal"));
       saveBtn.innerHTML = prevContent;
+      saveBtn.disabled = false;
     }
   }
 };
 
 export const handleCardsetDelete = (deleteBtn) => {
-  useConfirmModal("Delete cardset?", () => {
+  useConfirmModal("Are you sure you want to delete this cardset?", () => {
     const cardsetId = deleteBtn.dataset.cardsetId;
     const prevContent = deleteBtn.innerHTML;
+    deleteBtn.disabled = true;
     deleteBtn.innerHTML = `
             <div style="border: 10px solid; transform: translateX(-8px);" class="loading-spinner"></div>
             `;
@@ -85,6 +88,7 @@ export const handleCardsetDelete = (deleteBtn) => {
       .catch((e) => {
         console.log(e);
         deleteBtn.innerHTML = prevContent;
+        deleteBtn.disabled = false;
       });
   });
 };

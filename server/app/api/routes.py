@@ -31,6 +31,12 @@ def delete_cardset(id: int) -> Response:
     return ApiService.delete_cardset(id)
 
 
+@bp.route("/cardset/<int:id>", methods=["PATCH"])
+@login_required
+def update_cardset(id: int) -> Response:
+    return ApiService.update_cardset(id)
+
+
 @bp.route("/cardset/save/<int:id>", methods=["PATCH"])
 @login_required
 def save_cardset(id: int) -> Response:

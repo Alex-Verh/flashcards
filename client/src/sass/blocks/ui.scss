@@ -206,6 +206,7 @@
   border-color: $first $second $third $fourth;
   border-radius: 50%;
   display: inline-block;
+  vertical-align: middle;
   box-sizing: border-box;
   animation: animloader 1s linear infinite;
 

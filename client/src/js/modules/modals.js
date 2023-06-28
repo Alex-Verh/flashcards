@@ -93,7 +93,7 @@ export const useMessageModal = (message) => {
     "afterbegin",
     `
       <div class="modal__line"></div>
-      <p style="margin: 10px; font-size: 18px">${message}</p>
+      <div style="margin: 10px; font-size: 18px">${message}</div>
     `
   );
   modal.style.width = "400px";

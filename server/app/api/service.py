@@ -78,25 +78,41 @@ class ApiService:
         if not cardset:
             return jsonify({"error": "Card set does not exist."}), 400
 
-        if cardset.user_id == current_user.id:
-            cardset_attachments = (
-                db.session.query(FlashCard.attachments)
-                .filter(FlashCard.cardset_id == cardset.id)
-                .all()
-            )
-            filenames = get_filenames_from_attachments(cardset_attachments)
-            filenames and delete_files_from_bucket(filenames)
-            db.session.delete(cardset)
-            db.session.commit()
-        else:
+        if not (cardset.user_id == current_user.id):
             return (
                 jsonify(
                     {"error": "You do not have permission to delete this card set"}
                 ),
                 400,
             )
-
+        cardset_attachments = (
+            db.session.query(FlashCard.attachments)
+            .filter(FlashCard.cardset_id == cardset.id)
+            .all()
+        )
+        filenames = get_filenames_from_attachments(cardset_attachments)
+        filenames and delete_files_from_bucket(filenames)
+        db.session.delete(cardset)
         return jsonify({"message": "Card set has been deleted"})
+
+    @classmethod
+    def update_cardset(cls, id):
+        new_title = request.form.get("title")
+        if not new_title:
+            return jsonify({"error": "Invalid request params"}), 400
+        cardset = CardSet.query.get(id)
+        if not cardset:
+            return jsonify({"error": "Card set does not exist."}), 400
+        if not (cardset.user_id == current_user.id):
+            return (
+                jsonify(
+                    {"error": "You do not have permission to update this card set"}
+                ),
+                400,
+            )
+        cardset.title = new_title
+        db.session.commit()
+        return jsonify({"message": "Card set has been updated", "title": cardset.title})
 
     @classmethod
     def save_cardset(cls, id):

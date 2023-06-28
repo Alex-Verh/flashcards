@@ -32,6 +32,26 @@
       />
       <label for="title-mode" class="choice__option-label">Guess title</label>
     </div>
+    <div class="mode-choice__title">Shuffle cards:</div>
+    <div class="choice">
+      <input
+        type="radio"
+        class="choice__option choice__option-1"
+        name="shuffleMode"
+        value="shuffle"
+        id="shuffle-mode"
+        checked
+      />
+      <label for="shuffle-mode" class="choice__option-label">Yes</label>
+      <input
+        type="radio"
+        class="choice__option choice__option-1"
+        name="shuffleMode"
+        value="noShuffle"
+        id="no-shuffle-mode"
+      />
+      <label for="no-shuffle-mode" class="choice__option-label">No</label>
+    </div>
     <div class="button" id="startLearn">Start</div>
     {% include "modals/cardset-choice.html" %}
   </div>
