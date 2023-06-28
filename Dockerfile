@@ -19,14 +19,20 @@ ARG AWS_BUCKET_NAME
 
 ARG PORT
 
-ENV FLASK_APP=app
+ENV FLASK_APP=server.app
 ENV FLASK_ENV=production
 
 COPY server/requirements.txt .
 
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
-COPY server .
+COPY server/ server/
+
+WORKDIR /app/server
+
+RUN flask --app app db init
+RUN flask --app app db migrate
+RUN flask --app app db upgrade
 
 
 # Base image for Node.js dependencies
@@ -36,21 +42,23 @@ FROM node:14-alpine as node-base
 WORKDIR /app
 
 # Copy webpack configuration file
-COPY webpack.config.js .
-
-# Copy frontend source code
-COPY frontend/ frontend/
+COPY client/package.json .
 
 # Install frontend dependencies
-RUN npm install --prefix frontend
+RUN npm install
 
+# Copy frontend source code
+COPY client/ .
+
+RUN npm run build
 
 # Merge Python and Node.js base images
 FROM python-base as final-python
-COPY --from=node-base /app/frontend /app/frontend
+COPY --from=node-base /app/dist/static /app/server/app/static
+COPY --from=node-base /app/dist/templates /app/server/app/templates
 
 # Expose the Flask application port
-EXPOSE 5000
+EXPOSE ${PORT}
 
 # Start the Flask application
-CMD ["flask", "run", "--host=0.0.0.0"]
+CMD flask --app ${FLASK_APP} run --host 0.0.0.0 --port ${PORT}

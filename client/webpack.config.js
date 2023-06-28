@@ -19,7 +19,7 @@ const filename = (ext = "[ext]") =>
 
 const distPath = () =>
   flask ? path.resolve(__dirname, "../server/app/static") : paths.dist;
-const templatesPath = () => (flask ? "../templates/" : "");
+const templatesPath = () => (flask ? "../templates/" : "templates/");
 const assetsPath = () => (flask ? "" : paths.assets);
 const publicPath = () => (flask ? "/" + paths.assets : "");
 
