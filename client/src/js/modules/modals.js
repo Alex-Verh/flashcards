@@ -266,6 +266,30 @@ const initUploadModal = () => {
   });
 };
 
+export const initMenu = () => {
+  const openMenu = document.querySelector(".nav__menu[data-menu]");
+  const closeMenu = document.querySelector(".menu__close");
+  const menu = document.querySelector(`.menu`);
+  openMenu.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (
+      menu.classList.contains("none") ||
+      menu.parentElement.classList.contains("none")
+    ) {
+      openModal(menu);
+    } else {
+      closeModal(menu);
+    }
+  });
+
+  closeMenu.addEventListener("click", () => {
+    closeModal(menu);
+  });
+  menu.querySelectorAll(".menu__option").forEach((option) => {
+    option.addEventListener("click", () => closeModal(menu));
+  });
+};
+
 export const initModals = () => {
   const openModalLinks = document.querySelectorAll("[data-modal-class]");
   const closeModalBtns = document.querySelectorAll(
@@ -294,6 +318,7 @@ export const initModals = () => {
   });
 
   try {
+    initMenu();
     initCardsetCreation();
     initAccountSettings();
     initUploadModal();

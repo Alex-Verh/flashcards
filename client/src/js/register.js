@@ -7,8 +7,11 @@ import {
   validatePassword,
 } from "./modules/validation";
 import { showInputError, hideInputError, initInput } from "./modules/input";
+import { initMenu } from "./modules/modals";
 
 document.addEventListener("DOMContentLoaded", () => {
+  initMenu();
+
   const registerForm = document.querySelector("#registerForm");
   initInput(registerForm.username, validateName);
   initInput(registerForm.email, validateEmail);

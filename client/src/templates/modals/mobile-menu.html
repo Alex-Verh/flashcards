@@ -3,14 +3,32 @@
     <img src="/static/img/icons/close-ico.svg" alt="Close" />
   </div>
   <div class="menu__options">
-    <div class="menu__option">Home</div>
-    <div class="menu__option">Explore</div>
-    <div class="menu__option">Help</div>
-    <div class="menu__option">Cards</div>
-    <div class="menu__option">Learn</div>
-    <div class="menu__option">Create</div>
-    <div class="menu__separator"></div>
-    <div class="menu__option">Settings</div>
-    <div class="menu__option-exit">Exit</div>
+    <div class="menu__separator">General</div>
+    <a href="{{ url_for('main.main') }}" class="menu__option">Home</a>
+    <a href="{{ url_for('main.main') }}#cards" class="menu__option">Cards</a>
+    <button data-modal-class="mode-choice" class="menu__option">Learn</button>
+    <a href="{{ url_for('main.main') }}#help" class="menu__option">Help</a>
+    <div class="menu__separator">Profile</div>
+    {% if current_user.is_authenticated %}
+    <a href="{{url_for('main.cardsets')}}" class="menu__option">Card Sets</a>
+    <button data-modal-class="create-cardset" class="menu__option">
+      Create
+    </button>
+    <button data-modal-class="account-settings" class="menu__option">
+      Settings
+    </button>
+    <a
+      href="{{url_for('users.logout')}}"
+      class="menu__option menu__option_danger"
+      >Log out</a
+    >
+    {% else %}
+    <a
+      href="{{ url_for('users.login') }}"
+      class="menu__option menu__option_important"
+      >Login</a
+    >
+    <a href="{{ url_for('users.register') }}" class="menu__option">Register</a>
+    {% endif %}
   </div>
 </div>

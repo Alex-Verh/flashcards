@@ -2,9 +2,12 @@
 
 import "../sass/pages/login.scss";
 import { initInput } from "./modules/input";
+import { initMenu } from "./modules/modals";
 import { validateEmail } from "./modules/validation";
 
 document.addEventListener("DOMContentLoaded", () => {
+  initMenu();
+
   const loginContainer = document.querySelector(".register .container");
   document.querySelectorAll(".input").forEach((input) => {
     input.addEventListener("change", () => {
