@@ -153,6 +153,13 @@ export const useUploadModal = (onUpload) => {
   openModal(dropArea.parentElement);
 };
 
+export const useAlertModal = (message, category) => {
+  document.body.insertAdjacentHTML(
+    "beforeend",
+    `<div class="alert alert_${category}">${message}<button class="alert__close" onclick="this.parentElement.remove()"><img src="/static/img/icons/close-ico.svg" alt="close" /></button></div>`
+  );
+};
+
 const initCardsetCreation = () => {
   initDropdown("#categoryForNewSet", (clickedItem) => {
     clickedItem.parentElement.parentElement.nextElementSibling.value =
@@ -183,8 +190,8 @@ const initCardsetCreation = () => {
 const initAccountSettings = () => {
   const settingsModal = document.querySelector(".account-settings");
   const settingsForm = settingsModal.querySelector("#accountSettings");
-  const username = settingsForm.username.value;
-  const email = settingsForm.email.value;
+  let username = settingsForm.username.value;
+  let email = settingsForm.email.value;
   initInput(settingsForm.username, validateName);
   initInput(settingsForm.email, validateEmail);
   settingsForm.addEventListener("submit", async (e) => {
@@ -215,13 +222,14 @@ const initAccountSettings = () => {
       try {
         const res = await updateUser(formData);
         if (res.updated_fields.includes("email")) {
-          settingsForm.insertAdjacentHTML(
-            "afterend",
-            `
-            <p>Verification link has been send to your new email</p>
-            `
+          closeModal(settingsModal);
+          useAlertModal(
+            "Verification link has been send to your new email.",
+            "info"
           );
         }
+        username = settingsForm.username.value;
+        email = settingsForm.email.value;
       } catch (e) {
         const errData = JSON.parse(e.message);
         if (+errData.status === 400) {
@@ -240,12 +248,20 @@ const initAccountSettings = () => {
   accountDeleteBtn.addEventListener("click", (e) => {
     useConfirmModal("Are you sure you want to delete your account?", () => {
       accountDeleteBtn.disabled = true;
+      settingsForm.insertAdjacentHTML(
+        "beforeend",
+        `
+        <div
+          style="position: relative; top: -200px; right: 0; left: 0; border-width: 20px;"
+          class="loading-spinner"
+        ></div>
+      `
+      );
       deleteUser().then((res) => {
-        accountDeleteBtn.insertAdjacentHTML(
-          "afterend",
-          `<p>${res.message}</p>`
-        );
         accountDeleteBtn.disabled = false;
+        closeModal(settingsModal);
+        settingsForm.lastElementChild.remove();
+        useAlertModal(res.message, "success");
       });
     });
   });
@@ -290,7 +306,7 @@ export const initMenu = () => {
   });
 };
 
-export const initModals = () => {
+export const initModals = (withLearn = true) => {
   const openModalLinks = document.querySelectorAll("[data-modal-class]");
   const closeModalBtns = document.querySelectorAll(
     ".modal__close, .menu__close"
@@ -319,8 +335,12 @@ export const initModals = () => {
 
   try {
     initMenu();
-    initCardsetCreation();
-    initAccountSettings();
+    withLearn &&
+      import("./learn").then((learnModule) => learnModule.initLearn());
+    if (window.isUserAuthenthicated) {
+      initCardsetCreation();
+      initAccountSettings();
+    }
     initUploadModal();
   } catch (error) {
     console.log(error);

@@ -40,9 +40,9 @@ const output = () => ({
 
 const optimization = () => {
   const optimizationConfig = {
-    // splitChunks: {
-    //   chunks: "all",
-    // },
+    splitChunks: {
+      chunks: "all",
+    },
   };
   if (mode === "production") {
     optimizationConfig.minimize = true;

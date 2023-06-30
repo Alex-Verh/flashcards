@@ -43,20 +43,25 @@ document.addEventListener("DOMContentLoaded", () => {
       deleteBtn.classList.add("flashcards__card-delete-btn");
       deleteBtn.innerHTML = `<img src="${deleteIco}" alt="delete flashcard" />`;
       deleteBtn.addEventListener("click", () => {
-        const prevContent = deleteBtn.innerHTML;
-        deleteBtn.innerHTML = `
-                <div style="display:block; border: 10px solid;" class="loading-spinner"></div>
-                `;
-        deleteBtn.disabled = true;
-        deleteFlashcard(data.id)
-          .then(() => {
-            flashcardEl.remove();
-          })
-          .catch((e) => {
-            console.log(e);
-            deleteBtn.innerHTML = prevContent;
-            deleteBtn.disabled = false;
-          });
+        useConfirmModal(
+          "Are you sure you want to delete this flashcard?",
+          () => {
+            const prevContent = deleteBtn.innerHTML;
+            deleteBtn.innerHTML = `
+                  <div style="display:block; border: 10px solid;" class="loading-spinner"></div>
+                  `;
+            deleteBtn.disabled = true;
+            deleteFlashcard(data.id)
+              .then(() => {
+                flashcardEl.remove();
+              })
+              .catch((e) => {
+                console.log(e);
+                deleteBtn.innerHTML = prevContent;
+                deleteBtn.disabled = false;
+              });
+          }
+        );
       });
       flashcardEl.append(deleteBtn);
     }
@@ -124,13 +129,19 @@ document.addEventListener("DOMContentLoaded", () => {
     deleteCardsetBtn.addEventListener("click", () => {
       useConfirmModal("Are you sure you want to delete this cardset?", () => {
         deleteCardsetBtn.disabled = true;
+        document.body.insertAdjacentHTML(
+          "beforeend",
+          `<div class="overlay"><div style="position: absolute; top: 50%; left: 50%; transform: translateX(-50%) translateY(-50%)"><div class="loading-spinner"></div></div></div>`
+        );
+        document.body.style.overflow = "hidden";
         deleteCardset(cardsetId)
-          .then(() => (window.location.href = "/cardsets"))
+          .then(() => {
+            window.location.href = document.referrer || "/cardsets";
+          })
           .catch((e) => {
             console.log(e);
-          })
-          .finally(() => {
             deleteCardsetBtn.disabled = false;
+            document.body.style.overflow = "auto";
           });
       });
     });
@@ -507,7 +518,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
   try {
-    initModals();
+    initModals(false);
     loadCategories();
     loadFlashcards();
     initCardsetActions();

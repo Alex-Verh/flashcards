@@ -7,6 +7,10 @@
     <meta name="author" content="Bargan Denis" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}{% endblock %}FLASHY</title>
+    <script>
+      window.isUserAuthenthicated =
+        "{{current_user.is_authenticated}}" === "True";
+    </script>
     {% block head %}{% endblock %}
     <!-- <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/icon.png') }}"> -->
   </head>
@@ -57,11 +61,17 @@
         <div class="line"></div>
       </div>
     </nav>
-
-    {% block modals %} {% include "modals/mobile-menu.html" %} {% include
-    "modals/learning-choice.html" %} {% include "modals/learning-modal.html" %}
-    {% if not current_user.is_authenticated %} {% include
-    "modals/unauthorized.html" %} {% else %} {% include
+    {% for category, message in get_flashed_messages(True) %}
+    <div class="alert alert_{{ category }}">
+      {{ message }}
+      <button class="alert__close" onclick="this.parentElement.remove()">
+        <img src="/static/img/icons/close-ico.svg" alt="close" />
+      </button>
+    </div>
+    {% endfor %} {% block modals %} {% include "modals/mobile-menu.html" %} {%
+    include "modals/learning-choice.html" %} {% include
+    "modals/learning-modal.html" %} {% if not current_user.is_authenticated %}
+    {% include "modals/unauthorized.html" %} {% else %} {% include
     "modals/create-cardset.html" %} {% include "modals/account-settings.html" %}
     {% include "modals/upload-file.html" %} {% endif %} {% endblock %} {% block
     container %} {% endblock %}

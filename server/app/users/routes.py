@@ -42,13 +42,13 @@ def login():
 def logout():
     logout_user()
     flash("You have logged out", "success")
-    return redirect(url_for("users.login"))
+    return redirect(url_for(".login"))
 
 
 @bp.route("/register", methods=["POST", "GET"])
 def register():
     if current_user.is_authenticated:
-        return redirect(url_for("users.profile"))
+        return redirect(url_for("main.main"))
 
     form = RegisterForm()
     if form.validate_on_submit():
@@ -65,10 +65,11 @@ def register():
         send_verification_email(
             email, "mails/verification.html", "Confirm your email", url=verification_url
         )
-        return render_template(
-            "common/error.html",
-            error="Verification link has been send to your email successfully",
+        flash(
+            "Please check your email. We have send verification message to complete registration.",
+            "info",
         )
+        return redirect(url_for(".login"))
 
     return render_template("register.html", form=form)
 
@@ -78,25 +79,23 @@ def confirm_email(token):
     try:
         user_data = serializer.loads(token, salt="email-confirm", max_age=3600)
     except SignatureExpired:
-        return render_template("common/error.html", error="Verification token expired!")
+        flash("Verification token has been expired!", "error")
+        return redirect(url_for(".register"))
     except BadData:
-        return render_template("common/error.html", error="Invalid verification token")
-    try:
-        new_user = User(
-            username=user_data["username"],
-            email=user_data["email"],
-            password=user_data["password"],
-        )
-        db.session.add(new_user)
-        db.session.commit()
-    except:
-        db.session.rollback()
-        return render_template(
-            "common/error.html", error="Error while working with database"
-        )
-
+        flash("Invalid verification token!", "error")
+        return redirect(url_for(".register"))
+    if User.query.filter_by(username=user_data["username"]).first():
+        flash("You have already registred!", "info")
+        return redirect(url_for(".login"))
+    new_user = User(
+        username=user_data["username"],
+        email=user_data["email"],
+        password=user_data["password"],
+    )
+    db.session.add(new_user)
+    db.session.commit()
     flash("You have registered successfully", "success")
-    return redirect(url_for("users.login"))
+    return redirect(url_for(".login"))
 
 
 @bp.route("/update-email/<token>")
@@ -104,12 +103,12 @@ def confirm_email(token):
 def update_email(token):
     try:
         new_email = serializer.loads(token, salt="update-email", max_age=3600)
+        current_user.email = new_email["new_email"]
+        db.session.commit()
     except SignatureExpired:
-        return render_template("common/error.html", error="Verification token expired!")
+        flash("Verification token has been expired!", "error")
     except BadData:
-        return render_template("common/error.html", error="Invalid verification token")
-    current_user.email = new_email["new_email"]
-    db.session.commit()
+        flash("Invalid verification token!", "error")
     return redirect(url_for("main.main"))
 
 
@@ -119,21 +118,24 @@ def delete_account(token):
     try:
         user_info = serializer.loads(token, salt="delete-account", max_age=3600)
     except SignatureExpired:
-        return render_template("common/error.html", error="Verification token expired!")
+        flash("Verification token has been expired!", "error")
+        return redirect(url_for("main.main"))
     except BadData:
-        return render_template("common/error.html", error="Invalid verification token")
-    if current_user.id == user_info["id"]:
-        user_attachments = (
-            db.session.query(FlashCard.attachments)
-            .join(CardSet)
-            .filter(CardSet.user_id == current_user.id)
-            .all()
-        )
-        filenames = get_filenames_from_attachments(user_attachments)
-        filenames and delete_files_from_bucket(filenames)
-        db.session.delete(current_user)
-        db.session.commit()
-        logout_user()
-        flash("Your account was deleted successfully", "success")
-        return redirect(url_for("users.register"))
-    return redirect(url_for("users.login"))
+        flash("Invalid verification token!", "error")
+        return redirect(url_for("main.main"))
+    if getattr(current_user, "id", 0) != user_info["id"]:
+        flash("Please login to account that you want to delete!", "error")
+        return redirect(url_for(".login"))
+    user_attachments = (
+        db.session.query(FlashCard.attachments)
+        .join(CardSet)
+        .filter(CardSet.user_id == current_user.id)
+        .all()
+    )
+    filenames = get_filenames_from_attachments(user_attachments)
+    filenames and delete_files_from_bucket(filenames)
+    db.session.delete(current_user)
+    db.session.commit()
+    logout_user()
+    flash("Your account was deleted successfully", "success")
+    return redirect(url_for(".register"))

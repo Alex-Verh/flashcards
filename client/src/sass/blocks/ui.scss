@@ -209,6 +209,7 @@
   vertical-align: middle;
   box-sizing: border-box;
   animation: animloader 1s linear infinite;
+  background-color: #fff1e9;
 
   @keyframes animloader {
     0% {
@@ -223,5 +224,50 @@
     100% {
       border-color: $second $third $fourth $first;
     }
+  }
+}
+
+.alert {
+  position: absolute;
+  top: 9px;
+  right: 9px;
+  width: 440px;
+  height: 70px;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: $box-shadow;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  font-family: $font-header;
+  font-size: 16px;
+  color: #fff;
+  &__close {
+    background: none;
+    border: none;
+    display: block;
+    img {
+      display: block;
+      width: 15px;
+      filter: brightness(2);
+    }
+    &:hover {
+      img {
+        filter: brightness(1.7);
+      }
+    }
+  }
+  &_success {
+    background-color: #12c99b;
+  }
+  &_error {
+    background-color: #e41749;
+  }
+  &_warning {
+    background-color: #f2a600;
+  }
+  &_info {
+    background-color: #0676ed;
   }
 }

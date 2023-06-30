@@ -2,17 +2,21 @@
 
 import "../sass/pages/login.scss";
 import { initInput } from "./modules/input";
-import { initMenu } from "./modules/modals";
+import { initLearn } from "./modules/learn";
+import { initMenu, initModals } from "./modules/modals";
 import { validateEmail } from "./modules/validation";
 
 document.addEventListener("DOMContentLoaded", () => {
-  initMenu();
+  initModals();
 
   const loginContainer = document.querySelector(".register .container");
   document.querySelectorAll(".input").forEach((input) => {
     input.addEventListener("change", () => {
       input.classList.remove("input_error");
-      if (input.nextElementSibling.matches(".input__error-msg")) {
+      if (
+        input.nextElementSibling &&
+        input.nextElementSibling.matches(".input__error-msg")
+      ) {
         input.nextElementSibling.remove();
       }
     });
