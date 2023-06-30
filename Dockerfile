@@ -1,5 +1,5 @@
 # Base image for Python dependencies
-FROM python:3.9-alpine as python-base
+FROM python:3.8 as python-base
 
 # Set working directory
 WORKDIR /app
@@ -25,6 +25,8 @@ ENV FLASK_ENV=production
 COPY server/requirements.txt .
 
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
+
+RUN apt-get update -y && apt-get upgrade -y && apt-get install -y ffmpeg --fix-missing
 
 COPY server/ server/
 
