@@ -93,6 +93,7 @@ class ApiService:
         filenames = get_filenames_from_attachments(cardset_attachments)
         filenames and delete_files_from_bucket(filenames)
         db.session.delete(cardset)
+        db.session.commit()
         return jsonify({"message": "Card set has been deleted"})
 
     @classmethod
