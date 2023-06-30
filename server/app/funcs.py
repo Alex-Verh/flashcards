@@ -47,23 +47,17 @@ def save_image(image):
 
 
 def save_audio(audio):
-    try:
-        audio_fn = uuid4().hex + ".mp3"
-        audio_segment = AudioSegment.from_file(
-            audio, format=os.path.splitext(audio.filename).lstrip(".")
-        )
-        audio_file = audio_segment.export(format="mp3", bitrate="64k")
+    audio_fn = uuid4().hex + ".mp3"
+    audio_segment = AudioSegment.from_file(
+        audio, format=os.path.splitext(audio.filename)[-1].lstrip(".")
+    )
+    audio_file = audio_segment.export(format="mp3", bitrate="64k")
 
-        s3_bucket.upload_fileobj(
-            audio_file, audio_fn, ExtraArgs={"ContentType": "audio/mpeg"}
-        )
-        audio_file.close()
-        return get_bucket_file_url(audio_fn)
-
-    except Exception as e:
-        print(e)
-
-    return audio_fn
+    s3_bucket.upload_fileobj(
+        audio_file, audio_fn, ExtraArgs={"ContentType": "audio/mpeg"}
+    )
+    audio_file.close()
+    return get_bucket_file_url(audio_fn)
 
 
 def get_bucket_file_url(filename):
