@@ -36,7 +36,7 @@ def save_image(image):
 
     img_file = TemporaryFile()
     img = Image.open(image)
-    img.thumbnail((300, 300))
+    img.thumbnail((550, 550))
     img.save(img_file, image.mimetype.split("/")[-1])
     img_file.seek(0)
     s3_bucket.upload_fileobj(
