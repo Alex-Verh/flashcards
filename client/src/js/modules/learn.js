@@ -189,7 +189,7 @@ export const initLearn = (initialCardset) => {
         containerClass: "learning__flashcard",
         imagesClass: "learning__flashcard-images",
         imageClass: "learning__flashcard-image",
-        textClass: "learning__flashcard-text",
+        textClass: `learning__flashcard-text learning__flashcard-text_${side}`,
         audioClass: "learning__flashcard-audio",
         text: side === "front" ? flashcard.title : flashcard.content,
         images: flashcard.attachments[side + "side"].images,

@@ -13,14 +13,18 @@ export const hideInputError = (input) => {
   input.nextElementSibling && input.nextElementSibling.remove();
 };
 
-export const centerTextInTextarea = (
-  textarea,
-  lineHeight,
-  height = textarea.clientHeight
-) => {
-  const verticalPadding = `${
-    (height - parseFloat(lineHeight) * textarea.value.split("\n").length) / 2
-  }px`;
+export const getTextHeightInTextara = (textarea) => {
+  const prevHeight = textarea.style.height;
+  textarea.style.height = "1px";
+  const textHeight = textarea.scrollHeight;
+  textarea.style.height = prevHeight || null;
+  return textHeight;
+};
+
+export const centerTextInTextarea = (textarea, isRenderedBeforeImages) => {
+  const textHeight = getTextHeightInTextara(textarea);
+  const height = textarea.clientHeight;
+  const verticalPadding = `${(height - textHeight) / 2}px`;
   textarea.style.paddingTop = verticalPadding;
   textarea.style.paddingBottom = verticalPadding;
 };

@@ -35,7 +35,12 @@
     }
     &-text {
       text-align: center;
-      font-size: 20px;
+      &_front {
+        font-size: 20px;
+      }
+      &_back {
+        font-size: 18px;
+      }
     }
     &-audio {
       position: absolute;

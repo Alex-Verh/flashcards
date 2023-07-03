@@ -80,8 +80,8 @@ class CardSet(db.Model):
 class FlashCard(db.Model):
     __tablename__ = "flash_cards"
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(160), nullable=False)
-    content = db.Column(db.String(320), nullable=False)
+    title = db.Column(db.String(600), nullable=False)
+    content = db.Column(db.String(800), nullable=False)
     attachments = db.Column(db.JSON, nullable=False)
     cardset_id = db.Column(
         db.Integer, db.ForeignKey("card_sets.id", ondelete="CASCADE"), nullable=False

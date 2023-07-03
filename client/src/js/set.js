@@ -35,7 +35,17 @@ document.addEventListener("DOMContentLoaded", () => {
   let isOwnCardset = false;
   const showFlashcard = (data) => {
     const flashcardEl = generateFlashcardEl({
-      data: data,
+      data: {
+        ...data,
+        content:
+          data.content.length > 170
+            ? data.content.slice(0, 171) + ".."
+            : data.content,
+        title:
+          data.title.length > 120
+            ? data.title.slice(0, 121) + ".."
+            : data.title,
+      },
       wrapperClass: "col-sm-6 col-md-4 col-lg-3 flashcards__card-wrapper",
     });
     if (isOwnCardset) {
@@ -163,11 +173,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (text && this.getImages(side).length > 2) {
           throw new Error("You can not have text with more than 2 images!");
         }
-        if (side === "front") {
-          this.title = text;
-        } else if (side === "back") {
-          this.content = text;
-        }
+        this[side === "front" ? "title" : "content"] =
+          typeof text === "string" ? text : "";
       }
       getText(side) {
         if (side === "front") {
@@ -269,31 +276,28 @@ document.addEventListener("DOMContentLoaded", () => {
         this.attachments = {};
       }
     }
-    const renderText = (text, textarea) => {
+    const renderText = (show, textarea, withImages, text) => {
       const textBtnIco =
         textarea.parentElement.nextElementSibling.firstElementChild
           .firstElementChild;
-      if (!text) {
+      textarea.value = text;
+      if (!show) {
         textarea.classList.add("none");
         textBtnIco.src = textIco;
       } else {
+        if (withImages) {
+          textarea.style.height = null;
+        } else {
+          textarea.style.height = "80%";
+        }
         textarea.classList.remove("none");
-        textarea.value = text.trim();
         textBtnIco.src = removeTextIco;
-        const { lineHeight } = getComputedStyle(textarea);
-        centerTextInTextarea(textarea, lineHeight, textarea.scrollHeight);
+        textarea.style.paddingTop = null;
+        textarea.style.paddingBottom = null;
+        centerTextInTextarea(textarea);
       }
     };
-    const renderImages = (images, container, sideName, onImageRemove) => {
-      container.style.height =
-        container.parentElement.lastElementChild.classList.contains("none")
-          ? "80%"
-          : images.length
-          ? sideName === "front"
-            ? "50%"
-            : "40%"
-          : "0";
-
+    const renderImages = (images, container, onImageRemove) => {
       const containerWidth = container.clientWidth,
         containerHeight = container.clientHeight,
         imageWidth =
@@ -306,15 +310,14 @@ document.addEventListener("DOMContentLoaded", () => {
         (prev, image) => prev.set(image.name, image),
         new Map()
       );
-
       container
         .querySelectorAll(".flashcard-side__image")
         .forEach((imageEl) => {
           const imageName = imageEl.dataset.imageName;
           if (newImages.has(imageName)) {
-            imageEl.lastElementChild.style.maxWidth = imageWidth;
             imageEl.lastElementChild.style.maxHeight = imageHeight;
             newImages.delete(imageName);
+            imageEl.lastElementChild.style.maxWidth = imageWidth;
           } else {
             imageEl.remove();
           }
@@ -380,14 +383,16 @@ document.addEventListener("DOMContentLoaded", () => {
       workspace.innerHTML = `<div class="flashcard-side__images"></div><div class="flashcard-side__sound"></div><textarea class="flashcard-side__text flashcard-side__text_${
         sideName === "front" ? "title" : "content"
       } none" placeholder="Enter your text here"></textarea>`;
-      let textareaLineHeight = sideName === "front" ? 27 : 24;
       workspace.lastElementChild.addEventListener("input", (e) => {
-        centerTextInTextarea(e.target, textareaLineHeight);
         const prevValue = flashcard.getText(sideName);
+        e.target.style.paddingTop = null;
+        e.target.style.paddingBottom = null;
         if (e.target.scrollHeight - e.target.clientHeight > 5) {
           e.target.value = prevValue;
+          centerTextInTextarea(e.target);
           return;
         }
+        centerTextInTextarea(e.target);
         try {
           flashcard.setText(e.target.value, sideName);
         } catch (e) {
@@ -402,18 +407,14 @@ document.addEventListener("DOMContentLoaded", () => {
       tools.innerHTML = `<button class="tool rnd-button" type="button"><img src="${textIco}" alt="#" /></button><button class="tool rnd-button"><img src="${imageIco}" alt="#" /></button><button class="tool rnd-button"><img src="${audioIco}" alt="#" /></button>`;
       tools.children[0].addEventListener("click", (e) => {
         const textarea = sideEl.firstElementChild.lastElementChild;
-        if (textarea.classList.contains("none")) {
-          try {
-            flashcard.setText(" ", sideName);
-            textarea.focus();
-          } catch (e) {
-            useMessageModal(e.message);
-          }
-        } else {
-          flashcard.setText("", sideName);
+        try {
+          const showText = textarea.classList.contains("none");
+          flashcard.setText(showText, sideName);
+          renderFlashcardSide(sideName, sideEl.firstElementChild, showText);
+          showText && textarea.focus();
+        } catch (e) {
+          useMessageModal(e.message);
         }
-        renderFlashcardSide(sideName, sideEl.firstElementChild);
-        textarea.focus();
       });
       tools.children[1].addEventListener("click", (e) => {
         e.stopPropagation();
@@ -451,21 +452,42 @@ document.addEventListener("DOMContentLoaded", () => {
       sideEl.append(tools);
     };
     const flashcard = new FlashCard();
-    const renderFlashcardSide = (sideName, sideWorkspace) => {
+    const renderFlashcardSide = (sideName, sideWorkspace, showTextarea) => {
       const sideData = flashcard.getSideData(sideName);
 
-      const textarea = sideWorkspace.children[2];
-      renderText(sideData.text, textarea);
-      sideData.text === " " && flashcard.setText("", sideName);
-
       const imagesContainer = sideWorkspace.children[0];
-      renderImages(sideData.images, imagesContainer, sideName, (imageName) => {
+      imagesContainer.style.height = !(showTextarea || sideData.text)
+        ? "80%"
+        : sideData.images.length
+        ? sideName === "front"
+          ? "50%"
+          : "40%"
+        : "0";
+      const textarea = sideWorkspace.children[2];
+      renderText(
+        showTextarea || sideData.text,
+        textarea,
+        !!sideData.images.length,
+        sideData.text
+      );
+      renderImages(sideData.images, imagesContainer, (imageName) => {
         flashcard.removeImage(imageName, sideName);
         renderFlashcardSide(sideName, sideWorkspace);
       });
-
       const audioBtn = sideWorkspace.children[1];
       renderAudio(sideData.audio, audioBtn);
+      if (
+        sideData.images.length &&
+        textarea.scrollHeight - textarea.clientHeight > 5
+      ) {
+        flashcard.setImages([], sideName);
+        useMessageModal(
+          "It feels like you have filled this card with text and there is no space for image. Remove some text and try again."
+        );
+        setTimeout(() => {
+          renderFlashcardSide(sideName, sideWorkspace);
+        }, 100);
+      }
     };
 
     const container = document.querySelector(".constructor__parts .row");

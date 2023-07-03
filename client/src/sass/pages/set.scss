@@ -180,17 +180,17 @@
       outline: 2px solid #a5a5a5;
     }
     &_title {
-      font-size: 18px;
+      font-size: 16px;
       height: 30%;
       &::placeholder {
-        font-size: 18px;
+        font-size: 16px;
       }
     }
     &_content {
-      font-size: 16px;
+      font-size: 14px;
       height: 41%;
       &::placeholder {
-        font-size: 16px;
+        font-size: 14px;
       }
     }
   }
