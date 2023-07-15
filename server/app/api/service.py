@@ -442,5 +442,28 @@ class ApiService:
         )
 
     @classmethod
+    def reset_password(cls):
+        username_or_email = request.form.get("username")
+        user = (
+            User.query.filter_by(username=username_or_email).first()
+            or User.query.filter_by(email=username_or_email).first()
+        )
+        if not user:
+            return jsonify({"error": "User with such email does not exist"}), 400
+
+        token = serializer.dumps({"id": user.id}, salt="reset-password").encode("utf-8")
+        url = url_for("users.change_password", token=token, _external=True)
+        send_verification_email(
+            user.email,
+            "mails/reset-password.html",
+            "Reset Password Instructions",
+            url=url,
+            username=user.username,
+        )
+        return jsonify(
+            {"message": "Message with instructions has been sent to your email address"}
+        )
+
+    @classmethod
     def _parse_bool(cls, value):
         return str(value).lower() in ["yes", "true", "1"]

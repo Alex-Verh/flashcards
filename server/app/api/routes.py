@@ -70,3 +70,8 @@ def update_user():
 @login_required
 def delete_user():
     return ApiService.delete_user()
+
+
+@bp.route("/user/reset-psw", methods=["POST"])
+def reset_password():
+    return ApiService.reset_password()

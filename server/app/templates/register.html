@@ -5,7 +5,7 @@ head %}<script defer src="/static/js/js_modules_modals_js-css_bootstrap-grid_min
   <div class="container">
     <form action="" method="POST" id="registerForm">
       {{ form.hidden_tag() }} {% for field in form if field.name not in
-      ['csrf_token', 'submit'] %}
+      ['csrf_token', 'submitBtn'] %}
       <div class="register__field">
         {{ field.label(class='label') -}} {% if field.errors %} {{
         field(class='input input_error', autocomplete='off') -}}

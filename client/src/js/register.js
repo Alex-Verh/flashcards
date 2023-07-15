@@ -6,33 +6,41 @@ import {
   validateEmail,
   validatePassword,
 } from "./modules/validation";
-import { showInputError, hideInputError, initInput } from "./modules/input";
+import { initInput } from "./modules/input";
 import { initModals } from "./modules/modals";
 
 document.addEventListener("DOMContentLoaded", () => {
   initModals();
 
   const registerForm = document.querySelector("#registerForm");
-  initInput(registerForm.username, validateName);
-  initInput(registerForm.email, validateEmail);
-  initInput(registerForm.password, validatePassword);
-
-  registerForm.repeatPassword.addEventListener("change", (e) => {
-    const target = e.target;
-    const isValid = target.value === registerForm.password.value;
-    if (!isValid) {
-      showInputError(target, "Passwords must match");
-    } else {
-      hideInputError(target);
+  const matchPasswords = () => {
+    const areEqual =
+      registerForm.password.value === registerForm.repeatPassword.value;
+    const result = { isValid: areEqual };
+    if (!areEqual) {
+      result.detail = "Passwords must match";
     }
+    return result;
+  };
+  const username = initInput(registerForm.username, validateName);
+  const email = initInput(registerForm.email, validateEmail);
+  const repeatPassword = initInput(registerForm.repeatPassword, matchPasswords);
+  const password = initInput(registerForm.password, (password) => {
+    registerForm.repeatPassword.value && repeatPassword.validate();
+    const firstValidation = validatePassword(password);
+    return !firstValidation.isValid
+      ? firstValidation
+      : registerForm.repeatPassword.value
+      ? matchPasswords()
+      : { isValid: true };
   });
   registerForm.addEventListener("submit", (e) => {
     e.preventDefault();
     if (
-      validateName(registerForm.username.value).isValid &&
-      validateEmail(registerForm.email.value).isValid &&
-      validatePassword(registerForm.password.value).isValid &&
-      registerForm.repeatPassword.value === registerForm.password.value
+      username.validate() &&
+      email.validate() &&
+      password.validate() &&
+      repeatPassword.validate()
     ) {
       registerForm.submit();
     }

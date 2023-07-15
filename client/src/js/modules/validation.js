@@ -30,7 +30,7 @@ export const validateEmail = (email) => {
 export const validatePassword = (password) => {
   const min = 6,
     max = 30,
-    regEx = /^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{6,})\S$/;
+    regEx = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{0,}$/;
 
   if (password.length < min || password.length > max) {
     return { isValid: false, detail: "Length must be between 6-30 characters" };

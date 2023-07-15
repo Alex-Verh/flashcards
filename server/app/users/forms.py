@@ -19,7 +19,7 @@ class LoginForm(FlaskForm):
     password = PasswordField(
         "Password", validators=[DataRequired("Please enter your password")]
     )
-    submit = SubmitField("Submit")
+    submit = SubmitField("Login")
 
 
 class RegisterForm(FlaskForm):
@@ -50,14 +50,15 @@ class RegisterForm(FlaskForm):
             Length(8, 30, "Length must be between 8-30 characters"),
         ],
     )
-    password1 = PasswordField(
+    repeat_password = PasswordField(
         "Repeat password",
         validators=[
             DataRequired("Please repeat your password"),
             EqualTo("password", "Passwords must match"),
         ],
+        name="repeatPassword",
     )
-    submit = SubmitField("Register")
+    submit = SubmitField("Register", name="submitBtn")
 
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
@@ -68,3 +69,26 @@ class RegisterForm(FlaskForm):
         user = User.query.filter_by(email=email.data).first()
         if user:
             raise ValidationError("User with such email already exists")
+
+
+class ChangePswForm(FlaskForm):
+    password = PasswordField(
+        "New Password",
+        validators=[
+            DataRequired("Please enter your password"),
+            Regexp(
+                "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{0,}$",
+                message="Password must contain at least one uppercase letter, one lowercase letter, one number",
+            ),
+            Length(8, 30, "Length must be between 8-30 characters"),
+        ],
+    )
+    repeat_password = PasswordField(
+        "Repeat password",
+        validators=[
+            DataRequired("Please repeat your password"),
+            EqualTo("password", "Passwords must match"),
+        ],
+        name="repeatPassword",
+    )
+    submit = SubmitField("Register", name="submitBtn")

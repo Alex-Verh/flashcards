@@ -9,3 +9,4 @@ export const FLASHCARDS_URL = BASE_API_URL + "/flashcards";
 export const FLASHCARD_URL = BASE_API_URL + "/flashcard";
 
 export const USER_URL = BASE_API_URL + "/user";
+export const RESET_PSW_URL = USER_URL + "/reset-psw";

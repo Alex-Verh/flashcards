@@ -4,6 +4,7 @@ import {
   CATEGORIES_URL,
   FLASHCARDS_URL,
   FLASHCARD_URL,
+  RESET_PSW_URL,
   SAVE_CARDSET_URL,
   USER_URL,
 } from "./endpoints";
@@ -119,6 +120,18 @@ export const deleteUser = async () => {
   try {
     const res = await fetch(USER_URL, {
       method: "DELETE",
+    });
+    return res.json();
+  } catch (e) {
+    throw e;
+  }
+};
+
+export const resetUserPsw = async (formData) => {
+  try {
+    const res = await fetch(RESET_PSW_URL, {
+      method: "POST",
+      body: formData,
     });
     return res.json();
   } catch (e) {

@@ -11,7 +11,7 @@ from ..funcs import (
 )
 from ..models import CardSet, FlashCard, User
 from . import bp
-from .forms import LoginForm, RegisterForm
+from .forms import ChangePswForm, LoginForm, RegisterForm
 
 
 @bp.route("/login", methods=["POST", "GET"])
@@ -139,3 +139,26 @@ def delete_account(token):
     logout_user()
     flash("Your account was deleted successfully", "success")
     return redirect(url_for(".register"))
+
+
+@bp.route("/change-password/<token>", methods=["POST", "GET"])
+def change_password(token):
+    try:
+        user_id = serializer.loads(token, salt="reset-password", max_age=3600)["id"]
+        user = User.query.get(int(user_id))
+        if not user:
+            flash("User does not exist", "error")
+            return
+        form = ChangePswForm()
+        if form.validate_on_submit():
+            hashed_password = generate_password_hash(form.password.data)
+            user.password = hashed_password
+            db.session.commit()
+            flash("Your password changed successfully", "success")
+            return redirect(url_for(".login"))
+        return render_template("change-password.html", form=form)
+    except SignatureExpired:
+        flash("Verification token has been expired!", "error")
+    except BadData:
+        flash("Invalid verification token!", "error")
+    return redirect(url_for("main.main"))

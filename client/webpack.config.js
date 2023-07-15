@@ -6,7 +6,7 @@ const TerserPlugin = require("terser-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 // Pages list
-const pages = ["main", "cardsets", "register", "login", "set"];
+const pages = ["main", "cardsets", "register", "login", "set", "change-password"];
 
 const paths = {
   src: path.resolve(__dirname, "./src"),

@@ -21,7 +21,7 @@ export const getTextHeightInTextara = (textarea) => {
   return textHeight;
 };
 
-export const centerTextInTextarea = (textarea, isRenderedBeforeImages) => {
+export const centerTextInTextarea = (textarea) => {
   const textHeight = getTextHeightInTextara(textarea);
   const height = textarea.clientHeight;
   const verticalPadding = `${(height - textHeight) / 2}px`;
