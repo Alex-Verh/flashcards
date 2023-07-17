@@ -60,4 +60,18 @@
   &__button:hover {
     box-shadow: $box-shadow-delete;
   }
+  @media screen and (max-width: 1000px) {
+    width: 80%;
+    &__field {
+      width: 50%;
+    }
+  }
+  @media screen and (max-width: 500px) {
+    &__title {
+      font-size: 24px;
+    }
+    &__field {
+      width: 80%;
+    }
+  }
 }

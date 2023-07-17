@@ -84,4 +84,10 @@
   &__add:hover {
     box-shadow: $box-shadow-hover;
   }
+  @media screen and (max-width: 400px) {
+    width: 80%;
+    .input, &__cardset {
+      width: 80%;
+    }
+  }
 }
