@@ -74,4 +74,21 @@
   &__tool:hover {
     box-shadow: $box-shadow-hover;
   }
+  @media screen and (max-width: 1200px) {
+    width: 90%;
+  }
+  @media screen and (max-width:800px) {
+    &__flashcard {
+      width: 80%;
+      &-text {
+        text-align: center;
+        &_front {
+          font-size: 16px;
+        }
+        &_back {
+          font-size: 14px;
+        }
+      }
+    }
+  }
 }
