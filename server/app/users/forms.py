@@ -91,4 +91,4 @@ class ChangePswForm(FlaskForm):
         ],
         name="repeatPassword",
     )
-    submit = SubmitField("Register", name="submitBtn")
+    submit = SubmitField("Submit", name="submitBtn")

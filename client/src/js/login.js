@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .querySelector(".register__forget-pass")
       .addEventListener("click", () => {
         const prevHTML = loginContainer.innerHTML;
-        loginContainer.innerHTML = `<button>Back</button><h1 style="font-size: 2rem; margin-bottom: 30px">Reset Password</h1>`;
+        loginContainer.innerHTML = `<button class="button button_small" style="width:auto;margin:0">Back</button><h1 style="font-size: 2rem; margin-bottom: 30px">Reset Password</h1>`;
         const newForm = document.createElement("form");
         newForm.innerHTML = `
         <div class="register__field">

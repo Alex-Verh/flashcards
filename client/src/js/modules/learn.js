@@ -138,25 +138,35 @@ const initLearnChoice = (initialCardset, onStart) => {
   initialCardset && cardsets.push(initialCardset);
   const modalEl = document.querySelector(".mode-choice");
   const cardsetsContainer = modalEl.querySelector(".cardsets");
-
   const showCardsets = (cardsets) => {
-    const cardsetsHTML = cardsets.reduce(
-      (prev, cardset) =>
-        prev + `<div class="cardsets__cardset">${cardset.title}</div>`,
-      " "
-    );
     cardsetsContainer
       .querySelectorAll(".cardsets__cardset")
       .forEach((set) => set.remove());
-    cardsetsContainer.lastElementChild.insertAdjacentHTML(
-      "beforebegin",
-      cardsetsHTML
-    );
+    cardsets.forEach((cardset) => {
+      const set = document.createElement("div");
+      set.classList.add("cardsets__cardset");
+
+      set.innerHTML = `<button class="cardsets__cardset-remove">&#x2715;</button>${cardset.title}`;
+      set.firstElementChild.addEventListener("click", (e) => {
+        e.stopPropagation();
+        cardsets.forEach((set, index) => {
+          if (+set.id === +cardset.id) {
+            cardsets.splice(index, 1);
+          }
+        });
+        showCardsets(cardsets);
+      });
+      cardsetsContainer.lastElementChild.insertAdjacentElement(
+        "beforebegin",
+        set
+      );
+    });
   };
 
   showCardsets(cardsets);
 
   initCardsetsChoice((selectedCardsets) => {
+    cardsets.fill();
     cardsets = selectedCardsets;
     showCardsets(cardsets);
   }, cardsets);
