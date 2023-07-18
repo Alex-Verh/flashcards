@@ -2,7 +2,7 @@
   height: 60vh;
   width: 60vw;
   &__drop-area {
-    margin: 50px;
+    margin: 20px;
     height: 68%;
     border: 3px dashed #3d3d3d;
     display: flex;
@@ -23,5 +23,16 @@
   }
   &__button {
     padding-inline: 30px;
+  }
+  @media screen and (max-width:460px) {
+    width: 90vw;
+  }
+  @media screen and (max-width:460px) {
+    &__text {
+      font-size: 16px;
+    }
+    .button {
+      width: 135px;
+    }
   }
 }

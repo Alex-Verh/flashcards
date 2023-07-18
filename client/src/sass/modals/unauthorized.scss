@@ -24,7 +24,7 @@
     button {
       background: $main-color;
       border-radius: 10px;
-      padding: 8px 30px;
+      padding: 8px 0;
       &:hover {
         box-shadow: $box-shadow-hover;
         cursor: pointer;
@@ -32,6 +32,16 @@
       &:active {
         box-shadow: none;
       }
+    }
+  }
+  @media screen and (max-width: 550px) {
+    width: 80%;
+    .button {
+      width: 100px;
+      font-size: 14px;
+    }
+    &__title {
+      font-size: 14px;
     }
   }
 }

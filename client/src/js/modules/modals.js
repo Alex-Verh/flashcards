@@ -96,7 +96,7 @@ export const useMessageModal = (message) => {
       <div style="margin: 10px; font-size: 18px">${message}</div>
     `
   );
-  modal.style.width = "400px";
+  modal.style.maxWidth = "400px";
   modal.style.paddingBottom = "20px";
   const closeModal = () => {
     modalOverlay.remove();

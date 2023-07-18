@@ -1,6 +1,6 @@
 .mode-choice {
-  width: 1149px;
-  height: 703px;
+  width: 1150px;
+  height: 700px;
 
   &__title {
     font-weight: 600;
@@ -13,22 +13,37 @@
   .button {
     margin-top: 45px;
   }
+  @media screen and (max-width: 1200px) {
+    width: 90%;
+  }
+  @media screen and (max-width:500px) {
+    .choice {
+      width: 80%;
+      font-size: 11px;
+    }
+    &__title {
+      font-size: 24px;
+    }
+  }
 }
 
 .cardsets {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 80%;
+  overflow-x: scroll;
+  margin: 0 auto;
   &__cardset {
     position: relative;
     border-radius: 20px;
-    width: 179px;
+    min-width: 180px;
     height: 117px;
     text-transform: none;
     box-shadow: $box-shadow;
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
+    text-align: center;
     padding: 5px 7px;
     margin: 35px 17px;
     cursor: pointer;

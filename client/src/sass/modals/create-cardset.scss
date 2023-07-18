@@ -1,5 +1,5 @@
 .create-cardset {
-  width: 866px;
+  width: 860px;
   height: 569px;
   &__title {
     font-weight: 700;
@@ -14,5 +14,17 @@
   input[type="submit"] {
     border: none;
     margin-top: 30px;
+  }
+  @media screen and (max-width: 900px) {
+    width: 80%;
+  }
+  @media screen and (max-width:500px) {
+    .choice, &__field {
+      width: 80%;
+      font-size: 12px;
+    }
+    &__title {
+      font-size: 24px;
+    }
   }
 }
